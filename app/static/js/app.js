@@ -1,11 +1,5 @@
-/**
- * Created by Corey Weber on 2016-01-26.
- */
-/**
- * Created by Corey Weber on 2016-01-05.
- */
-'use strict';
 
+'use strict';
 
 angular.module('example', [
     'ngRoute',
