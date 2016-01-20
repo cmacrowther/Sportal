@@ -24,12 +24,18 @@ class User(db.Model):
 
 class Team(db.Model):
     id = Column(Integer, primary_key=True)
+    picture = Column(Text, unique=False)
+    adminId = Column(Integer, unique=False)
+    name = Column(Text, unique=False)
+    description = Column(Text, unique=False)
+    password = Column(Text, unique=False)
 
 
 db.create_all()
 
 api_manager = APIManager(app, flask_sqlalchemy_db=db)
 api_manager.create_api(User, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(Team, methods=['GET', 'POST', 'DELETE', 'PUT'])
 
 
 @app.route('/')
