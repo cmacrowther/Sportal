@@ -22,6 +22,10 @@ class User(db.Model):
     picture = Column(Text, unique=False)
 
 
+class Team(db.Model):
+    id = Column(Integer, primary_key=True)
+
+
 db.create_all()
 
 api_manager = APIManager(app, flask_sqlalchemy_db=db)
