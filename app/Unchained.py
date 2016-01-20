@@ -77,5 +77,126 @@ def index():
     return app.send_static_file("index.html")
 
 
+@app.route('/api/sign_in', methods=['POST'])
+def sign_in():
+    # Get User table
+    from Unchained import User
+
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+    user = User.query.filter(User.email == email).all()
+
+    if user:
+        if password == user[0].password:
+            return str(user[0].id)
+        else:
+            return "Password Incorrect"
+    else:
+        return "No User with that email"
+
+
+@app.route('/api/get_team_by_url', methods=['POST'])
+def get_team_by_url():
+    from Unchained import Team
+
+    data = request.get_json()
+    url = data.get('url')
+    password = data.get('password')
+    team = Team.query.filter(Team.url == url).all()
+
+    if team:
+        if password == team[0].password:
+            return str(team[0].id)
+        else:
+            return "Password Incorrect"
+    else:
+        return "No Workspace with that name"
+
+
+@app.route('/api/email_check', methods=['POST'])
+def email_check():
+    from Unchained import User
+
+    data = request.get_json()
+    email = data.get('email')
+    user = User.query.filter(User.email == email).all()
+
+    if user:
+        return "duplicate"
+    else:
+        return "noduplicate"
+
+
+@app.route('/api/team_url_check', methods=['POST'])
+def team_url_check():
+    from Unchained import Team
+
+    data = request.get_json()
+    url = data.get('url')
+    team = Team.query.filter(Team.url == url).all()
+
+    if team:
+        return "duplicate"
+    else:
+        return "noduplicate"
+
+
+@app.route('/api/send_mail', methods=['POST'])
+def send_mail():
+    import smtplib
+
+    data = request.get_json()
+
+    user = data.get('user')
+    receivers = data.get('email')
+    team = data.get('team')
+    password = data.get('password')
+    sender = 'mycodebrary@gmail.com'
+
+    message = """\From: %s\nTo: %s\nSubject: %s\n\n%s
+    """ % (sender, receivers, "Unchained Invitation from " + user,
+           "You have recieved an invitation to join " + user + "'s Team " + team + " with password " + password + " \n Go to www.unchained.com make an account and join their workspace")
+
+    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server.ehlo()
+    server.starttls()
+    server.login("mycodebrary@gmail.com", "mycodebrary#1")
+    server.sendmail(sender, receivers, message)
+    server.close()
+
+    return "Successfully sent"
+
+
+@app.route('/api/get_team_members', methods=['POST'])
+def get_team_members():
+    import json
+    import collections
+    from Unchained import User
+
+    data = request.get_json()
+    wid = data.get('wid')
+
+    users = User.query.filter(User.wid == wid).all()
+    objects_list = []
+
+    for user in users:
+        d = collections.OrderedDict()
+        d['id'] = user.id
+        d['team_id'] = user.team_id
+        d['first_name'] = user.first_name
+        d['last_name'] = user.last_name
+        d['description'] = user.description
+        d['email'] = user.email
+        d['picture'] = user.picture
+
+        objects_list.append(d)
+
+    j = json.dumps(objects_list)
+    return j
+
+
+app.debug = True
+
 if __name__ == '__main__':
     app.run()
