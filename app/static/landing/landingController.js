@@ -25,6 +25,7 @@ angular.module('example.controllers',[]).controller('LandingController', ['$scop
 	    $scope.password_error = "";
 	    $scope.pw_confirm_error = "";
 	    $scope.match_error = "";
+	    $scope.email_exist_error = "";
 
 	    //checking empty fields
 		if ($scope.first_name == undefined || $scope.first_name == ""){
@@ -45,9 +46,8 @@ angular.module('example.controllers',[]).controller('LandingController', ['$scop
 	    	is_error = true;
 	    }
 	    else {
-	    	console.log("Were in");
 	    	var email = $scope.email;
-	    	//fix this fucking shit 
+	    	//todo check for period after @ sign
 	    	var result = email.match(/\w*\@\w*\\\.\w*/gi);
 	    	console.log(result);
 	    }
@@ -56,6 +56,14 @@ angular.module('example.controllers',[]).controller('LandingController', ['$scop
 	    	console.log("Please Enter Password *");
 	    	$scope.password_error = "Please Enter Password *";
 	    	is_error = true;
+	    }
+	    else {
+	    	//checks password strength
+	    	var password = $scope.password;
+	    	if (password.length < 8) {
+	    		console.log("Password too weak");
+	    		$scope.pw_length_error = "Password must be at least 8 characters *"
+	    	}
 	    }
 
 	    if ($scope.pw_confirm == undefined || $scope.pw_confirm == ""){
@@ -75,20 +83,40 @@ angular.module('example.controllers',[]).controller('LandingController', ['$scop
 	    	console.log("Error");
 	    }
 	    else{
-	    	console.log("Registration Successful");
-	    	//sending the shit to the database
-	    	$http.post("api/user", {
-	    		team_id: 0,
-	    		first_name: $scope.first_name,
-	    		last_name: $scope.last_name,
-	    		email: $scope.email,
-	    		password: $scope.password,
-	    		description: "",
-	    		picture: ""
+	    	var passObject = {email: $scope.email};
+
+	    	//Checks if email is taken
+	    	$http({
+	    		method: 'POST',
+	    		url: 'api/email_check',
+	    		headers: {'Content-Type': 'application/json'},
+	    		data: JSON.stringify(passObject)
 	    	})
 	    	.success(function(data){
-	    		console.log("Successful Register");
+	    		if (data == "duplicate") {
+	    			console.log("Email Already Exists");
+	    			$scope.email_exists_error = "Email Already Exists *";
+	    		}
+	    		else {
+	    			console.log("No duplicate");
+		    		console.log("Registration Successful");
+		    		
+		    		//sending the shit to the database
+		    		$http.post("api/user", {
+			    		team_id: 0,
+			    		first_name: $scope.first_name,
+			    		last_name: $scope.last_name,
+			    		email: $scope.email,
+			    		password: $scope.password,
+			    		description: "",
+			    		picture: ""
+	    			})
+	    			.success(function(data){
+	    				console.log("Successful Register");
+	    			})
+	    		}
 	    	})
+
 	    }
 
     }

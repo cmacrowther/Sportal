@@ -27,6 +27,7 @@
 				    			<div class="form-group">
 				    				<input type="email" ng-model="email" name="email" id="email" class="form-control input-sm" placeholder="Email Address">
 				    				<p style="color: red">{{ email_error }}</p>
+				    				<p style="color: red">{{ email_exists_error }}</p>
 				    			</div>
 
 				    			<div class="row">
@@ -45,6 +46,7 @@
 				    			</div>
 
 								<p style="color: red" class="text-center">{{ match_error }}</p>
+								<p style="color: red" class="text-center">{{ pw_length_error }}</p>
 
 				    			<input id="submit" type="submit" value="Register" class="btn btn-info btn-block" ng-click="register()">
 
