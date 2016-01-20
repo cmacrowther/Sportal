@@ -1,61 +1,153 @@
 <!DOCTYPE html>
 <html>
-	<div class="container">        
-	    <div class="row centered-form">
-	        <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
-	        	<div class="panel panel-default">
-	        		<div class="panel-heading">
-				    		<h3 class="panel-title">Register Now</h3>
-				 			</div>
-				 			<div class="panel-body">
-				    		<form role="form">
-				    			<div class="row">
-				    				<div class="col-xs-6 col-sm-6 col-md-6">
-				    					<div class="form-group">
-				                <input type="text" ng-model="first_name" name="first_name" id="first_name" class="form-control input-sm" placeholder="First Name">
-				                		<p style="color: red">{{ first_name_error }}</p>
-				    					</div>
-				    				</div>
-				    				<div class="col-xs-6 col-sm-6 col-md-6">
-				    					<div class="form-group">
-				    						<input type="text" ng-model="last_name" name="last_name" id="last_name" class="form-control input-sm" placeholder="Last Name">
-				    						<p style="color: red">{{ last_name_error }}</p>
-				    					</div>
-				    				</div>
-				    			</div>
+<div class="container">
+    <div class="row centered-form">
+        <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Register Now</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" ng-model="first_name" name="first_name" id="first_name"
+                                           class="form-control input-sm" placeholder="First Name">
 
-				    			<div class="form-group">
-				    				<input type="email" ng-model="email" name="email" id="email" class="form-control input-sm" placeholder="Email Address">
-				    				<p style="color: red">{{ email_error }}</p>
-				    				<p style="color: red">{{ email_exists_error }}</p>
-				    			</div>
+                                    <p style="color: red">{{ first_name_error }}</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" ng-model="last_name" name="last_name" id="last_name"
+                                           class="form-control input-sm" placeholder="Last Name">
 
-				    			<div class="row">
-				    				<div class="col-xs-6 col-sm-6 col-md-6">
-				    					<div class="form-group">
-				    						<input type="password" ng-model="password" name="password" id="password" class="form-control input-sm" placeholder="Password">
-				    						<p style="color: red">{{ password_error }}</p>
-				    					</div>
-				    				</div>
-				    				<div class="col-xs-6 col-sm-6 col-md-6">
-				    					<div class="form-group">
-				    						<input type="password" ng-model="pw_confirm" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirm Password">
-				    						<p style="color: red">{{ pw_confirm_error }}</p>
-				    					</div>
-				    				</div>
-				    			</div>
+                                    <p style="color: red">{{ last_name_error }}</p>
+                                </div>
+                            </div>
+                        </div>
 
-								<p style="color: red" class="text-center">{{ match_error }}</p>
-								<p style="color: red" class="text-center">{{ pw_length_error }}</p>
+                        <div class="form-group">
+                            <input type="email" ng-model="email" name="email" id="email" class="form-control input-sm"
+                                   placeholder="Email Address">
 
-				    			<input id="submit" type="submit" value="Register" class="btn btn-info btn-block" ng-click="register()">
+                            <p style="color: red">{{ email_error }}</p>
 
+                            <p style="color: red">{{ email_exists_error }}</p>
+                        </div>
 
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="password" ng-model="password" name="password" id="password"
+                                           class="form-control input-sm" placeholder="Password">
 
-				    		</form>
-			    	</div>
-	    		</div>
-    		</div>
-    	</div>
+                                    <p style="color: red">{{ password_error }}</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="password" ng-model="pw_confirm" name="password_confirmation"
+                                           id="password_confirmation" class="form-control input-sm"
+                                           placeholder="Confirm Password">
+
+                                    <p style="color: red">{{ pw_confirm_error }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p style="color: red" class="text-center">{{ match_error }}</p>
+
+                        <p style="color: red" class="text-center">{{ pw_length_error }}</p>
+
+                        <input id="submit" type="submit" value="Register" class="btn btn-info btn-block"
+                               ng-click="register()">
+
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-<html>
+    <div class="row centered-form">
+        <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Login</h3>
+                </div>
+                <div class="panel-body">
+                    <form data-toggle="validator" id="myForm" role="form">
+                        <div class="form-group">
+                            <label for="inputName" class="control-label">Name</label>
+                            <input type="text" class="form-control" id="inputName" placeholder="Cina Saffary" required>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="inputTwitter" class="control-label">Twitter</label>
+
+                            <div class="input-group">
+                                <span class="input-group-addon">@</span>
+                                <input type="text" pattern="^[_A-z0-9]{1,}$" maxlength="15" class="form-control"
+                                       id="inputTwitter" placeholder="1000hz" required>
+                            </div>
+                            <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+                            <span class="help-block with-errors">Hey look, this one has feedback icons!</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail" class="control-label">Email</label>
+                            <input type="email" class="form-control" id="inputEmail" placeholder="Email"
+                                   data-error="Bruh, that email address is invalid" required>
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="control-label">Password</label>
+
+                            <div class="form-group col-sm-6">
+                                <input type="password" data-minlength="6" class="form-control" id="inputPassword"
+                                       placeholder="Password" required>
+                                <span class="help-block">Minimum of 6 characters</span>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <input type="password" class="form-control" id="inputPasswordConfirm"
+                                       data-match="#inputPassword" data-match-error="Whoops, these don't match"
+                                       placeholder="Confirm" required>
+
+                                <div class="help-block with-errors"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="form-group">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="underwear" required>
+                            Boxers
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="underwear" required>
+                            Briefs
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" id="terms" data-error="Before you wreck yourself" required>
+                            Check yourself
+                        </label>
+
+                        <div class="help-block with-errors"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</html>
