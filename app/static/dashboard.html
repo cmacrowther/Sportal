@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="example">
+<html lang="en" ng-app="dashboard">
 <head>
     <meta charset="UTF-8">
     <title>Unchained</title>
@@ -22,8 +22,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
             integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
             crossorigin="anonymous"></script>
-    <!-- Other Libraries -->
+
+    <!-- Other Stylesheets -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    
+    <!-- JS Plugin for Validation -->
+    <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.9.0/validator.js"></script>
+    <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.9.0/validator.min.js"></script>
 
     <!-- CSS -->
     <link href="css/dashboard.css" rel="stylesheet">
@@ -77,23 +82,22 @@
     <div class="side-menu-container">
         <ul class="nav navbar-nav">
 
-            <li><a href="#"><span class="glyphicon glyphicon-send"></span> Link</a></li>
-            <li class="active"><a href="#"><span class="glyphicon glyphicon-plane"></span> Active Link</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-cloud"></span> Link</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-send"></span> Profile</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-cloud"></span> Link (dead)</a></li>
 
             <!-- Dropdown-->
             <li class="panel panel-default" id="dropdown">
                 <a data-toggle="collapse" href="#dropdown-lvl1">
-                    <span class="glyphicon glyphicon-user"></span> Sub Level <span class="caret"></span>
+                    <span class="glyphicon glyphicon-user"></span> Team <span class="caret"></span>
                 </a>
 
                 <!-- Dropdown level 1 -->
                 <div id="dropdown-lvl1" class="panel-collapse collapse">
                     <div class="panel-body">
                         <ul class="nav navbar-nav">
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
+                            <li><a href="#">Create a Team</a></li>
+                            <li><a href="#">Example Team Profile</a></li>
+                            <li><a href="#">Link (dead)</a></li>
 
                             <!-- Dropdown level 2 -->
                             <li class="panel panel-default" id="dropdown">
@@ -115,7 +119,7 @@
                 </div>
             </li>
 
-            <li><a href="#"><span class="glyphicon glyphicon-signal"></span> Link</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-signal"></span> Play</a></li>
 
         </ul>
     </div><!-- /.navbar-collapse -->
@@ -124,7 +128,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="container-fluid" ng-view>
+    <div class="side-body" ng-view>
            <!-- Angular Controller Here --> 
     </div>
 </div>
@@ -134,7 +138,7 @@
 
 <!-- Scripts -->
 <script src="js/app.js"></script>
-<script src="landing/landingController.js"></script>
+<script src="home/homeController.js"></script>
 <script src="js/dashboard.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/css/bootstrapValidator.css"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
