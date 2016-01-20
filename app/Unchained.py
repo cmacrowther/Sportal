@@ -235,8 +235,8 @@ def get_user_sports():
         return "no sports"
 
 
-@app.route('/api/get_user_teams', methods=['GET'])
-def get_user_sports():
+@app.route('/api/get_user_teams', methods=['POST'])
+def get_user_teams():
     import json
     import collections
     from Unchained import UserHasTeam
