@@ -4,22 +4,10 @@
 angular.module('example.controllers',[]).controller('LandingController', ['$scope', '$http', function ($scope, $http) {
 	//Initializes the validator plugin
 	$('#myForm').validator();
-	
-    console.log("UNCHAINED");
-    console.log($scope.first_name);
-    console.log($scope.last_name);
-    console.log($scope.email);
-    console.log($scope.password);
-    console.log($scope.pw_confirm);
 
     var is_error = false;
 
     $scope.register = function() {
-    	console.log($scope.first_name);
-    	console.log($scope.last_name);
-	    console.log($scope.email);
-	    console.log($scope.password);
-	    console.log($scope.pw_confirm);
 
 	    is_error = false;
 	    $scope.first_name_error = "";
@@ -146,11 +134,8 @@ angular.module('example.controllers',[]).controller('LandingController', ['$scop
 				console.log("User id: " + data);
 				console.log("Login Successful");
 
-				//Get User
-				$http.get("api/user/" + data)
-				.success(function(data){
-					console.log("Successfully got user");
-				})
+				localStorage.setItem("id", data);
+				window.location.assign("/dashboard.html");
 			}
 		})
 
