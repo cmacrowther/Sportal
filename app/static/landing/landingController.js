@@ -4,12 +4,6 @@
 angular.module('example.controllers',[]).controller('LandingController', ['$scope', '$http', function ($scope, $http) {
 	//Initializes the validator plugin.
 	$('#myForm').validator();
-	
-	//Initializes the date time picker plugin.
-	$('#birth').datetimepicker({
-        format: 'MM/DD/YYYY',
-        viewMode: 'years'
-    });
 
     console.log("UNCHAINED");
     console.log($scope.first_name);

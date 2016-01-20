@@ -3,4 +3,10 @@
  */
 angular.module('dashboard.controllers',[]).controller('HomeController', ['$scope', '$http', function ($scope, $http) {
     console.log("hello world");
+
+    //Initializes the date time picker plugin.
+	$('#birth').datetimepicker({
+        format: 'MM/DD/YYYY',
+        viewMode: 'years'
+    });
 }]);
