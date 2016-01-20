@@ -175,9 +175,9 @@ def get_team_members():
     from Unchained import User
 
     data = request.get_json()
-    wid = data.get('wid')
+    team_id = data.get('team_id')
 
-    users = User.query.filter(User.wid == wid).all()
+    users = User.query.filter(User.team_id == team_id).all()
     objects_list = []
 
     for user in users:
