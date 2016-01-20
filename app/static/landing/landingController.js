@@ -121,4 +121,42 @@ angular.module('example.controllers',[]).controller('LandingController', ['$scop
 
     }
 
+	$scope.login = function(){
+
+		var passObject = {email: $scope.loginEmail, password: $scope.loginPassword};
+
+	    	//Checks if email is taken
+	    	$http({
+	    		method: 'POST',
+	    		url: 'api/email_check',
+	    		headers: {'Content-Type': 'application/json'},
+	    		data: JSON.stringify(passObject)
+	    	})
+	    	.success(function(data){
+	    		if (data == "duplicate") {
+	    			console.log("Email Already Exists");
+	    			$scope.email_exists_error = "Email Already Exists *";
+	    		}
+	    		else {
+	    			console.log("No duplicate");
+		    		console.log("Registration Successful");
+
+		    		//sending the shit to the database
+		    		$http.post("api/user", {
+			    		team_id: 0,
+			    		first_name: $scope.first_name,
+			    		last_name: $scope.last_name,
+			    		email: $scope.email,
+			    		password: $scope.password,
+			    		description: "",
+			    		picture: ""
+	    			})
+	    			.success(function(data){
+	    				console.log("Successful Register");
+	    			})
+	    		}
+	    	})
+
+	}
+
 }]);
