@@ -1,1 +1,148 @@
-<h1>user_profile Page</h1>
+<div style="text-align: center; padding-bottom: 20px;">
+	<h1>Profile Page</h1>
+	<p>best page on this website so far</p>
+</div>
+
+<form data-toggle="validator" role="form" class="form-horizontal"  id="user_creation_form">
+        <div class="form-group">
+            <label for="first_name" class="col-sm-2 control-label">First Name</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="first_name" placeholder="Bob" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="last_name" class="col-sm-2 control-label">Last Name</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="last_name" placeholder="Lewis" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email" class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-8">
+                <input type="email" class="form-control" name="email" placeholder="example@example.com" data-error="That address is invalid" required>
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+
+
+       <div class="form-group">
+           <label for="birth" class="col-sm-2 control-label">Birth</label>
+           <div class='date col-sm-8'>
+               <div class="input-group" id='birth'>
+                   <input type='text' class="form-control" name="birth" required>
+                   <span class="input-group-addon">
+                       <span class="glyphicon glyphicon-calendar"></span>
+                   </span>
+               </div>
+           </div>
+       </div>
+
+
+        <div class="form-group">
+            <label for="address" class="col-sm-2 control-label">Address One</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="address" placeholder="812 Hwy 1." required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="addressLine2" class="col-sm-2 control-label">Address Two</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="addressLine2" placeholder="RR 1">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="city" class="col-sm-2 control-label">City</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="city" placeholder="Annapolis Royal" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="postal_code" class="col-sm-2 control-label">Postal Code</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="postal_code" placeholder="B0V 1A0" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="province" class="col-sm-2 control-label">Province</label>
+            <div class="col-sm-8">
+                <select name="province" class="form-control" required>
+                    <option value="ns">NS</option>
+                    <option value="nb">NB</option>
+                    <option value="pe">PE</option>
+                    <option value="nl">NL</option>
+                    <option value="qc">QC</option>
+                    <option value="on">ON</option>
+                    <option value="mn">MN</option>
+                    <option value="sk">SK</option>
+                    <option value="ab">AB</option>
+                    <option value="bc">BC</option>
+                    <option value="nwt">NT</option>
+                    <option value="yk">YK</option>
+                    <option value="nu">NU</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="country" class="col-sm-2 control-label">Country</label>
+            <div class="col-sm-8">
+                <select name="country" class="form-control" required>
+                    <option value="CA">Canada</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="gender" class="col-sm-2 control-label">Gender</label>
+            <div class="col-sm-8">
+                <label class="radio-inline">
+                    <input type="radio" name="gender" value="male" checked="checked"> Male
+                </label>
+                <br />
+                <label class="radio-inline">
+                    <input type="radio" name="gender" value="female"> Female
+                </label>
+            </div>
+        </div>
+
+        <!-- The Following two forms are hidden, they contain longitude and latitude values that are needed -->
+        <input type="hidden" class="form-control" name="longitude"></label>
+
+        <input type="hidden" class="form-control" name="latitude"></label>
+
+
+        <div class="form-group">
+            <label for="interests" class="col-sm-2 control-label">Interests</label>
+            <div class="col-sm-8">
+                <select id="tags" name="tags" class="form-control tagSelectBox" multiple="true" required></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-8">
+                <input type="password" id="password" class="form-control" data-minlength="6" name="password" required>
+                <span class="help-block">Minimum of 6 characters</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password_confirm" class="col-sm-2 control-label">Confirm Password</label>
+            <div class="col-sm-8">
+                <input type="password" class="form-control" name="password_confirm" data-match="#password" data-match-error="Passwords do not match" required>
+                <div class="help-block with-errors"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-8">
+                <input type="submit" class="btn btn-default" value="Create User">
+            </div>
+        </div>
+    </form>
