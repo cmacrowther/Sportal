@@ -25,6 +25,7 @@ angular.module('example.controllers',[]).controller('LandingController', ['$scop
 	    $scope.password_error = "";
 	    $scope.pw_confirm_error = "";
 	    $scope.match_error = "";
+	    $scope.email_exist_error = "";
 
 	    //checking empty fields
 		if ($scope.first_name == undefined || $scope.first_name == ""){
@@ -46,7 +47,7 @@ angular.module('example.controllers',[]).controller('LandingController', ['$scop
 	    }
 	    else {
 	    	var email = $scope.email;
-	    	//fix this fucking shit 
+	    	//todo check for period after @ sign
 	    	var result = email.match(/\w*\@\w*\\\.\w*/gi);
 	    	console.log(result);
 	    }
@@ -55,6 +56,14 @@ angular.module('example.controllers',[]).controller('LandingController', ['$scop
 	    	console.log("Please Enter Password *");
 	    	$scope.password_error = "Please Enter Password *";
 	    	is_error = true;
+	    }
+	    else {
+	    	//checks password strength
+	    	var password = $scope.password;
+	    	if (password.length < 8) {
+	    		console.log("Password too weak");
+	    		$scope.pw_length_error = "Password must be at least 8 characters *"
+	    	}
 	    }
 
 	    if ($scope.pw_confirm == undefined || $scope.pw_confirm == ""){
@@ -86,6 +95,7 @@ angular.module('example.controllers',[]).controller('LandingController', ['$scop
 	    	.success(function(data){
 	    		if (data == "duplicate") {
 	    			console.log("Email Already Exists");
+	    			$scope.email_exists_error = "Email Already Exists *";
 	    		}
 	    		else {
 	    			console.log("No duplicate");
