@@ -22,13 +22,47 @@ class User(db.Model):
     picture = Column(Text, unique=False)
 
 
+class UserHasTeam(db.Model):
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, unique=False)
+    team_id = Column(Integer, unique=False)
+
+
 class Team(db.Model):
     id = Column(Integer, primary_key=True)
+    sport_id = Column(Integer, unique=False)
     picture = Column(Text, unique=False)
     adminId = Column(Integer, unique=False)
     name = Column(Text, unique=False)
+    url = Column(Text, unique=False)
     description = Column(Text, unique=False)
     password = Column(Text, unique=False)
+
+
+class UserHasSport(db.Model):
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, unique=False)
+    sport_id = Column(Integer, unique=False)
+
+
+class Sport(db.Model):
+    id = Column(Integer, primary_key=True)
+    number_of_members = Column(Integer, unique=False)
+    number_of_teams = Column(Integer, unique=False)
+    name = Column(Text, unique=False)
+    draw_flag = Column(Integer, unique=False)
+
+
+class Facility(db.Model):
+    id = Column(Integer, primary_key=True)
+    name = Column(Text, unique=False)
+    address = Column(Text, unique=False)
+
+
+class FacilityHasSport(db.Model):
+    id = Column(Integer, primary_key=True)
+    facility_id = Column(Integer, unique=False)
+    sport_id = Column(Integer, unique=False)
 
 
 db.create_all()
