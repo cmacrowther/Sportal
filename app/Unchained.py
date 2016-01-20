@@ -70,6 +70,11 @@ db.create_all()
 api_manager = APIManager(app, flask_sqlalchemy_db=db)
 api_manager.create_api(User, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(Team, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(Sport, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(Facility, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(UserHasSport, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(UserHasTeam, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(FacilityHasSport, methods=['GET', 'POST', 'DELETE', 'PUT'])
 
 
 @app.route('/')
@@ -175,9 +180,9 @@ def get_team_members():
     from Unchained import User
 
     data = request.get_json()
-    wid = data.get('wid')
+    team_id = data.get('team_id')
 
-    users = User.query.filter(User.wid == wid).all()
+    users = User.query.filter(User.team_id == team_id).all()
     objects_list = []
 
     for user in users:
@@ -195,6 +200,76 @@ def get_team_members():
     j = json.dumps(objects_list)
     return j
 
+
+@app.route('/api/get_user_sports', methods=['POST'])
+def get_user_sports():
+    import json
+    import collections
+    from Unchained import UserHasSport
+    from Unchained import Sport
+
+    data = request.get_json()
+    user_id = data.get('user_id')
+
+    sport_ids = UserHasSport.query.filter(UserHasSport.user_id == user_id).all()
+    objects_list = []
+
+    if sport_ids:
+
+        for sid in sport_ids:
+            sport = Sport.query.get(sid.sport_id)
+
+            d = collections.OrderedDict()
+            d['id'] = sport.id
+            d['number_of_members'] = sport.number_of_members
+            d['number_of_teams'] = sport.number_of_teams
+            d['name'] = sport.name
+            d['draw_flag'] = sport.draw_flag
+
+            objects_list.append(d)
+
+        j = json.dumps(objects_list)
+        return j
+
+    else:
+        return "no sports"
+
+
+@app.route('/api/get_user_teams', methods=['POST'])
+def get_user_teams():
+    import json
+    import collections
+    from Unchained import UserHasTeam
+    from Unchained import Team
+
+    data = request.get_json()
+    user_id = data.get('user_id')
+
+    user_has_teams = UserHasTeam.query.filter(UserHasTeam.user_id == user_id).all()
+    objects_list = []
+
+    if user_has_teams:
+
+        for uht in user_has_teams:
+            team = Team.query.get(uht.team_id)
+
+            d = collections.OrderedDict()
+            d['id'] = team.id
+            d['sport_id'] = team.sport_id
+            d['picture'] = team.picture
+            d['adminId'] = team.adminId
+            d['name'] = team.name
+            d['url'] = team.url
+            d['description'] = team.description
+            d['password'] = team.password
+
+            objects_list.append(d)
+
+        j = json.dumps(objects_list)
+        return j
+
+    else:
+        return "no sports"
 
 app.debug = True
 
