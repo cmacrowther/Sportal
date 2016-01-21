@@ -117,6 +117,9 @@ angular.module('example.controllers',[]).controller('LandingController', ['$scop
 	    			})
 	    			.success(function(data){
 	    				console.log("Successful Register");
+
+						localStorage.setItem("id", data.id);
+						window.location.assign("/dashboard.html");
 	    			})
 	    		}
 	    	})
@@ -147,11 +150,8 @@ angular.module('example.controllers',[]).controller('LandingController', ['$scop
 				console.log("User id: " + data);
 				console.log("Login Successful");
 
-				//Get User
-				$http.get("api/user/" + data)
-				.success(function(data){
-					console.log("Successfully got user");
-				})
+				localStorage.setItem("id", data);
+				window.location.assign("/dashboard.html");
 			}
 		})
 
