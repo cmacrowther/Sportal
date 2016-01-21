@@ -18,6 +18,10 @@ angular.module('dashboard.controllers').controller('adminController', ['$scope',
     //creation functions
     $scope.createSport = function() {
 
+        //resetting result variables
+        $scope.createFacilityResult = "";
+        $scope.createSportResult = "";
+
 	    //sending the sport to the database
 		$http.post("api/sport", {
     		number_of_members: $scope.members_required,
