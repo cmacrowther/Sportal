@@ -5,10 +5,12 @@ angular.module('dashboard.controllers',[]).controller('HomeController', ['$scope
     console.log("hello world");
 
     //if id is set in local storage then get user info
-    if (localStorage.getItem("id") != null || localStorage.getItem("id") != 0) {
+    if (localStorage.getItem("id") != null && localStorage.getItem("id") != 0 && $rootScope.userObject == undefined) {
 
         console.log(localStorage.getItem("id"));
         $scope.userId = localStorage.getItem("id");
+
+        localStorage.setItem("id", 0);
 
         $http.get("/api/user/" + $scope.userId)
             .success(function (data) {
@@ -19,8 +21,11 @@ angular.module('dashboard.controllers',[]).controller('HomeController', ['$scope
             })
 
     }
-    //else user not logged in
-    else {
+    //User logged in (don't remember me)
+    else if( localStorage.getItem("id") == 0){
+        console.log(" Still logged in ");
+    }
+    else{
         alert(" Not logged in ");
         window.location.assign("/");
     }
