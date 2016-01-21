@@ -1,2 +1,3 @@
-Yes I do this often, often, often
-Git that GitLab poppin', poppin', poppin'
+Often, Often, yes I push code often,
+Git that GitLab poppin', style it how I want it,
+
