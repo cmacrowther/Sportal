@@ -23,7 +23,9 @@ $(function () {
 angular.module('dashboard.controllers')
     .controller('DashboardController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
 
-            var passObject = { user_id: $rootScope.userObject.id }
+            var user_id = localStorage.getItem("id");
+
+            var passObject = { user_id: user_id }
 
             $http({
 	    		method: 'POST',
