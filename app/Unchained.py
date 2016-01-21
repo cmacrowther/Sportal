@@ -26,6 +26,7 @@ class UserHasTeam(db.Model):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, unique=False)
     team_id = Column(Integer, unique=False)
+    skill = Column(Text, unique=False)
 
 
 class Team(db.Model):
@@ -225,6 +226,7 @@ def get_user_sports():
             d['number_of_teams'] = sport.number_of_teams
             d['name'] = sport.name
             d['draw_flag'] = sport.draw_flag
+            d['skill'] = sid.skill
 
             objects_list.append(d)
 
