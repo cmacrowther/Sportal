@@ -269,7 +269,7 @@ def get_user_teams():
         return j
 
     else:
-        return "no sports"
+        return "no teams"
 
 app.debug = True
 
