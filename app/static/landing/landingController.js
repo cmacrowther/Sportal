@@ -2,9 +2,16 @@
  * Created by Corey Weber on 2016-01-11.
  */
 angular.module('example.controllers',[]).controller('LandingController', ['$scope', '$http', function ($scope, $http) {
+
 	//Initializes the validator plugin
 	$('#registerForm').validator();
-	$('#myForm').validator();
+
+    console.log("UNCHAINED");
+    console.log($scope.first_name);
+    console.log($scope.last_name);
+    console.log($scope.email);
+    console.log($scope.password);
+    console.log($scope.pw_confirm);
 
     var is_error = false;
 

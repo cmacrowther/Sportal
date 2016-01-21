@@ -4,6 +4,12 @@
 angular.module('dashboard.controllers',[]).controller('HomeController', ['$scope', '$http','$rootScope', function ($scope, $http, $rootScope) {
     console.log("hello world");
 
+    //Initializes the date time picker plugin.
+	$('#birth').datetimepicker({
+        format: 'MM/DD/YYYY',
+        viewMode: 'years'
+    });
+
     //if id is set in local storage then get user info
     if (localStorage.getItem("id") != null && localStorage.getItem("id") != 0) {
 
