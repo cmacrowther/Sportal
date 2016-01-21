@@ -16,7 +16,6 @@ angular.module('dashboard.controllers',[]).controller('HomeController', ['$scope
         console.log(localStorage.getItem("id"));
         $scope.userId = localStorage.getItem("id");
 
-        localStorage.setItem("id", 0);
 
         $http.get("/api/user/" + $scope.userId)
             .success(function (data) {
