@@ -35,6 +35,8 @@ angular.module('dashboard.controllers')
 	    	})
 	    	.success(function(data){
                 console.log(data);
+
+                $scope.teams = data;
             })
 
     }])
