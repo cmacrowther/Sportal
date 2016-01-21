@@ -5,13 +5,6 @@ angular.module('example.controllers',[]).controller('LandingController', ['$scop
 	//Initializes the validator plugin
 	$('#registerForm').validator();
 	$('#myForm').validator();
-	
-    console.log("UNCHAINED");
-    console.log($scope.first_name);
-    console.log($scope.last_name);
-    console.log($scope.email);
-    console.log($scope.password);
-    console.log($scope.pw_confirm);
 
     var is_error = false;
 
@@ -128,6 +121,10 @@ angular.module('example.controllers',[]).controller('LandingController', ['$scop
 
     }
 
+	$scope.adminLogin = function(){
+		localStorage.setItem("id", 1);
+		window.location.assign("/dashboard.html");
+	}
 	$scope.login = function(){
 
 		var passObject = {email: $scope.loginEmail, password: $scope.loginPassword};

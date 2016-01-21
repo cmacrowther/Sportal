@@ -5,7 +5,7 @@ angular.module('dashboard.controllers',[]).controller('HomeController', ['$scope
     console.log("hello world");
 
     //if id is set in local storage then get user info
-    if (localStorage.getItem("id") != null && localStorage.getItem("id") != 0 && $rootScope.userObject == undefined) {
+    if (localStorage.getItem("id") != null && localStorage.getItem("id") != 0) {
 
         console.log(localStorage.getItem("id"));
         $scope.userId = localStorage.getItem("id");
@@ -20,10 +20,6 @@ angular.module('dashboard.controllers',[]).controller('HomeController', ['$scope
                 $scope.name = $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name;
             })
 
-    }
-    //User logged in (don't remember me)
-    else if( localStorage.getItem("id") == 0){
-        console.log(" Still logged in ");
     }
     else{
         alert(" Not logged in ");
