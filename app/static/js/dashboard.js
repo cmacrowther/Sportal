@@ -20,3 +20,19 @@ $(function () {
     });
 });
 
+angular.module('dashboard.controllers')
+    .controller('DashboardController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
+
+            var passObject = { user_id: $rootScope.userObject.id }
+
+            $http({
+	    		method: 'POST',
+	    		url: 'api/get_user_teams',
+	    		headers: {'Content-Type': 'application/json'},
+	    		data: JSON.stringify(passObject)
+	    	})
+	    	.success(function(data){
+                console.log(data);
+            })
+
+    }])
