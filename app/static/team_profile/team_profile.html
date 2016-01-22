@@ -1,1 +1,36 @@
 <h1>team_profile Page</h1>
+
+<div class="row">
+	<div class="col-md-6">
+		<h3 class="text-center">All Sports</h3>
+		<hr>
+		<div>
+			<input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" ng-model="searchTerm"/>
+		</div>
+		<br>
+		<table class="table table-striped">
+			<thead>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in allSports | filter:searchTerm">
+					<td>{{ item.name }}</td>
+					<td><button class="btn btn-primary"ng-click="addSport(item)" style="float: right">Add</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-md-6">
+		<h3 class="text-center">My Sports</h3>
+		<hr>
+		<table class="table table-striped">
+			<thead>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in mySports">
+					<td>{{ item.name }}</td>
+					<td><button class="btn btn-danger" ng-click="deleteSport(item)" style="float: right">Delete</button></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

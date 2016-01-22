@@ -12,4 +12,6 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
         viewMode: 'years'
     });
 
+    
+
 }]);

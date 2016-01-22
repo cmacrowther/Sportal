@@ -129,6 +129,7 @@ angular.module('example.controllers',[]).controller('LandingController', ['$scop
     }
 
 	$scope.adminLogin = function(){
+		//set this to whoever signs in for now
 		localStorage.setItem("id", 1);
 		window.location.assign("/dashboard.html");
 	}

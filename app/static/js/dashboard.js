@@ -27,6 +27,29 @@ angular.module('dashboard.controllers')
 
             var passObject = { user_id: user_id }
 
+            if (localStorage.getItem("id") != null && localStorage.getItem("id") != 0) {
+
+                console.log(localStorage.getItem("id"));
+                $scope.userId = localStorage.getItem("id");
+
+
+                $http.get("/api/user/" + $scope.userId)
+                    .success(function (data) {
+                        $rootScope.userObject = data;
+
+                        localStorage.setItem("userObject", JSON.stringify($rootScope.userObject));
+                        var retrievedObject = JSON.parse(localStorage.getItem("userObject"));
+                        console.log(retrievedObject);
+
+                       
+                    })
+
+            }
+            else{
+                alert(" Not logged in ");
+                window.location.assign("/");
+            }   
+
             $http({
 	    		method: 'POST',
 	    		url: 'api/get_user_teams',
@@ -37,6 +60,8 @@ angular.module('dashboard.controllers')
                 console.log(data);
 
                 $scope.teams = data;
+
+
             })
 
     }])

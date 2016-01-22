@@ -7,13 +7,14 @@
                     <span class="caret"></span></button>
                 <ul class="dropdown-menu scrollable-menu" role="menu">
                     <li class="dropdown-header text-center">My Sports</li>
-                    <li ng-repeat="item in mySports"><a>{{ item.name }}</a></li>
+                    <li ng-repeat="item in mySports" ng-click="setSport()"><a>{{ item.name }}</a></li>
                     <li class="dropdown-header text-center">All Sports</li>
-                    <li ng-repeat="item in sports" ><a>{{ item.name }}</a></li>
+                    <li ng-repeat="item in sports" ng-click="setSport()"><a>{{ item.name }}</a></li>
                 </ul>
             </div>
         </div>
     </div>
+
     <div class="col-md-3">
         <div class="well row text-center" style="height: 300px; margin-top: 15px">
             <div class="col-md-12" style="height: 33%">

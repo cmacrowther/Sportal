@@ -5,28 +5,24 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
 
     console.log("Play Page");
 
-    $http.get("/api/user/" + localStorage.getItem("id"))
+
+    var passObject = {user_id: $rootScope.userObject.id}
+    $http({
+        method: 'POST',
+        url: 'api/get_user_sports',
+        headers: {'Content-Type': 'application/json'},
+        data: JSON.stringify(passObject)
+    })
         .success(function (data) {
-            $rootScope.userObject = data;
+            console.log(data);
 
-            var passObject = {user_id: $rootScope.userObject.id}
-            $http({
-                method: 'POST',
-                url: 'api/get_user_sports',
-                headers: {'Content-Type': 'application/json'},
-                data: JSON.stringify(passObject)
-            })
-                .success(function (data) {
-                    console.log(data);
+            $scope.mySports = data;
+        })
 
-                    $scope.mySports = data;
-                })
-
-            $http.get("/api/sport")
-                .success(function (data) {
-                    console.log(data);
-                    $scope.sports = data.objects;
-                })
+    $http.get("/api/sport")
+        .success(function (data) {
+            console.log(data);
+            $scope.sports = data.objects;
         })
 
 

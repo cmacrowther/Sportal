@@ -41,7 +41,7 @@ angular.module('dashboard.controllers').controller('adminController', ['$scope',
 
     $scope.createFacility = function() {
     	
-    	//sending the sport to the database
+    	//sending the facility to the database
 		$http.post("api/facility", {
 			name: $scope.facility_name,
 			address: $scope.facility_address
