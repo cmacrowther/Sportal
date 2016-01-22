@@ -3,6 +3,9 @@
  */
 angular.module('dashboard.controllers').controller('team_profileController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
 
+    //initializes bootstrap validator
+    $("#inviteForm").validator();
+
     console.log("team_profile Page");
 
     var passObject = {user_id: $rootScope.userObject.id}

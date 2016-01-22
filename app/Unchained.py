@@ -162,7 +162,7 @@ def send_mail():
 
     message = """\From: %s\nTo: %s\nSubject: %s\n\n%s
     """ % (sender, receivers, "Unchained Invitation from " + user,
-           "You have recieved an invitation to join " + user + "'s Team " + team + " with password " + password + " \n Go to www.unchained.com make an account and join their workspace")
+           "You have recieved an invitation to join " + user + "'s Team " + team + " with password " + password + " \n Go to www.unchained.com make an account and join their team!")
 
     server = smtplib.SMTP("smtp.gmail.com", 587)
     server.ehlo()
