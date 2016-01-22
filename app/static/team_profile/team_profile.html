@@ -28,9 +28,19 @@
 			<tbody>
 				<tr ng-repeat="item in mySports">
 					<td>{{ item.name }}</td>
+					<td>
+					    <select class="selectpicker" data-header="Select a Difficulty">
+					        <option><button>Novice</button></option>
+					        <option><button>Intermediate</button></option>
+					        <option><button>Expert</button></option>
+						</select>
+					</td>
 					<td><button class="btn btn-danger" ng-click="deleteSport(item)" style="float: right">Delete</button></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 </div>
+
+<script type="text/javascript" href="js/sportsDifficulty.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js" />

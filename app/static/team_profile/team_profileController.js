@@ -7,6 +7,11 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
 
     var passObject = {user_id: $rootScope.userObject.id}
 
+    //variables
+    $scope.novice = "1";
+    $scope.intermediate = "2";
+    $scope.expert = "3";
+
     $http({
         method: 'POST',
         url: 'api/get_user_sports',
@@ -71,6 +76,12 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
     		})
     	})
 
+    }
+
+    //sets the difficulty when adding sports ############## FIX THIS ################
+    $scope.setDifficulty = function() {
+        //code here
+        console.log("were in");
     }
 
 }]);
