@@ -16,7 +16,8 @@ angular.module('dashboard', [
     'ngRoute',
     'dashboard.controllers',
     'ngAnimate',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'dashboard.services'
 ]).
     config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'home/home.html', controller: 'HomeController'});

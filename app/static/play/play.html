@@ -7,21 +7,9 @@
                     <span class="caret"></span></button>
                 <ul class="dropdown-menu scrollable-menu" role="menu">
                     <li class="dropdown-header text-center">My Sports</li>
-                    <li><a>Sport 1</a></li>
-                    <li><a>Sport 2</a></li>
-                    <li><a>Sport 3</a></li>
+                    <li ng-repeat="item in mySports"><a>{{ item.name }}</a></li>
                     <li class="dropdown-header text-center">All Sports</li>
-                    <li><a>Sport 1</a></li>
-                    <li><a>Sport 2</a></li>
-                    <li><a>Sport 3</a></li>
-                    <li><a>Sport 1</a></li>
-                    <li><a>Sport 2</a></li>
-                    <li><a>Sport 3</a></li>
-                    <li><a>Sport 2</a></li>
-                    <li><a>Sport 3</a></li>
-                    <li><a>Sport 1</a></li>
-                    <li><a>Sport 2</a></li>
-                    <li><a>Sport 3</a></li>
+                    <li ng-repeat="item in sports" ><a>{{ item.name }}</a></li>
                 </ul>
             </div>
         </div>
