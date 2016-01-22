@@ -236,6 +236,21 @@ def get_user_sports():
     else:
         return "no sports"
 
+@app.route('/api/get_user_has_sport_id', methods=['POST'])
+def get_user_has_sport_id():
+    import json
+    import collections
+    from Unchained import UserHasSport
+    
+    data = request.get_json()
+    user_id = data.get('user_id')
+    sport_id = data.get('sport_id')
+    
+    user_has_sport_id = UserHasSport.query.filter(and_(UserHasSport.user_id == user_id, UserHasSport.sport_id == sport_id)).all()
+
+    return str(user_has_sport_id[0].id)
+
+
 
 @app.route('/api/get_user_teams', methods=['POST'])
 def get_user_teams():
@@ -272,6 +287,8 @@ def get_user_teams():
 
     else:
         return "no teams"
+
+
 
 app.debug = True
 
