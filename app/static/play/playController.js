@@ -27,6 +27,18 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
 
     $scope.setSport = function(item){
         $scope.sport = item;
+        $scope.pickSport = $scope.sport.name;
+    }
+
+    $scope.setTier = function(item){
+        $scope.pickTier = item;
+    }
+
+    $scope.setTeams = function(item){
+        $scope.pickTeams = item;
+    }
+
+    $scope.play = function(item){
 
     }
 }]);

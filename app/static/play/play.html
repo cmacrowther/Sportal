@@ -13,38 +13,41 @@
                 </ul>
             </div>
         </div>
+        <h3>Sport: {{ pickSport }}</h3>
     </div>
 
     <div class="col-md-3">
         <div class="well row text-center" style="height: 300px; margin-top: 15px">
             <div class="col-md-12" style="height: 33%">
-                <button style="margin-top: 15px" class="btn btn-primary">Novice</button>
+                <button ng-click="setTier('Novice')" style="margin-top: 15px" class="btn btn-primary">Novice</button>
             </div>
             <div class="col-md-12" style="height: 33%">
-                <button style="margin-top: 15px" class="btn btn-primary">Intermediate</button>
+                <button ng-click="setTier('Intermediate')" style="margin-top: 15px" class="btn btn-primary">Intermediate</button>
             </div>
             <div class="col-md-12" style="height: 33%">
-                <button style="margin-top: 15px" class="btn btn-primary">Expert</button>
+                <button ng-click="setTier('Expert')" style="margin-top: 15px" class="btn btn-primary">Expert</button>
             </div>
         </div>
+        <h3>Tier: {{ pickTier }}</h3>
     </div>
     <div class="col-md-3">
         <div class="well text-center" style="height: 300px; margin-top: 15px">
             <div class="row" style="height: 50%">
-                <button class="btn btn-primary">1 VS 1</button>
+                <button ng-click="setTeams('1 VS 1')" class="btn btn-primary">1 VS 1</button>
             </div>
             <div class="row" style="height: 50%">
                 <div class="btn-group">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Teams
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu scrollable-menu" role="menu">
-                        <li><a>2 VS 2</a></li>
-                        <li><a>3 VS 3</a></li>
-                        <li><a>4 VS 4</a></li>
+                        <li><a ng-click="setTeams('2 VS 2')">2 VS 2</a></li>
+                        <li><a ng-click="setTeams('3 VS 3')">3 VS 3</a></li>
+                        <li><a ng-click="setTeams('4 VS 4')">4 VS 4</a></li>
                     </ul>
                 </div>
             </div>
         </div>
+        <h3>Teams: {{ pickTeams }}</h3>
     </div>
     <div class="col-md-3">
         <div class="well text-center" style="height: 300px; margin-top: 15px">
