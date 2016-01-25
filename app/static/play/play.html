@@ -1,58 +1,73 @@
 <link href="css/play.css" rel="stylesheet">
-<div class="row">
-    <div class="col-md-3">
-        <div class="well text-center" style="height: 300px; margin-top: 15px">
-            <div class="btn-group">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Pick Sport
-                    <span class="caret"></span></button>
-                <ul class="dropdown-menu scrollable-menu" role="menu">
-                    <li class="dropdown-header text-center">My Sports</li>
-                    <li ng-repeat="item in mySports" ng-click="setSport(item)"><a>{{ item.name }}</a></li>
-                    <li class="dropdown-header text-center">All Sports</li>
-                    <li ng-repeat="item in sports" ng-click="setSport(item)"><a>{{ item.name }}</a></li>
-                </ul>
-            </div>
-        </div>
-        <h3>Sport: {{ pickSport }}</h3>
-    </div>
 
-    <div class="col-md-3">
-        <div class="well row text-center" style="height: 300px; margin-top: 15px">
-            <div class="col-md-12" style="height: 33%">
-                <button ng-click="setTier('Novice')" style="margin-top: 15px" class="btn btn-primary">Novice</button>
-            </div>
-            <div class="col-md-12" style="height: 33%">
-                <button ng-click="setTier('Intermediate')" style="margin-top: 15px" class="btn btn-primary">Intermediate</button>
-            </div>
-            <div class="col-md-12" style="height: 33%">
-                <button ng-click="setTier('Expert')" style="margin-top: 15px" class="btn btn-primary">Expert</button>
-            </div>
-        </div>
-        <h3>Tier: {{ pickTier }}</h3>
-    </div>
-    <div class="col-md-3">
-        <div class="well text-center" style="height: 300px; margin-top: 15px">
-            <div class="row" style="height: 50%">
-                <button ng-click="setTeams('1 VS 1')" class="btn btn-primary">1 VS 1</button>
-            </div>
-            <div class="row" style="height: 50%">
+<div class="row">
+    <h1 align="center">Find an Opponent!</h1>
+</div>
+
+<div class="row">
+    <div class="well" style="height: 400px">
+
+
+        <div class="col-md-3">
+            <div class="well text-center" style="height: 300px; margin-top: 15px">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Teams
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Pick Sport
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu scrollable-menu" role="menu">
-                        <li><a ng-click="setTeams('2 VS 2')">2 VS 2</a></li>
-                        <li><a ng-click="setTeams('3 VS 3')">3 VS 3</a></li>
-                        <li><a ng-click="setTeams('4 VS 4')">4 VS 4</a></li>
+                        <li class="dropdown-header text-center">My Sports</li>
+                        <li ng-repeat="item in mySports" ng-click="setSport(item)"><a>{{ item.name }}</a></li>
+                        <li class="dropdown-header text-center">All Sports</li>
+                        <li ng-repeat="item in sports" ng-click="setSport(item)"><a>{{ item.name }}</a></li>
                     </ul>
                 </div>
             </div>
-        </div>
-        <h3>Teams: {{ pickTeams }}</h3>
-    </div>
-    <div class="col-md-3">
-        <div class="well text-center" style="height: 300px; margin-top: 15px">
-            <button class="btn btn-success">Play!</button>
+            <h3>Sport: {{ pickSport }}</h3>
         </div>
 
+        <div class="col-md-3">
+            <div class="well row text-center" style="height: 300px; margin-top: 15px">
+                <div class="col-md-12" style="height: 33%">
+                    <button ng-click="setTier('Novice')" style="margin-top: 15px" class="btn btn-primary">Novice
+                    </button>
+                </div>
+                <div class="col-md-12" style="height: 33%">
+                    <button ng-click="setTier('Intermediate')" style="margin-top: 15px" class="btn btn-primary">
+                        Intermediate
+                    </button>
+                </div>
+                <div class="col-md-12" style="height: 33%">
+                    <button ng-click="setTier('Expert')" style="margin-top: 15px" class="btn btn-primary">Expert
+                    </button>
+                </div>
+            </div>
+            <h3>Tier: {{ pickTier }}</h3>
+        </div>
+        <div class="col-md-3">
+            <div class="well text-center" style="height: 300px; margin-top: 15px">
+                <div class="row" style="height: 50%">
+                    <button ng-click="setTeams('1 VS 1')" class="btn btn-primary">1 VS 1</button>
+                </div>
+                <div class="row" style="height: 50%">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Teams
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu scrollable-menu" role="menu">
+                            <li><a ng-click="setTeams('2 VS 2')">2 VS 2</a></li>
+                            <li><a ng-click="setTeams('3 VS 3')">3 VS 3</a></li>
+                            <li><a ng-click="setTeams('4 VS 4')">4 VS 4</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <h3>Teams: {{ pickTeams }}</h3>
+        </div>
+        <div class="col-md-3">
+            <div class="well text-center" style="height: 300px; margin-top: 15px">
+                <button ng-click="play()" class="btn btn-success">Play!</button>
+
+            </div>
+            <h3>{{ playResult }}</h3>
+
+        </div>
     </div>
 </div>

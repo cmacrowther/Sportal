@@ -39,6 +39,7 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
     }
 
     $scope.play = function(item){
-
+        $scope.playResult = "Searching...";
+        console.log("Finding an opponent...");
     }
 }]);
