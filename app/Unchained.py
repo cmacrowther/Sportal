@@ -120,6 +120,18 @@ def get_team_by_url():
         return "No Workspace with that name"
 
 
+@app.route('/api/get_team_id_by_url', methods=['GET'])
+def get_team_id_by_url(team_url):
+    from Unchained import Team
+
+    team = Team.query.filter(Team.url == team_url).all()
+
+    if team:
+        return str(team[0].id)
+    else:
+        return "No Workspace with that name"
+
+
 @app.route('/api/email_check', methods=['POST'])
 def email_check():
     from Unchained import User
@@ -237,10 +249,64 @@ def get_user_sports():
         return "no sports"
 
 
-@app.route('/api/get_user_has_sport_id', methods=['POST'])
-def get_user_has_sport_id():
+@app.route("/profile/<int:profile_id>", methods=["GET"])
+def get_profile(profile_id):
+    from Unchained import User
     import json
     import collections
+
+    user = User.query.get(profile_id)
+    objects_list = []
+
+    if user:
+        d = collections.OrderedDict()
+        d['id'] = user.id
+        d['team_id'] = user.team_id
+        d['first_name'] = user.first_name
+        d['last_name'] = user.last_name
+        d['description'] = user.description
+        d['email'] = user.email
+        d['picture'] = user.picture
+
+        objects_list.append(d)
+    else:
+        return "No User"
+
+    j = json.dumps(objects_list)
+    return j
+
+
+@app.route("/team/<string:team_url>", methods=["GET"])
+def get_team(team_url):
+    from Unchained import Team
+    import json
+    import collections
+
+    team_id = get_team_id_by_url(team_url)
+    team = Team.query.get(team_id)
+    objects_list = []
+
+    if team:
+        d = collections.OrderedDict()
+        d['id'] = team.id
+        d['sport_id'] = team.sport_id
+        d['picture'] = team.picture
+        d['adminId'] = team.adminId
+        d['name'] = team.name
+        d['url'] = team.url
+        d['description'] = team.description
+        d['password'] = team.password
+
+        objects_list.append(d)
+    else:
+        return "No Team"
+
+    j = json.dumps(objects_list)
+    return j
+
+
+@app.route('/api/get_user_has_sport_id', methods=['POST'])
+def get_user_has_sport_id():
     from Unchained import UserHasSport
 
     data = request.get_json()
@@ -263,7 +329,8 @@ def get_user_has_sport():
     user_id = data.get('user_id')
     sport_id = data.get('sport_id')
 
-    user_has_sport = UserHasSport.query.filter(and_(UserHasSport.user_id == user_id, UserHasSport.sport_id == sport_id)).all()
+    user_has_sport = UserHasSport.query.filter(
+        and_(UserHasSport.user_id == user_id, UserHasSport.sport_id == sport_id)).all()
     objects_list = []
 
     if user_has_sport:
