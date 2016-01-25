@@ -38,20 +38,28 @@ angular.module('dashboard.controllers').controller('team_createController', ['$s
                 }
                 else {
                     $http.post("api/team", {
-                        sport_id: null,
+                        sport_id: 0,
                         picture: null,
-                        adminId: null,
+                        adminId: $rootScope.userObject.id,
                         name: $scope.team_name,
                         url: $scope.team_name,
                         description: null,
                         password: $scope.team_password
-
                     })
-                    .success(function() {
+                    .success(function(data) {
                         console.log($scope.team_name);
                         console.log($scope.team_password);
                         console.log("Team Logged into DB");
                         $scope.createTeamResult = "Team Successfully Added!";
+
+                        $http.post("api/user_has_team", {
+                            user_id: $rootScope.userObject.id, 
+                            team_id: data.id
+                        })
+                        .success(function(){
+                            console.log("Team Added to user profile.");
+                        })
+
                     })
                 }
             })
