@@ -6,6 +6,8 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
 
     console.log("user_profil Page");
 
+    $("#user_creation_form").validator();
+
     //Initializes the date time picker plugin.
 	$('#birth').datetimepicker({
         format: 'MM/DD/YYYY',
