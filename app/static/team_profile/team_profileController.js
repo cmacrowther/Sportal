@@ -81,10 +81,47 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
 
     }
 
+    $scope.sendMail = function() {
+
+        passObject = {user: $rootScope.userObject.first_name, receivers: $scope.email, team: $scope.team_name, password: $scope.team_password};
+
+        $http({
+            method: 'POST',
+            url: 'api/send_mail',
+            headers: {'Content-Type': 'application/json'},
+            data: JSON.stringify(passObject)
+        })
+        .success(function(data){
+            if (data == "Successfully sent"){
+                $scope.sendMessageResult = "Message Sent Successfully";
+            }
+            else {
+                console.log("Error Sending Mail");
+            }
+        })
+
+
+    }
+
     //sets the difficulty when adding sports ############## FIX THIS ################
-    $scope.setDifficulty = function() {
-        //code here
-        console.log("were in");
+    $scope.setDifficulty = function(difficulty, item) {
+
+        passObject = {user_id: $rootScope.userObject.id, sport_id: item.id};
+
+        $http({
+            method: 'POST',
+            url: 'api/get_user_has_sport',
+            headers: {'Content-Type': 'application/json'},
+            data: JSON.stringify(passObject)           
+        })
+        .success(function(data){
+            data.skill = difficulty;
+            $http.put("/api/user_has_sport/" + data.id, data)
+            .success(function(item){
+                console.log("Skill Level Updated");
+            })
+        })
+        
     }
 
 }]);
