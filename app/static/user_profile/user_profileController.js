@@ -6,6 +6,7 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
 
     //Initializes the form validator plugin.
     $("#user_creation_form").validator();
+    $("#changePassword").validator();
 
     //Initializes the date time picker plugin.
     $('#birth').datetimepicker({
@@ -115,6 +116,21 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
         $rootScope.userObject.picture = $scope.picture;
 
         $http.put("api/user/" + $rootScope.userObject.id, $rootScope.userObject);
+    }
+
+    $scope.changePassword = function () {
+
+        if ($rootScope.userObject.password == $scope.passwordCurrent) {
+            $rootScope.userObject.password = $scope.passwordNew;
+            $http.put("api/user/" + $rootScope.userObject.id, $rootScope.userObject);
+            $scope.password_message = "Password Changed Successfully!";
+        }
+        else {
+            console.log("Incorrect Password.")
+            $scope.password_message = "Current Password Incorrect";
+        }
+
+
     }
 
 }]);

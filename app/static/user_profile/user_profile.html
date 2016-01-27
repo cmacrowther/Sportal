@@ -6,8 +6,64 @@
     <img src="{{picture}}" alt="..." class="img-rounded" height="150px" width="150px">
     <br>
     <br>
-    <button class="btn btn-default" ng-click="editPage()"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Edit Info</button>
+    <button ng-hide="edit" class="btn btn-default" ng-click="editPage()"><span class="glyphicon glyphicon-wrench"
+                                                                               aria-hidden="true"></span> Edit Info
+    </button>
+    <button ng-show="edit" class="btn btn-danger" ng-click="editPage()"><span class="glyphicon glyphicon-wrench"
+                                                                              aria-hidden="true"></span> Stop Editing
+    </button>
+    <button class="btn btn-default" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-wrench"
+                                                                                     aria-hidden="true"></span> Change
+        Password
+    </button>
 
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Change Password</h4>
+                </div>
+
+                <div class="modal-body">
+                    <form id="changePassword">
+
+                        <div class="form-group">
+                            <input type="password" ng-model="passwordCurrent" name="password" id="passwordCurrent"
+                                   class="form-control input-sm" placeholder="Current Password" data-minlength="8"
+                                   required>
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" ng-model="passwordNew" name="password" id="passwordNew"
+                                   class="form-control input-sm" placeholder="New Password" data-minlength="8" required>
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" ng-model="passwordConfirm" name="password" id="passwordConfirm"
+                                   class="form-control input-sm" placeholder="Confirm Password"
+                                   data-match="#passwordNew" data-minlength="8" required>
+
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <p class="pull-left">{{password_message}}</p>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" ng-click="changePassword()" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="row">
@@ -17,7 +73,8 @@
                 <label for="first_name" class="col-sm-2 control-label-fix">First Name</label>
 
                 <div class="col-sm-8">
-                    <input ng-show="edit" ng-model="first_name" ng-blur="updateInfo()" type="text" id="first_name" class="form-control" name="first_name"
+                    <input ng-show="edit" ng-model="first_name" ng-blur="updateInfo()" type="text" id="first_name"
+                           class="form-control" name="first_name"
                            placeholder="Jane">
                     <strong ng-hide="edit">{{ first_name }}</strong>
                 </div>
@@ -27,7 +84,8 @@
                 <label for="last_name" class="col-sm-2 control-label-fix">Last Name</label>
 
                 <div class="col-sm-8">
-                    <input ng-show="edit" ng-model="last_name" ng-blur="updateInfo()" type="text" id="last_name" class="form-control" name="last_name"
+                    <input ng-show="edit" ng-model="last_name" ng-blur="updateInfo()" type="text" id="last_name"
+                           class="form-control" name="last_name"
                            placeholder="Doe">
                     <strong ng-hide="edit">{{ last_name }}</strong>
                 </div>
@@ -37,7 +95,8 @@
                 <label for="email" class="col-sm-2 control-label-fix">Email</label>
 
                 <div class="col-sm-8">
-                    <input ng-show="edit" ng-model="email" ng-blur="updateInfo()" type="email" id="email" class="form-control" name="email"
+                    <input ng-show="edit" ng-model="email" ng-blur="updateInfo()" type="email" id="email"
+                           class="form-control" name="email"
                            placeholder="Example@example.com"
                            data-error="That address is invalid">
                     <strong ng-hide="edit">{{ email }}</strong>
@@ -50,9 +109,13 @@
                 <label for="picture" class="col-sm-2 control-label-fix">Profile Picture</label>
 
                 <div class="col-sm-8">
-                    <input ng-show="edit" ng-model="picture" ng-blur="updateInfo()" type="text" id="picture" class="form-control" name="picture"
+                    <input ng-show="edit" ng-model="picture" ng-blur="updateInfo()" type="text" id="picture"
+                           class="form-control" name="picture"
                            placeholder="URL link to picture">
-                    <strong ng-hide="edit">{{ picture }}</strong>
+
+                    <div class="limit-text-length">
+                        <strong ng-hide="edit">{{ picture }}</strong>
+                    </div>
                 </div>
             </div>
 
@@ -61,7 +124,8 @@
 
                 <div class='date col-sm-8'>
                     <div class="input-group">
-                        <input ng-show="edit" ng-model="birth" ng-blur="updateInfo()" type='text' id='birth' class="form-control" name="Birth">
+                        <input ng-show="edit" ng-model="birth" ng-blur="updateInfo()" type='text' id='birth'
+                               class="form-control" name="Birth">
                    <span ng-show="edit" class="input-group-addon">
                        <span ng-show="edit" class="glyphicon glyphicon-calendar"></span>
                    </span>
@@ -75,7 +139,8 @@
                 <label for="address" class="col-sm-2 control-label-fix">Address One</label>
 
                 <div class="col-sm-8">
-                    <input ng-show="edit" ng-model="address" ng-blur="updateInfo()" type="text" id="address" class="form-control" name="address"
+                    <input ng-show="edit" ng-model="address" ng-blur="updateInfo()" type="text" id="address"
+                           class="form-control" name="address"
                            placeholder="812 Hwy 1.">
                     <strong ng-hide="edit">{{ address }}</strong>
                 </div>
@@ -85,7 +150,8 @@
                 <label for="addressLine2" class="col-sm-2 control-label-fix">Address Two</label>
 
                 <div class="col-sm-8">
-                    <input ng-show="edit" ng-model="address2" ng-blur="updateInfo()" type="text" id="addressLine2" class="form-control" name="addressLine2"
+                    <input ng-show="edit" ng-model="address2" ng-blur="updateInfo()" type="text" id="addressLine2"
+                           class="form-control" name="addressLine2"
                            placeholder="RR 1">
                     <strong ng-hide="edit">{{ address2 }}</strong>
                 </div>
@@ -95,7 +161,8 @@
                 <label for="city" class="col-sm-2 control-label-fix">City</label>
 
                 <div class="col-sm-8">
-                    <input ng-show="edit" ng-model="city" ng-blur="updateInfo()" type="text" id="city" class="form-control" name="city"
+                    <input ng-show="edit" ng-model="city" ng-blur="updateInfo()" type="text" id="city"
+                           class="form-control" name="city"
                            placeholder="Annapolis Royal">
                     <strong ng-hide="edit">{{ city }}</strong>
                 </div>
@@ -105,7 +172,8 @@
                 <label for="postal_code" class="col-sm-2 control-label-fix">Postal Code</label>
 
                 <div class="col-sm-8">
-                    <input ng-show="edit" ng-model="postal_code" ng-blur="updateInfo()" type="text" id="postal_code" class="form-control" name="postal_code"
+                    <input ng-show="edit" ng-model="postal_code" ng-blur="updateInfo()" type="text" id="postal_code"
+                           class="form-control" name="postal_code"
                            placeholder="B0V 1A0">
                     <strong ng-hide="edit">{{ postal_code }}</strong>
                 </div>
@@ -115,7 +183,8 @@
                 <label for="province" class="col-sm-2 control-label-fix">Province</label>
 
                 <div class="col-sm-8">
-                    <select ng-show="edit" ng-model="province" ng-blur="updateInfo()" name="province" id="province" class="form-control">
+                    <select ng-show="edit" ng-model="province" ng-blur="updateInfo()" name="province" id="province"
+                            class="form-control">
                         <option value="ns">NS</option>
                         <option value="nb">NB</option>
                         <option value="pe">PE</option>
@@ -138,7 +207,8 @@
                 <label for="country" class="col-sm-2 control-label-fix">Country</label>
 
                 <div class="col-sm-8">
-                    <select ng-show="edit" ng-model="country" ng-blur="updateInfo()" name="country" id="country" class="form-control">
+                    <select ng-show="edit" ng-model="country" ng-blur="updateInfo()" name="country" id="country"
+                            class="form-control">
                         <option value="CA">Canada</option>
                     </select>
                     <strong ng-hide="edit">{{ country }}</strong>
@@ -150,7 +220,8 @@
 
                 <div class="col-sm-8">
                     <label ng-show="edit" class="radio-inline">
-                        <input ng-show="edit" ng-model="gender" ng-blur="updateInfo()" type="radio" id="gender" name="gender" value="male" checked="checked">
+                        <input ng-show="edit" ng-model="gender" ng-blur="updateInfo()" type="radio" id="gender"
+                               name="gender" value="male" checked="checked">
                         Male
                     </label>
                     <br/>
@@ -171,14 +242,9 @@
                 <label for="interests" class="col-sm-2 control-label-fix">Interests</label>
 
                 <div class="col-sm-8">
-                    <select ng-show="edit" ng-model="interests" ng-blur="updateInfo()" id="interests" name="tags" class="form-control tagSelectBox"></select>
+                    <select ng-show="edit" ng-model="interests" ng-blur="updateInfo()" id="interests" name="tags"
+                            class="form-control tagSelectBox"></select>
                     <strong ng-hide="edit">{{ interests }}</strong>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-8">
-                    <input type="submit" class="btn btn-default" value="Update Info">
                 </div>
             </div>
         </form>
