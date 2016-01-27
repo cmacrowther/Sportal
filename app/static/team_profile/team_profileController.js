@@ -110,26 +110,38 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         })
     }
 
+    $scope.setSportModal= function(item) {
+        $scope.sportModal = item;
+    }
     //sets the difficulty when adding sports ############## FIX THIS ################
-    $scope.setDifficulty = function(item) {
-      
+    $scope.setDifficulty = function(skill) {
 
-      /*  
-        passObject = {user_id: $rootScope.userObject.id, sport_id: item.id};
+        console.log("Change skill: " + skill);
+       
+        passObject = {user_id: $rootScope.userObject.id, sport_id: $scope.sportModal.id};
 
         $http({
             method: 'POST',
-            url: 'api/get_user_has_sport',
+            url: 'api/get_user_has_sport_id',
             headers: {'Content-Type': 'application/json'},
             data: JSON.stringify(passObject)           
         })
         .success(function(data){
-            data.skill = item;
-            $http.put("/api/user_has_sport/" + data.id)
-            .success(function(item){
-                console.log("Skill Level Updated");
+
+            $http.get("/api/user_has_sport/" + data)
+            .success(function(data){
+
+                data.skill = skill;
+
+                $http.put("/api/user_has_sport/" + data.id, data)
+                    .success(function(item){
+                        console.log("Skill Level Updated");
+                    })
             })
-        })*/
+            console.log('data.id' + data + "skill: " + skill);
+
+            
+        })
     }
 
 }]);

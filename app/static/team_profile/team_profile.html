@@ -31,12 +31,31 @@
 					<td>
                         <!-- ######### FIX ########### -->
                         <div class="text-center">                            
-                            <select ng-model="skill" ng-init="skill = difficulties[0]">
-                                <option ng-repeat="option in difficulties">{{ option }}</option>
-                            </select> 
-                            <button class="btn-group btn-group-xs" role="group" ng-click="setDifficulty(skill)">Set Difficulty</button>                                                   
+                           <button type="button" class="btn btn-primary btn-md" data-toggle="modal" ng-click="setSportModal(item)" data-target="#{{item.id}}myModal">Set Difficulty</button>
+                            <div id="{{item.id}}myModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Set Difficulty</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>{{ item.name }}</p>
+                                            <button type="button" class="btn btn-primary btn-md" ng-click="setDifficulty('Novice'); item.skill = 'Novice'">Novice</button>
+                                            <button type="button" class="btn btn-primary btn-md" ng-click="setDifficulty('Intermediate'); item.skill = 'Intermediate'">Intermediate</button>
+                                            <button type="button" class="btn btn-primary btn-md" ng-click="setDifficulty('Expert'); item.skill = 'Expert'">Expert</button>
+                                            <br><br><p>Current Skill Level: {{ item.skill }}</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </td>
+                    <td>{{ item.skill }}</td>
 					<td><button class="btn btn-danger" ng-click="deleteSport(item)" style="float: right">Delete</button></td>
 				</tr>
 			</tbody>
