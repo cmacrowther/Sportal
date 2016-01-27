@@ -43,6 +43,15 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label for="picture" class="col-sm-2 control-label">Profile Picture</label>
+
+                <div class="col-sm-8">
+                    <input ng-show="edit" type="text" id="picture" class="form-control" name="picture"
+                           placeholder="URL link to picture">
+                    <strong ng-hide="edit">{{picture}}</strong>
+                </div>
+            </div>
 
             <div class="form-group">
                 <label for="birth" class="col-sm-2 control-label">Birth</label>
@@ -63,7 +72,8 @@
                 <label for="address" class="col-sm-2 control-label">Address One</label>
 
                 <div class="col-sm-8">
-                    <input ng-show="edit" type="text" id="address" class="form-control" name="address" placeholder="812 Hwy 1.">
+                    <input ng-show="edit" type="text" id="address" class="form-control" name="address"
+                           placeholder="812 Hwy 1.">
                     <strong ng-hide="edit">{{address}}</strong>
                 </div>
             </div>
@@ -72,7 +82,8 @@
                 <label for="addressLine2" class="col-sm-2 control-label">Address Two</label>
 
                 <div class="col-sm-8">
-                    <input ng-show="edit" type="text" id="addressLine2" class="form-control" name="addressLine2" placeholder="RR 1">
+                    <input ng-show="edit" type="text" id="addressLine2" class="form-control" name="addressLine2"
+                           placeholder="RR 1">
                     <strong ng-hide="edit">{{address2}}</strong>
                 </div>
             </div>
@@ -81,7 +92,8 @@
                 <label for="city" class="col-sm-2 control-label">City</label>
 
                 <div class="col-sm-8">
-                    <input ng-show="edit" type="text" id="city" class="form-control" name="city" placeholder="Annapolis Royal">
+                    <input ng-show="edit" type="text" id="city" class="form-control" name="city"
+                           placeholder="Annapolis Royal">
                     <strong ng-hide="edit">{{city}}</strong>
                 </div>
             </div>
@@ -90,7 +102,8 @@
                 <label for="postal_code" class="col-sm-2 control-label">Postal Code</label>
 
                 <div class="col-sm-8">
-                    <input ng-show="edit" type="text" id="postal_code" class="form-control" name="postal_code" placeholder="B0V 1A0">
+                    <input ng-show="edit" type="text" id="postal_code" class="form-control" name="postal_code"
+                           placeholder="B0V 1A0">
                     <strong ng-hide="edit">{{postal_code}}</strong>
                 </div>
             </div>
@@ -134,7 +147,8 @@
 
                 <div class="col-sm-8">
                     <label ng-show="edit" class="radio-inline">
-                        <input ng-show="edit" type="radio" id="gender" name="gender" value="male" checked="checked"> Male
+                        <input ng-show="edit" type="radio" id="gender" name="gender" value="male" checked="checked">
+                        Male
                     </label>
                     <br/>
                     <label ng-show="edit" class="radio-inline">
@@ -163,7 +177,8 @@
                 <label for="password" class="col-sm-2 control-label">Password</label>
 
                 <div class="col-sm-8">
-                    <input ng-show="edit" type="password" id="password" class="form-control" data-minlength="6" name="password"
+                    <input ng-show="edit" type="password" id="password" class="form-control" data-minlength="6"
+                           name="password"
                     >
                     <span ng-show="edit" class="help-block">Minimum of 6 characters</span>
                     <strong ng-hide="edit">{{password}}</strong>
@@ -174,7 +189,8 @@
                 <label ng-show="edit" for="password_confirm" class="col-sm-2 control-label">Confirm Password</label>
 
                 <div class="col-sm-8">
-                    <input ng-show="edit" type="password" id="password_confirm" class="form-control" name="password_confirm"
+                    <input ng-show="edit" type="password" id="password_confirm" class="form-control"
+                           name="password_confirm"
                            data-match="#password"
                            data-match-error="Passwords do not match">
 

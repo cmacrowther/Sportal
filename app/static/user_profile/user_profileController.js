@@ -27,12 +27,17 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
     else {
         $scope.last_name = $rootScope.userObject.last_name;
     }
-
     if ($rootScope.userObject.email == "" || $rootScope.userObject.email == undefined) {
         $scope.email = "No info given";
     }
     else {
         $scope.email = $rootScope.userObject.email;
+    }
+    if ($rootScope.userObject.picture == "" || $rootScope.userObject.picture == undefined) {
+        $scope.picture = "No info given";
+    }
+    else {
+        $scope.picture = $rootScope.userObject.picture;
     }
     if ($rootScope.userObject.birth == "" || $rootScope.userObject.birth == undefined) {
         $scope.birth = "No info given";
