@@ -163,27 +163,30 @@ def team_url_check():
 @app.route('/api/send_mail', methods=['POST'])
 def send_mail():
     import smtplib
-
+    import email.message
+    
     data = request.get_json()
-
+    
     user = data.get('user')
     receivers = data.get('email')
     team = data.get('team')
     password = data.get('password')
     sender = 'mycodebrary@gmail.com'
+    
+    msg = email.message.Message()
+    msg['Subject'] = 'Unchained Invitation from' + user
+    msg['From'] = 'mycodebrary@gmail.com'
+    msg['To'] = receivers
+    msg.add_header('Content-Type','text/html')
+    msg.set_payload('<h1>You have recieved an invitation to join ' + user + '\'s Team ' + team + ' with password ' + password + ' <br><br> Go to www.unchained.com make an account and join their team!</h1>')
 
-    message = """\From: %s\nTo: %s\nSubject: %s\n\n%s
-    """ % (sender, receivers, "Unchained Invitation from " + user,
-           "You have recieved an invitation to join " + user + "'s Team " + team + " with password " + password + " \n Go to www.unchained.com make an account and join their team!")
-
-    server = smtplib.SMTP("smtp.gmail.com", 587)
-    server.ehlo()
-    server.starttls()
-    server.login("mycodebrary@gmail.com", "mycodebrary#1")
-    server.sendmail(sender, receivers, message)
-    server.close()
-
+    s = smtplib.SMTP("smtp.gmail.com", 587)
+    s.starttls()
+    s.login("mycodebrary@gmail.com", "mycodebrary#1")
+    s.sendmail(msg['From'], [msg['To']], msg.as_string())
+               
     return "Successfully sent"
+
 
 
 @app.route('/api/get_team_members', methods=['POST'])

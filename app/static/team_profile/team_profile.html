@@ -12,7 +12,7 @@
 			<thead>
 			</thead>
 			<tbody>
-				<tr ng-repeat="item in allSports | filter:searchTerm">
+				<tr ng-repeat="item in allSports | filter:searchTerm | orderBy: '-name'">
 					<td>{{ item.name }}</td>
 					<td><button class="btn btn-primary"ng-click="addSport(item)" style="float: right">Add</button></td>
 				</tr>
@@ -26,15 +26,17 @@
 			<thead>
 			</thead>
 			<tbody>
-				<tr ng-repeat="item in mySports">
+				<tr ng-repeat="item in mySports | orderBy:'-name'">
 					<td>{{ item.name }}</td>
 					<td>
-					    <select class="selectpicker" data-header="Select a Difficulty">
-					        <option><button ng-click="setDifficulty('Novice', item)">Novice</button></option>
-					        <option><button ng-click="setDifficulty('Intermediate', item)">Intermediate</button></option>
-					        <option><button ng-click="setDifficulty('Expert', item)">Expert</button></option>
-						</select>
-					</td>
+                        <!-- ######### FIX ########### -->
+                        <div class="text-center">                            
+                            <select ng-model="skill" ng-init="skill = difficulties[0]">
+                                <option ng-repeat="option in difficulties">{{ option }}</option>
+                            </select> 
+                            <button class="btn-group btn-group-xs" role="group" ng-click="setDifficulty(skill)">Set Difficulty</button>                                                   
+                        </div>
+                    </td>
 					<td><button class="btn btn-danger" ng-click="deleteSport(item)" style="float: right">Delete</button></td>
 				</tr>
 			</tbody>
@@ -111,5 +113,5 @@
 </div>
 
 
-<script type="text/javascript" href="js/sportsDifficulty.js"></script>
+
 <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js" />

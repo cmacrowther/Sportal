@@ -15,6 +15,8 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
     $scope.intermediate = "2";
     $scope.expert = "3";
 
+    $scope.difficulties = ['Novice', 'Intermediate', 'Expert'];
+
     $http({
         method: 'POST',
         url: 'api/get_user_sports',
@@ -83,7 +85,12 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
 
     $scope.sendMail = function() {
 
-        passObject = {user: $rootScope.userObject.first_name, receivers: $scope.email, team: $scope.team_name, password: $scope.team_password};
+        console.log($rootScope.userObject.first_name);
+        console.log($scope.email);
+        console.log($scope.team_name);        
+        console.log($scope.team_password);
+
+        passObject = {user: $rootScope.userObject.first_name, email: $scope.email, team: $scope.team_name, password: $scope.team_password};
 
         $http({
             method: 'POST',
@@ -92,20 +99,22 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             data: JSON.stringify(passObject)
         })
         .success(function(data){
+            console.log("Success");
             if (data == "Successfully sent"){
                 $scope.sendMessageResult = "Message Sent Successfully";
+                console.log("Message Sent Successfully");
             }
             else {
                 console.log("Error Sending Mail");
             }
         })
-
-
     }
 
     //sets the difficulty when adding sports ############## FIX THIS ################
-    $scope.setDifficulty = function(difficulty, item) {
+    $scope.setDifficulty = function(item) {
+      
 
+      /*  
         passObject = {user_id: $rootScope.userObject.id, sport_id: item.id};
 
         $http({
@@ -115,13 +124,12 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             data: JSON.stringify(passObject)           
         })
         .success(function(data){
-            data.skill = difficulty;
-            $http.put("/api/user_has_sport/" + data.id, data)
+            data.skill = item;
+            $http.put("/api/user_has_sport/" + data.id)
             .success(function(item){
                 console.log("Skill Level Updated");
             })
-        })
-        
+        })*/
     }
 
 }]);
