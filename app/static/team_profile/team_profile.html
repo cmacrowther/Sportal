@@ -89,7 +89,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <input ng-model="team_name" type="text" class="form-control"
-                                   placeholder="Enter Password" data-minlength="8" required>
+                                   placeholder="Enter Password" required>
                         	<div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -121,7 +121,7 @@
 
                 <div class="row">
                     <div class="col-md-4 col-md-offset-4" class="form-group">
-                        <button type="submit" ng-click="sendMail()" class="btn btn-success btn-block">Send Message
+                        <button type="submit" data-disable="true" class="btn btn-success btn-block" >Send Message
                         </button>
                         <h4 class="text-center">{{ sendMessageResult }}</h4>
                     </div>

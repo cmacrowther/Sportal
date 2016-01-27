@@ -110,6 +110,16 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         })
     }
 
+    $('#inviteForm').validator().on('submit', function (e) {
+        if (e.isDefaultPrevented()) {
+            console.log("Form Error");
+        } else {
+            //check for team and password
+            
+            $scope.sendMail();
+        }
+    })
+
     $scope.setSportModal= function(item) {
         $scope.sportModal = item;
     }

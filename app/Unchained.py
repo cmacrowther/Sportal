@@ -65,7 +65,6 @@ class FacilityHasSport(db.Model):
     facility_id = Column(Integer, unique=False)
     sport_id = Column(Integer, unique=False)
 
-
 db.create_all()
 
 api_manager = APIManager(app, flask_sqlalchemy_db=db)
