@@ -5,6 +5,25 @@ angular.module('dashboard.controllers').controller('team_createController', ['$s
 	//Initializes the validator plugin
 	$('#teamForm').validator();
 
+    $scope.Fruits = [{
+        Id: 1,
+        Name: 'Apple'
+    }, {
+        Id: 2,
+        Name: 'Mango'
+    }, {
+        Id: 3,
+        Name: 'Orange'
+    }];
+
+    $scope.GetValue = function (fruit) {
+        var fruitId = $scope.ddlFruits;
+        var fruitName = $.grep($scope.Fruits, function (fruit) {
+            return fruit.Id == fruitId;
+        })[0].Name;
+        alert("Selected Value: " + fruitId + "\nSelected Text: " + fruitName);
+    }
+
     console.log("team_create Page");
 
     //variables

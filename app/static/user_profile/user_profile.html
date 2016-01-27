@@ -2,6 +2,9 @@
     <h1>Profile Page</h1>
 
     <p>Manage your user information</p>
+
+    <button ng-click="editPage()">Edit this page</button>
+
 </div>
 
 <div class="row">
@@ -11,10 +14,16 @@
                 <label for="first_name" class="col-sm-2 control-label">First Name</label>
 
                 <div class="col-sm-8">
+<<<<<<< HEAD
                     <input ng-show="first_name_value" type="text" id="first_name" class="form-control" name="first_name" placeholder="Jane" required>
                     <strong ng-hide="first_name_value">{{first_name}}</strong>
                     <button ng-hide="first_name_value" ng-click="edit_first_name()" type="button" class="btn btn-default btn-xs" class="pull-right">Edit</button>
 
+=======
+                    <input ng-show="edit" type="text" id="first_name" class="form-control" name="first_name"
+                           placeholder="Jane">
+                    <strong ng-hide="edit">{{ first_name }}</strong>
+>>>>>>> 8a2cd86fbc06a76aae1a881f128f9305c260f934
                 </div>
             </div>
 
@@ -22,8 +31,9 @@
                 <label for="last_name" class="col-sm-2 control-label">Last Name</label>
 
                 <div class="col-sm-8">
-                    <input ng-show="last_name_value" type="text" id="last_name" class="form-control" name="last_name" placeholder="Doe">
-                    <strong>{{last_name}}</strong>
+                    <input ng-show="edit" type="text" id="last_name" class="form-control" name="last_name"
+                           placeholder="Doe">
+                    <strong ng-hide="edit">{{ last_name }}</strong>
                 </div>
             </div>
 
@@ -31,23 +41,35 @@
                 <label for="email" class="col-sm-2 control-label">Email</label>
 
                 <div class="col-sm-8">
-                    <input ng-show="email_value" type="email" id="email" class="form-control" name="email" placeholder="Example@example.com"
-                           data-error="That address is invalid" >
+                    <input ng-show="edit" type="email" id="email" class="form-control" name="email"
+                           placeholder="Example@example.com"
+                           data-error="That address is invalid">
+                    <strong ng-hide="edit">{{ email }}</strong>
+
                     <div class="help-block with-errors"></div>
-                    <strong>{{email}}</strong>
                 </div>
             </div>
 
+            <div class="form-group">
+                <label for="picture" class="col-sm-2 control-label">Profile Picture</label>
+
+                <div class="col-sm-8">
+                    <input ng-show="edit" type="text" id="picture" class="form-control" name="picture"
+                           placeholder="URL link to picture">
+                    <strong ng-hide="edit">{{picture}}</strong>
+                </div>
+            </div>
 
             <div class="form-group">
                 <label for="birth" class="col-sm-2 control-label">Birth</label>
 
                 <div class='date col-sm-8'>
                     <div class="input-group">
-                        <input type='text' id='birth' class="form-control" name="Birth" >
-                   <span class="input-group-addon">
-                       <span class="glyphicon glyphicon-calendar"></span>
+                        <input ng-show="edit" type='text' id='birth' class="form-control" name="Birth">
+                   <span ng-show="edit" class="input-group-addon">
+                       <span ng-show="edit" class="glyphicon glyphicon-calendar"></span>
                    </span>
+                        <strong ng-hide="edit">{{birth}}</strong>
                     </div>
                 </div>
             </div>
@@ -57,7 +79,9 @@
                 <label for="address" class="col-sm-2 control-label">Address One</label>
 
                 <div class="col-sm-8">
-                    <input type="text" id="address" class="form-control" name="address" placeholder="812 Hwy 1." >
+                    <input ng-show="edit" type="text" id="address" class="form-control" name="address"
+                           placeholder="812 Hwy 1.">
+                    <strong ng-hide="edit">{{address}}</strong>
                 </div>
             </div>
 
@@ -65,7 +89,9 @@
                 <label for="addressLine2" class="col-sm-2 control-label">Address Two</label>
 
                 <div class="col-sm-8">
-                    <input type="text" id="addressLine2" class="form-control" name="addressLine2" placeholder="RR 1">
+                    <input ng-show="edit" type="text" id="addressLine2" class="form-control" name="addressLine2"
+                           placeholder="RR 1">
+                    <strong ng-hide="edit">{{address2}}</strong>
                 </div>
             </div>
 
@@ -73,7 +99,9 @@
                 <label for="city" class="col-sm-2 control-label">City</label>
 
                 <div class="col-sm-8">
-                    <input type="text" id="city" class="form-control" name="city" placeholder="Annapolis Royal" >
+                    <input ng-show="edit" type="text" id="city" class="form-control" name="city"
+                           placeholder="Annapolis Royal">
+                    <strong ng-hide="edit">{{city}}</strong>
                 </div>
             </div>
 
@@ -81,7 +109,9 @@
                 <label for="postal_code" class="col-sm-2 control-label">Postal Code</label>
 
                 <div class="col-sm-8">
-                    <input type="text" id="postal_code" class="form-control" name="postal_code" placeholder="B0V 1A0" >
+                    <input ng-show="edit" type="text" id="postal_code" class="form-control" name="postal_code"
+                           placeholder="B0V 1A0">
+                    <strong ng-hide="edit">{{postal_code}}</strong>
                 </div>
             </div>
 
@@ -89,7 +119,7 @@
                 <label for="province" class="col-sm-2 control-label">Province</label>
 
                 <div class="col-sm-8">
-                    <select name="province" id="province" class="form-control" >
+                    <select ng-show="edit" name="province" id="province" class="form-control">
                         <option value="ns">NS</option>
                         <option value="nb">NB</option>
                         <option value="pe">PE</option>
@@ -104,6 +134,7 @@
                         <option value="yk">YK</option>
                         <option value="nu">NU</option>
                     </select>
+                    <strong ng-hide="edit">{{province}}</strong>
                 </div>
             </div>
 
@@ -111,9 +142,10 @@
                 <label for="country" class="col-sm-2 control-label">Country</label>
 
                 <div class="col-sm-8">
-                    <select name="country" id="country" class="form-control" >
+                    <select ng-show="edit" name="country" id="country" class="form-control">
                         <option value="CA">Canada</option>
                     </select>
+                    <strong ng-hide="edit">{{country}}</strong>
                 </div>
             </div>
 
@@ -121,13 +153,15 @@
                 <label for="gender" class="col-sm-2 control-label">Gender</label>
 
                 <div class="col-sm-8">
-                    <label class="radio-inline">
-                        <input type="radio" id="gender" name="gender" value="male" checked="checked"> Male
+                    <label ng-show="edit" class="radio-inline">
+                        <input ng-show="edit" type="radio" id="gender" name="gender" value="male" checked="checked">
+                        Male
                     </label>
                     <br/>
-                    <label class="radio-inline">
-                        <input type="radio" name="gender" value="female"> Female
+                    <label ng-show="edit" class="radio-inline">
+                        <input ng-show="edit" type="radio" name="gender" value="female"> Female
                     </label>
+                    <strong ng-hide="edit">{{gender}}</strong>
                 </div>
             </div>
 
@@ -141,7 +175,8 @@
                 <label for="interests" class="col-sm-2 control-label">Interests</label>
 
                 <div class="col-sm-8">
-                    <select id="interests" name="tags" class="form-control tagSelectBox" ></select>
+                    <select ng-show="edit" id="interests" name="tags" class="form-control tagSelectBox"></select>
+                    <strong ng-hide="edit">{{interests}}</strong>
                 </div>
             </div>
 
@@ -149,18 +184,22 @@
                 <label for="password" class="col-sm-2 control-label">Password</label>
 
                 <div class="col-sm-8">
-                    <input type="password" id="password" class="form-control" data-minlength="6" name="password"
-                           >
-                    <span class="help-block">Minimum of 6 characters</span>
+                    <input ng-show="edit" type="password" id="password" class="form-control" data-minlength="6"
+                           name="password"
+                    >
+                    <span ng-show="edit" class="help-block">Minimum of 6 characters</span>
+                    <strong ng-hide="edit">{{password}}</strong>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="password_confirm" class="col-sm-2 control-label">Confirm Password</label>
+                <label ng-show="edit" for="password_confirm" class="col-sm-2 control-label">Confirm Password</label>
 
                 <div class="col-sm-8">
-                    <input type="password" id="password_confirm" class="form-control" name="password_confirm" data-match="#password"
-                           data-match-error="Passwords do not match" >
+                    <input ng-show="edit" type="password" id="password_confirm" class="form-control"
+                           name="password_confirm"
+                           data-match="#password"
+                           data-match-error="Passwords do not match">
 
                     <div class="help-block with-errors"></div>
                 </div>
