@@ -4,7 +4,7 @@
 
 angular.module('dashboard.controllers').controller('user_profileController', ['$scope', '$rootScope', '$http', function ($scope, $rootScope, $http) {
 
-
+    //Initializes the form validator plugin.
     $("#user_creation_form").validator();
 
     //Initializes the date time picker plugin.
@@ -13,7 +13,7 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
         viewMode: 'years'
     });
 
-
+    //variable checks to see if we have values already.
     if ($rootScope.userObject.first_name == "" || $rootScope.userObject.first_name == undefined) {
         $scope.first_name = "No info given";
     }
@@ -34,7 +34,7 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
         $scope.email = $rootScope.userObject.email;
     }
     if ($rootScope.userObject.picture == "" || $rootScope.userObject.picture == undefined) {
-        $scope.picture = "No info given";
+        $scope.picture = "http://placehold.it/150x150";
     }
     else {
         $scope.picture = $rootScope.userObject.picture;
@@ -93,14 +93,8 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
     else {
         $scope.interests = $rootScope.userObject.interests;
     }
-    if ($rootScope.userObject.password == "" || $rootScope.userObject.password == undefined) {
-        $scope.password = "No info given";
-    }
-    else {
-        $scope.password = "Password is set.";
-    }
 
-
+    //Function to toggle between either info displaying or input fields for editing
     $scope.editPage = function () {
         console.log("Edit = true.")
         if ($scope.edit) {
@@ -111,9 +105,16 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
         }
     }
 
+    //Function to update info based on inputs with ng-blur
     $scope.updateInfo = function () {
         console.log("Updating Info.");
 
+        $rootScope.userObject.first_name = $scope.first_name;
+        $rootScope.userObject.last_name = $scope.last_name;
+        $rootScope.userObject.email = $scope.email;
+        $rootScope.userObject.picture = $scope.picture;
+
+        $http.put("api/user/" + $rootScope.userObject.id, $rootScope.userObject);
     }
 
 }]);
