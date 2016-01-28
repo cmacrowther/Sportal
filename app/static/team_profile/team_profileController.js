@@ -47,4 +47,6 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         }
     })
 
+    
+
 }]);

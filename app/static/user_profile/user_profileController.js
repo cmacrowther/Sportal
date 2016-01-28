@@ -6,6 +6,8 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
 
     $scope.user_id = $routeParams.user_id;
 
+    
+
     var passObject = {user_id: $rootScope.userObject.id}
 
     console.log("Profile Param " + $scope.user_id);
