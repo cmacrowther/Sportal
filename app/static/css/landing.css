@@ -1,0 +1,100 @@
+.video-section .pattern-overlay {
+    padding: 70px 0 32px;
+    min-height: 550px;
+    background-color: rgba(71, 71, 71, 0.59);
+    /* Incase of overlay problems just increase the min-height*/
+}
+
+.video-section h1, .video-section h3 {
+    text-align: center;
+    color: #fff;
+}
+
+.video-section h2 {
+    font-size: 49px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0px auto 0px;
+    text-shadow: 1px 1px 1px #000;
+    -webkit-text-shadow: 1px 1px 1px #000;
+    -moz-text-shadow: 1px 1px 1px #000;
+    padding-top: 0;
+    position: relative;
+    bottom: 25px;
+}
+
+.video-section h3 {
+    font-size: 40px;
+    font-weight: lighter;
+    margin: 0px auto 15px;
+}
+
+.video-section .buttonBar {
+    display: none;
+}
+
+.player {
+    font-size: 1px;
+}
+
+.video-section {
+    overflow: hidden;
+    position: relative;
+}
+
+#video_background {
+    position: absolute;
+    top: 0;
+    right: 0px;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1000;
+    overflow: hidden;
+}
+
+@media (max-width: 992px) {
+    .video-section h2 {
+        font-size: 36px;
+    }
+
+}
+
+@media (max-width: 768px) {
+    .video-section h2 {
+        font-size: 32px;
+        line-height: normal;
+    }
+
+    .video-section h3 {
+        font-size: 30px;
+    }
+
+    .video-section .pattern-overlay {
+        min-height: 300px;
+        padding: 35px;
+    }
+
+    @media (max-width: 767px) {
+        .video-section h2 {
+            font-size: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .video-section h2 {
+                font-size: 16px;
+                bottom: 0;
+            }
+
+            .video-section h3 {
+                font-size: 20px;
+            }
+
+            .video-section .pattern-overlay {
+                min-height: 200px;
+                padding: 15px;
+            }
+        }
+    }
+}
