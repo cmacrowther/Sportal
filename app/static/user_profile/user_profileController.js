@@ -2,7 +2,111 @@
  * Created by Brandon on 1/20/2016.
  */
 
-angular.module('dashboard.controllers').controller('user_profileController', ['$scope', '$rootScope', '$http', function ($scope, $rootScope, $http) {
+angular.module('dashboard.controllers').controller('user_profileController', ['$scope', '$rootScope', '$http', '$routeParams', function ($scope, $rootScope, $http, $routeParams) {
+
+    $scope.user_id = $routeParams.user_id;
+
+    console.log("Profile Param " + $scope.user_id);
+
+    $http.get("/api/user/" + $scope.user_id)
+    .success(function (data) {
+        $scope.profileObject = data;
+
+        console.log($scope.profileObject.first_name);
+        if ($rootScope.userObject.id == $scope.profileObject.id) {
+            $scope.editable = true;
+        } 
+        else {
+            $scope.editable = false;
+        }
+
+         //variable checks to see if we have values already.
+        if ($scope.profileObject.first_name == "" || $scope.profileObject.first_name == undefined) {
+            $scope.first_name = "No info given";
+        }
+        else {
+            $scope.first_name = $scope.profileObject.first_name;
+        }
+
+        if ($scope.profileObject.last_name == "" || $scope.profileObject.last_name == undefined) {
+            $scope.last_name = "No info given";
+        }
+        else {
+            $scope.last_name = $scope.profileObject.last_name;
+        }
+        if ($scope.profileObject.email == "" || $scope.profileObject.email == undefined) {
+            $scope.email = "No info given";
+        }
+        else {
+            $scope.email = $scope.profileObject.email;
+        }
+        if ($scope.profileObject.picture == "" || $scope.profileObject.picture == undefined) {
+            $scope.picture = "http://placehold.it/150x150";
+        }
+        else {
+            $scope.picture = $scope.profileObject.picture;
+        }
+        if ($scope.profileObject.birth == "" || $scope.profileObject.birth == undefined) {
+            $scope.birth = "No info given";
+        }
+        else {
+            $scope.birth = $scope.profileObject.birth;
+        }
+        if ($scope.profileObject.address == "" || $scope.profileObject.address == undefined) {
+            $scope.address = "No info given";
+        }
+        else {
+            $scope.address = $scope.profileObject.address;
+        }
+        if ($scope.profileObject.address2 == "" || $scope.profileObject.address2 == undefined) {
+            $scope.address2 = "No info given";
+        }
+        else {
+            $scope.address2 = $scope.profileObject.address2;
+        }
+        if ($scope.profileObject.city == "" || $scope.profileObject.city == undefined) {
+            $scope.city = "No info given";
+        }
+        else {
+            $scope.city = $scope.profileObject.city;
+        }
+        if ($scope.profileObject.postal_code == "" || $scope.profileObject.postal_code == undefined) {
+            $scope.postal_code = "No info given";
+        }
+        else {
+            $scope.postal_code = $scope.profileObject.postal_code;
+        }
+        if ($scope.profileObject.province == "" || $scope.profileObject.province == undefined) {
+            $scope.province = "No info given";
+        }
+        else {
+            $scope.province = $scope.profileObject.province;
+        }
+        if ($scope.profileObject.country == "" || $scope.profileObject.country == undefined) {
+            $scope.country = "No info given";
+        }
+        else {
+            $scope.country = $scope.profileObject.country;
+        }
+        if ($scope.profileObject.gender == "" || $scope.profileObject.gender == undefined) {
+            $scope.gender = "No info given";
+        }
+        else {
+            $scope.gender = $scope.profileObject.gender;
+        }
+        if ($scope.profileObject.interests == "" || $scope.profileObject.interests == undefined) {
+            $scope.interests = "No info given";
+        }
+        else {
+            $scope.interests = $scope.profileObject.interests;
+        }
+                       
+    })
+    .error(function(){
+        console.log("User does Not Exist");
+        $scope.error = "User does Not Exist";
+        window.location.assign("dashboard.html#/error/" + $scope.error);
+    })
 
     //Initializes the form validator plugin.
     $("#user_creation_form").validator();
@@ -14,86 +118,7 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
         viewMode: 'years'
     });
 
-    //variable checks to see if we have values already.
-    if ($rootScope.userObject.first_name == "" || $rootScope.userObject.first_name == undefined) {
-        $scope.first_name = "No info given";
-    }
-    else {
-        $scope.first_name = $rootScope.userObject.first_name;
-    }
-
-    if ($rootScope.userObject.last_name == "" || $rootScope.userObject.last_name == undefined) {
-        $scope.last_name = "No info given";
-    }
-    else {
-        $scope.last_name = $rootScope.userObject.last_name;
-    }
-    if ($rootScope.userObject.email == "" || $rootScope.userObject.email == undefined) {
-        $scope.email = "No info given";
-    }
-    else {
-        $scope.email = $rootScope.userObject.email;
-    }
-    if ($rootScope.userObject.picture == "" || $rootScope.userObject.picture == undefined) {
-        $scope.picture = "http://placehold.it/150x150";
-    }
-    else {
-        $scope.picture = $rootScope.userObject.picture;
-    }
-    if ($rootScope.userObject.birth == "" || $rootScope.userObject.birth == undefined) {
-        $scope.birth = "No info given";
-    }
-    else {
-        $scope.birth = $rootScope.userObject.birth;
-    }
-    if ($rootScope.userObject.address == "" || $rootScope.userObject.address == undefined) {
-        $scope.address = "No info given";
-    }
-    else {
-        $scope.address = $rootScope.userObject.address;
-    }
-    if ($rootScope.userObject.address2 == "" || $rootScope.userObject.address2 == undefined) {
-        $scope.address2 = "No info given";
-    }
-    else {
-        $scope.address2 = $rootScope.userObject.address2;
-    }
-    if ($rootScope.userObject.city == "" || $rootScope.userObject.city == undefined) {
-        $scope.city = "No info given";
-    }
-    else {
-        $scope.city = $rootScope.userObject.city;
-    }
-    if ($rootScope.userObject.postal_code == "" || $rootScope.userObject.postal_code == undefined) {
-        $scope.postal_code = "No info given";
-    }
-    else {
-        $scope.postal_code = $rootScope.userObject.postal_code;
-    }
-    if ($rootScope.userObject.province == "" || $rootScope.userObject.province == undefined) {
-        $scope.province = "No info given";
-    }
-    else {
-        $scope.province = $rootScope.userObject.province;
-    }
-    if ($rootScope.userObject.country == "" || $rootScope.userObject.country == undefined) {
-        $scope.country = "No info given";
-    }
-    else {
-        $scope.country = $rootScope.userObject.country;
-    }
-    if ($rootScope.userObject.gender == "" || $rootScope.userObject.gender == undefined) {
-        $scope.gender = "No info given";
-    }
-    else {
-        $scope.gender = $rootScope.userObject.gender;
-    }
-    if ($rootScope.userObject.interests == "" || $rootScope.userObject.interests == undefined) {
-        $scope.interests = "No info given";
-    }
-    else {
-        $scope.interests = $rootScope.userObject.interests;
-    }
+   
 
     //Function to toggle between either info displaying or input fields for editing
     $scope.editPage = function () {
@@ -110,27 +135,25 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
     $scope.updateInfo = function () {
         console.log("Updating Info.");
 
-        $rootScope.userObject.first_name = $scope.first_name;
-        $rootScope.userObject.last_name = $scope.last_name;
-        $rootScope.userObject.email = $scope.email;
-        $rootScope.userObject.picture = $scope.picture;
+        $scope.profileObject.first_name = $scope.first_name;
+        $scope.profileObject.last_name = $scope.last_name;
+        $scope.profileObject.email = $scope.email;
+        $scope.profileObject.picture = $scope.picture;
 
-        $http.put("api/user/" + $rootScope.userObject.id, $rootScope.userObject);
+        $http.put("api/user/" + $scope.profileObject.id, $scope.profileObject);
     }
 
     $scope.changePassword = function () {
 
-        if ($rootScope.userObject.password == $scope.passwordCurrent) {
-            $rootScope.userObject.password = $scope.passwordNew;
-            $http.put("api/user/" + $rootScope.userObject.id, $rootScope.userObject);
+        if ($scope.profileObject.password == $scope.passwordCurrent) {
+            $scope.profileObject.password = $scope.passwordNew;
+            $http.put("api/user/" + $scope.profileObject.id, $scope.profileObject);
             $scope.password_message = "Password Changed Successfully!";
         }
         else {
             console.log("Incorrect Password.")
             $scope.password_message = "Current Password Incorrect";
         }
-
-
     }
 
 }]);
