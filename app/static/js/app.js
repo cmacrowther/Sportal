@@ -25,6 +25,7 @@ angular.module('dashboard', [
         $routeProvider.when('/team_profile', {templateUrl: 'team_profile/team_profile.html', controller: 'team_profileController'});
         $routeProvider.when('/user_profile/:user_id', {templateUrl: 'user_profile/user_profile.html', controller: 'user_profileController'});
         $routeProvider.when('/error/:error', {templateUrl: 'error/error.html', controller: 'errorController'});
+        $routeProvider.when('/team_profile/:url', {templateUrl: 'team_profile/team_profile.html', controller: 'team_profileController'});
         $routeProvider.when('/admin', {templateUrl: 'admin/admin.html', controller: 'adminController'});
         $routeProvider.when('/play', {templateUrl: 'play/play.html', controller: 'playController'});
         $routeProvider.otherwise({redirectTo: '/'});

@@ -8,8 +8,6 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
 
     console.log("team_profile Page");
 
-    var passObject = {user_id: $rootScope.userObject.id}
-
     $scope.sendMail = function() {
 
         console.log($rootScope.userObject.first_name);

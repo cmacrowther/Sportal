@@ -8,8 +8,6 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
 
     
 
-    var passObject = {user_id: $rootScope.userObject.id}
-
     console.log("Profile Param " + $scope.user_id);
 
     $http.get("/api/user/" + $scope.user_id)
@@ -193,7 +191,8 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
             
         })
     }
-
+    var passObject = {user_id: $rootScope.userObject.id};
+    
     $http({
         method: 'POST',
         url: 'api/get_user_sports',
