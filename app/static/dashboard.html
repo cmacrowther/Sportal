@@ -99,9 +99,8 @@
                     <div class="panel-body">
                         <ul class="nav navbar-nav">
                             <li><a href="#/team_create">Create a Team</a></li>
-                            <li><a href="#/team_profile/{{  }}">Example Team Profile</a></li>
                             <li class="divider" role="separator"></li>
-                            <ul class="nav navbar-nav"><li ng-repeat="item in teams"><a href="/">{{ item.name }}</a></ul>
+                            <ul class="nav navbar-nav"><li ng-repeat="item in teams"><a href="#/team_profile/{{ item.name }}">{{ item.name }}</a></ul>
                         </ul>
                     </div>
                 </div>

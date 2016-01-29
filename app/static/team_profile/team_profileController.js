@@ -1,7 +1,55 @@
 /**
  * Created by Brandon on 1/20/2016.
  */
-angular.module('dashboard.controllers').controller('team_profileController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
+angular.module('dashboard.controllers').controller('team_profileController', ['$scope', '$http', '$rootScope', '$routeParams', function ($scope, $http, $rootScope, $routeParams) {
+
+    console.log($routeParams.url);
+
+    var passObject = {url: $routeParams.url};
+
+    $http({
+        method: 'POST',
+        url: 'api/get_team_info',
+        headers: {'Content-Type': 'application/json'},
+        data: JSON.stringify(passObject)
+    })
+    .success(function(data){
+
+        $scope.teamObject = data[0];
+
+        if ($scope.teamObject.name == "" || $scope.teamObject.name == undefined) {
+            $scope.team_name = "No info given";
+        }
+        else {
+            $scope.team_name = $scope.teamObject.name;
+        }
+
+        if ($scope.teamObject.adminId == "" || $scope.teamObject.adminId == undefined) {
+            $scope.admin = "No info given";
+        }
+        else {
+            $scope.admin = $scope.teamObject.adminId;
+        }
+        if ($scope.teamObject.description == "" || $scope.teamObject.description == undefined) {
+            $scope.description = "No info given";
+        }
+        else {
+            $scope.description = $scope.teamObject.description;
+        }
+        if ($scope.teamObject.picture == "" || $scope.teamObject.picture == undefined) {
+            $scope.picture = "http://placehold.it/150x150";
+        }
+        else {
+            $scope.picture = $scope.teamObject.picture;
+        }
+
+        if($rootScope.userObject.id == $scope.teamObject.adminId) {
+            $scope.editable = true;
+        }
+        else {
+            $scope.editable = false;
+        }
+    })
 
     //initializes bootstrap validator
     $("#inviteForm").validator();
@@ -44,6 +92,43 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             $scope.sendMail();
         }
     })
+
+    $scope.editPage = function () {
+        console.log("Edit = true.")
+        if ($scope.edit) {
+            $scope.edit = false;
+        }
+        else {
+            $scope.edit = true;
+        }
+    }
+
+    //Function to update info based on inputs with ng-blur
+    $scope.updateInfo = function () {
+        console.log("Updating Info.");
+
+        $scope.teamObject.name = $scope.team_name;
+        $scope.teamObject.adminId = $scope.admin;
+        $scope.teamObject.description = $scope.description;
+        $scope.teamObject.picture = $scope.picture;
+
+        $http.put("api/team/" + $scope.teamObject.id, $scope.teamObject);
+    }
+
+    $scope.changePassword = function () {
+
+        if ($scope.teamObject.password == $scope.passwordCurrent) {
+            $scope.teamObject.password = $scope.passwordNew;
+            $http.put("api/team/" + $scope.teamObject.id, $scope.teamObject);
+            $scope.password_message = "Password Changed Successfully!";
+        }
+        else {
+            console.log("Incorrect Password.")
+            $scope.password_message = "Current Password Incorrect";
+        }
+    }
+
+
 
     
 

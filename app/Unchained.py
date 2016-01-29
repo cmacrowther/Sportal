@@ -389,6 +389,40 @@ def get_user_teams():
     else:
         return "no teams"
 
+@app.route('/api/get_team_info', methods=['POST'])
+def get_team_info():
+    import json
+    import collections
+    from Unchained import Team
+    
+    data = request.get_json()
+    url = data.get('url')
+    item = Team.query.filter(Team.url == url).all()
+    objects_list = []
+    
+    if item:
+        
+        for group in item:
+            team = Team.query.get(group.id)
+            
+            d = collections.OrderedDict()
+            d['id'] = team.id
+            d['sport_id'] = team.sport_id
+            d['picture'] = team.picture
+            d['adminId'] = team.adminId
+            d['name'] = team.name
+            d['url'] = team.url
+            d['description'] = team.description
+            d['password'] = team.password
+            
+            objects_list.append(d)
+        
+        j = json.dumps(objects_list)
+        return j
+
+    else:
+        return "it fucked up"
+
 
 app.debug = True
 

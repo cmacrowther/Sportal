@@ -61,7 +61,6 @@ angular.module('dashboard.controllers')
 
                 $scope.teams = data;
 
-
             })
 
     }])
