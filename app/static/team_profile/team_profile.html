@@ -1,4 +1,94 @@
-<h1>team_profile Page</h1>
+<h1>Team Profile</h1>
+
+<img src="{{picture}}" alt="..." class="img-rounded" height="150px" width="150px">
+<br>
+<br>
+
+<div ng-show="editable">
+    <button ng-hide="edit" class="btn btn-default" ng-click="editPage()"><span class="glyphicon glyphicon-wrench"
+                                                                               aria-hidden="true"></span> Edit Info
+    </button>
+    <button ng-show="edit" class="btn btn-danger" ng-click="editPage()"><span class="glyphicon glyphicon-wrench"
+                                                                              aria-hidden="true"></span> Stop Editing
+    </button>
+    <button class="btn btn-default" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-wrench"
+                                                                                     aria-hidden="true"></span> Change
+        Password
+    </button>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <form data-toggle="validator" role="form" class="form-horizontal" id="user_creation_form">
+
+            <div class="form-group">
+                <label for="team_name" class="col-sm-2 control-label-fix">Team Name</label>
+
+                <div class="col-sm-8">
+                    <input ng-show="edit" ng-model="team_name" ng-blur="updateInfo()" type="text" id="team_name"
+                           class="form-control" name="team_name"
+                           placeholder="Team Name">
+                    <strong ng-hide="edit">{{ team_name }}</strong>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="admin" class="col-sm-2 control-label-fix">Team Admin</label>
+
+                <div class="col-sm-8">
+                    <input ng-show="edit" ng-model="admin" ng-blur="updateInfo()" type="text" id="admin"
+                           class="form-control" name="admin"
+                           placeholder="Team admin">
+                    <strong ng-hide="edit">{{ admin }}</strong>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description" class="col-sm-2 control-label-fix">Description</label>
+
+                <div class="col-sm-8">
+                    <input ng-show="edit" ng-model="description" ng-blur="updateInfo()" type="text" id="description"
+                           class="form-control" name="description"
+                           placeholder="Doe">
+                    <strong ng-hide="edit">{{ description }}</strong>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="picture" class="col-sm-2 control-label-fix">Profile Picture</label>
+
+                <div class="col-sm-8">
+                    <input ng-show="edit" ng-model="picture" ng-blur="updateInfo()" type="text" id="picture"
+                           class="form-control" name="picture"
+                           placeholder="URL link to picture">
+
+                    <div class="limit-text-length">
+                        <strong ng-hide="edit">{{ picture }}</strong>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<strong>Create table to display members of the team.</strong>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th> Name </th>
+            <th> Email </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in users">
+            <td>{{ item.first_name }} {{ item.last_name }}</td>
+            <td> {{ item.email }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<br>
 
 <div class="row">
     <div class="col-lg-12">
@@ -7,7 +97,7 @@
                 <div>
                     <h2>Invite a Friend</h2>
 
-                    
+
                 </div>
 
                 <div class="form-group">
@@ -17,6 +107,7 @@
                         <div class="col-md-12">
                             <input ng-model="email" type="text" class="form-control"
                                    placeholder="Enter Email" required>
+
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -29,7 +120,8 @@
                         <div class="col-md-12">
                             <input ng-model="team_name" type="text" class="form-control"
                                    placeholder="Enter Password" required>
-                        	<div class="help-block with-errors"></div>
+
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
                 </div>
@@ -37,14 +129,15 @@
                 <div class="form-group">
                     <label class="signup control-label">Password</label>
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <input ng-model="team_password" type="password" id="password" class="form-control"
-                                       placeholder="Enter Password" data-minlength="8" required>
-                                <div class="help-block with-errors"></div>
-                            </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input ng-model="team_password" type="password" id="password" class="form-control"
+                                   placeholder="Enter Password" data-minlength="8" required>
+
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
+                </div>
 
                 <div class="form-group">
                     <label class="signup control-label">Retype Password</label>
@@ -52,7 +145,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <input ng-model="confirm_password" type="password" class="form-control"
-                                   placeholder=" Retype Password" data-match="#password" data-match-error="Passwords Do Not Match" required>
+                                   placeholder=" Retype Password" data-match="#password"
+                                   data-match-error="Passwords Do Not Match" required>
                         </div>
                         <div class="help-block with-errors"></div>
                     </div>
@@ -60,7 +154,7 @@
 
                 <div class="row">
                     <div class="col-md-4 col-md-offset-4" class="form-group">
-                        <button type="submit" data-disable="true" class="btn btn-success btn-block" >Send Message
+                        <button type="submit" data-disable="true" class="btn btn-success btn-block">Send Message
                         </button>
                         <h4 class="text-center">{{ sendMessageResult }}</h4>
                     </div>
@@ -71,5 +165,4 @@
 </div>
 
 
-
-<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js" />
+<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.5.4/bootstrap-select.js"/>
