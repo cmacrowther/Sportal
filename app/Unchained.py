@@ -236,20 +236,52 @@ def get_user_sports():
     else:
         return "no sports"
 
+
 @app.route('/api/get_user_has_sport_id', methods=['POST'])
 def get_user_has_sport_id():
     import json
     import collections
     from Unchained import UserHasSport
-    
+
     data = request.get_json()
     user_id = data.get('user_id')
     sport_id = data.get('sport_id')
-    
-    user_has_sport_id = UserHasSport.query.filter(and_(UserHasSport.user_id == user_id, UserHasSport.sport_id == sport_id)).all()
+
+    user_has_sport_id = UserHasSport.query.filter(
+        and_(UserHasSport.user_id == user_id, UserHasSport.sport_id == sport_id)).all()
 
     return str(user_has_sport_id[0].id)
 
+
+@app.route('/api/get_user_has_sport', methods=['POST'])
+def get_user_has_sport():
+    import json
+    import collections
+    from Unchained import UserHasSport
+
+    data = request.get_json()
+    user_id = data.get('user_id')
+    sport_id = data.get('sport_id')
+
+    user_has_sport = UserHasSport.query.filter(and_(UserHasSport.user_id == user_id, UserHasSport.sport_id == sport_id)).all()
+    objects_list = []
+
+    if user_has_sport:
+
+        for uhs in user_has_sport:
+            d = collections.OrderedDict()
+            d['id'] = uhs.id
+            d['user_id'] = uhs.user_id
+            d['sport_id'] = uhs.sport_id
+            d['skill'] = uhs.skill
+
+            objects_list.append(d)
+
+        j = json.dumps(objects_list)
+        return j
+
+    else:
+        return "no user has sport"
 
 
 @app.route('/api/get_user_teams', methods=['POST'])
@@ -287,7 +319,6 @@ def get_user_teams():
 
     else:
         return "no teams"
-
 
 
 app.debug = True

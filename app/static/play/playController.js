@@ -25,5 +25,8 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
             $scope.sports = data.objects;
         })
 
+    $scope.setSport = function(item){
+        $scope.sport = item;
 
+    }
 }]);

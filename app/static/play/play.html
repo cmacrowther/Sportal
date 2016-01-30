@@ -7,9 +7,9 @@
                     <span class="caret"></span></button>
                 <ul class="dropdown-menu scrollable-menu" role="menu">
                     <li class="dropdown-header text-center">My Sports</li>
-                    <li ng-repeat="item in mySports" ng-click="setSport()"><a>{{ item.name }}</a></li>
+                    <li ng-repeat="item in mySports" ng-click="setSport(item)"><a>{{ item.name }}</a></li>
                     <li class="dropdown-header text-center">All Sports</li>
-                    <li ng-repeat="item in sports" ng-click="setSport()"><a>{{ item.name }}</a></li>
+                    <li ng-repeat="item in sports" ng-click="setSport(item)"><a>{{ item.name }}</a></li>
                 </ul>
             </div>
         </div>
