@@ -50,7 +50,7 @@ angular.module('dashboard.controllers')
                 window.location.assign("/");
             }   
 
-            $rootScope.teams = [{}];
+            $rootScope.teams = [];
 
             $http({
 	    		method: 'POST',
@@ -61,7 +61,7 @@ angular.module('dashboard.controllers')
 	    	.success(function(data){
                 console.log(data);
                 if (data == "no teams") {
-                    $rootScope.teams = [{}];
+                    $rootScope.teams = [];
                 }
                 else {
                     $rootScope.teams = data;

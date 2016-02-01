@@ -200,7 +200,13 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
         .success(function (data) {
             console.log(data);
 
-            $scope.mySports = data;
+            if (data == "no sports") {
+                 $scope.mySports = [];
+            }
+            else{
+                $scope.mySports = data;
+            }
+
         })
 
     $http.get("/api/sport")
