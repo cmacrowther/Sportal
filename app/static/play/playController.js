@@ -40,6 +40,13 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
 
     $scope.play = function(item){
         $scope.playResult = "Searching...";
+
+
+        $scope.matchObject = { sport:  $scope.sport,
+                               difficulty: $scope.pickTier,
+                               team:  $scope.pickTeams }
+
         console.log("Finding an opponent...");
+        console.log($scope.matchObject);
     }
 }]);

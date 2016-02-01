@@ -58,4 +58,9 @@
             </form>
         </div>
     </div>
+    <div>
+        <select ng-model="ddlFruits" ng-options="fruit.Id as fruit.Name for fruit in Fruits track by fruit.Id"
+            ng-change="GetValue()">
+        </select>
+    </div>
 </div>
