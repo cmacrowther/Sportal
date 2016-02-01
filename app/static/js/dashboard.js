@@ -50,6 +50,8 @@ angular.module('dashboard.controllers')
                 window.location.assign("/");
             }   
 
+            $rootScope.teams = [{}];
+
             $http({
 	    		method: 'POST',
 	    		url: 'api/get_user_teams',
@@ -58,9 +60,14 @@ angular.module('dashboard.controllers')
 	    	})
 	    	.success(function(data){
                 console.log(data);
-
-                $rootScope.teams = data;
+                if (data == "no teams") {
+                    $rootScope.teams = [{}];
+                }
+                else {
+                    $rootScope.teams = data;
+                }
 
             })
+            
 
     }])
