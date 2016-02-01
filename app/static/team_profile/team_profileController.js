@@ -49,6 +49,22 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         else {
             $scope.editable = false;
         }
+
+        passObject = {team_id: $scope.teamObject.id};
+
+        console.log(passObject);
+
+        //todo: fix so that it pulls from user_has_team
+        $http({
+            method: 'POST',
+            url: 'api/get_team_members',
+            headers: {'Content-Type': 'application/json'},
+            data: JSON.stringify(passObject)
+        })
+        .success(function (data) {
+            console.log(data);
+            $scope.team_members = data;
+        })
     })
 
     //initializes bootstrap validator
@@ -115,6 +131,15 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         $http.put("api/team/" + $scope.teamObject.id, $scope.teamObject);
     }
 
+    //todo: change so that it stores sport_id correctly
+    $scope.updateTeamSport = function(item) {
+
+        console.log("Changing Team Sport")
+        $scope.teamObject.sport_id = item.id;
+
+        $http.put("api/team/" + $scope.teamObject.id, $scope.teamObject);
+    }
+
     $scope.changePassword = function () {
 
         if ($scope.teamObject.password == $scope.passwordCurrent) {
@@ -127,6 +152,14 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             $scope.password_message = "Current Password Incorrect";
         }
     }
+
+    $http.get("/api/sport")
+        .success(function (data) {
+            console.log(data);
+            $scope.allSports = data.objects;
+        })
+
+
 
 
 

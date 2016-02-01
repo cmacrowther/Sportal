@@ -2,7 +2,7 @@
 <html lang="en" ng-app="dashboard">
 <head>
     <meta charset="UTF-8">
-    <title>Unchained</title>
+    <title>Huddle</title>
 
      <!-- Angular js-->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
@@ -56,8 +56,8 @@
 
             <!-- Brand -->
             <div class="brand-name-wrapper">
-                <a class="navbar-brand" href="/">
-                    Unchained
+                <a class="navbar-brand" style="color:red"href="/">
+                    Huddle
                 </a>
             </div>
 
@@ -99,6 +99,7 @@
                     <div class="panel-body">
                         <ul class="nav navbar-nav">
                             <li><a href="#/team_create">Create a Team</a></li>
+                            <li><a href="#/join_team">Join a Team</a><li>
                             <li class="divider" role="separator"></li>
                             <ul class="nav navbar-nav"><li ng-repeat="item in teams"><a href="#/team_profile/{{ item.name }}">{{ item.name }}</a></ul>
                         </ul>
@@ -130,6 +131,7 @@
 <script src="js/services.js"></script>
 <script src="home/homeController.js"></script>
 <script src="team_create/team_createController.js"></script>
+<script src="join_team/join_teamController.js"></script>
 <script src="team_profile/team_profileController.js"></script>
 <script src="user_profile/user_profileController.js"></script>
 <script src="error/errorController.js"></script>

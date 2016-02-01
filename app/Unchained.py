@@ -65,6 +65,7 @@ class FacilityHasSport(db.Model):
     facility_id = Column(Integer, unique=False)
     sport_id = Column(Integer, unique=False)
 
+
 db.create_all()
 
 api_manager = APIManager(app, flask_sqlalchemy_db=db)
@@ -101,8 +102,8 @@ def sign_in():
         return "No User with that email"
 
 
-@app.route('/api/get_team_by_url', methods=['POST'])
-def get_team_by_url():
+@app.route('/api/join_team', methods=['POST'])
+def join_team():
     from Unchained import Team
 
     data = request.get_json()
@@ -116,7 +117,7 @@ def get_team_by_url():
         else:
             return "Password Incorrect"
     else:
-        return "No Workspace with that name"
+        return "No Team with that name"
 
 
 @app.route('/api/get_team_id_by_url', methods=['GET'])
@@ -192,15 +193,18 @@ def send_mail():
 def get_team_members():
     import json
     import collections
+    from Unchained import UserHasTeam
     from Unchained import User
 
     data = request.get_json()
     team_id = data.get('team_id')
 
-    users = User.query.filter(User.team_id == team_id).all()
+    members = UserHasTeam.query.filter(UserHasTeam.team_id == team_id).all()
     objects_list = []
 
-    for user in users:
+    for uht in members:
+        user = User.query.get(uht.user_id)
+        
         d = collections.OrderedDict()
         d['id'] = user.id
         d['team_id'] = user.team_id

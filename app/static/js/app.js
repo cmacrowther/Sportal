@@ -22,6 +22,7 @@ angular.module('dashboard', [
     config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'home/home.html', controller: 'HomeController'});
         $routeProvider.when('/team_create', {templateUrl: 'team_create/team_create.html', controller: 'team_createController'});
+        $routeProvider.when('/join_team', {templateUrl: 'join_team/join_team.html', controller: 'join_teamController'});
         $routeProvider.when('/user_profile/:user_id', {templateUrl: 'user_profile/user_profile.html', controller: 'user_profileController'});
         $routeProvider.when('/error/:error', {templateUrl: 'error/error.html', controller: 'errorController'});
         $routeProvider.when('/team_profile/:url', {templateUrl: 'team_profile/team_profile.html', controller: 'team_profileController'});

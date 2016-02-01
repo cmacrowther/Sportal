@@ -43,7 +43,7 @@ angular.module('dashboard.controllers').controller('team_createController', ['$s
             $scope.team_name_exists_error = "Please Fill in Required Fields.";
         }
         else {
-            //Checks if email is taken
+            //Checks if url is taken
             $http({
                 method: 'POST',
                 url: 'api/team_url_check',
@@ -70,13 +70,14 @@ angular.module('dashboard.controllers').controller('team_createController', ['$s
                         console.log($scope.team_password);
                         console.log("Team Logged into DB");
                         $scope.createTeamResult = "Team Successfully Added!";
+                        $rootScope.teams.push(data);
 
                         $http.post("api/user_has_team", {
-                            user_id: $rootScope.userObject.id, 
+                            user_id: $rootScope.userObject.id,
                             team_id: data.id
                         })
                         .success(function(){
-                            console.log("Team Added to user profile.");
+                            console.log("User_has_team Updated");
                         })
 
                     })
