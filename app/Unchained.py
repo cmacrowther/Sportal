@@ -427,6 +427,25 @@ def get_team_info():
     else:
         return "it fucked up"
 
+@app.route('/api/team_member_check', methods=['POST'])
+def team_member_check():
+    import json
+    import collections
+    from Unchained import Team
+    from Unchained import UserHasTeam
+    
+    data = request.get_json()
+    url = data.get('url')
+    user_id = data.get('user_id')
+    
+    team_match = Team.query.filter(Team.url == url).all()
+    match = UserHasTeam.query.filter(and_(UserHasTeam.team_id == team_match[0].id, UserHasTeam.user_id == user_id)).all()
+        
+    if match:
+        return "duplicate"
+    else:
+        return str(team_match[0].id)
+
 
 app.debug = True
 

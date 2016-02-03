@@ -30,6 +30,19 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         else {
             $scope.admin = $scope.teamObject.adminId;
         }
+        if ($scope.teamObject.sport_id == "" || $scope.teamObject.sport_id == undefined || $scope.teamObject.sport_id == 0) {
+            $scope.team_sport = "No info given";
+        }
+        else {
+            $http.get("/api/sport/" + $scope.teamObject.sport_id)
+            .success(function(data){
+                $scope.sportObject = data;
+                $scope.team_sport = $scope.sportObject.name;
+            })
+            .error(function(data){
+                console.log("Error getting sport.");
+            })
+        }
         if ($scope.teamObject.description == "" || $scope.teamObject.description == undefined) {
             $scope.description = "No info given";
         }
@@ -124,20 +137,30 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         console.log("Updating Info.");
 
         $scope.teamObject.name = $scope.team_name;
+        $scope.teamObject.url = $scope.team_name;
         $scope.teamObject.adminId = $scope.admin;
         $scope.teamObject.description = $scope.description;
         $scope.teamObject.picture = $scope.picture;
 
         $http.put("api/team/" + $scope.teamObject.id, $scope.teamObject);
+        $rootScope.teams.splice($scope.teamObject.id-1, 1, $scope.teamObject);
+        window.location.assign("#/team_profile/" + $scope.teamObject.name);
     }
 
-    //todo: change so that it stores sport_id correctly
-    $scope.updateTeamSport = function(item) {
+    //Updates team sport from dropdown
+    $scope.updateTeamSport = function() {
 
         console.log("Changing Team Sport")
-        $scope.teamObject.sport_id = item.id;
 
-        $http.put("api/team/" + $scope.teamObject.id, $scope.teamObject);
+        $http.get("/api/sport/" + $scope.team_sport_id)
+        .success(function(data){
+            $scope.teamObject.sport_id = data.id;
+            $scope.team_sport = data.name;
+            $scope.updateInfo();
+        })
+        .error(function(data){
+            console.log("Error getting sport.");
+        })
     }
 
     $scope.changePassword = function () {

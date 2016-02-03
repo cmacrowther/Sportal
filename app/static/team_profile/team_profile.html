@@ -94,11 +94,10 @@
                 <label for="team_sport" class="col-sm-2 control-label-fix">Sport</label>
 
                 <div class="col-sm-8">
-                    <select ng-show="edit" ng-model="team_sport" ng-blur="updateTeamSport(item)" id="team_sport" class="form-control" name="team_sport">
-                        <option ng-repeat="item in allSports">{{ item.name }}</option>
+                    <select ng-show="edit" ng-model="team_sport_id" ng-blur="updateTeamSport()" class="form-control">
+                        <option value="{{item.id}}" ng-repeat="item in allSports">{{ item.name }}</option>
                     </select>
-                    <!-- Create function for grabbing team_sport_name from database -->
-                    <strong ng-hide="edit">{{ team_sport_name }}</strong>
+                    <strong ng-hide="edit">{{ team_sport }}</strong>
                 </div>
             </div>
 

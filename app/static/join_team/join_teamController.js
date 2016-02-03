@@ -23,31 +23,48 @@ angular.module('dashboard.controllers').controller('join_teamController', ['$sco
         		console.log("Team DNE");
         	}
         	else {
-        		console.log("Team Joined");
-        		$scope.joinTeamResult = "Team Joined Successfully";
+                
+                var passObject = {url: $scope.team_name, user_id: $rootScope.userObject.id}
 
-        		$http.post("api/user_has_team", {
+                $http({
+                    method: 'POST',
+                    url: 'api/team_member_check',
+                    headers: {'Content-Type': 'application/json'},
+                    data: JSON.stringify(passObject)
+                })
+                .success(function(data){ 
+                    
+                    if (data == "duplicate"){
+                        console.log("already a member");
+                        $scope.team_name_dne_error = "Already a Member";
+                    }
+                    else {
+                        console.log("Joining team... " + data);
+                        $scope.join_team_id = data;
+                        $http.post("api/user_has_team", {
                             user_id: $rootScope.userObject.id,
-                            team_id: data.id
+                            team_id: data
                         })
                         .success(function(){
                             console.log("User_has_team Updated");
+                            console.log("Team Joined Successfully");
+                            $scope.joinTeamResult = "Team Joined Successfully";
+                            $http.get("/api/team/" + $scope.join_team_id)
+                            .success(function (data) {
+                                $rootScope.teams.push(data);
+                            })
                         })
+
+                    }
+                })
+
         	}
 
 
         })
 
 
-
-
-
-
-
 	}
-
-
-
 
 
 }]);
