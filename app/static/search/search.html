@@ -1,0 +1,50 @@
+<h1>Search Page</h1>
+
+<div class="col-md-6">
+    <div class="input-group custom-search-form">
+	    <input type="text" class="form-control" ng-model="searchTerm">
+	    <span class="input-group-btn">
+	    <button class="btn btn-default" type="button" ng-click="search()">
+	    <span class="glyphicon glyphicon-search"></span>
+	    </button>
+	    </span>
+    </div><!-- /input-group -->
+</div>
+<br><br><br>
+<div>
+	<h4>Users</h4>
+	<table class="table table-striped">
+	    <thead>
+	        <tr>
+	            <th> Name </th>
+	            <th> Email </th>
+	            <th> Profile</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <tr ng-repeat="item in users_list">
+	            <td><img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.first_name }} {{ item.last_name }}</td>
+	            <td> {{ item.email }}</td>
+	            <td><a href="#/user_profile/{{item.id}}"><button class="btn btn-primary" href="#/user_profile/{{item.id}}">Go</button></a></td>
+	        </tr>
+	    </tbody>
+	</table>
+
+	<h4>Teams</h4>
+	<table class="table table-striped">
+	    <thead>
+	        <tr>
+	            <th> Name </th>
+	            <th> Sport </th>
+	            <th> Profile </th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <tr ng-repeat="item in teams_list">
+	            <td><img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.name }}</td>
+	            <td>{{ item.sport_id }}</td>
+	            <td><a href="#/team_profile/{{item.url}}"><button class="btn btn-primary" href="#/user_profile/{{item.id}}">Go</button></a></td>
+	        </tr>
+	    </tbody>
+	</table>
+</div>

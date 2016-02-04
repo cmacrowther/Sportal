@@ -8,7 +8,6 @@ $(function () {
         //$('.absolute-wrapper').toggleClass('slide-in');
         
     });
-   
    // Remove menu for searching
    $('#search-trigger').click(function () {
         $('.navbar-nav').removeClass('slide-in');

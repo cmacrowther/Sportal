@@ -117,13 +117,11 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             console.log("Form Error");
         } else {
             //check for team and password
-            
             $scope.sendMail();
         }
     })
 
     $scope.editPage = function () {
-        console.log("Edit = true.")
         if ($scope.edit) {
             $scope.edit = false;
         }
@@ -134,17 +132,26 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
 
     //Function to update info based on inputs with ng-blur
     $scope.updateInfo = function () {
-        console.log("Updating Info.");
 
-        $scope.teamObject.name = $scope.team_name;
-        $scope.teamObject.url = $scope.team_name;
-        $scope.teamObject.adminId = $scope.admin;
-        $scope.teamObject.description = $scope.description;
-        $scope.teamObject.picture = $scope.picture;
+        if ($scope.unique_team_name()) {
+            
+            console.log("Updating Info.");
 
-        $http.put("api/team/" + $scope.teamObject.id, $scope.teamObject);
-        $rootScope.teams.splice($scope.teamObject.id-1, 1, $scope.teamObject);
-        window.location.assign("#/team_profile/" + $scope.teamObject.name);
+            $scope.teamObject.name = $scope.team_name;
+            $scope.teamObject.url = $scope.team_name;
+            $scope.teamObject.adminId = $scope.admin;
+            $scope.teamObject.description = $scope.description;
+            $scope.teamObject.picture = $scope.picture;
+
+            $http.put("api/team/" + $scope.teamObject.id, $scope.teamObject);
+            $rootScope.teams.splice($scope.teamObject.id-1, 1, $scope.teamObject);
+            window.location.assign("#/team_profile/" + $scope.teamObject.name);
+        }
+        else {
+            alert("Team Name Not Available");
+            $scope.edit = false;
+            window.location.assign("#/team_profile/" + $scope.teamObject.name);
+        }
     }
 
     //Updates team sport from dropdown
@@ -173,6 +180,31 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         else {
             console.log("Incorrect Password.")
             $scope.password_message = "Current Password Incorrect";
+        }
+    }
+
+    $scope.unique_team_name = function() {
+
+        console.log("TEAM NAME: "+ $scope.tea)
+        if($scope.team_name != $scope.teamObject.name){
+            console.log("team names not same");
+
+            var passObject = {url: $scope.team_name};
+           //Checks if url is taken
+           console.log($scope.team_name);
+           console.log(passObject);
+            $http({
+                method: 'POST',
+                url: 'api/team_url_check',
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify(passObject)
+            })
+            .success(function(data){
+                console.log(data);  
+            })
+        }
+        else {
+            return true;
         }
     }
 

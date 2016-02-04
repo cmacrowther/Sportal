@@ -446,6 +446,66 @@ def team_member_check():
     else:
         return str(team_match[0].id)
 
+@app.route('/api/team_search', methods=['POST'])
+def team_search():
+    import json
+    import collections
+    from Unchained import Team
+    
+    data = request.get_json()
+    searchTerm = '%' + str(data.get('searchTerm')) + '%'
+    team = Team.query.filter(or_(Team.name.ilike(searchTerm), Team.url.ilike(searchTerm))).all()
+    objects_list = []
+    
+    if team:
+        for item in team:
+            match = Team.query.get(item.id)
+            
+            d = collections.OrderedDict()
+            d['team_id'] = match.id
+            d['name'] = match.name
+            d['url'] = match.url
+            d['picture'] = match.picture
+            d['sport_id'] = match.sport_id
+            
+            objects_list.append(d)
+        
+        j = json.dumps(objects_list)
+        return j
+    else:
+        return "no matching teams"
+
+
+@app.route('/api/user_search', methods=['POST'])
+def user_search():
+    import json
+    import collections
+    from Unchained import User
+    
+    data = request.get_json()
+    searchTerm = '%' + str(data.get('searchTerm')) + '%'
+    user = User.query.filter(or_(User.first_name.ilike(searchTerm), User.last_name.ilike(searchTerm), User.email.ilike(searchTerm))).all()
+    objects_list = []
+
+    if user:
+        for item in user:
+            match = User.query.get(item.id)
+    
+            d = collections.OrderedDict()
+            d['id'] = match.id
+            d['email'] = match.email
+            d['first_name'] = match.first_name
+            d['last_name'] = match.last_name
+            d['picture'] = match.picture
+            
+            objects_list.append(d)
+        
+        j = json.dumps(objects_list)
+        return j
+    else:
+        return "no matching users"
+
+
 
 app.debug = True
 

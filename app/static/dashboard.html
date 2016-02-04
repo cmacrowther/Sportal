@@ -34,7 +34,8 @@
     <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 
     <!-- CSS -->
-    <link href="css/dashboard.css" rel="stylesheet">
+    <link type="text/css" href="css/dashboard.css" rel="stylesheet">
+
 </head>
 <body ng-controller="DashboardController">
 <!-- -->
@@ -56,13 +57,11 @@
 
             <!-- Brand -->
             <div class="brand-name-wrapper">
-                <a class="navbar-brand" style="color:red"href="#/">
-                    Huddle
-                </a>
+                <a class="navbar-brand" style="color:red" href="#/">Huddle</a>
             </div>
 
             <!-- Search -->
-            <a data-toggle="collapse" href="#/" class="btn btn-default" id="search-trigger">
+            <a data-toggle="collapse" class="btn btn-default" href="#/search_page" id="search-trigger">
                 <span class="glyphicon glyphicon-search"></span>
             </a>
 
@@ -136,6 +135,7 @@
 <script src="user_profile/user_profileController.js"></script>
 <script src="error/errorController.js"></script>
 <script src="play/playController.js"></script>
+<script src="search/searchController.js"></script>
 <script src="js/dashboard.js"></script>
 <script src="admin/adminController.js"></script>
 </html>
