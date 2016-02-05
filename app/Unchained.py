@@ -159,6 +159,19 @@ def team_url_check():
     else:
         return "noduplicate"
 
+@app.route('/api/team_name_check', methods=['POST'])
+def team_name_check():
+    from Unchained import Team
+    
+    data = request.get_json()
+    name = data.get('name')
+    team = Team.query.filter(Team.name == name).all()
+    
+    if team:
+        return "duplicate"
+    else:
+        return "noduplicate"
+
 
 @app.route('/api/send_mail', methods=['POST'])
 def send_mail():

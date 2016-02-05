@@ -133,7 +133,9 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
     //Function to update info based on inputs with ng-blur
     $scope.updateInfo = function () {
 
-        if ($scope.unique_team_name()) {
+        $scope.url_result = $scope.unique_team_name();
+
+        if ($scope.url_result == "noduplicate") {
             
             console.log("Updating Info.");
 
@@ -185,22 +187,26 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
 
     $scope.unique_team_name = function() {
 
-        console.log("TEAM NAME: "+ $scope.tea)
+        console.log("TEAM NAME: "+ $scope.team_name)
+        
         if($scope.team_name != $scope.teamObject.name){
             console.log("team names not same");
 
-            var passObject = {url: $scope.team_name};
+            var passObject = {name: $scope.team_name};
+
            //Checks if url is taken
-           console.log($scope.team_name);
+
            console.log(passObject);
+
             $http({
                 method: 'POST',
-                url: 'api/team_url_check',
+                url: 'api/team_name_check',
                 headers: {'Content-Type': 'application/json'},
                 data: JSON.stringify(passObject)
             })
             .success(function(data){
-                console.log(data);  
+                console.log(data);
+                return data; 
             })
         }
         else {
