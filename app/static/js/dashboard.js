@@ -5,7 +5,7 @@ $(function () {
         $('#search').removeClass('in').addClass('collapse').slideUp(200);
 
         /// uncomment code for absolute positioning tweek see top comment in css
-        //$('.absolute-wrapper').toggleClass('slide-in');
+        $('.absolute-wrapper').toggleClass('slide-in');
         
     });
    // Remove menu for searching
@@ -14,7 +14,7 @@ $(function () {
         $('.side-body').removeClass('body-slide-in');
 
         /// uncomment code for absolute positioning tweek see top comment in css
-        //$('.absolute-wrapper').removeClass('slide-in');
+        $('.absolute-wrapper').removeClass('slide-in');
 
     });
 });

@@ -1,15 +1,17 @@
 <h1>Search Page</h1>
 
-<div class="col-md-6">
-    <div class="input-group custom-search-form">
-	    <input type="text" class="form-control" ng-model="searchTerm">
-	    <span class="input-group-btn">
-	    <button class="btn btn-default" type="button" ng-click="search()">
-	    <span class="glyphicon glyphicon-search"></span>
-	    </button>
-	    </span>
-    </div><!-- /input-group -->
-</div>
+<form ng-submit="search()">
+	<div class="col-md-6">
+	    <div class="input-group custom-search-form">
+		    <input type="text" class="form-control" ng-model="searchTerm">
+		    <span class="input-group-btn">
+		    <button class="btn btn-default" type="button" ng-click="search()">
+		    <span class="glyphicon glyphicon-search"></span>
+		    </button>
+		    </span>
+	    </div><!-- /input-group -->
+	</div>
+</form>
 <br><br><br>
 <div>
 	<h4>Users</h4>
@@ -29,6 +31,7 @@
 	        </tr>
 	    </tbody>
 	</table>
+	<p class="text-center">{{ no_users }}</p>
 
 	<h4>Teams</h4>
 	<table class="table table-striped">
@@ -42,9 +45,10 @@
 	    <tbody>
 	        <tr ng-repeat="item in teams_list">
 	            <td><img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.name }}</td>
-	            <td>{{ item.sport_id }}</td>
+	            <td value="getSport(item)">{{ sport_name }}</td>
 	            <td><a href="#/team_profile/{{item.url}}"><button class="btn btn-primary" href="#/user_profile/{{item.id}}">Go</button></a></td>
 	        </tr>
 	    </tbody>
 	</table>
+	<p class="text-center">{{ no_teams }}</p>
 </div>

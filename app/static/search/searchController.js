@@ -1,6 +1,7 @@
 angular.module('dashboard.controllers').controller('searchController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
 
 
+
 	//function for searching database
 	$scope.search = function() {
 
@@ -16,9 +17,11 @@ angular.module('dashboard.controllers').controller('searchController', ['$scope'
             console.log(data);
             if (data == "no matching users") {
                 $rootScope.users_list = [];
+                $scope.no_users = "No Matching Users";
             }
             else {
                 $rootScope.users_list = data;
+                $scope.no_users = "";
             }
         })
 
@@ -32,24 +35,36 @@ angular.module('dashboard.controllers').controller('searchController', ['$scope'
             console.log(data);
             if (data == "no matching teams") {
                 $rootScope.teams_list = [];
+                $scope.no_teams = "No Matching Teams";
             }
             else {
                 $rootScope.teams_list = data;
+                $scope.no_teams = "";
             }
         })
 
 	}
 
-	$scope.displayTeamSport = function(item) {
-		
-		$http.get("/api/sport/" + item)
-            .success(function(data){
-                return data.name;
-            })
-            .error(function(data){
-                console.log("Error getting sport.");
-            })
-	}
+    $scope.getSport = function(item){
+        
+        $scope.result = [];
+
+        console.log("function");
+
+        for(var i = 0 ; i < $rootScope.teams_list.length ; i++){
+            if(item.id === $rootScope.teams_list[i].id){
+                console.log("in");
+                $http.get("/api/sport/" + $rootScope.teams_list[i].sport_id)
+                .success(function(data){
+                    console.log(data);
+                    $scope.sport_name = data.name;
+                    return $scope.sport_name;
+                })
+
+            }
+        }
+
+    }
 
 
 }]);
