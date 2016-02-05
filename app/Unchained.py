@@ -65,6 +65,11 @@ class FacilityHasSport(db.Model):
     facility_id = Column(Integer, unique=False)
     sport_id = Column(Integer, unique=False)
 
+class TeamHasAdmin(db.Model):
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, unique=False)
+    team_id = Column(Integer, unique=False)
+
 
 db.create_all()
 
@@ -76,6 +81,7 @@ api_manager.create_api(Facility, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(UserHasSport, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(UserHasTeam, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(FacilityHasSport, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(TeamHasAdmin, methods=['GET', 'POST', 'DELETE', 'PUT'])
 
 
 @app.route('/')
@@ -229,6 +235,34 @@ def get_team_members():
 
         objects_list.append(d)
 
+    j = json.dumps(objects_list)
+    return j
+
+@app.route('/api/get_team_admins', methods=['POST'])
+def get_team_admins():
+    import json
+    import collections
+    from Unchained import TeamHasAdmin
+    from Unchained import User
+    
+    data = request.get_json()
+    team_id = data.get('team_id')
+    
+    admins = TeamHasAdmin.query.filter(TeamHasAdmin.team_id == team_id).all()
+    objects_list = []
+    
+    for tha in admins:
+        user = User.query.get(tha.user_id)
+        
+        d = collections.OrderedDict()
+        d['user_id'] = user.id
+        d['first_name'] = user.first_name
+        d['last_name'] = user.last_name
+        d['email'] = user.email
+        d['picture'] = user.picture
+        
+        objects_list.append(d)
+    
     j = json.dumps(objects_list)
     return j
 
@@ -517,6 +551,21 @@ def user_search():
         return j
     else:
         return "no matching users"
+
+@app.route('/api/team_admin_check', methods=['POST'])
+def team_admin_check():
+    import json
+    from Unchained import TeamHasAdmin
+
+    data = request.get_json()
+    team = data.get('team_id')
+    promotee = data.get('promotee')
+    admin = TeamHasAdmin.query.filter(and_(TeamHasAdmin.team_id == team, TeamHasAdmin.user_id == promotee)).all()
+
+    if admin:
+        return "already admin"
+    else:
+        return "promote"
 
 
 

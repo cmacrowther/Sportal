@@ -80,6 +80,15 @@ angular.module('dashboard.controllers').controller('team_createController', ['$s
                             console.log("User_has_team Updated");
                         })
 
+                        $http.post("api/team_has_admin", {
+                            user_id: $rootScope.userObject.id,
+                            team_id: data.id
+                        })
+                        .success(function(){
+                            console.log("Team_has_admin Updated");
+                        })
+
+
                     })
                 }
             })

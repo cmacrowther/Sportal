@@ -23,13 +23,6 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         else {
             $scope.team_name = $scope.teamObject.name;
         }
-
-        if ($scope.teamObject.adminId == "" || $scope.teamObject.adminId == undefined) {
-            $scope.admin = "No info given";
-        }
-        else {
-            $scope.admin = $scope.teamObject.adminId;
-        }
         if ($scope.teamObject.sport_id == "" || $scope.teamObject.sport_id == undefined || $scope.teamObject.sport_id == 0) {
             $scope.team_sport = "No info given";
         }
@@ -56,18 +49,11 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             $scope.picture = $scope.teamObject.picture;
         }
 
-        if($rootScope.userObject.id == $scope.teamObject.adminId) {
-            $scope.editable = true;
-        }
-        else {
-            $scope.editable = false;
-        }
-
         passObject = {team_id: $scope.teamObject.id};
 
         console.log(passObject);
 
-        //todo: fix so that it pulls from user_has_team
+        //pulls all team members
         $http({
             method: 'POST',
             url: 'api/get_team_members',
@@ -77,6 +63,26 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         .success(function (data) {
             console.log(data);
             $scope.team_members = data;
+        })
+
+        //pulls team admins
+        $http({
+            method: 'POST',
+            url: 'api/get_team_admins',
+            headers: {'Content-Type': 'application/json'},
+            data: JSON.stringify(passObject)
+        })
+        .success(function (data) {
+            console.log(data);
+            $scope.team_admins = data;
+            for(var i = 0; i < $scope.team_admins.length; i++) {
+                if($rootScope.userObject.id == $scope.team_admins[i].user_id) {
+                    $scope.editable = true;
+                }
+                else {
+                    //nothing
+                }
+            }
         })
     })
 
@@ -176,18 +182,12 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
     }
 
     $scope.unique_team_name = function() {
-
-        console.log("TEAM NAME: "+ $scope.team_name)
         
         if($scope.team_name != $scope.teamObject.name){
-            console.log("team names not same");
 
             var passObject = {name: $scope.team_name};
 
            //Checks if url is taken
-
-           console.log(passObject);
-
             $http({
                 method: 'POST',
                 url: 'api/team_name_check',
@@ -196,7 +196,6 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             })
             .then(function(data){
                 console.log(data.data);
-
                 if(data.data == "noduplicate"){
                    $scope.updateInfo();
                 }
@@ -216,6 +215,38 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             console.log(data);
             $scope.allSports = data.objects;
         })
+
+    $scope.promote = function (item) {
+
+        var passObject = {team_id: $scope.teamObject.id, promotee: item.id};
+
+        $http({
+                method: 'POST',
+                url: 'api/team_admin_check',
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify(passObject)
+        })
+        .success(function(data){
+            if(data == "promote") {
+                $http.post("api/team_has_admin", {
+                    user_id: item.id,
+                    team_id: $scope.teamObject.id
+                })
+                .success(function(data){
+                    console.log("User Promoted!");
+                    $http.get("/api/user/" + data.user_id)
+                    .success(function(data){
+                        $scope.team_admins.push(data);
+                    })
+                })
+            }
+            else {
+                console.log("Already an Admin");
+                alert("That Member is Already An Admin!");
+            }
+        })
+
+    }
 
 
 
