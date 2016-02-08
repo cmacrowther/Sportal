@@ -255,11 +255,61 @@ def get_team_admins():
         user = User.query.get(tha.user_id)
         
         d = collections.OrderedDict()
-        d['user_id'] = user.id
+        d['id'] = user.id
         d['first_name'] = user.first_name
         d['last_name'] = user.last_name
         d['email'] = user.email
         d['picture'] = user.picture
+        
+        objects_list.append(d)
+    
+    j = json.dumps(objects_list)
+    return j
+
+@app.route('/api/get_admin', methods=['POST'])
+def get_admin():
+    import json
+    import collections
+    from Unchained import TeamHasAdmin
+    
+    data = request.get_json()
+    team_id = data.get('team_id')
+    user_id = data.get('user_id')
+    
+    admin = TeamHasAdmin.query.filter(and_(TeamHasAdmin.team_id == team_id, TeamHasAdmin.user_id == user_id)).all()
+    objects_list = []
+    
+    for tha in admin:
+        
+        d = collections.OrderedDict()
+        d['id'] = tha.id
+        d['user_id'] = tha.user_id
+        d['team_id'] = tha.team_id
+        
+        objects_list.append(d)
+    
+    j = json.dumps(objects_list)
+    return j
+
+@app.route('/api/get_member', methods=['POST'])
+def get_member():
+    import json
+    import collections
+    from Unchained import UserHasTeam
+    
+    data = request.get_json()
+    team_id = data.get('team_id')
+    user_id = data.get('user_id')
+    
+    member = UserHasTeam.query.filter(and_(UserHasTeam.team_id == team_id, UserHasTeam.user_id == user_id)).all()
+    objects_list = []
+
+    for uht in member:
+        
+        d = collections.OrderedDict()
+        d['id'] = uht.id
+        d['user_id'] = uht.user_id
+        d['team_id'] = uht.team_id
         
         objects_list.append(d)
     

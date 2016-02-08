@@ -5,6 +5,8 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
 
     console.log($routeParams.url);
 
+    $scope.editable = true;
+
     var passObject = {url: $routeParams.url};
 
     $http({
@@ -78,6 +80,7 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             for(var i = 0; i < $scope.team_admins.length; i++) {
                 if($rootScope.userObject.id == $scope.team_admins[i].user_id) {
                     $scope.editable = true;
+                    $scope.notself = false;
                 }
                 else {
                     //nothing
@@ -148,7 +151,7 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         $scope.teamObject.picture = $scope.picture;
 
         $http.put("api/team/" + $scope.teamObject.id, $scope.teamObject);
-        $rootScope.teams.splice($scope.teamObject.id-1, 1, $scope.teamObject);
+        $rootScope.teams.splice($rootScope.teams.indexOf($scope.teamObject), 1, $scope.teamObject);
         window.location.assign("#/team_profile/" + $scope.teamObject.name);
     }
 
@@ -244,6 +247,80 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                 console.log("Already an Admin");
                 alert("That Member is Already An Admin!");
             }
+        })
+
+    }
+
+    $scope.kick = function (item) {
+        
+        //available to team admins
+        var passObject = {team_id: $scope.teamObject.id, user_id: item.id};
+
+        console.log(passObject);
+
+        $http({
+                method: 'POST',
+                url: 'api/get_member',
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify(passObject)
+        })
+        .success(function(data){
+            console.log(data);
+            
+            $http.delete("/api/user_has_team/" + data[0].id)
+            .success(function(){
+                console.log("Team Member Deleted.");
+                $scope.team_members.splice(item, 1)
+            })
+            
+        })
+
+    }
+
+    $scope.leaveTeam = function() {
+        
+        //available to team admins
+        var passObject = {team_id: $scope.teamObject.id, user_id: $rootScope.userObject.id};
+
+        $http({
+                method: 'POST',
+                url: 'api/get_member',
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify(passObject)
+        })
+        .success(function(data){
+            console.log(data);
+
+            $http.delete("/api/user_has_team/" + data[0].id)
+            .success(function(){
+                console.log("Team Left.");
+                $rootScope.teams.splice($rootScope.teams.indexOf($scope.teamObject.id), 1);
+                window.location.assign("#/");
+            })
+        })
+
+    }
+
+    $scope.demote = function (item) {
+        
+        //available to team admins
+        var passObject = {team_id: $scope.teamObject.id, user_id: item.id};
+
+        $http({
+                method: 'POST',
+                url: 'api/get_admin',
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify(passObject)
+        })
+        .success(function(data){
+            console.log(data);
+
+            $http.delete("/api/team_has_admin/" + data[0].id)
+            .success(function(){
+                console.log("Team Admin Demoted.");
+                $scope.team_admins.splice(item, 1)
+            })
+
         })
 
     }
