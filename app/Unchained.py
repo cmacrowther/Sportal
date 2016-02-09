@@ -70,6 +70,14 @@ class TeamHasAdmin(db.Model):
     user_id = Column(Integer, unique=False)
     team_id = Column(Integer, unique=False)
 
+class Event(db.Model):
+    id = Column(Integer, primary_key=True)
+    name = Column(Text, unique=False)
+    date = Column(Text, unique=False)
+    time = Column(Text, unique=False)
+    location = Column(Text, unique=False)
+    description = Column(Text, unique=False)
+
 
 db.create_all()
 
@@ -82,6 +90,7 @@ api_manager.create_api(UserHasSport, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(UserHasTeam, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(FacilityHasSport, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(TeamHasAdmin, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(Event, methods=['GET', 'POST', 'DELETE', 'PUT'])
 
 
 @app.route('/')
@@ -616,6 +625,36 @@ def team_admin_check():
         return "already admin"
     else:
         return "promote"
+
+@app.route('/api/events_search', methods=['POST'])
+def events_search():
+    import json
+    import collections
+    from Unchained import Event
+    
+    data = request.get_json()
+    searchTerm = '%' + str(data.get('searchTerm')) + '%'
+    event = Event.query.filter(or_(Event.name.ilike(searchTerm), Event.description.ilike(searchTerm), Event.location.ilike(searchTerm))).all()
+    objects_list = []
+    
+    if event:
+        for item in event:
+            match = Event.query.get(item.id)
+            
+            d = collections.OrderedDict()
+            d['id'] = match.id
+            d['name'] = match.name
+            d['date'] = match.date
+            d['time'] = match.time
+            d['location'] = match.location
+            d['description'] = match.description
+            
+            objects_list.append(d)
+        
+        j = json.dumps(objects_list)
+        return j
+    else:
+        return "no matching events"
 
 
 
