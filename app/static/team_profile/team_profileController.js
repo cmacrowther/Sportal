@@ -323,9 +323,20 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
 
         })
 
+
+
     }
 
+    $scope.deleteTeam = function (item) {
+        
+        //available to team admins
+        $http.delete("/api/team/" + $scope.teamObject.id)
+        .success(function(){
+            console.log("Team Deleted.");
+            //todo: delete all ties with team_has_admin and user_has_team
+        })
 
+    }
 
 
 
