@@ -5,8 +5,6 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
 
     console.log($routeParams.url);
 
-    $scope.editable = true;
-
     var passObject = {url: $routeParams.url};
 
     $http({
@@ -63,7 +61,6 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             data: JSON.stringify(passObject)
         })
         .success(function (data) {
-            console.log(data);
             $scope.team_members = data;
         })
 
@@ -75,12 +72,10 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             data: JSON.stringify(passObject)
         })
         .success(function (data) {
-            console.log(data);
             $scope.team_admins = data;
             for(var i = 0; i < $scope.team_admins.length; i++) {
-                if($rootScope.userObject.id == $scope.team_admins[i].user_id) {
+                if($rootScope.userObject.id == $scope.team_admins[i].id) {
                     $scope.editable = true;
-                    $scope.notself = false;
                 }
                 else {
                     //nothing
@@ -333,9 +328,51 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         $http.delete("/api/team/" + $scope.teamObject.id)
         .success(function(){
             console.log("Team Deleted.");
-            //todo: delete all ties with team_has_admin and user_has_team
-        })
+            var passObject = {team_id: $scope.teamObject.id};
 
+            $http({
+                method: 'POST',
+                url: 'api/get_team_members_for_deletion',
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify(passObject)
+            })
+            .success(function(data){
+                for(var i = 0; i < data.length; i++){
+                    $http.delete("/api/user_has_team/" + data[i].id)
+                    .success(function(){
+                        console.log("User " + i + " deleted.")
+                    })
+                }
+                var passObject = {team_id: $scope.teamObject.id};
+                $http({
+                method: 'POST',
+                url: 'api/get_team_admins_for_deletion',
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify(passObject)
+                })
+                .success(function(data){
+                    for(var i = 0; i < data.length; i++){
+                        $http.delete("/api/team_has_admin/" + data[i].id)
+                        .success(function(){
+                            console.log("Admin " + i + " deleted.")
+                        })
+                    }
+                    $rootScope.teams.splice($rootScope.teams.indexOf($scope.teamObject.id), 1);
+                    alert("Team Has Been Deleted.");
+                    window.location.assign("#/");
+                })
+
+            })
+        })
+    }   
+
+    $scope.checkID = function(item) {
+        if (item.id == $rootScope.userObject.id) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 
 

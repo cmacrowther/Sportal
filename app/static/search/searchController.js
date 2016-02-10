@@ -43,27 +43,40 @@ angular.module('dashboard.controllers').controller('searchController', ['$scope'
             }
         })
 
+        $http({
+            method: 'POST',
+            url: 'api/events_search',
+            headers: {'Content-Type': 'application/json'},
+            data: JSON.stringify(passObject)
+        })
+        .success(function(data){
+            console.log(data);
+            if (data == "no matching events") {
+                $rootScope.events_list = [];
+                $scope.no_events = "No Matching Events";
+            }
+            else {
+                $rootScope.events_list = data;
+                $scope.no_events = "";
+            }
+        })
 	}
 
     $scope.getSport = function(item){
         
-        $scope.result = [];
+        $http.get("/api/sport/" + item.sport_id)
+        .success(function(data){
+            item.sport_id = data.name;
+        })
 
-        console.log("function");
+    }
 
-        for(var i = 0 ; i < $rootScope.teams_list.length ; i++){
-            if(item.id === $rootScope.teams_list[i].id){
-                console.log("in");
-                $http.get("/api/sport/" + $rootScope.teams_list[i].sport_id)
-                .success(function(data){
-                    console.log(data);
-                    $scope.sport_name = data.name;
-                    return $scope.sport_name;
-                })
+    $scope.getCreator = function(item) {
 
-            }
-        }
-
+        $http.get("/api/user/" + item.creator)
+        .success(function(data){
+            item.creator = data.first_name + " " + data.last_name;
+        })
     }
 
 

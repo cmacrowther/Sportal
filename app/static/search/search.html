@@ -45,10 +45,37 @@
 	    <tbody>
 	        <tr ng-repeat="item in teams_list">
 	            <td><img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.name }}</td>
-	            <td value="getSport(item)">{{ sport_name }}</td>
+	            <td ng-init="item.sport_id=getSport(item)">{{ item.sport_id }}</td>
 	            <td><a href="#/team_profile/{{item.url}}"><button class="btn btn-primary" href="#/user_profile/{{item.id}}">Go</button></a></td>
 	        </tr>
 	    </tbody>
 	</table>
 	<p class="text-center">{{ no_teams }}</p>
+</div>
+
+<div>
+	<h4>Events</h4>
+	<table class="table table-striped">
+	    <thead>
+	        <tr>
+	            <th> Event </th>
+	            <th> Date </th>
+	            <th> Time </th>
+	            <th> Location </th>
+	            <th> Description </th>
+                <th> Created By </th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <tr ng-repeat="item in events_list">
+	            <td>{{ item.name }}</td>
+	            <td> {{ item.date }}</td>
+	            <td>{{ item.time }}</td>
+	            <td>{{ item.location }}</td>
+	            <td>{{ item.description }}</td>
+                <td ng-init="item.creator=getCreator(item)">{{ item.creator }}</td>
+	        </tr>
+	    </tbody>
+	</table>
+	<p class="text-center">{{ no_events }}</p>
 </div>

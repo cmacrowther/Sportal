@@ -77,7 +77,12 @@ class Event(db.Model):
     time = Column(Text, unique=False)
     location = Column(Text, unique=False)
     description = Column(Text, unique=False)
+    creator = Column(Integer, unique=False)
 
+class EventHasAttendee(db.Model):
+    id = Column(Integer, primary_key=True)
+    event_id = Column(Integer, unique=False)
+    user_id = Column(Integer, unique=False)
 
 db.create_all()
 
@@ -91,7 +96,7 @@ api_manager.create_api(UserHasTeam, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(FacilityHasSport, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(TeamHasAdmin, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(Event, methods=['GET', 'POST', 'DELETE', 'PUT'])
-
+api_manager.create_api(EventHasAttendee, methods=['GET', 'POST', 'DELETE', 'PUT'])
 
 @app.route('/')
 def index():
@@ -247,6 +252,53 @@ def get_team_members():
     j = json.dumps(objects_list)
     return j
 
+@app.route('/api/get_team_members_for_deletion', methods=['POST'])
+def get_team_members_for_deletion():
+    import json
+    import collections
+    from Unchained import UserHasTeam
+
+    data = request.get_json()
+    team_id = data.get('team_id')
+    users = UserHasTeam.query.filter(UserHasTeam.team_id == team_id).all()
+    objects_list = []
+
+    if users:
+        for item in users:
+            d = collections.OrderedDict()
+            d['id'] = item.id
+
+            objects_list.append(d)
+    
+        j = json.dumps(objects_list)
+        return j
+    else:
+        return "error"
+
+@app.route('/api/get_team_admins_for_deletion', methods=['POST'])
+def get_team_admins_for_deletion():
+    import json
+    import collections
+    from Unchained import TeamHasAdmin
+    
+    data = request.get_json()
+    team_id = data.get('team_id')
+    users = TeamHasAdmin.query.filter(TeamHasAdmin.team_id == team_id).all()
+    objects_list = []
+    
+    if users:
+        for item in users:
+            d = collections.OrderedDict()
+            d['id'] = item.id
+            
+            objects_list.append(d)
+        
+        j = json.dumps(objects_list)
+        return j
+    else:
+        return "error"
+
+
 @app.route('/api/get_team_admins', methods=['POST'])
 def get_team_admins():
     import json
@@ -360,6 +412,39 @@ def get_user_sports():
     else:
         return "no sports"
 
+@app.route('/api/get_event_attendees', methods=['POST'])
+def get_event_attendees():
+    import json
+    import collections
+    from Unchained import User
+    from Unchained import EventHasAttendee
+    
+    data = request.get_json()
+    event_id = data.get('event_id')
+    
+    attendees = EventHasAttendee.query.filter(and_(EventHasAttendee.event_id == event_id)).all()
+    objects_list = []
+    
+    if attendees:
+        
+        for item in attendees:
+            user = User.query.get(item.user_id)
+            
+            d = collections.OrderedDict()
+            d['id'] = user.id
+            d['first_name'] = user.first_name
+            d['last_name'] = user.last_name
+            d['description'] = user.description
+            d['email'] = user.email
+            d['picture'] = user.picture
+            
+            objects_list.append(d)
+        
+        j = json.dumps(objects_list)
+        return j
+    
+    else:
+        return "no people attending"
 
 @app.route("/profile/<int:profile_id>", methods=["GET"])
 def get_profile(profile_id):
@@ -498,6 +583,90 @@ def get_user_teams():
 
     else:
         return "no teams"
+
+@app.route('/api/get_user_events', methods=['POST'])
+def get_user_events():
+    import json
+    import collections
+    from Unchained import EventHasAttendee
+    
+    data = request.get_json()
+    user_id = data.get('user_id')
+    
+    event = EventHasAttendee.query.filter(EventHasAttendee.user_id == user_id).all()
+    objects_list = []
+    
+    if event:
+        
+        for item in event:
+            event = Event.query.get(item.id)
+            
+            d = collections.OrderedDict()
+            d['id'] = event.id
+            d['name'] = event.name
+            d['date'] = event.date
+            d['time'] = event.time
+            d['location'] = event.location
+            d['description'] = event.description
+            d['creator'] = event.creator
+
+            
+            objects_list.append(d)
+        
+        j = json.dumps(objects_list)
+        return j
+    
+    else:
+        return "no events"
+
+@app.route('/api/check_follow_status', methods=['POST'])
+def check_follow_status():
+    import json
+    from Unchained import EventHasAttendee
+
+    data = request.get_json()
+    event_id = data.get('event_id')
+    user_id = data.get('user_id')
+
+    duplicate = EventHasAttendee.query.filter(and_(EventHasAttendee.user_id == user_id, EventHasAttendee.event_id == event_id)).all()
+
+    if duplicate:
+        return "duplicate"
+    else:
+        return "noduplicate"
+
+@app.route('/api/get_event_info', methods=['POST'])
+def get_event_info():
+    import json
+    import collections
+    from Unchained import Event
+    
+    data = request.get_json()
+    url = data.get('url')
+    item = Event.query.filter(Event.name == url).all()
+    objects_list = []
+    
+    if item:
+        
+        for event in item:
+            event = Event.query.get(event.id)
+            
+            d = collections.OrderedDict()
+            d['id'] = event.id
+            d['name'] = event.name
+            d['date'] = event.date
+            d['time'] = event.time
+            d['location'] = event.location
+            d['description'] = event.description
+            d['creator'] = event.creator
+            
+            objects_list.append(d)
+        
+        j = json.dumps(objects_list)
+        return j
+    
+    else:
+        return "it fucked up"
 
 @app.route('/api/get_team_info', methods=['POST'])
 def get_team_info():
@@ -648,6 +817,7 @@ def events_search():
             d['time'] = match.time
             d['location'] = match.location
             d['description'] = match.description
+            d['creator'] = match.creator
             
             objects_list.append(d)
         

@@ -30,7 +30,7 @@
 }
 
 .side-menu {
-  position: fixed;
+  position: absolute;
   width: 300px;
   height: 100%;
   background-color: #f8f8f8;
@@ -230,7 +230,7 @@
   }
   .side-menu-container > .navbar-nav {
     /* Add position:absolute for scrollable menu -> see top comment */
-    position: fixed;
+    position: absolute;
     left: -300px;
     width: 300px;
     top: 43px;
@@ -244,8 +244,7 @@
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
   }
-  /* Uncomment for scrollable menu -> see top comment */
-  /*.absolute-wrapper{
+  .absolute-wrapper{
         width:285px;
         -moz-animation: slideout 300ms forwards;
         -o-animation: slideout 300ms forwards;
@@ -253,7 +252,7 @@
         animation: slideout 300ms forwards;
         -webkit-transform-style: preserve-3d;
         transform-style: preserve-3d;
-    }*/
+    }
   @-moz-keyframes bodyslidein {
     0% {
       left: 0;

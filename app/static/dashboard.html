@@ -33,6 +33,7 @@
     <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
     <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 
+
     <!-- CSS -->
     <link type="text/css" href="css/dashboard.css" rel="stylesheet">
 
@@ -61,7 +62,7 @@
             </div>
 
             <!-- Search -->
-            <a data-toggle="collapse" class="btn btn-default" href="#/search_page" id="search-trigger">
+            <a data-toggle="collapse" class="btn btn-default" href="#/search" id="search-trigger">
                 <span class="glyphicon glyphicon-search"></span>
             </a>
 
@@ -85,7 +86,6 @@
         <ul class="nav navbar-nav">
 
             <li><a href="#/user_profile/{{ $root.userObject.id }}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-            <!--<li><a href="#"><span class="glyphicon glyphicon-cloud"></span> Link (dead)</a></li>-->
 
             <!-- Dropdown-->
             <li class="panel panel-default" id="dropdown">
@@ -107,7 +107,23 @@
             </li>
 
             <li><a href="#/play"><span style="padding-right: 10px"><i class="fa fa-futbol-o"></i></span> Play</a></li>
-            <li><a href="#/events"><span class="glyphicon glyphicon-calendar"></span> Events</a></li>
+            <li><a href="#/games"><span class="glyphicon glyphicon-object-align-horizontal"></span> Games</a></li>
+            <li class="panel panel-default" id="dropdown">
+                <a data-toggle="collapse" data-target="#dropdown-lvl2">
+                    <span style="padding-right: 10px"><i class="fa fa-calendar"></i></span> Events<span class="caret"></span>
+                </a>
+
+                <!-- Dropdown level 1 -->
+                <div id="dropdown-lvl2" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <ul class="nav navbar-nav">
+                            <li><a href="#/event_create">Create an Event</a></li>
+                            <li class="divider" role="separator"></li>
+                            <ul class="nav navbar-nav"><li ng-repeat="item in events"><a href="#/events/{{ item.name }}">{{ item.name }}</a></ul>
+                        </ul>
+                    </div>
+                </div>
+            </li>
             <li><a href="#/admin"><span class="glyphicon glyphicon-cog"></span> Admin</a></li>
 
 
@@ -140,4 +156,6 @@
 <script src="js/dashboard.js"></script>
 <script src="admin/adminController.js"></script>
 <script src="events/eventsController.js"></script>
+<script src="games/gamesController.js"></script>
+<script src="event_create/event_createController.js"></script>
 </html>

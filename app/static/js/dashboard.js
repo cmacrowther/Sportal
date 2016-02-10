@@ -65,8 +65,27 @@ angular.module('dashboard.controllers')
                 else {
                     $rootScope.teams = data;
                 }
-
             })
+
+            $rootScope.events = [];
+
+            $http({
+                method: 'POST',
+                url: 'api/get_user_events',
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify(passObject)
+            })
+            .success(function(data){
+                console.log(data);
+                if (data == "no events") {
+                    $rootScope.events = [];
+                }
+                else {
+                    $rootScope.events = data;
+                }
+            })
+
+
             
 
     }])
