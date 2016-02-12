@@ -37,7 +37,12 @@ angular.module('dashboard.controllers').controller('eventsController', ['$scope'
             $scope.event_location = "No info given";
         }
         else {
-            $scope.event_location = $scope.eventObject.location;
+            $scope.event_location_address = $scope.eventObject.location_address;
+
+            $('#location').locationpicker({
+                location: {latitude: $scope.eventObject.location_lat, longitude: $scope.eventObject.location_long},   
+                radius: 300,
+            })
         }
         if ($scope.eventObject.description == "" || $scope.eventObject.description == undefined) {
             $scope.event_description = "No info given";

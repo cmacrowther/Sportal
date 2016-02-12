@@ -46,9 +46,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="signup control-label">Location</label>
-
-                    
+                    Location: <input type="text" ng-model="event_location" id="location-address" style="width: 300px"/>
+                    <div id="location" style="width: 600px; height: 600px;"></div>
 
                 </div>
 
@@ -67,7 +66,7 @@
 
                 <div class="row">
                     <div class="col-md-4 col-md-offset-4" class="form-group">
-                        <button type="submit" ng-click="addEvent()" class="btn btn-success btn-block">Create Event
+                        <button ng-click="addEvent()" class="btn btn-success btn-block">Create Event
                         </button>
                         <h4 class="text-center">{{ addEventResult }}</h4>
                     </div>

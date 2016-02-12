@@ -75,7 +75,9 @@ class Event(db.Model):
     name = Column(Text, unique=False)
     date = Column(Text, unique=False)
     time = Column(Text, unique=False)
-    location = Column(Text, unique=False)
+    location_address = Column(Text, unique=false)
+    location_lat = Column(Numeric, unique=False)
+    location_long = Column(Numeric, unique=False)
     description = Column(Text, unique=False)
     creator = Column(Integer, unique=False)
 
@@ -589,6 +591,7 @@ def get_user_events():
     import json
     import collections
     from Unchained import EventHasAttendee
+    from Unchained import Event
     
     data = request.get_json()
     user_id = data.get('user_id')
@@ -599,16 +602,16 @@ def get_user_events():
     if event:
         
         for item in event:
-            event = Event.query.get(item.id)
+            target = Event.query.get(item.event_id)
             
             d = collections.OrderedDict()
-            d['id'] = event.id
-            d['name'] = event.name
-            d['date'] = event.date
-            d['time'] = event.time
-            d['location'] = event.location
-            d['description'] = event.description
-            d['creator'] = event.creator
+            d['id'] = target.id
+            d['name'] = target.name
+            d['date'] = target.date
+            d['time'] = target.time
+            d['location'] = target.location
+            d['description'] = target.description
+            d['creator'] = target.creator
 
             
             objects_list.append(d)

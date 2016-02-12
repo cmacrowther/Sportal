@@ -1,9 +1,21 @@
 /**
  * Created by Brandon on 1/20/2016.
  */
-angular.module('dashboard.controllers').controller('event_createController', ['$scope', '$http', '$rootScope', '$routeParams', function ($scope, $http, $rootScope, $routeParams) {
+angular.module('dashboard.controllers').controller('event_createController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
 
-    $('#eventForm').validator();
+    $('#location').locationpicker({
+        location: {latitude: 46.15242437752303, longitude: 2.7470703125},   
+        radius: 300,
+        inputBinding: {
+            locationNameInput: $('#location-address')        
+        },
+        enableAutocomplete: true,
+        onchanged: function(currentLocation, radius, isMarkerDropped) {
+            console.log("Location Changed");
+            $scope.event_location_lat = currentLocation.latitude;
+            $scope.event_location_long = currentLocation.longitude;
+        }
+    })
 
 	$scope.addEvent = function() {
 
@@ -12,7 +24,9 @@ angular.module('dashboard.controllers').controller('event_createController', ['$
             date: $scope.event_date, 
             time: $scope.event_time, 
             description: $scope.event_description,
-            location: $scope.event_location,
+            location_address: $scope.event_location,
+            location_lat: String($scope.event_location_lat),
+            location_long: String($scope.event_location_long),
             creator: $rootScope.userObject.id
         })
         .success(function(data){
