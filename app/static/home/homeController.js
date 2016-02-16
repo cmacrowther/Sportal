@@ -5,7 +5,7 @@ angular.module('dashboard.controllers',[]).controller('HomeController', ['$scope
     console.log("hello world");
 
     //Initializes the date time picker plugin.
-	$('#birth').datetimepicker({
+    $('#birth').datetimepicker({
         format: 'MM/DD/YYYY',
         viewMode: 'years'
     });
