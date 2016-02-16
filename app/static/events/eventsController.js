@@ -33,14 +33,14 @@ angular.module('dashboard.controllers').controller('eventsController', ['$scope'
         else {
             $scope.event_time = $scope.eventObject.time;
         }
-        if ($scope.eventObject.location == "" || $scope.eventObject.location == undefined) {
+        if ($scope.eventObject.address == "" || $scope.eventObject.address == undefined) {
             $scope.event_location = "No info given";
         }
         else {
-            $scope.event_location_address = $scope.eventObject.location_address;
+            $scope.event_location_address = $scope.eventObject.address;
 
             $('#location').locationpicker({
-                location: {latitude: $scope.eventObject.location_lat, longitude: $scope.eventObject.location_long},   
+                location: {latitude: $scope.eventObject.latitude, longitude: $scope.eventObject.longitude},   
                 radius: 300,
             })
         }

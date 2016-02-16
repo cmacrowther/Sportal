@@ -76,8 +76,8 @@ class Event(db.Model):
     date = Column(Text, unique=False)
     time = Column(Text, unique=False)
     location_address = Column(Text, unique=false)
-    location_lat = Column(Numeric, unique=False)
-    location_long = Column(Numeric, unique=False)
+    location_lat = Column(Float, unique=False)
+    location_long = Column(Float, unique=False)
     description = Column(Text, unique=False)
     creator = Column(Integer, unique=False)
 
@@ -602,16 +602,18 @@ def get_user_events():
     if event:
         
         for item in event:
-            target = Event.query.get(item.event_id)
+            match = Event.query.get(item.event_id)
             
             d = collections.OrderedDict()
-            d['id'] = target.id
-            d['name'] = target.name
-            d['date'] = target.date
-            d['time'] = target.time
-            d['location'] = target.location
-            d['description'] = target.description
-            d['creator'] = target.creator
+            d['id'] = match.id
+            d['name'] = match.name
+            d['date'] = match.date
+            d['time'] = match.time
+            d['address'] = match.location_address
+            d['latitude'] = match.location_lat
+            d['longitude'] = match.location_long
+            d['description'] = match.description
+            d['creator'] = match.creator
 
             
             objects_list.append(d)
@@ -646,22 +648,24 @@ def get_event_info():
     
     data = request.get_json()
     url = data.get('url')
-    item = Event.query.filter(Event.name == url).all()
+    event = Event.query.filter(Event.name == url).all()
     objects_list = []
     
-    if item:
+    if event:
         
-        for event in item:
-            event = Event.query.get(event.id)
+        for item in event:
+            match = Event.query.get(item.id)
             
             d = collections.OrderedDict()
-            d['id'] = event.id
-            d['name'] = event.name
-            d['date'] = event.date
-            d['time'] = event.time
-            d['location'] = event.location
-            d['description'] = event.description
-            d['creator'] = event.creator
+            d['id'] = match.id
+            d['name'] = match.name
+            d['date'] = match.date
+            d['time'] = match.time
+            d['address'] = match.location_address
+            d['latitude'] = match.location_lat
+            d['longitude'] = match.location_long
+            d['description'] = match.description
+            d['creator'] = match.creator
             
             objects_list.append(d)
         
@@ -818,7 +822,9 @@ def events_search():
             d['name'] = match.name
             d['date'] = match.date
             d['time'] = match.time
-            d['location'] = match.location
+            d['address'] = match.location_address
+            d['latitude'] = match.location_lat
+            d['longitude'] = match.location_long
             d['description'] = match.description
             d['creator'] = match.creator
             

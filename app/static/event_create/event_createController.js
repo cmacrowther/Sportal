@@ -12,6 +12,7 @@ angular.module('dashboard.controllers').controller('event_createController', ['$
         enableAutocomplete: true,
         onchanged: function(currentLocation, radius, isMarkerDropped) {
             console.log("Location Changed");
+            $scope.event_location = $('#location-address');
             $scope.event_location_lat = currentLocation.latitude;
             $scope.event_location_long = currentLocation.longitude;
         }
@@ -25,8 +26,8 @@ angular.module('dashboard.controllers').controller('event_createController', ['$
             time: $scope.event_time, 
             description: $scope.event_description,
             location_address: $scope.event_location,
-            location_lat: String($scope.event_location_lat),
-            location_long: String($scope.event_location_long),
+            location_lat: $scope.event_location_lat,
+            location_long: $scope.event_location_long,
             creator: $rootScope.userObject.id
         })
         .success(function(data){
