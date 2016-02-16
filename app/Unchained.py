@@ -65,10 +65,36 @@ class FacilityHasSport(db.Model):
     facility_id = Column(Integer, unique=False)
     sport_id = Column(Integer, unique=False)
 
+
 class TeamHasAdmin(db.Model):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, unique=False)
     team_id = Column(Integer, unique=False)
+
+
+class Queue(db.Model):
+    id = Column(Integer, primary_key=True)
+    sport_id = Column(Integer, unique=False)
+    user_id = Column(Integer, unique=False)
+    is_team = Column(Integer, unique=False)
+    members = Column(Integer, unique=False)
+    difficulty = Column(Text, unique=False)
+
+
+class Match(db.Model):
+    id = Column(Integer, primary_key=True)
+    sport_id = Column(Integer, unique=False)
+    player1_id = Column(Integer, unique=False)
+    player2_id = Column(Integer, unique=False)
+    is_team = Column(Integer, unique=False)
+    date = Column(Text, unique=False)
+    time = Column(Text, unique=False)
+    facility_id = Column(Integer, unique=False)
+    complete = Column(Integer, unique=False)
+    winner_id = Column(Integer, unique=False)
+    score_1 = Column(Integer, unique=False)
+    score_2 = Column(Integer, unique=False)
+
 
 class Event(db.Model):
     id = Column(Integer, primary_key=True)
@@ -81,10 +107,12 @@ class Event(db.Model):
     description = Column(Text, unique=False)
     creator = Column(Integer, unique=False)
 
+
 class EventHasAttendee(db.Model):
     id = Column(Integer, primary_key=True)
     event_id = Column(Integer, unique=False)
     user_id = Column(Integer, unique=False)
+
 
 db.create_all()
 
@@ -97,8 +125,11 @@ api_manager.create_api(UserHasSport, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(UserHasTeam, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(FacilityHasSport, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(TeamHasAdmin, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(Queue, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(Match, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(Event, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(EventHasAttendee, methods=['GET', 'POST', 'DELETE', 'PUT'])
+
 
 @app.route('/')
 def index():
@@ -181,14 +212,15 @@ def team_url_check():
     else:
         return "noduplicate"
 
+
 @app.route('/api/team_name_check', methods=['POST'])
 def team_name_check():
     from Unchained import Team
-    
+
     data = request.get_json()
     name = data.get('name')
     team = Team.query.filter(Team.name == name).all()
-    
+
     if team:
         return "duplicate"
     else:
@@ -199,29 +231,29 @@ def team_name_check():
 def send_mail():
     import smtplib
     import email.message
-    
+
     data = request.get_json()
-    
+
     user = data.get('user')
     receivers = data.get('email')
     team = data.get('team')
     password = data.get('password')
     sender = 'mycodebrary@gmail.com'
-    
+
     msg = email.message.Message()
     msg['Subject'] = 'Unchained Invitation from' + user
     msg['From'] = 'mycodebrary@gmail.com'
     msg['To'] = receivers
-    msg.add_header('Content-Type','text/html')
-    msg.set_payload('<h1>You have recieved an invitation to join ' + user + '\'s Team ' + team + ' with password ' + password + ' <br><br> Go to www.unchained.com make an account and join their team!</h1>')
+    msg.add_header('Content-Type', 'text/html')
+    msg.set_payload(
+        '<h1>You have recieved an invitation to join ' + user + '\'s Team ' + team + ' with password ' + password + ' <br><br> Go to www.unchained.com make an account and join their team!</h1>')
 
     s = smtplib.SMTP("smtp.gmail.com", 587)
     s.starttls()
     s.login("mycodebrary@gmail.com", "mycodebrary#1")
     s.sendmail(msg['From'], [msg['To']], msg.as_string())
-               
-    return "Successfully sent"
 
+    return "Successfully sent"
 
 
 @app.route('/api/get_team_members', methods=['POST'])
@@ -239,7 +271,7 @@ def get_team_members():
 
     for uht in members:
         user = User.query.get(uht.user_id)
-        
+
         d = collections.OrderedDict()
         d['id'] = user.id
         d['team_id'] = user.team_id
@@ -253,6 +285,7 @@ def get_team_members():
 
     j = json.dumps(objects_list)
     return j
+
 
 @app.route('/api/get_team_members_for_deletion', methods=['POST'])
 def get_team_members_for_deletion():
@@ -271,30 +304,31 @@ def get_team_members_for_deletion():
             d['id'] = item.id
 
             objects_list.append(d)
-    
+
         j = json.dumps(objects_list)
         return j
     else:
         return "error"
+
 
 @app.route('/api/get_team_admins_for_deletion', methods=['POST'])
 def get_team_admins_for_deletion():
     import json
     import collections
     from Unchained import TeamHasAdmin
-    
+
     data = request.get_json()
     team_id = data.get('team_id')
     users = TeamHasAdmin.query.filter(TeamHasAdmin.team_id == team_id).all()
     objects_list = []
-    
+
     if users:
         for item in users:
             d = collections.OrderedDict()
             d['id'] = item.id
-            
+
             objects_list.append(d)
-        
+
         j = json.dumps(objects_list)
         return j
     else:
@@ -307,75 +341,75 @@ def get_team_admins():
     import collections
     from Unchained import TeamHasAdmin
     from Unchained import User
-    
+
     data = request.get_json()
     team_id = data.get('team_id')
-    
+
     admins = TeamHasAdmin.query.filter(TeamHasAdmin.team_id == team_id).all()
     objects_list = []
-    
+
     for tha in admins:
         user = User.query.get(tha.user_id)
-        
+
         d = collections.OrderedDict()
         d['id'] = user.id
         d['first_name'] = user.first_name
         d['last_name'] = user.last_name
         d['email'] = user.email
         d['picture'] = user.picture
-        
+
         objects_list.append(d)
-    
+
     j = json.dumps(objects_list)
     return j
+
 
 @app.route('/api/get_admin', methods=['POST'])
 def get_admin():
     import json
     import collections
     from Unchained import TeamHasAdmin
-    
+
     data = request.get_json()
     team_id = data.get('team_id')
     user_id = data.get('user_id')
-    
+
     admin = TeamHasAdmin.query.filter(and_(TeamHasAdmin.team_id == team_id, TeamHasAdmin.user_id == user_id)).all()
     objects_list = []
-    
+
     for tha in admin:
-        
         d = collections.OrderedDict()
         d['id'] = tha.id
         d['user_id'] = tha.user_id
         d['team_id'] = tha.team_id
-        
+
         objects_list.append(d)
-    
+
     j = json.dumps(objects_list)
     return j
+
 
 @app.route('/api/get_member', methods=['POST'])
 def get_member():
     import json
     import collections
     from Unchained import UserHasTeam
-    
+
     data = request.get_json()
     team_id = data.get('team_id')
     user_id = data.get('user_id')
-    
+
     member = UserHasTeam.query.filter(and_(UserHasTeam.team_id == team_id, UserHasTeam.user_id == user_id)).all()
     objects_list = []
 
     for uht in member:
-        
         d = collections.OrderedDict()
         d['id'] = uht.id
         d['user_id'] = uht.user_id
         d['team_id'] = uht.team_id
-        
+
         objects_list.append(d)
-    
+
     j = json.dumps(objects_list)
     return j
 
@@ -414,24 +448,25 @@ def get_user_sports():
     else:
         return "no sports"
 
+
 @app.route('/api/get_event_attendees', methods=['POST'])
 def get_event_attendees():
     import json
     import collections
     from Unchained import User
     from Unchained import EventHasAttendee
-    
+
     data = request.get_json()
     event_id = data.get('event_id')
-    
+
     attendees = EventHasAttendee.query.filter(and_(EventHasAttendee.event_id == event_id)).all()
     objects_list = []
-    
+
     if attendees:
-        
+
         for item in attendees:
             user = User.query.get(item.user_id)
-            
+
             d = collections.OrderedDict()
             d['id'] = user.id
             d['first_name'] = user.first_name
@@ -439,14 +474,15 @@ def get_event_attendees():
             d['description'] = user.description
             d['email'] = user.email
             d['picture'] = user.picture
-            
+
             objects_list.append(d)
-        
+
         j = json.dumps(objects_list)
         return j
-    
+
     else:
         return "no people attending"
+
 
 @app.route("/profile/<int:profile_id>", methods=["GET"])
 def get_profile(profile_id):
@@ -586,24 +622,25 @@ def get_user_teams():
     else:
         return "no teams"
 
+
 @app.route('/api/get_user_events', methods=['POST'])
 def get_user_events():
     import json
     import collections
     from Unchained import EventHasAttendee
     from Unchained import Event
-    
+
     data = request.get_json()
     user_id = data.get('user_id')
-    
+
     event = EventHasAttendee.query.filter(EventHasAttendee.user_id == user_id).all()
     objects_list = []
-    
+
     if event:
-        
+
         for item in event:
             match = Event.query.get(item.event_id)
-            
+
             d = collections.OrderedDict()
             d['id'] = match.id
             d['name'] = match.name
@@ -615,14 +652,14 @@ def get_user_events():
             d['description'] = match.description
             d['creator'] = match.creator
 
-            
             objects_list.append(d)
-        
+
         j = json.dumps(objects_list)
         return j
-    
+
     else:
         return "no events"
+
 
 @app.route('/api/check_follow_status', methods=['POST'])
 def check_follow_status():
@@ -633,29 +670,31 @@ def check_follow_status():
     event_id = data.get('event_id')
     user_id = data.get('user_id')
 
-    duplicate = EventHasAttendee.query.filter(and_(EventHasAttendee.user_id == user_id, EventHasAttendee.event_id == event_id)).all()
+    duplicate = EventHasAttendee.query.filter(
+        and_(EventHasAttendee.user_id == user_id, EventHasAttendee.event_id == event_id)).all()
 
     if duplicate:
         return "duplicate"
     else:
         return "noduplicate"
 
+
 @app.route('/api/get_event_info', methods=['POST'])
 def get_event_info():
     import json
     import collections
     from Unchained import Event
-    
+
     data = request.get_json()
     url = data.get('url')
     event = Event.query.filter(Event.name == url).all()
     objects_list = []
-    
+
     if event:
-        
+
         for item in event:
             match = Event.query.get(item.id)
-            
+
             d = collections.OrderedDict()
             d['id'] = match.id
             d['name'] = match.name
@@ -666,31 +705,32 @@ def get_event_info():
             d['longitude'] = match.location_long
             d['description'] = match.description
             d['creator'] = match.creator
-            
+
             objects_list.append(d)
-        
+
         j = json.dumps(objects_list)
         return j
-    
+
     else:
         return "it fucked up"
+
 
 @app.route('/api/get_team_info', methods=['POST'])
 def get_team_info():
     import json
     import collections
     from Unchained import Team
-    
+
     data = request.get_json()
     url = data.get('url')
     item = Team.query.filter(Team.url == url).all()
     objects_list = []
-    
+
     if item:
-        
+
         for group in item:
             team = Team.query.get(group.id)
-            
+
             d = collections.OrderedDict()
             d['id'] = team.id
             d['sport_id'] = team.sport_id
@@ -700,14 +740,15 @@ def get_team_info():
             d['url'] = team.url
             d['description'] = team.description
             d['password'] = team.password
-            
+
             objects_list.append(d)
-        
+
         j = json.dumps(objects_list)
         return j
 
     else:
         return "it fucked up"
+
 
 @app.route('/api/team_member_check', methods=['POST'])
 def team_member_check():
@@ -715,43 +756,45 @@ def team_member_check():
     import collections
     from Unchained import Team
     from Unchained import UserHasTeam
-    
+
     data = request.get_json()
     url = data.get('url')
     user_id = data.get('user_id')
-    
+
     team_match = Team.query.filter(Team.url == url).all()
-    match = UserHasTeam.query.filter(and_(UserHasTeam.team_id == team_match[0].id, UserHasTeam.user_id == user_id)).all()
-        
+    match = UserHasTeam.query.filter(
+        and_(UserHasTeam.team_id == team_match[0].id, UserHasTeam.user_id == user_id)).all()
+
     if match:
         return "duplicate"
     else:
         return str(team_match[0].id)
+
 
 @app.route('/api/team_search', methods=['POST'])
 def team_search():
     import json
     import collections
     from Unchained import Team
-    
+
     data = request.get_json()
     searchTerm = '%' + str(data.get('searchTerm')) + '%'
     team = Team.query.filter(or_(Team.name.ilike(searchTerm), Team.url.ilike(searchTerm))).all()
     objects_list = []
-    
+
     if team:
         for item in team:
             match = Team.query.get(item.id)
-            
+
             d = collections.OrderedDict()
             d['team_id'] = match.id
             d['name'] = match.name
             d['url'] = match.url
             d['picture'] = match.picture
             d['sport_id'] = match.sport_id
-            
+
             objects_list.append(d)
-        
+
         j = json.dumps(objects_list)
         return j
     else:
@@ -763,29 +806,31 @@ def user_search():
     import json
     import collections
     from Unchained import User
-    
+
     data = request.get_json()
     searchTerm = '%' + str(data.get('searchTerm')) + '%'
-    user = User.query.filter(or_(User.first_name.ilike(searchTerm), User.last_name.ilike(searchTerm), User.email.ilike(searchTerm))).all()
+    user = User.query.filter(
+        or_(User.first_name.ilike(searchTerm), User.last_name.ilike(searchTerm), User.email.ilike(searchTerm))).all()
     objects_list = []
 
     if user:
         for item in user:
             match = User.query.get(item.id)
-    
+
             d = collections.OrderedDict()
             d['id'] = match.id
             d['email'] = match.email
             d['first_name'] = match.first_name
             d['last_name'] = match.last_name
             d['picture'] = match.picture
-            
+
             objects_list.append(d)
-        
+
         j = json.dumps(objects_list)
         return j
     else:
         return "no matching users"
+
 
 @app.route('/api/team_admin_check', methods=['POST'])
 def team_admin_check():
@@ -802,21 +847,23 @@ def team_admin_check():
     else:
         return "promote"
 
+
 @app.route('/api/events_search', methods=['POST'])
 def events_search():
     import json
     import collections
     from Unchained import Event
-    
+
     data = request.get_json()
     searchTerm = '%' + str(data.get('searchTerm')) + '%'
-    event = Event.query.filter(or_(Event.name.ilike(searchTerm), Event.description.ilike(searchTerm), Event.location.ilike(searchTerm))).all()
+    event = Event.query.filter(
+        or_(Event.name.ilike(searchTerm), Event.description.ilike(searchTerm), Event.location.ilike(searchTerm))).all()
     objects_list = []
-    
+
     if event:
         for item in event:
             match = Event.query.get(item.id)
-            
+
             d = collections.OrderedDict()
             d['id'] = match.id
             d['name'] = match.name
@@ -827,14 +874,41 @@ def events_search():
             d['longitude'] = match.location_long
             d['description'] = match.description
             d['creator'] = match.creator
-            
+
             objects_list.append(d)
-        
+
         j = json.dumps(objects_list)
         return j
     else:
         return "no matching events"
 
+
+# MATCHMAKING
+@app.route('/api/single_matchmaking', methods=['POST'])
+def single_matchmaking():
+    import json
+    import collections
+    from Unchained import Queue
+    from Unchained import Match
+    from Unchained import User
+
+    data = request.get_json()
+    sport_id = data.get('sport_id')
+    user_id = data.get('user_id')
+    difficulty = data.get('difficulty')
+    team = data.get('team')
+
+    if team == '1 VS 1':
+        is_team = 0
+    else:
+        is_team = 1
+
+    queue = Queue.query.filter(and_(Queue.difficulty == difficulty, Queue.sport_id == sport_id, Queue.is_team == is_team )).all()
+
+    if queue:
+        return str(queue[0].user_id)
+    else:
+        return "no match"
 
 
 app.debug = True

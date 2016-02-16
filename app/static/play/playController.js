@@ -25,28 +25,60 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
             $scope.sports = data.objects;
         })
 
-    $scope.setSport = function(item){
+    $scope.setSport = function (item) {
         $scope.sport = item;
         $scope.pickSport = $scope.sport.name;
     }
 
-    $scope.setTier = function(item){
+    $scope.setTier = function (item) {
         $scope.pickTier = item;
     }
 
-    $scope.setTeams = function(item){
+    $scope.setTeams = function (item) {
         $scope.pickTeams = item;
     }
 
-    $scope.play = function(item){
+    $scope.play = function () {
         $scope.playResult = "Searching...";
 
 
-        $scope.matchObject = { sport:  $scope.sport,
-                               difficulty: $scope.pickTier,
-                               team:  $scope.pickTeams }
+        $scope.matchObject = {
+            user: $rootScope.userObject,
+            sport: $scope.sport,
+            difficulty: $scope.pickTier,
+            team: $scope.pickTeams
+        }
+
+        var passObject = {
+            user_id: $rootScope.userObject.id,
+            sport_id: $scope.sport.id,
+            difficulty: $scope.pickTier,
+            team: $scope.pickTeams
+        }
 
         console.log("Finding an opponent...");
-        console.log($scope.matchObject);
+        console.log(passObject);
+
+        $http({
+            method: 'POST',
+            url: 'api/single_matchmaking',
+            headers: {'Content-Type': 'application/json'},
+            data: JSON.stringify(passObject)
+        }).success(function (data) {
+            console.log(data);
+            if (data == "no match") {
+
+                $http.post("/api/queue", passObject)
+                    .success(function (data) {
+                        console.log("Queued for match");
+                        alert("Queued");
+                    })
+            }
+            else{
+                window.location.assign("#/user_profile/" + data);
+            }
+
+
+        })
     }
 }]);
