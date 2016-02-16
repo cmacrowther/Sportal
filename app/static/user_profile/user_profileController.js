@@ -4,6 +4,17 @@
 
 angular.module('dashboard.controllers').controller('user_profileController', ['$scope', '$rootScope', '$http', '$routeParams', function ($scope, $rootScope, $http, $routeParams) {
 
+        //Initializes the form validator plugin.
+    $('#user_creation_form').validator();
+    $('#changePassword').validator();
+    //$('#registerForm').validator();
+
+    //Initializes the date time picker plugin.
+    $('#birth').datetimepicker({
+        format: 'MM/DD/YYYY',
+        viewMode: 'years'
+    });
+
     $scope.user_id = $routeParams.user_id;
 
     console.log("Profile Param " + $scope.user_id);
@@ -108,15 +119,6 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
         window.location.assign("dashboard.html#/error/" + $scope.error);
     })
 
-    //Initializes the form validator plugin.
-    $("#user_creation_form").validator();
-    $("#changePassword").validator();
-
-    //Initializes the date time picker plugin.
-    $('#birth').datetimepicker({
-        format: 'MM/DD/YYYY',
-        viewMode: 'years'
-    });
 
    
 
