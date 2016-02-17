@@ -924,6 +924,44 @@ def single_matchmaking():
     else:
         return "no match"
 
+@app.route('/api/get_user_games', methods=['POST'])
+def get_user_games():
+    import json
+    import collections
+    from Unchained import Match
+    
+    data = request.get_json()
+    user_id = data.get('user_id')
+    games = Match.query.filter(or_(Match.player1_id == user_id, Match.player2_id == user_id)).all()
+    objects_list = []
+    
+    if games:
+        
+        for item in games:
+            game = Match.query.get(item.id)
+            
+            d = collections.OrderedDict()
+            d['id'] = game.id
+            d['sport_id'] = game.sport_id
+            d['player1_id'] = game.player1_id
+            d['player2_id'] = game.player2_id
+            d['is_team'] = game.is_team
+            d['date'] = game.date
+            d['time'] = game.time
+            d['facility_id'] = game.facility_id
+            d['complete'] = game.complete
+            d['winner_id'] = game.winner_id
+            d['score_1'] = game.score_1
+            d['score_2'] = game.score_2
+            
+            objects_list.append(d)
+        
+        j = json.dumps(objects_list)
+        return j
+    
+    else:
+        return "no games"
+
 app.debug = True
 
 if __name__ == '__main__':
