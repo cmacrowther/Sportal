@@ -88,7 +88,7 @@
             <tr ng-repeat="item in matches_list">
                 <td><img src="{{ item.picture }}" alt="..." class="img-rounded" height="50px" width="50px"/></td>
                 <td>{{ item.first_name }} {{ item.last_name }}</td>
-                <td><a role="button" href="#/user_profile/{{ item.id }}" class="btn btn-success">View</a></td>
+                <td><a role="button" target="_blank" href="#/user_profile/{{ item.id }}" class="btn btn-success">View</a></td>
                 <td><button ng-click="acceptChallenge(item.id)" class="btn btn-success">Accept Challenge</button></td>
             </tr>
             </tbody>
