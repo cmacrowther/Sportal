@@ -6,7 +6,8 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
     console.log("Play Page");
 
 
-    var passObject = {user_id: $rootScope.userObject.id}
+    var passObject = {user_id: $rootScope.userObject.id};
+
     $http({
         method: 'POST',
         url: 'api/get_user_sports',
@@ -17,26 +18,26 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
             console.log(data);
 
             $scope.mySports = data;
-        })
+        });
 
     $http.get("/api/sport")
         .success(function (data) {
             console.log(data);
             $scope.sports = data.objects;
-        })
+        });
 
     $scope.setSport = function (item) {
         $scope.sport = item;
         $scope.pickSport = $scope.sport.name;
-    }
+    };
 
     $scope.setTier = function (item) {
         $scope.pickTier = item;
-    }
+    };
 
     $scope.setTeams = function (item) {
         $scope.pickTeams = item;
-    }
+    };
 
     $scope.play = function () {
         $scope.playResult = "Searching...";
@@ -47,14 +48,14 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
             sport: $scope.sport,
             difficulty: $scope.pickTier,
             team: $scope.pickTeams
-        }
+        };
 
         var passObject = {
             user_id: $rootScope.userObject.id,
             sport_id: $scope.sport.id,
             difficulty: $scope.pickTier,
             team: $scope.pickTeams
-        }
+        };
 
         console.log("Finding an opponent...");
         console.log(passObject);
@@ -75,22 +76,41 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
                 }
 
                 $http.post("api/queue", {
-                    sport_id: $scope.sport.id,
-                    user_id: $rootScope.userObject.id,
-                    is_team: $scope.is_team,
-                    members: $scope.pickTeams,
-                    difficulty: $scope.pickTier,
-                })
-                .success(function (data) {
-                    console.log("Queued for match");
-                    alert("Queued");
-                })
+                        sport_id: $scope.sport.id,
+                        user_id: $rootScope.userObject.id,
+                        is_team: $scope.is_team,
+                        members: $scope.pickTeams,
+                        difficulty: $scope.pickTier
+                    })
+                    .success(function (data) {
+                        console.log("Queued for match");
+                        alert("Queued");
+                    })
             }
-            else{
-                window.location.assign("#/user_profile/" + data);
+            else {
+                $scope.matches_list = data;
             }
-
-
         })
-    }
+    };
+
+    $scope.acceptChallenge = function (item) {
+        console.log("You accepted the challenge of user with id: " + item);
+        $http.post("api/match", {
+                sport_id: $scope.sport.id,
+                player1_id: $rootScope.userObject.id,
+                player2_id: item,
+                is_team: $scope.is_team,
+                date: "",
+                time: "",
+                facility_id: 0,
+                complete: 0,
+                winner_id: 0,
+                score_1: 0,
+                score_2: 0
+            })
+            .success(function (data) {
+                console.log("Created Match object.");
+                window.location.assign("#/games");
+            })
+    };
 }]);
