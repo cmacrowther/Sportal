@@ -3,11 +3,9 @@
  */
 angular.module('dashboard.controllers').controller('playController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
 
-    console.log("Play Page");
-
-
     var passObject = {user_id: $rootScope.userObject.id};
 
+    //Gets the sports the user has set in there profile as "favourites"
     $http({
         method: 'POST',
         url: 'api/get_user_sports',
@@ -20,28 +18,33 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
             $scope.mySports = data;
         });
 
+    //Gets all the sports in the database created by the Admin
     $http.get("/api/sport")
         .success(function (data) {
             console.log(data);
             $scope.sports = data.objects;
         });
 
+    //Sets the sport the user wishes to find opponents for
     $scope.setSport = function (item) {
         $scope.sport = item;
         $scope.pickSport = $scope.sport.name;
     };
 
+    //Sets the tier Novice, Intermediate, etc
     $scope.setTier = function (item) {
         $scope.pickTier = item;
     };
 
+    //Sets 1vs1, 2vs2, 3vs3, etc
     $scope.setTeams = function (item) {
         $scope.pickTeams = item;
     };
 
+    //Finds matches similar to games you wish to play
+    //No matches will throw you into a queue to wait for a possible match
     $scope.play = function () {
         $scope.playResult = "Searching...";
-
 
         $scope.matchObject = {
             user: $rootScope.userObject,
@@ -74,7 +77,6 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
                 else {
                     $scope.is_team = 1;
                 }
-
                 $http.post("api/queue", {
                         sport_id: $scope.sport.id,
                         user_id: $rootScope.userObject.id,
@@ -93,6 +95,8 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
         })
     };
 
+    //Ran when accept challenge button is clicked in the list of possible matches for the user
+    //Creates a match object in the database and throws the user to the games page
     $scope.acceptChallenge = function (item) {
         console.log("You accepted the challenge of user with id: " + item);
         $http.post("api/match", {
