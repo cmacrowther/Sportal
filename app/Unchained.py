@@ -903,13 +903,27 @@ def single_matchmaking():
     else:
         is_team = 1
 
-    queue = Queue.query.filter(and_(Queue.difficulty == difficulty, Queue.sport_id == sport_id, Queue.is_team == is_team )).all()
+    queue = Queue.query.filter(and_(Queue.difficulty == difficulty, Queue.sport_id == sport_id, Queue.is_team == is_team)).all()
+    objects_list = []
 
-    if queue:
-        return str(queue[0].user_id)
+    if len(queue) >= 5:
+        queue1 = queue[:5]
+
+        for item in queue1:
+            user = User.query.get(item.user_id)
+
+            d = collections.OrderedDict()
+            d['id'] = user.id
+            d['first_name'] = user.first_name
+            d['last_name'] = user.last_name
+            d['picture'] = user.picture
+
+            objects_list.append(d)
+
+        j = json.dumps(objects_list)
+        return j
     else:
         return "no match"
-
 
 app.debug = True
 
