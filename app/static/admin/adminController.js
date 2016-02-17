@@ -3,21 +3,12 @@
  */
 angular.module('dashboard.controllers').controller('adminController', ['$scope', '$http', function ($scope, $http) {
 
+	//Initialize validators
 	$('#sportForm').validator();
 	$('#facilityForm').validator();
 
-    console.log("admin_page");
-    //create sport variable
-    console.log($scope.sport_name);
-    console.log($scope.members_required);
-    console.log($scope.teams_required);
-    //create facility variables
-    console.log($scope.facility_name);
-    console.log($scope.facility_address);
-
-    //creation functions
+    //create a new sport
     $scope.createSport = function() {
-
         //resetting result variables
         $scope.createFacilityResult = "";
         $scope.createSportResult = "";
@@ -36,11 +27,10 @@ angular.module('dashboard.controllers').controller('adminController', ['$scope',
 			console.log("Sport Logged into DB");
 			$scope.createSportResult = "Sport Successfully Added!";
 		})
-  		
-    }
+    };
 
+	//Create a new facility
     $scope.createFacility = function() {
-    	
     	//sending the facility to the database
 		$http.post("api/facility", {
 			name: $scope.facility_name,
@@ -52,8 +42,6 @@ angular.module('dashboard.controllers').controller('adminController', ['$scope',
 			console.log("Facility Logged into DB");
 			$scope.createFacilityResult = "Facility Successfully Added!";
 		})
-
-    }
-
+    };
 }]);
 
