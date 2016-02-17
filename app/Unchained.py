@@ -889,7 +889,6 @@ def single_matchmaking():
     import json
     import collections
     from Unchained import Queue
-    from Unchained import Match
     from Unchained import User
 
     data = request.get_json()
@@ -923,6 +922,9 @@ def single_matchmaking():
         j = json.dumps(objects_list)
         return j
     else:
+        item = Queue(sport_id,user_id,is_team,0,difficulty)
+        db.session.add(item)
+        db.session.commit()
         return "no match"
 
 app.debug = True
