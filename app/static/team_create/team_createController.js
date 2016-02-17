@@ -2,38 +2,14 @@
  * Created by Brandon on 1/20/2016.
  */
 angular.module('dashboard.controllers').controller('team_createController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
+
 	//Initializes the validator plugin
 	$('#teamForm').validator();
 
-    $scope.Fruits = [{
-        Id: 1,
-        Name: 'Apple'
-    }, {
-        Id: 2,
-        Name: 'Mango'
-    }, {
-        Id: 3,
-        Name: 'Orange'
-    }];
-
-    $scope.GetValue = function (fruit) {
-        var fruitId = $scope.ddlFruits;
-        var fruitName = $.grep($scope.Fruits, function (fruit) {
-            return fruit.Id == fruitId;
-        })[0].Name;
-        alert("Selected Value: " + fruitId + "\nSelected Text: " + fruitName);
-    }
-
     console.log("team_create Page");
-
-    //variables
-    console.log($scope.team_name);
-    console.log($scope.team_password);
-    console.log($scope.confirm_password);
 
     //creates a team in the database
     $scope.createTeam = function() {
-
         var passObject = {url: $scope.team_name};
         $scope.createTeamResult = "";
         $scope.team_name_exists_error = "";
@@ -78,7 +54,7 @@ angular.module('dashboard.controllers').controller('team_createController', ['$s
                         })
                         .success(function(){
                             console.log("User_has_team Updated");
-                        })
+                        });
 
                         $http.post("api/team_has_admin", {
                             user_id: $rootScope.userObject.id,
@@ -87,12 +63,9 @@ angular.module('dashboard.controllers').controller('team_createController', ['$s
                         .success(function(){
                             console.log("Team_has_admin Updated");
                         })
-
-
                     })
                 }
             })
         }
-    }
-
+    };
 }]);
