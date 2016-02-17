@@ -3,6 +3,7 @@
  */
 angular.module('dashboard.controllers').controller('event_createController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
 
+    //Location Picker
     $('#location').locationpicker({
         location: {latitude: 46.15242437752303, longitude: 2.7470703125},   
         radius: 300,
@@ -15,10 +16,10 @@ angular.module('dashboard.controllers').controller('event_createController', ['$
             $scope.event_location_lat = currentLocation.latitude;
             $scope.event_location_long = currentLocation.longitude;
         }
-    })
+    });
 
+    //Add an event
 	$scope.addEvent = function() {
-
 		$http.post("api/event", {
             name: $scope.event_name, 
             date: $scope.event_date, 
@@ -42,7 +43,5 @@ angular.module('dashboard.controllers').controller('event_createController', ['$
                 console.log("attendee added");
             })
         })
-	}
-
-
+	};
 }]);
