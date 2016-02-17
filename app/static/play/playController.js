@@ -67,12 +67,24 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
         }).success(function (data) {
             console.log(data);
             if (data == "no match") {
+                if ($scope.pickTeams == "1 VS 1") {
+                    $scope.is_team = 0;
+                }
+                else {
+                    $scope.is_team = 1;
+                }
 
-                $http.post("/api/queue", passObject)
-                    .success(function (data) {
-                        console.log("Queued for match");
-                        alert("Queued");
-                    })
+                $http.post("api/queue", {
+                    sport_id: $scope.sport.id,
+                    user_id: $rootScope.userObject.id,
+                    is_team: $scope.is_team,
+                    members: $scope.pickTeams,
+                    difficulty: $scope.pickTier,
+                })
+                .success(function (data) {
+                    console.log("Queued for match");
+                    alert("Queued");
+                })
             }
             else{
                 window.location.assign("#/user_profile/" + data);

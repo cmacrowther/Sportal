@@ -1,1 +1,43 @@
 <h1>Games Page</h1>
+
+<h4>Games in Progress</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th> Sport </th>
+            <th> Opponent </th>
+            <th> Date </th>
+            <th> Finish </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in teams_list">
+            <td ng-init="item.sport_id=getSport(item)">{{ item.sport_id }}</td>
+            <td>{{ item.opponent }}</td>
+            <td>{{ item.date }}</td>
+            <td><button class="btn btn-primary" data-toggle="gameModal">Finish Game!</button></td>
+        </tr>
+    </tbody>
+</table>
+<p class="text-center">{{ no_teams }}</p>
+
+<h4>Past Games</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th> Sport </th>
+            <th> Opponent </th>
+            <th> Date </th>
+            <th> Results </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in teams_list">
+            <td ng-init="item.sport_id=getSport(item)">{{ item.sport_id }}</td>
+            <td>{{ item.opponent }}</td>
+            <td>{{ item.date }}</td>
+            <td><button class="btn btn-primary" data-toggle="gameModal">See Results</button></td>
+        </tr>
+    </tbody>
+</table>
+<p class="text-center">{{ no_teams }}</p>

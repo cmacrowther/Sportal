@@ -38,12 +38,23 @@ angular.module('dashboard.controllers').controller('eventsController', ['$scope'
         }
         else {
             $scope.event_location_address = $scope.eventObject.address;
-
-            $('#location').locationpicker({
-                location: {latitude: $scope.eventObject.latitude, longitude: $scope.eventObject.longitude},   
-                radius: 300,
-            })
         }
+        if ($scope.eventObject.latitude == "" || $scope.eventObject.latitude == undefined) {
+            $scope.event_location_latitude = "";
+        }
+        else {
+            $scope.event_location_latitude = $scope.eventObject.latitude;
+        }
+        if ($scope.eventObject.longitude == "" || $scope.eventObject.longitude == undefined) {
+            $scope.event_location_longitude = "";
+        }
+        else {
+            $scope.event_location_longitude = $scope.eventObject.longitude;
+        }
+        $('#location').locationpicker({
+            location: {latitude: $scope.event_location_latitude, longitude: $scope.event_location_longitude},   
+            radius: 300
+        })
         if ($scope.eventObject.description == "" || $scope.eventObject.description == undefined) {
             $scope.event_description = "No info given";
         }
@@ -111,6 +122,30 @@ angular.module('dashboard.controllers').controller('eventsController', ['$scope'
             else {
                 alert("You are already following this event you!");
             }
+        })
+    }
+
+    $scope.deleteEvent = function() {
+
+        var passObject = {event_id: $scope.eventObject.id};
+
+        $http.delete("/api/event/" + $scope.eventObject.id)
+        .success(function(){
+            $http({
+                method: 'POST',
+                url: 'api/get_event_attendees',
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify(passObject)
+            })
+            .success(function(data){
+                for(var i = 0; i<data.length; i++){
+                    $http.delete("/api/event_has_attendee/" + data[i].id)
+                    .success(function(){
+                        console.log("Attendee " + i + " deleted.");
+                    })
+                }
+                window.location.assign("#/home");
+            })
         })
     }
 

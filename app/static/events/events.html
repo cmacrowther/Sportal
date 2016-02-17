@@ -1,7 +1,7 @@
 <h1>Event Page</h1>
 
 <div class="row">
-	<p>Event Name: {{ event_name }}</p>
+	<p>Event Name: {{ event_name }}<span class="pull-right"><button class="btn btn-danger" ng-click="deleteEvent()">Delete Event</button></span></p>
 	<p>Event Date: {{ event_date }}</p>
 	<p>Event Time: {{ event_time }}</p>
 	<p>Event Location: {{ event_location_addresss }}</p>

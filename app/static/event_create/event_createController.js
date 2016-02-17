@@ -12,7 +12,6 @@ angular.module('dashboard.controllers').controller('event_createController', ['$
         enableAutocomplete: true,
         onchanged: function(currentLocation, radius, isMarkerDropped) {
             console.log("Location Changed");
-            $scope.event_location = $('#location-address');
             $scope.event_location_lat = currentLocation.latitude;
             $scope.event_location_long = currentLocation.longitude;
         }
