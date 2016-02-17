@@ -1,21 +1,21 @@
 <h1>Games Page</h1>
-
+<br><br>
 <h4>Games in Progress</h4>
 <table class="table table-striped">
     <thead>
         <tr>
             <th> Sport </th>
             <th> Opponent </th>
-            <th> Date </th>
+            <th> Edit </th>
             <th> Finish </th>
         </tr>
     </thead>
     <tbody>
         <tr ng-repeat="item in gamesip">
-            <td ng-init="item.sport_id=getSport(item)">{{ item.sport_id }}</td>
+            <td ng-init="item.sport_name=getSport(item)">{{ item.sport_name }}</td>
             <td ng-init="item.opponent=getUser(item)">{{ item.opponent }}</td>
-            <td>{{ item.date }}</td>
-            <td><button class="btn btn-primary" data-toggle="gameModal">Finish Game!</button></td>
+            <td><button class="btn btn-danger" ng-click="setModal(item)" data-toggle="modal" data-target="#gameModal"><span class="glyphicon glyphicon-wrench"></span> Details</button></td>
+            <td><button class="btn btn-success" ng-click="setModal(item)" data-toggle="modal" data-target="#gameFinishModal"><span class="glyphicon glyphicon-check"><span> Finish Game!</button></td>
         </tr>
     </tbody>
 </table>
@@ -33,12 +33,78 @@
     </thead>
     <tbody>
         <tr ng-repeat="item in past_games">
-            <td ng-init="item.sport_id=getSport(item)">{{ item.sport_id }}</td>
-            <td>{{ item.opponent }}</td>
+            <td ng-init="item.sport_name=getSport(item)">{{ item.sport_name }}</td>
+            <td ng-init="item.opponent=getUser(item)">{{ item.opponent }}</td>
             <td>{{ item.date }}</td>
-            <td><button class="btn btn-primary" data-toggle="gameModal">See Results</button></td>
+            <td>{{ results }}</td>
         </tr>
     </tbody>
 </table>
 <p class="text-center">{{ no_past_games }}</p>
+
+<!-- Game Modal -->
+    <div class="modal fade" id="gameModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Game Details</h4>
+                </div>
+
+                <div class="modal-body">
+                    <form id="editGameDetails">
+                    	Opponent:<p class="pull-right">{{modalObject.opponent}}</p>
+                    	<br><br>Facility:<span class="pull-right"><input type="text" value="{{modalObject.facility_id}}"/></span>
+                    	<br><br>Date:<span class="pull-right"><input ng-model="date" type="date" value="{{modalObject.date}}"/></span>
+                    	<br><br>Time:<span class="pull-right"><input ng-model="time" type="time" value="{{modalObject.time}}"/></span>
+                    	<br><br><select class="form-control">
+                        			<option value="{{modalObject.sport_id}}" ng-repeat="item in allSports">{{ item.name }}</option>
+                    			</select>
+
+                        
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <p class="pull-left">{{password_message}}</p>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" ng-click="updateInfo()" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Finish Modal -->
+    <div class="modal fade" id="gameFinishModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Finish Game</h4>
+                </div>
+
+                <div class="modal-body">
+                    <form id="gameFinish">
+
+                    	<p class="text-center">Please Enter Results<br>Score</p>
+                    	<br>{{$root.userObject.first_name}} {{$root.userObject.last_name}} <input ng-blur="getWinner()" ng-model="your_score" class="pull-right" type="number" min="0"/>
+                    	<br><br>{{modalObject.opponent}} <input ng-blur="getWinner()" ng-model="opponent_score" class="pull-right" type="number" min="0"/>
+                    	<br><br>Winner: {{ game_results }}
+
+                        
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <p class="pull-left">{{password_message}}</p>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" ng-click="finishGame()" class="btn btn-primary">Save Score!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
