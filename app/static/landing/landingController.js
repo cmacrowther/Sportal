@@ -122,6 +122,8 @@ angular.module('example.controllers', []).controller('LandingController', ['$sco
                             })
                     }
                 })
+
+
         }
     };
 
@@ -157,5 +159,4 @@ angular.module('example.controllers', []).controller('LandingController', ['$sco
                 }
             })
     };
-
 }]);

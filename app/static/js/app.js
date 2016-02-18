@@ -46,8 +46,8 @@ angular.module('dashboard', [
         $routeProvider.when('/events/:url', {templateUrl: 'events/events.html', controller: 'eventsController'});
         $routeProvider.when('/admin', {templateUrl: 'admin/admin.html', controller: 'adminController'});
         $routeProvider.when('/play', {templateUrl: 'play/play.html', controller: 'playController'});
-        //$routeProvider.otherwise({redirectTo: '/'});
 
+        $routeProvider.when('/test_messages', {templateUrl: 'test_messages/index.html', controller: 'ChannelsController'});
         $stateProvider
             .state('home', {
                 url: '/messages',
@@ -169,7 +169,7 @@ angular.module('dashboard', [
                 }
             })
 
-        $urlRouterProvider.otherwise('/');
+        $routeProvider.otherwise('/');
     }])
     .constant('FirebaseUrl', 'https://burning-fire-322.firebaseio.com/');
 

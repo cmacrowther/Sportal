@@ -2,7 +2,7 @@
  * Created by Corey Weber on 2016-03-06.
  */
 angular.module('dashboard.controllers')
-  .controller('ChannelsCtrl', function (Auth, $state, Users, profile, channels) {
+  .controller('ChannelsCtrl', function () {
     var channelsCtrl = this;
 
     Users.setOnline(profile.$id);

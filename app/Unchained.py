@@ -114,6 +114,19 @@ class EventHasAttendee(db.Model):
     user_id = Column(Integer, unique=False)
 
 
+class UserHasConversation(db.Model):
+    id = Column(Integer, primary_key=True)
+    user_1 = Column(Integer, unique=False)
+    user_2 = Column(Integer, unique=False)
+
+
+class ConversationHasMessage(db.Model):
+    id = Column(Integer, primary_key=True)
+    sender_id = Column(Integer, unique=False)
+    message = Column(Text, unique=False)
+    time = Column(Text, unique=False)
+
+
 db.create_all()
 
 api_manager = APIManager(app, flask_sqlalchemy_db=db)
@@ -129,6 +142,8 @@ api_manager.create_api(Queue, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(Match, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(Event, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(EventHasAttendee, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(UserHasConversation, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(ConversationHasMessage, methods=['GET', 'POST', 'DELETE', 'PUT'])
 
 
 @app.route('/')
@@ -902,7 +917,8 @@ def single_matchmaking():
     else:
         is_team = 1
 
-    queue = Queue.query.filter(and_(Queue.difficulty == difficulty, Queue.sport_id == sport_id, Queue.is_team == is_team)).all()
+    queue = Queue.query.filter(
+        and_(Queue.difficulty == difficulty, Queue.sport_id == sport_id, Queue.is_team == is_team)).all()
     objects_list = []
 
     if len(queue) >= 5:
@@ -924,22 +940,23 @@ def single_matchmaking():
     else:
         return "no match"
 
+
 @app.route('/api/get_user_games', methods=['POST'])
 def get_user_games():
     import json
     import collections
     from Unchained import Match
-    
+
     data = request.get_json()
     user_id = data.get('user_id')
     games = Match.query.filter(or_(Match.player1_id == user_id, Match.player2_id == user_id)).all()
     objects_list = []
-    
+
     if games:
-        
+
         for item in games:
             game = Match.query.get(item.id)
-            
+
             d = collections.OrderedDict()
             d['id'] = game.id
             d['sport_id'] = game.sport_id
@@ -953,14 +970,85 @@ def get_user_games():
             d['winner_id'] = game.winner_id
             d['score_1'] = game.score_1
             d['score_2'] = game.score_2
-            
+
             objects_list.append(d)
-        
+
         j = json.dumps(objects_list)
         return j
-    
+
     else:
         return "no games"
+
+
+@app.route('/api/get_user_conversations', methods=['POST'])
+def get_user_conversations():
+    import json
+    import collections
+    from Unchained import UserHasConversation
+    from Unchained import User
+
+    data = request.get_json()
+    user_id = data.get('user_id')
+    uhc = UserHasConversation.query.filter(
+        or_(UserHasConversation.user_1 == user_id, UserHasConversation.user_2 == user_id)).all()
+    objects_list = []
+
+    if uhc:
+
+        for item in uhc:
+
+            if item.user_1 == user_id:
+                user = User.query.get(item.user_2)
+            else:
+                user = User.query.get(item.user_1)
+
+            d = collections.OrderedDict()
+            d['id'] = item.id
+            d['convo_user_id'] = user.id
+            d['first_name'] = user.first_name
+            d['last_name'] = user.last_name
+            d['picture'] = user.picture
+
+            objects_list.append(d)
+
+        j = json.dumps(objects_list)
+        return j
+
+    else:
+        return "no conversations"
+
+
+@app.route('/api/get_conversation_messages', methods=['POST'])
+def get_conversation_messages():
+    import json
+    import collections
+    from Unchained import ConversationHasMessage
+    from Unchained import User
+
+    data = request.get_json()
+    conversation_id = data.get('conversation_id')
+    chm = ConversationHasMessage.query.filter(ConversationHasMessage.id == conversation_id).all()
+    objects_list = []
+
+    if chm:
+        for item in chm:
+            user = User.query.get(item.sender_id)
+
+            d = collections.OrderedDict()
+            d['id'] = item.id
+            d['sender_first_name'] = user.first_name
+            d['sender_last_name'] = user.last_name
+            d['message'] = item.message
+            d['time'] = item.time
+
+            objects_list.append(d)
+
+        j = json.dumps(objects_list)
+        return j
+
+    else:
+        return "no messages"
+
 
 app.debug = True
 
