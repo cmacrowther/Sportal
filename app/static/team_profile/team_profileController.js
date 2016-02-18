@@ -132,34 +132,24 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
 
     //Function to update info based on inputs with ng-blur
     $scope.updateInfo = function () {
-
-        $scope.url_result = $scope.unique_team_name();
-
-        if ($scope.url_result == "noduplicate") {
             
-            console.log("Updating Info.");
+        console.log("Updating Info.");
 
-            $scope.teamObject.name = $scope.team_name;
-            $scope.teamObject.url = $scope.team_name;
-            $scope.teamObject.adminId = $scope.admin;
-            $scope.teamObject.description = $scope.description;
-            $scope.teamObject.picture = $scope.picture;
+        $scope.teamObject.name = $scope.team_name;
+        $scope.teamObject.url = $scope.team_name;
+        $scope.teamObject.adminId = $scope.admin;
+        $scope.teamObject.description = $scope.description;
+        $scope.teamObject.picture = $scope.picture;
 
-            $http.put("api/team/" + $scope.teamObject.id, $scope.teamObject);
-            $rootScope.teams.splice($scope.teamObject.id-1, 1, $scope.teamObject);
-            window.location.assign("#/team_profile/" + $scope.teamObject.name);
-        }
-        else {
-            alert("Team Name Not Available");
-            $scope.edit = false;
-            window.location.assign("#/team_profile/" + $scope.teamObject.name);
-        }
+        $http.put("api/team/" + $scope.teamObject.id, $scope.teamObject);
+        $rootScope.teams.splice($scope.teamObject.id-1, 1, $scope.teamObject);
+        window.location.assign("#/team_profile/" + $scope.teamObject.name);
     }
 
     //Updates team sport from dropdown
     $scope.updateTeamSport = function() {
 
-        console.log("Changing Team Sport")
+        console.log("Changing Team Sport");
 
         $http.get("/api/sport/" + $scope.team_sport_id)
         .success(function(data){
@@ -180,7 +170,7 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             $scope.password_message = "Password Changed Successfully!";
         }
         else {
-            console.log("Incorrect Password.")
+            console.log("Incorrect Password.");
             $scope.password_message = "Current Password Incorrect";
         }
     }
@@ -204,9 +194,16 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                 headers: {'Content-Type': 'application/json'},
                 data: JSON.stringify(passObject)
             })
-            .success(function(data){
-                console.log(data);
-                return data; 
+            .then(function(data){
+                console.log(data.data);
+
+                if(data.data == "noduplicate"){
+                   $scope.updateInfo();
+                }
+                else{
+                    alert("Duplicate Name");
+                    window.location.assign('#/team_profile/' + $scope.teamObject.url);
+                }
             })
         }
         else {
