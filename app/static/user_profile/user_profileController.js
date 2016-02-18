@@ -177,7 +177,7 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
     };
 
     //Get list of sports from users mySports list
-    var passObject = {user_id: $rootScope.userObject.id};
+    var passObject = {user_id: $routeParams.user_id};
     $http({
         method: 'POST',
         url: 'api/get_user_sports',
