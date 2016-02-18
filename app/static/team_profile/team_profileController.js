@@ -1,7 +1,7 @@
 /**
  * Created by Brandon on 1/20/2016.
  */
-angular.module('dashboard.controllers').controller('team_profileController', ['$scope', '$http', '$rootScope', '$routeParams', function ($scope, $http, $rootScope, $routeParams) {
+angular.module('dashboard.controllers').controller('team_profileController', ['$scope', '$http', '$rootScope', '$timeout', '$routeParams', function ($scope, $http, $rootScope, $timeout, $routeParams) {
 
     console.log($routeParams.url);
     console.log("Testing stuff " + $routeParams.id);
@@ -99,6 +99,7 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
 
     $scope.sendMail = function () {
 
+        $scope.emailLoad = true;
         //console.log($rootScope.userObject.first_name);
         //console.log($scope.email);
         //console.log($scope.team_name);
@@ -125,10 +126,16 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             data: JSON.stringify(passObject)
         })
             .success(function (data) {
+                $scope.emailLoad = false;
+
                 console.log("Success");
                 if (data == "Successfully sent") {
                     $scope.sendMessageResult = "Message Sent Successfully";
                     console.log("Message Sent Successfully");
+                    $timeout(function () {
+                        console.log("TIMEOUT YA!");
+                        $scope.sendMessageResult = "";
+                    }, 3000);
                 }
                 else {
                     console.log("Error Sending Mail");
