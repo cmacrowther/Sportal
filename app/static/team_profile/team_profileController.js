@@ -62,7 +62,7 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         })
         .success(function (data) {
             $scope.team_members = data;
-        })
+        });
 
         //pulls team admins
         $http({
@@ -82,7 +82,7 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                 }
             }
         })
-    })
+    });
 
     //initializes bootstrap validator
     $("#inviteForm").validator();
@@ -91,12 +91,19 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
 
     $scope.sendMail = function() {
 
-        console.log($rootScope.userObject.first_name);
-        console.log($scope.email);
-        console.log($scope.team_name);        
-        console.log($scope.team_password);
+        //console.log($rootScope.userObject.first_name);
+        //console.log($scope.email);
+        //console.log($scope.team_name);
+        //console.log($scope.team_password);
 
-        passObject = {user: $rootScope.userObject.first_name, email: $scope.email, team: $scope.team_name, password: $scope.team_password};
+        console.log("1 " + $rootScope.userObject.first_name);
+        console.log("2 " + $scope.email);
+        console.log("3 " + $scope.teamObject.name);
+        console.log("4 " + $scope.teamObject.password);
+
+        //passObject = {user: $rootScope.userObject.first_name, email: $scope.email, team: $scope.team_name, password: $scope.team_password};
+        passObject = {user: $rootScope.userObject.first_name, email: $scope.email, team: $scope.teamObject.name, password: $scope.teamObject.password};
+
 
         $http({
             method: 'POST',
@@ -114,7 +121,7 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                 console.log("Error Sending Mail");
             }
         })
-    }
+    };
 
     $('#inviteForm').validator().on('submit', function (e) {
         if (e.isDefaultPrevented()) {
@@ -123,16 +130,11 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             //check for team and password
             $scope.sendMail();
         }
-    })
+    });
 
     $scope.editPage = function () {
-        if ($scope.edit) {
-            $scope.edit = false;
-        }
-        else {
-            $scope.edit = true;
-        }
-    }
+        $scope.edit = !$scope.edit;
+    };
 
     //Function to update info based on inputs with ng-blur
     $scope.updateInfo = function () {
@@ -148,7 +150,7 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         $http.put("api/team/" + $scope.teamObject.id, $scope.teamObject);
         $rootScope.teams.splice($rootScope.teams.indexOf($scope.teamObject), 1, $scope.teamObject);
         window.location.assign("#/team_profile/" + $scope.teamObject.name);
-    }
+    };
 
     //Updates team sport from dropdown
     $scope.updateTeamSport = function() {
@@ -164,7 +166,7 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         .error(function(data){
             console.log("Error getting sport.");
         })
-    }
+    };
 
     $scope.changePassword = function () {
 
@@ -177,7 +179,7 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             console.log("Incorrect Password.");
             $scope.password_message = "Current Password Incorrect";
         }
-    }
+    };
 
     $scope.unique_team_name = function() {
         
@@ -206,13 +208,13 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         else {
             return true;
         }
-    }
+    };
 
     $http.get("/api/sport")
         .success(function (data) {
             console.log(data);
             $scope.allSports = data.objects;
-        })
+        });
 
     $scope.promote = function (item) {
 
@@ -243,14 +245,12 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                 alert("That Member is Already An Admin!");
             }
         })
-
-    }
+    };
 
     $scope.kick = function (item) {
         
         //available to team admins
         var passObject = {team_id: $scope.teamObject.id, user_id: item.id};
-
         console.log(passObject);
 
         $http({
@@ -267,10 +267,8 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                 console.log("Team Member Deleted.");
                 $scope.team_members.splice(item, 1)
             })
-            
         })
-
-    }
+    };
 
     $scope.leaveTeam = function() {
         
@@ -285,7 +283,6 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         })
         .success(function(data){
             console.log(data);
-
             $http.delete("/api/user_has_team/" + data[0].id)
             .success(function(){
                 console.log("Team Left.");
@@ -293,8 +290,7 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                 window.location.assign("#/");
             })
         })
-
-    }
+    };
 
     $scope.demote = function (item) {
         
@@ -315,12 +311,8 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                 console.log("Team Admin Demoted.");
                 $scope.team_admins.splice(item, 1)
             })
-
         })
-
-
-
-    }
+    };
 
     $scope.deleteTeam = function (item) {
         
@@ -364,19 +356,9 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
 
             })
         })
-    }   
+    };
 
     $scope.checkID = function(item) {
-        if (item.id == $rootScope.userObject.id) {
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
-
-
-
-    
-
+        return item.id != $rootScope.userObject.id;
+    };
 }]);
