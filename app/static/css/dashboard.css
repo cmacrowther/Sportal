@@ -51,6 +51,9 @@
   width: 100%;
   border-bottom: 1px solid #303A4B;
   background-color: #354052;
+  position: relative;
+  overflow: hidden;
+  outline:none
 }
 .side-menu .navbar-nav li:hover {
   background-color: #414D60;
@@ -60,6 +63,9 @@
   padding-left: 20px;
   color: #A9B4C6;
   font-family: 'Roboto', sans-serif;
+  position: relative;
+  overflow: hidden;
+  outline:none
 }
 .navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {
   color: #A9B4C6;
@@ -73,6 +79,9 @@
   border-radius: 0;
   background-color: transparent;
   box-shadow: none;
+  position: relative;
+  overflow: hidden;
+  outline:none
 }
 .side-menu #dropdown .caret {
   float: right;
@@ -84,6 +93,9 @@
 .side-menu #dropdown > a {
   border-bottom: 1px solid #303A4B;
   background-color: #354052;
+  position: relative;
+  overflow: hidden;
+  outline:none
 }
 .side-menu #dropdown > a:hover {
   background-color: #414D60;
@@ -92,6 +104,9 @@
 .side-menu #dropdown .panel-body {
   padding: 0;
   background-color: #f3f3f3;
+  position: relative;
+  overflow: hidden;
+  outline:none
 }
 .side-menu #dropdown .panel-body .navbar-nav {
   width: 100%;
@@ -100,6 +115,9 @@
   padding-left: 15px;
   border-bottom: 1px solid #2B3342;
   background-color: #303949;
+  position: relative;
+  overflow: hidden;
+  outline:none
 }
 .side-menu #dropdown .panel-body .navbar-nav li a .glyphicon {
   padding-right: 15px;
@@ -113,12 +131,18 @@
 .side-menu #dropdown .panel-body .panel > a {
   margin-left: -20px;
   padding-left: 35px;
+  position: relative;
+  overflow: hidden;
+  outline:none
 }
 .side-menu #dropdown .panel-body .panel-body {
   margin-left: -15px;
 }
 .side-menu #dropdown .panel-body .panel-body li {
   padding-left: 30px;
+  position: relative;
+  overflow: hidden;
+  outline:none
 }
 .side-menu #dropdown .panel-body .panel-body li:last-child {
   border-bottom: 1px solid #e7e7e7;
@@ -399,6 +423,7 @@
 }
 .head-information .tool-butt {
   padding-left: 10px;
+  position: relative;
   float: left;
   width: 60px;
   height: 59px;
@@ -427,3 +452,27 @@
   font-size: 24px;
 }
 
+.label {
+  position: absolute;
+  top: 10px;
+  left: 35px;
+}
+
+/*.ink styles - the elements which will create the ripple effect. The size and position of these elements will be set by the JS code. Initially these elements will be scaled down to 0% and later animated to large fading circles on user click.*/
+.ink {
+  display: block; position: absolute;
+  background-color: #303949;
+  border-radius: 100%;
+  transform: scale(0);
+}
+/*animation effect*/
+.ink.animate {animation: ripple 0.65s linear;}
+@keyframes ripple {
+  /*scale the element to 250% to safely cover the entire link and fade it out*/
+  100% {opacity: 0; transform: scale(2.5);}
+}
+
+.active {
+    color: #F8F8F8;
+    background-color: #4f81bd;
+}

@@ -117,4 +117,6 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
                 window.location.assign("#/games");
             })
     };
+
+    
 }]);
