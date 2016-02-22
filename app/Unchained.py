@@ -256,6 +256,33 @@ def send_mail():
     return "Successfully sent"
 
 
+@app.route('/api/send_mail_match', methods=['POST'])
+def send_mail_match():
+    import smtplib
+    import email.message
+
+    data = request.get_json()
+
+    user = data.get('user')
+    receivers = data.get('email')
+    sender = 'mycodebrary@gmail.com'
+
+    msg = email.message.Message()
+    msg['Subject'] = 'Unchained Invitation from' + user
+    msg['From'] = 'mycodebrary@gmail.com'
+    msg['To'] = receivers
+    msg.add_header('Content-Type', 'text/html')
+    msg.set_payload(
+        '<h1>You have a possible match with ' + user + '<br><br> Go to www.unchained.com to accept the match against them!</h1>')
+
+    s = smtplib.SMTP("smtp.gmail.com", 587)
+    s.starttls()
+    s.login("mycodebrary@gmail.com", "mycodebrary#1")
+    s.sendmail(msg['From'], [msg['To']], msg.as_string())
+
+    return "Successfully sent"
+
+
 @app.route('/api/get_team_members', methods=['POST'])
 def get_team_members():
     import json
@@ -915,6 +942,7 @@ def single_matchmaking():
             d['id'] = user.id
             d['first_name'] = user.first_name
             d['last_name'] = user.last_name
+            d['email'] = user.email
             d['picture'] = user.picture
 
             objects_list.append(d)
