@@ -3,7 +3,7 @@
  */
 angular.module('dashboard.controllers').controller('gamesController', ['$scope', '$http', '$rootScope', '$routeParams', function ($scope, $http, $rootScope, $routeParams) {
 
-    var passObject = {user_id: $rootScope.userObject.id};
+    var passObject = {user_id: $rootScope.userObject.id, page: 3};
 
     $scope.gamesip = [];
     $scope.past_games = [];
@@ -53,6 +53,17 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
             }
 
         });
+
+    $http.post("api/get_matches_pending", {
+            user_id: $rootScope.userObject.id,
+            page: 0
+        })
+        .success(function (data) {
+            console.log("Finding pending matches.");
+            $scope.games_pending = data;
+            console.log(data);
+            //window.location.assign("#/games");
+        })
 
     $scope.getSport = function (item) {
 
