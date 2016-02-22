@@ -5,6 +5,7 @@ from sqlalchemy import *
 
 app = Flask(__name__, static_url_path='')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///unchained.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
@@ -967,4 +968,7 @@ def get_user_games():
 app.debug = True
 
 if __name__ == '__main__':
-    app.run()
+    print "\n"
+    print " * Sportznegger Development Server - Ver. 0.1"
+    print " *"
+    app.run(debug=False, port=5000)
