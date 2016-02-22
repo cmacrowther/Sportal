@@ -916,18 +916,32 @@ def get_matches_pending():
     import collections
     from Unchained import Match
     from Unchained import User
+    from Unchained import Sport
 
     data = request.get_json()
     user_id = data.get('user_id')
+    page = data.get('page')
 
-    pending = Match.query.filter(and_(Match.player1_id == user_id, Match.complete == 2)).all()
+    if page == 1:
+        pending = Match.query.filter(and_(Match.player1_id == user_id, Match.complete == 2)).all()
+
+    if page == 0:
+        pending = Match.query.filter(and_(Match.player2_id == user_id, Match.complete == 2)).all()
+
+    if page == 3:
+        pending = Match.query.filter(and_(Match.player2_id == user_id, Match.complete == 0)).all()
+
     objects_list = []
 
     for item in pending:
         user = User.query.get(item.player2_id)
+        opponent = User.query.get(item.player1_id)
+        sport = Sport.query.get(item.sport_id)
 
         d = collections.OrderedDict()
         d['id'] = user.id
+        d['sport_name'] = sport.name
+        d['opponent'] = opponent.first_name + " " + opponent.last_name
         d['first_name'] = user.first_name
         d['last_name'] = user.last_name
         d['email'] = user.email

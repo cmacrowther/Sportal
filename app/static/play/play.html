@@ -111,7 +111,7 @@
             <tbody>
             <tr ng-repeat="item in pending_list">
                 <td><img src="{{ item.picture }}" alt="..." class="img-rounded" height="50px" width="50px"/></td>
-                <td>{{ item.player1_id }} {{ item.player1_id }}</td>
+                <td>{{ item.first_name }} {{ item.last_name }}</td>
                 <td><a role="button" target="_blank" href="#/user_profile/{{ item.id }}" class="btn btn-success">View</a></td>
                 <td><button class="btn btn-success">Request Pending</button></td>
             </tr>

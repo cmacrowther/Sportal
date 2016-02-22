@@ -1,5 +1,26 @@
 <h1>Games Page</h1>
 <br><br>
+
+<h4>Games Pending</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th> Sport </th>
+            <th> Opponent </th>
+            <th> Accept </th>
+            <th> Decline </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in games_pending">
+            <td>{{ item.sport_name }}</td>
+            <td>{{ item.opponent }}</td>
+            <td><button class="btn btn-success"> Accept Challenge</button></td>
+            <td><button class="btn btn-danger"> Decline Challenge</button></td>
+        </tr>
+    </tbody>
+</table>
+
 <h4>Games in Progress</h4>
 <table class="table table-striped">
     <thead>

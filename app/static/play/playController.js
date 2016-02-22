@@ -127,7 +127,8 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
             })
 
         $http.post("api/get_matches_pending", {
-                user_id: $rootScope.userObject.id
+                user_id: $rootScope.userObject.id,
+                page: 1
             })
             .success(function (data) {
                 console.log("Finding pending matches.");
