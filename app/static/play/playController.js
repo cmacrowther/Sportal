@@ -116,14 +116,24 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
                 date: "",
                 time: "",
                 facility_id: 0,
-                complete: 0,
+                complete: 2,
                 winner_id: 0,
                 score_1: 0,
                 score_2: 0
             })
             .success(function (data) {
-                console.log("Created Match object.");
-                window.location.assign("#/games");
+                console.log("Created Match object. Putting in pending until opponent accepts.");
+                //window.location.assign("#/games");
             })
+
+        $http.post("api/get_matches_pending", {
+                user_id: $rootScope.userObject.id
+            })
+            .success(function (data) {
+                console.log("Finding pending matches.");
+                $scope.pending_list = data;
+                //window.location.assign("#/games");
+            })
+
     };
 }]);

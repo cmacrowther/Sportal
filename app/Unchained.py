@@ -909,6 +909,35 @@ def events_search():
         return "no matching events"
 
 
+@app.route('/api/get_matches_pending', methods=['POST'])
+def get_matches_pending():
+    import json
+    import collections
+    from Unchained import Match
+    from Unchained import User
+
+    data = request.get_json()
+    user_id = data.get('user_id')
+
+    pending = Match.query.filter(and_(Match.player1_id == user_id, Match.complete == 2)).all()
+    objects_list = []
+
+    for item in pending:
+        user = User.query.get(item.player2_id)
+
+        d = collections.OrderedDict()
+        d['id'] = user.id
+        d['first_name'] = user.first_name
+        d['last_name'] = user.last_name
+        d['email'] = user.email
+        d['picture'] = user.picture
+
+        objects_list.append(d)
+
+    j = json.dumps(objects_list)
+    return j
+
+
 # MATCHMAKING
 @app.route('/api/single_matchmaking', methods=['POST'])
 def single_matchmaking():
