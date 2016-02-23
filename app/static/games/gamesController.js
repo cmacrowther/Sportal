@@ -29,18 +29,18 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
                         $scope.past_games.push(data[i]);
                         if (data[i].winner_id == $rootScope.userObject.id) {
                             if (data[i].score_1 > data[i].score_2) {
-                                $scope.results = "WIN " + data[i].score_1 + "-" + data[i].score_2;
+                                data[i].results = "WIN " + data[i].score_1 + "-" + data[i].score_2;
                             }
                             else {
-                                $scope.results = "WIN " + data[i].score_2 + "-" + data[i].score_1;
+                                data[i].results = "WIN " + data[i].score_2 + "-" + data[i].score_1;
                             }
                         }
                         else {
                             if (data[i].score_1 > data[i].score_2) {
-                                $scope.results = "LOSS " + data[i].score_1 + "-" + data[i].score_2;
+                               data[i].results = "LOSS " + data[i].score_1 + "-" + data[i].score_2;
                             }
                             else {
-                                $scope.results = "LOSS " + data[i].score_2 + "-" + data[i].score_1;
+                                data[i].results = "LOSS " + data[i].score_2 + "-" + data[i].score_1;
                             }
                         }
                         $scope.no_past_games = "";
@@ -81,15 +81,25 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
             $scope.allSports = data.objects;
         });
 
+    $http.get("/api/facility")
+        .success(function (data) {
+            console.log(data);
+            $scope.allFacilities = data.objects;
+        });
+
     $scope.updateInfo = function () {
 
         console.log("Updating Info.");
 
-        $scope.modalObject.facility_id = $scope.facility;
-        $scope.modalObject.date = $scope.date;
-        $scope.modalObject.time = $scope.time;
+        $http.get("api/match/" + $scope.modalObject.id)
+        .success(function (data) {
 
-        $http.put("api/match/" + $scope.modalObject.id, $scope.modalObject);
+            data.facility_id = $scope.facility;
+            data.date = $scope.modalObject.date;
+            data.time = $scope.modalObject.time;
+
+            $http.put("api/match/" + data.id, data);
+        })
     };
 
     $scope.getWinner = function () {

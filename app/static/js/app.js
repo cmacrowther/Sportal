@@ -33,5 +33,6 @@ angular.module('dashboard', [
         $routeProvider.when('/events/:url', {templateUrl: 'events/events.html', controller: 'eventsController'});
         $routeProvider.when('/admin', {templateUrl: 'admin/admin.html', controller: 'adminController'});
         $routeProvider.when('/play', {templateUrl: 'play/play.html', controller: 'playController'});
+        $routeProvider.when('/messages', {templateUrl: 'channels/channel.html', controller: 'channelController'});
         $routeProvider.otherwise({redirectTo: '/'});
     }]);

@@ -36,7 +36,7 @@
             <td ng-init="item.sport_name=getSport(item)">{{ item.sport_name }}</td>
             <td ng-init="item.opponent=getUser(item)">{{ item.opponent }}</td>
             <td>{{ item.date }}</td>
-            <td>{{ results }}</td>
+            <td>{{ item.results }}</td>
         </tr>
     </tbody>
 </table>
@@ -55,9 +55,11 @@
                 <div class="modal-body">
                     <form id="editGameDetails">
                     	Opponent:<p class="pull-right">{{modalObject.opponent}}</p>
-                    	<br><br>Facility:<span class="pull-right"><input type="text" value="{{modalObject.facility_id}}"/></span>
-                    	<br><br>Date:<span class="pull-right"><input ng-model="date" type="date" value="{{modalObject.date}}"/></span>
-                    	<br><br>Time:<span class="pull-right"><input ng-model="time" type="time" value="{{modalObject.time}}"/></span>
+                    	<br><br>Facility:<span class="pull-right"><select class="form-control">
+                                                                    <option value="{{modalObject.facility_id}}" ng-repeat="item in allFacilities">{{ item.name }}</option>
+                                                                </select></span>
+                    	<br><br>Date:<span class="pull-right"><input type="date" value="{{modalObject.date}}"/></span>
+                    	<br><br>Time:<span class="pull-right"><input type="time" value="{{modalObject.time}}"/></span>
                     	<br><br><select class="form-control">
                         			<option value="{{modalObject.sport_id}}" ng-repeat="item in allSports">{{ item.name }}</option>
                     			</select>

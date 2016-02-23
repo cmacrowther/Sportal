@@ -87,7 +87,7 @@
                         <ul class="nav navbar-nav">
                             <li><a href="#/team_create">Create a new team</a></li>
                             <li><a href="#/join_team">Join an existing team</a><li>
-                            <ul class="nav navbar-nav"><li ng-repeat="item in teams"><a href="#/team_profile/{{ item.name }}">{{ item.name }}</a></ul>
+                            <li ng-repeat="item in teams"><a href="#/team_profile/{{ item.name }}">{{ item.name }}</a>
                         </ul>
                     </div>
                 </div>
@@ -105,12 +105,14 @@
                     <div class="panel-body">
                         <ul class="nav navbar-nav">
                             <li><a href="#/event_create">Create an event</a></li>
-                            <ul class="nav navbar-nav"><li ng-repeat="item in events"><a href="#/events/{{ item.name }}">{{ item.name }}</a></ul>
+                            <li ng-repeat="item in events"><a href="#/events/{{ item.name }}">{{ item.name }}</a>
                         </ul>
                     </div>
                 </div>
             </li>
             <li><a href="#/admin"><span class="glyphicon glyphicon-cog"></span> ADMIN</a></li>
+            <li><a href="#/messages"><span class="glyphicon glyphicon-envelope"></span> MESSAGING</a></li>
+
 
 
         </ul>
@@ -175,5 +177,6 @@
 <script src="events/eventsController.js"></script>
 <script src="games/gamesController.js"></script>
 <script src="event_create/event_createController.js"></script>
+<script src="channels/channelController.js"></script>
 <script src="js/locationpicker.jquery.js"></script>
 </html>
