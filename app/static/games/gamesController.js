@@ -147,18 +147,18 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
                         console.log("Testing if we get into success.");
                         if (data.winner_id == $rootScope.userObject.id) {
                             if (data.score_1 > data.score_2) {
-                                $scope.results = "WIN " + data.score_1 + "-" + data.score_2;
+                                item.results = "WIN " + data.score_1 + "-" + data.score_2;
                             }
                             else {
-                                $scope.results = "WIN " + data.score_2 + "-" + data.score_1;
+                                item.results = "WIN " + data.score_2 + "-" + data.score_1;
                             }
                         }
                         else {
                             if (data.score_1 > data.score_2) {
-                                $scope.results = "LOSS " + data.score_1 + "-" + data.score_2;
+                                item.results = "LOSS " + data.score_1 + "-" + data.score_2;
                             }
                             else {
-                                $scope.results = "LOSS " + data.score_2 + "-" + data.score_1;
+                                item.results = "LOSS " + data.score_2 + "-" + data.score_1;
                             }
                         }
                         $scope.gamesip.splice(data, 1);

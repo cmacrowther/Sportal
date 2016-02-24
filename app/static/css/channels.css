@@ -148,11 +148,11 @@ body {
   height:100%;
   width:80%;
   overflow-y:scroll;
-  padding:55px 15px 65px 15px;
+  margin-right: 0;
 }
 
 .message-pane .header {
-  position:fixed;
+  position:relative;
   top:0;
   background:#fff;
   width:100%;
