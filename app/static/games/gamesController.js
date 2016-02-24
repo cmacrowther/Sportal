@@ -54,16 +54,16 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
 
         });
 
-    $http.post("api/get_matches_pending", {
-            user_id: $rootScope.userObject.id,
-            page: 0
-        })
-        .success(function (data) {
-            console.log("Finding pending matches.");
-            $scope.games_pending = data;
-            console.log(data);
-            //window.location.assign("#/games");
-        })
+    //$http.post("api/get_matches_pending", {
+    //        user_id: $rootScope.userObject.id,
+    //        page: 0
+    //    })
+    //    .success(function (data) {
+    //        console.log("Finding pending matches.");
+    //        $scope.games_pending = data;
+    //        console.log(data);
+    //        //window.location.assign("#/games");
+    //    });
 
     $scope.getSport = function (item) {
 
