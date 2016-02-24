@@ -4,7 +4,6 @@
 angular.module('dashboard.controllers').controller('team_profileController', ['$scope', '$http', '$rootScope', '$timeout', '$routeParams', function ($scope, $http, $rootScope, $timeout, $routeParams) {
 
     console.log($routeParams.url);
-    console.log("Testing stuff " + $routeParams.id);
 
 
     var passObject = {url: $routeParams.url};
@@ -161,6 +160,22 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
 
         console.log("Updating Info.");
 
+        var passObject = {team_id: $scope.teamObject.id};
+
+        $http({
+            method: 'POST',
+            url: 'api/get_team_has_channel',
+            headers: {'Content-Type': 'application/json'},
+            data: JSON.stringify(passObject)
+        })
+        .success(function(data){
+            $http.get("api/channel/" + data[0].channel_id)
+            .success(function(data){
+                data.name = $scope.team_name;
+                $http.put("api/channel/" + data.id, data);
+            })
+        })
+
         $scope.teamObject.name = $scope.team_name;
         $scope.teamObject.url = $scope.team_name;
         $scope.teamObject.adminId = $scope.admin;
@@ -232,7 +247,6 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
 
     $http.get("/api/sport")
         .success(function (data) {
-            console.log(data);
             $scope.allSports = data.objects;
         });
 
