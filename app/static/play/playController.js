@@ -97,8 +97,17 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
 
     //Ran when accept challenge button is clicked in the list of possible matches for the user
     //Creates a match object in the database and throws the user to the games page
-    $scope.acceptChallenge = function (item) {
-        console.log("You accepted the challenge of user with id: " + item);
+    $scope.acceptChallenge = function (item, item2) {
+        console.log("You accepted the challenge of user with id: " + item + " hahaha " + item2);
+
+        $http.post("api/send_mail_match", {
+                user: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name,
+                email: item2
+            })
+            .success(function (data) {
+                console.log("Sent email to user.");
+            });
+
         $http.post("api/match", {
                 sport_id: $scope.sport.id,
                 player1_id: $rootScope.userObject.id,
@@ -107,14 +116,27 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
                 date: "",
                 time: "",
                 facility_id: 0,
-                complete: 0,
+                complete: 2,
                 winner_id: 0,
                 score_1: 0,
                 score_2: 0
             })
             .success(function (data) {
-                console.log("Created Match object.");
-                window.location.assign("#/games");
+                console.log("Created Match object. Putting in pending until opponent accepts.");
+                //window.location.assign("#/games");
             })
+
+        $http.post("api/get_matches_pending", {
+                user_id: $rootScope.userObject.id,
+                page: 1
+            })
+            .success(function (data) {
+                console.log("Finding pending matches.");
+                $scope.pending_list = data;
+                //window.location.assign("#/games");
+            })
+
     };
+
+    
 }]);

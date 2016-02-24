@@ -5,6 +5,7 @@ from sqlalchemy import *
 
 app = Flask(__name__, static_url_path='')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///unchained.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
@@ -297,6 +298,33 @@ def send_mail():
     msg.add_header('Content-Type', 'text/html')
     msg.set_payload(
         '<h1>You have recieved an invitation to join ' + user + '\'s Team ' + team + ' with password ' + password + ' <br><br> Go to www.unchained.com make an account and join their team!</h1>')
+
+    s = smtplib.SMTP("smtp.gmail.com", 587)
+    s.starttls()
+    s.login("mycodebrary@gmail.com", "mycodebrary#1")
+    s.sendmail(msg['From'], [msg['To']], msg.as_string())
+
+    return "Successfully sent"
+
+
+@app.route('/api/send_mail_match', methods=['POST'])
+def send_mail_match():
+    import smtplib
+    import email.message
+
+    data = request.get_json()
+
+    user = data.get('user')
+    receivers = data.get('email')
+    sender = 'mycodebrary@gmail.com'
+
+    msg = email.message.Message()
+    msg['Subject'] = 'Unchained Invitation from' + user
+    msg['From'] = 'mycodebrary@gmail.com'
+    msg['To'] = receivers
+    msg.add_header('Content-Type', 'text/html')
+    msg.set_payload(
+        '<h1>You have a possible match with ' + user + '<br><br> Go to www.unchained.com to accept the match against them!</h1>')
 
     s = smtplib.SMTP("smtp.gmail.com", 587)
     s.starttls()
@@ -932,6 +960,49 @@ def events_search():
         return "no matching events"
 
 
+@app.route('/api/get_matches_pending', methods=['POST'])
+def get_matches_pending():
+    import json
+    import collections
+    from Unchained import Match
+    from Unchained import User
+    from Unchained import Sport
+
+    data = request.get_json()
+    user_id = data.get('user_id')
+    page = data.get('page')
+
+    if page == 1:
+        pending = Match.query.filter(and_(Match.player1_id == user_id, Match.complete == 2)).all()
+
+    if page == 0:
+        pending = Match.query.filter(and_(Match.player2_id == user_id, Match.complete == 2)).all()
+
+    if page == 3:
+        pending = Match.query.filter(and_(Match.player2_id == user_id, Match.complete == 0)).all()
+
+    objects_list = []
+
+    for item in pending:
+        user = User.query.get(item.player2_id)
+        opponent = User.query.get(item.player1_id)
+        sport = Sport.query.get(item.sport_id)
+
+        d = collections.OrderedDict()
+        d['id'] = user.id
+        d['sport_name'] = sport.name
+        d['opponent'] = opponent.first_name + " " + opponent.last_name
+        d['first_name'] = user.first_name
+        d['last_name'] = user.last_name
+        d['email'] = user.email
+        d['picture'] = user.picture
+
+        objects_list.append(d)
+
+    j = json.dumps(objects_list)
+    return j
+
+
 # MATCHMAKING
 @app.route('/api/single_matchmaking', methods=['POST'])
 def single_matchmaking():
@@ -965,6 +1036,7 @@ def single_matchmaking():
             d['id'] = user.id
             d['first_name'] = user.first_name
             d['last_name'] = user.last_name
+            d['email'] = user.email
             d['picture'] = user.picture
 
             objects_list.append(d)
@@ -1186,4 +1258,7 @@ def get_team_has_channel():
 app.debug = True
 
 if __name__ == '__main__':
-    app.run()
+    print "\n"
+    print " * Sportznegger Development Server - Ver. 0.1"
+    print " *"
+    app.run(debug=False, port=5000)

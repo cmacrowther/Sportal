@@ -5,7 +5,6 @@ angular.module('example', [
     'ngRoute',
     'example.controllers',
     'ngAnimate',
-    'ngMaterial',
     'ui.bootstrap'
 ]).
     config(['$routeProvider', function($routeProvider) {
