@@ -1254,7 +1254,6 @@ def get_team_has_channel():
     j = json.dumps(objects_list)
     return j
 
-
 app.debug = True
 
 if __name__ == '__main__':
