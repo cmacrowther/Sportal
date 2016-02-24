@@ -114,6 +114,48 @@ class EventHasAttendee(db.Model):
     event_id = Column(Integer, unique=False)
     user_id = Column(Integer, unique=False)
 
+class Channel(db.Model):
+    id = Column(Integer, primary_key=True)
+    admin_id = Column(Integer, unique=False)
+    name = Column(Text, unique=False)
+    description = Column(Text, unique=False)
+
+class Message(db.Model):
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, unique=False)
+    body = Column(Text, unique=False)
+    time = Column(Text, unique=False)
+
+class ChannelHasMessage(db.Model):
+    id = Column(Integer, primary_key=True)
+    channel_id = Column(Integer, unique=False)
+    message_id = Column(Integer, unique=False)
+
+class Conversation(db.Model):
+    id = Column(Integer, primary_key=True)
+    user_one = Column(Integer, unique=False)
+    user_two = Column(Integer, unique=False)
+    time = Column(Text, unique=False)
+    status = Column(Integer, unique=False)
+
+class UserHasChannel(db.Model):
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, unique=False)
+    channel_id = Column(Integer, unique=False)
+    status = Column(Integer, unique=False)
+
+class UserHasMessage(db.Model):
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, unique=False)
+    message_id = Column(Integer, unique=False)
+    is_read = Column(Integer, unique=False)
+    conversation_id = Column(Integer, unique=False)
+
+class TeamHasChannel(db.Model):
+    id = Column(Integer, primary_key=True)
+    team_id = Column(Integer, unique=False)
+    channel_id = Column(Integer, unique=False)
+
 
 db.create_all()
 
@@ -130,6 +172,14 @@ api_manager.create_api(Queue, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(Match, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(Event, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(EventHasAttendee, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(Channel, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(Message, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(ChannelHasMessage, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(Conversation, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(UserHasChannel, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(UserHasMessage, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(TeamHasChannel, methods=['GET', 'POST', 'DELETE', 'PUT'])
+
 
 
 @app.route('/')
@@ -1034,6 +1084,175 @@ def get_user_games():
 
     else:
         return "no games"
+
+@app.route('/api/get_conversation_messages', methods=['POST'])
+def get_conversation_messages():
+    import json
+    import collections
+    from Unchained import UserHasMessage
+    from Unchained import Message
+    from Unchained import User
+    
+    data = request.get_json()
+    conversation_id = data.get('conversation_id')
+    uhm = UserHasMessage.query.filter(UserHasMessage.conversation_id == conversation_id).all()
+    objects_list = []
+    
+    if uhm:
+        for item in uhm:
+            user = User.query.get(item.user_id)
+            message = Message.query.get(item.message_id)
+            
+            d = collections.OrderedDict()
+            d['id'] = message.id
+            d['sender_first_name'] = user.first_name
+            d['sender_last_name'] = user.last_name
+            d['message'] = message.body
+            d['time'] = message.time
+            d['is_read'] = item.is_read
+            d['picture'] = user.picture
+            
+            objects_list.append(d)
+        
+        j = json.dumps(objects_list)
+        return j
+    
+    else:
+        return "no messages"
+
+@app.route('/api/get_user_conversations', methods=['POST'])
+def get_user_conversations():
+    import json
+    import collections
+    from Unchained import Conversation
+    from Unchained import User
+    
+    data = request.get_json()
+    user_id = data.get('user_id')
+    uhc = Conversation.query.filter(or_(Conversation.user_one == user_id, Conversation.user_two == user_id)).all()
+    objects_list = []
+    
+    if uhc:
+        
+        for item in uhc:
+            
+            if item.user_one == user_id:
+                user = User.query.get(item.user_two)
+            else:
+                user = User.query.get(item.user_one)
+        
+            d = collections.OrderedDict()
+            d['id'] = item.id
+            d['convo_user_id'] = user.id
+            d['first_name'] = user.first_name
+            d['last_name'] = user.last_name
+            d['picture'] = user.picture
+    
+            objects_list.append(d)
+        
+        j = json.dumps(objects_list)
+        return j
+
+    else:
+        return "no conversations"
+
+@app.route('/api/get_team_channels', methods=['POST'])
+def get_teams_channels():
+    import json
+    import collections
+    from Unchained import Channel
+    from Unchained import TeamHasChannel
+    from Unchained import User
+    from Unchained import UserHasTeam
+    
+    data = request.get_json()
+    user_id = data.get('user_id')
+    uht = UserHasTeam.query.filter(UserHasTeam.user_id == user_id).all()
+    objects_list = []
+    
+    if uht:
+        for item in uht:
+            thc = TeamHasChannel.query.filter(TeamHasChannel.team_id == item.team_id).all()
+            
+            for chan in thc:
+
+                channel = Channel.query.get(chan.channel_id)
+                user = User.query.get(channel.admin_id)
+            
+                d = collections.OrderedDict()
+                d['id'] = channel.id
+                d['name'] = channel.name
+                d['description'] = channel.description
+                d['admin_id'] = channel.admin_id
+                d['first_name'] = user.first_name
+                d['last_name'] = user.last_name
+            
+                objects_list.append(d)
+    
+    
+        j = json.dumps(objects_list)
+        return j
+    
+    else:
+        return "no channels"
+
+@app.route('/api/get_channel_messages', methods=['POST'])
+def get_channel_messages():
+    import json
+    import collections
+    from Unchained import ChannelHasMessage
+    from Unchained import Message
+    from Unchained import User
+    
+    data = request.get_json()
+    channel_id = data.get('channel_id')
+    chm = ChannelHasMessage.query.filter(ChannelHasMessage.channel_id == channel_id).all()
+    objects_list = []
+    
+    if chm:
+        for item in chm:
+            message = Message.query.get(item.message_id)
+            user = User.query.get(message.user_id)
+            
+            d = collections.OrderedDict()
+            d['id'] = message.id
+            d['sender_first_name'] = user.first_name
+            d['sender_last_name'] = user.last_name
+            d['message'] = message.body
+            d['time'] = message.time
+            d['is_read'] = item.is_read
+            d['picture'] = user.picture
+            
+            objects_list.append(d)
+        
+        j = json.dumps(objects_list)
+        return j
+    
+    else:
+        return "no messages"
+
+@app.route('/api/get_team_has_channel', methods=['POST'])
+def get_team_has_channel():
+    import json
+    import collections
+    from Unchained import TeamHasChannel
+
+    data = request.get_json()
+    team_id = data.get('team_id')
+    thc = TeamHasChannel.query.filter(TeamHasChannel.team_id == team_id).all()
+    objects_list = []
+
+    for item in thc:
+            
+        d = collections.OrderedDict()
+        d['id'] = item.id
+        d['team_id'] = item.team_id
+        d['channel_id'] = item.channel_id
+                
+        objects_list.append(d)
+
+    j = json.dumps(objects_list)
+    return j
 
 
 app.debug = True

@@ -369,6 +369,18 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                                             console.log("Admin " + i + " deleted.")
                                         })
                                 }
+
+                                $http({
+                                    method: 'POST',
+                                    url: 'api/get_team_has_channel',
+                                    headers: {'Content-Type': 'application/json'},
+                                    data: JSON.stringify(passObject)
+                                })
+                                .success(function(data){
+                                    $http.delete("/api/team_has_channel/" + data.id);
+                                    $http.delete("/api/channel/" + data.channel_id);
+                                })
+
                                 $rootScope.teams.splice($rootScope.teams.indexOf($scope.teamObject.id), 1);
                                 alert("Team Has Been Deleted.");
                                 window.location.assign("#/");

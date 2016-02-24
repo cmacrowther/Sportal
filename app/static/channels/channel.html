@@ -1,0 +1,87 @@
+<link type="text/css" rel="stylesheet" href="../css/channels.css">
+<div class="main">
+    <div class="sidebar">
+​
+        <div class="slack-name">
+            <h2>FireSlack</h2>
+        </div>
+​
+​
+        <div class="channel-list">
+            <div class="list-head">Channels</div>
+            <div class="channel" ng-repeat="channel in channels">
+                <a ng-click="setChannel(channel.id)"># {{ channel.name }}</a>
+            </div>
+​
+            <div class="list-head">Direct Messages</div>
+            <div class="channel" ng-repeat="item in convos">
+                <a ng-click="setConversation(item.id)" ui-sref-active="selected">
+                    <span class="presence"></span>
+                    {{ item.first_name }} {{ item.last_name }}
+                </a>
+            </div>
+​
+            <div class="list-head">Users</div>
+            <input type="text" ng-model="search_term" class="form-control" placeholder="Search">
+​
+            <div class="channel" ng-repeat="item in users | filter: search_term">
+                <a ng-click="createConversation(item.id)" ui-sref-active="selected">
+                    <span class="presence"></span>
+                    {{ item.first_name }} {{ item.last_name }}
+                </a>
+            </div>
+        </div>
+​
+        <div class="my-info">
+            <img class="user-pic" ng-src="{{ $root.userObject.picture }}"/>
+​
+            <div class="user-info">
+                <div class="user-name">
+                    <span class="presence"></span>
+                    {{ $root.userObject.first_name }} {{ $root.userObject.last_name }}
+                </div>
+​
+                <div class="options">
+                    <a ui-sref="profile">edit profile</a>
+                    /
+                    <a href="#" ng-click="channelsCtrl.logout()">logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+​
+    <!--<div class="message-pane">
+      <ui-view></ui-view>
+    </div>-->
+    <div class="message-pane">
+        <div class="header">
+            <h1>{{ title }}</h1>
+        </div>
+​
+        <div class="message-wrap" ng-repeat="message in messages">
+            <img class="user-pic" ng-src="{{ message.picture }}"/>
+​
+            <div class="message-info">
+                <div class="user-name">
+                    {{ message.sender_first_name }} {{ message.sender_last_name }}
+                    <span class="timestamp">{{ message.time }}</span>
+                </div>
+                <div class="message">
+                    {{ message.message }}
+                </div>
+            </div>
+        </div>
+​
+        <form class="message-form" ng-submit="sendMessage()">
+​
+            <div class="input-group">
+                <input type="text" class="form-control" ng-model="message" placeholder="Type a message...">
+    <span class="input-group-btn">
+      <button class="btn btn-default" ng-click="sendDirectMessage()" type="submit">Send</button>
+    </span>
+            </div>
+​
+        </form>
+    </div>
+​
+</div>

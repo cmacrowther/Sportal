@@ -50,6 +50,7 @@ angular.module('dashboard.controllers').controller('team_createController', ['$s
                                     $scope.createTeamResult = "";
                                 }, 3000);
                                 $rootScope.teams.push(data);
+                                $scope.team_id_ = data.id;
 
                                 $http.post("api/user_has_team", {
                                         user_id: $rootScope.userObject.id,
@@ -65,6 +66,22 @@ angular.module('dashboard.controllers').controller('team_createController', ['$s
                                     })
                                     .success(function () {
                                         console.log("Team_has_admin Updated");
+
+                                        $http.post("api/channel", {
+                                                admin_id: $rootScope.userObject.id,
+                                                name: $scope.team_name,
+                                                description: "description"
+                                            })
+                                            .success(function (data) {
+                                                console.log("Successful Create.");
+                                                $http.post("api/team_has_channel", {
+                                                    team_id: $scope.team_id_,
+                                                    channel_id: data.id
+                                                })
+                                                .success(function(data){
+                                                    console.log("successful channel creation");
+                                                })
+                                            })
                                     })
                             })
                     }
