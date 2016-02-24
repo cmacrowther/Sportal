@@ -5,6 +5,7 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
 
     var passObject = {user_id: $rootScope.userObject.id, page: 3};
 
+    $scope.games_pending = [];
     $scope.gamesip = [];
     $scope.past_games = [];
     $scope.no_games_ip = "No Games in Progress";
@@ -25,7 +26,11 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
             }
             else {
                 for (var i = 0; i < data.length; i++) {
-                    if (data[i].complete == 1) {
+                    if (data[i].complete == 2) {
+                        console.log("Challenge is presentttttttttttttttttttt");
+                        $scope.games_pending.push(data[i]);
+                    }
+                    else if (data[i].complete == 1) {
                         $scope.past_games.push(data[i]);
                         if (data[i].winner_id == $rootScope.userObject.id) {
                             if (data[i].score_1 > data[i].score_2) {
@@ -37,7 +42,7 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
                         }
                         else {
                             if (data[i].score_1 > data[i].score_2) {
-                               data[i].results = "LOSS " + data[i].score_1 + "-" + data[i].score_2;
+                                data[i].results = "LOSS " + data[i].score_1 + "-" + data[i].score_2;
                             }
                             else {
                                 data[i].results = "LOSS " + data[i].score_2 + "-" + data[i].score_1;
@@ -103,14 +108,14 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
         console.log("Updating Info.");
 
         $http.get("api/match/" + $scope.modalObject.id)
-        .success(function (data) {
+            .success(function (data) {
 
-            data.facility_id = $scope.facility;
-            data.date = $scope.modalObject.date;
-            data.time = $scope.modalObject.time;
+                data.facility_id = $scope.facility;
+                data.date = $scope.modalObject.date;
+                data.time = $scope.modalObject.time;
 
-            $http.put("api/match/" + data.id, data);
-        })
+                $http.put("api/match/" + data.id, data);
+            })
     };
 
     $scope.getWinner = function () {
@@ -167,4 +172,32 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
                     });
             });
     };
+
+    $scope.accept = function (item) {
+        console.log(item);
+        $http.get("api/match/" + item)
+            .success(function (data) {
+                console.log("Sup dude");
+                data.complete = 0;
+                console.log("testing");
+                $http.put("api/match/" + data.id, data);
+                $scope.games_pending.splice(data, 1);
+                $scope.gamesip.push(data);
+
+            });
+        console.log("Accepted the challenge.");
+    };
+
+    $scope.decline = function (item) {
+        console.log(item);
+        $http.get("api/match/" + item)
+            .success(function (data) {
+                console.log("Sup dude");
+                $scope.games_pending.splice(data, 1);
+            });
+
+        $http.delete("api/match/" + item);
+        console.log("Declined the challenge and removed match object from database.");
+    };
+
 }]);
