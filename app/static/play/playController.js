@@ -102,6 +102,11 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
     $scope.acceptChallenge = function (item, item2) {
         console.log("You accepted the challenge of user with id: " + item + " hahaha " + item2);
 
+        $http.get("api/queue/" + item).success(function(data) {
+            console.log(data);
+            $scope.matches_list.splice(data, 1);
+        });
+
         $http.post("api/send_mail_match", {
                 user: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name,
                 email: item2
@@ -126,17 +131,17 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
             .success(function (data) {
                 console.log("Created Match object. Putting in pending until opponent accepts.");
                 //window.location.assign("#/games");
-            })
+            });
 
-        $http.post("api/get_matches_pending", {
-                user_id: $rootScope.userObject.id,
-                page: 1
-            })
-            .success(function (data) {
-                console.log("Finding pending matches.");
-                $scope.pending_list = data;
-                //window.location.assign("#/games");
-            })
+        //$http.post("api/get_matches_pending", {
+        //        user_id: $rootScope.userObject.id,
+        //        page: 1
+        //    })
+        //    .success(function (data) {
+        //        console.log("Finding pending matches.");
+        //        $scope.pending_list = data;
+        //        //window.location.assign("#/games");
+        //    })
 
     };
 

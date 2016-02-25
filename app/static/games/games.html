@@ -15,8 +15,8 @@
         <tr ng-repeat="item in games_pending">
             <td>{{ item.sport_name }}</td>
             <td>{{ item.opponent }}</td>
-            <td><button class="btn btn-success"> Accept Challenge</button></td>
-            <td><button class="btn btn-danger"> Decline Challenge</button></td>
+            <td><button ng-click="accept(item.id)" class="btn btn-success"> Accept Challenge</button></td>
+            <td><button ng-click="decline(item.id)" class="btn btn-danger"> Decline Challenge</button></td>
         </tr>
     </tbody>
 </table>
