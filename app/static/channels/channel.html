@@ -1,5 +1,37 @@
 <link type="text/css" rel="stylesheet" href="../css/channels.css">
-<div class="main">
+<div class="row" style="height: 110px; border-bottom: 1px solid #e7e7e7;">
+    <h2 style="padding-left: 15px;">FireSlack</h2>    
+        <!-- Channels -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Channels<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li ng-repeat="item in channels" ng-click="setChannel(item.id)">{{ item.name }}</li>
+          </ul>
+        </div>
+        <!-- Conversations -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Conversations<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li ng-repeat="item in convos" ng-click="setConversation(item.id)">{{ item.first_name }} {{ item.last_name }}</li>
+          </ul>
+        </div>
+        
+        <!-- Users -->
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Users<span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li ng-repeat="item in users" ng-click="createConversation(item.id)">{{ item.first_name }} {{ item.last_name }} <span class="glyphicon glyphicon-plus"></span></li>
+          </ul>
+        </div>
+</div>
+<!--
+<div>
     <div class="sidebar">
 ​
         <div class="slack-name">
@@ -31,24 +63,8 @@
                 </a>
             </div>
         </div>
-​
-        <div class="my-info">
-            <img class="user-pic" ng-src="{{ $root.userObject.picture }}"/>
-​
-            <div class="user-info">
-                <div class="user-name">
-                    <span class="presence"></span>
-                    {{ $root.userObject.first_name }} {{ $root.userObject.last_name }}
-                </div>
-​
-                <div class="options">
-                    <a ui-sref="profile">edit profile</a>
-                    /
-                    <a href="#" ng-click="channelsCtrl.logout()">logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+
+    </div>-->
 ​
     <!--<div class="message-pane">
       <ui-view></ui-view>
@@ -72,7 +88,7 @@
             </div>
         </div>
 ​
-        <form class="message-form" ng-submit="sendMessage()">
+        <form class="message-form" ng-submit="sendDirectMessage()">
 ​
             <div class="input-group">
                 <input type="text" class="form-control" ng-model="message" placeholder="Type a message...">

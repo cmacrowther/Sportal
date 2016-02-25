@@ -53,6 +53,8 @@ $(function () {
 angular.module('dashboard.controllers')
     .controller('DashboardController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
 
+        $rootScope.page_name = "Dashboard";
+
         var user_id = localStorage.getItem("id");
         var passObject = {user_id: user_id};
 
@@ -109,6 +111,66 @@ angular.module('dashboard.controllers')
                     $rootScope.events = data;
                 }
             });
+
+        $rootScope.notifications = [];
+        $scope.notification_counter = 0;
+
+        $http({
+            method: 'POST',
+            url: 'api/get_team_notifications',
+            headers: {'Content-Type': 'application/json'},
+            data: JSON.stringify(passObject)
+        })
+        .success(function (data) {
+            console.log(data);
+            if(data == "no team notifications") {
+                $scope.is_team_notifications = false;
+            }
+            else {
+                for(var i = 0; i < data.length; i++) {
+                    $rootScope.notifications.push(data[i]);
+                    if(data[i].is_read == 0) {
+                        $scope.notification_counter++;
+                    }
+                }
+                $scope.is_team_notifications = true;
+            }
+        });
+
+        $http({
+            method: 'POST',
+            url: 'api/get_user_notifications',
+            headers: {'Content-Type': 'application/json'},
+            data: JSON.stringify(passObject)
+        })
+        .success(function (data) {
+            console.log(data);
+            if(data == "no user notifications") {
+                $scope.is_user_notifications = false;
+            }
+            else {
+                for(var i = 0; i < data.length; i++) {
+                    $rootScope.notifications.push(data[i]);
+                    if(data[i].is_read == 0) {
+                        $scope.notification_counter++;
+                    }
+                }
+                $scope.is_user_notifications = true;
+            }
+        })
+
+        $scope.display_notifications = false;
+
+        $scope.display = function() {
+            if($scope.display_notifications == true) {
+                $scope.display_notifications = false;
+            }
+            else {
+                $scope.display_notifications = true;
+            }
+            
+        }
+
     }]);
 
     

@@ -1,5 +1,11 @@
 <link href="css/user_profile.css" rel="stylesheet">
 
+    <div ng-show="display_notifications" style="margin-top: 0px; height: 200px; width: 200px; border: 1px solid #000000" class="pull-right">
+            <ul>
+                <li ng-repeat="item in notifications" ng-click="is_read_set(item)"><a href="{{item.link}}">{{ item.notification }}</a></li>
+            </ul>
+    </div>
+
 <div style="text-align: center; padding-bottom: 20px;">
     <h1>{{first_name}} {{last_name}}</h1>
 

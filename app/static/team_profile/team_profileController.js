@@ -5,8 +5,9 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
 
     console.log($routeParams.url);
 
-
     var passObject = {url: $routeParams.url};
+
+    $rootScope.page_name = $routeParams.url;
 
     $http({
         method: 'POST',
@@ -174,6 +175,18 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                 data.name = $scope.team_name;
                 $http.put("api/channel/" + data.id, data);
             })
+        })
+
+        $http.post("/api/team_has_notification", {
+            team_id: $scope.teamObject.id,
+            notification: "There has been a change to " + $scope.teamObject.url + "'s team profile page.",
+            time: new Date(),
+            link: "#/team_profile/" + $scope.teamObject.team_name,
+            is_read: 0
+        })
+        .success(function(data) {
+            console.log("Notification Sent.");
+            $rootScope.notifications.push(data);
         })
 
         $scope.teamObject.name = $scope.team_name;

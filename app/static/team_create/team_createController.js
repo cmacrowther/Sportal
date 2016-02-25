@@ -8,6 +8,8 @@ angular.module('dashboard.controllers').controller('team_createController', ['$s
 
     console.log("team_create Page");
 
+    $rootScope.page_name = "Create Team";
+
     //creates a team in the database
     $scope.createTeam = function () {
         var passObject = {url: $scope.team_name};

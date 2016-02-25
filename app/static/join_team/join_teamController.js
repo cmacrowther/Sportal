@@ -3,6 +3,8 @@ angular.module('dashboard.controllers').controller('join_teamController', ['$sco
     //Initializes the validator plugin
     $('#teamForm').validator();
 
+    $rootScope.page_name = "Join Team";
+
     $scope.joinTeam = function () {
 
         var passObject = {url: $scope.team_name, password: $scope.team_password};

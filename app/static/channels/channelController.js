@@ -4,6 +4,8 @@
 
 angular.module('dashboard.controllers').controller('channelController', ['$scope', '$rootScope', '$http', '$routeParams', function ($scope, $rootScope, $http, $routeParams) {
 
+    $rootScope.page_name = "Messages";
+
     $scope.channel_create = false;
 
     $http.get("/api/user").success(function(data){

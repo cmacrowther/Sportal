@@ -156,6 +156,21 @@ class TeamHasChannel(db.Model):
     team_id = Column(Integer, unique=False)
     channel_id = Column(Integer, unique=False)
 
+class UserHasNotification(db.Model):
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, unique=False)
+    notification = Column(Text, unique=false)
+    time = Column(Text, unique=False)
+    link = Column(Text, unique=false)
+    is_read = Column(Integer, unique=False)
+
+class TeamHasNotification(db.Model):
+    id = Column(Integer, primary_key=True)
+    team_id = Column(Integer, unique=False)
+    notification = Column(Text, unique=false)
+    time = Column(Text, unique=False)
+    link = Column(Text, unique=false)
+    is_read = Column(Integer, unique=False)
 
 db.create_all()
 
@@ -179,6 +194,8 @@ api_manager.create_api(Conversation, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(UserHasChannel, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(UserHasMessage, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(TeamHasChannel, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(UserHasNotification, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(TeamHasNotification, methods=['GET', 'POST', 'DELETE', 'PUT'])
 
 
 
@@ -1253,6 +1270,119 @@ def get_team_has_channel():
 
     j = json.dumps(objects_list)
     return j
+
+@app.route('/api/get_team_notifications', methods=['POST'])
+def get_team_notifications():
+    import json
+    import collections
+    from Unchained import UserHasTeam
+    from Unchained import TeamHasNotification
+    
+    data = request.get_json()
+    user_id = data.get('user_id')
+    
+    team = UserHasTeam.query.filter(UserHasTeam.user_id == user_id).all()
+    objects_list = []
+    
+    if team:
+        
+        for item in team:
+            thn = TeamHasNotification.query.filter(TeamHasNotification.team_id == item.team_id).all()
+            
+            if thn:
+                
+                for object in thn:
+            
+                    d = collections.OrderedDict()
+                    d['id'] = object.id
+                    d['team_id'] = object.team_id
+                    d['notification'] = object.notification
+                    d['time'] = object.time
+                    d['link'] = object.link
+                    d['is_read'] = object.is_read
+            
+                    objects_list.append(d)
+    
+            else:
+                return "no team notifications"
+        
+        j = json.dumps(objects_list)
+        return j
+    
+    else:
+        return "no team notifications"
+
+@app.route('/api/get_team_notifications_test', methods=['GET'])
+def get_team_notifications_test():
+    import json
+    import collections
+    from Unchained import UserHasTeam
+    from Unchained import TeamHasNotification
+    
+    data = request.get_json()
+    user_id = 1
+    
+    team = UserHasTeam.query.filter(UserHasTeam.user_id == user_id).all()
+    objects_list = []
+    
+    if team:
+        
+        for item in team:
+            thn = TeamHasNotification.query.filter(TeamHasNotification.team_id == item.team_id).all()
+            
+            if thn:
+                
+                d = collections.OrderedDict()
+                d['id'] = thn[0].id
+                d['team_id'] = thn[0].team_id
+                d['notification'] = thn[0].notification
+                d['time'] = thn[0].time
+                d['link'] = thn[0].link
+                d['is_read'] = thn[0].is_read
+                
+                objects_list.append(d)
+            
+            else:
+                return "no team notifications"
+
+        j = json.dumps(objects_list)
+        return j
+
+    else:
+        return "no team notifications"
+
+@app.route('/api/get_user_notifications', methods=['POST'])
+def get_user_notifications():
+    import json
+    import collections
+    from Unchained import UserHasNotification
+    
+    data = request.get_json()
+    user_id = data.get('user_id')
+    
+    notification = UserHasNotification.query.filter(UserHasNotification.user_id == user_id).all()
+    objects_list = []
+    
+    if notification:
+        
+        for item in notification:
+            
+            d = collections.OrderedDict()
+            d['id'] = item.id
+            d['user_id'] = item.user_id
+            d['notification'] = item.notification
+            d['time'] = item.time
+            d['link'] = item.link
+            d['is_read'] = item.is_read
+            
+            objects_list.append(d)
+        
+        j = json.dumps(objects_list)
+        return j
+    
+    else:
+        return "no user notifications"
+
 
 app.debug = True
 

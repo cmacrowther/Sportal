@@ -14,6 +14,10 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
         viewMode: 'years'
     });
 
+    $rootScope.page_name = $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name;
+
+    console.log("NOTIFICATIONS: " + $rootScope.notifications[0].notification);
+
     //Setting unique user profile URL
     $scope.user_id = $routeParams.user_id;
     console.log("Profile Parameter user ID: " + $scope.user_id);
@@ -242,6 +246,18 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
                         console.log("Sport successfully deleted");
                     })
             })
+    }
+
+    $scope.is_read_set = function (item) {
+        console.log("Notification Read.");
+        item.is_read = 1;
+        if(item.team_id) {
+            $http.put("/api/team_has_notification/" + item.id, item);
+        }
+        else {
+            $http.put("/api/user_has_notification/" + item.id, item);
+        }
+
     }
 
 }]);

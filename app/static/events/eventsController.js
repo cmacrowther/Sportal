@@ -20,6 +20,7 @@ angular.module('dashboard.controllers').controller('eventsController', ['$scope'
         }
         else {
             $scope.event_name = $scope.eventObject.name;
+            $rootScope.page_name = $scope.eventObject.name;
         }
         if ($scope.eventObject.date == "" || $scope.eventObject.date == undefined) {
             $scope.event_date = "No info given";

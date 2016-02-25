@@ -10,6 +10,8 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
     $scope.no_games_ip = "No Games in Progress";
     $scope.no_past_games = "No Past Games";
 
+    $rootScope.page_name = "Games";
+
 
     //code here
     $http({

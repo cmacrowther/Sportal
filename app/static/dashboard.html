@@ -139,17 +139,19 @@
             </div>
 
             <div class="tool-name">
-                <p>PAGE NAME</p>
+                <p>{{ $root.page_name }}</p>
             </div>
 
             <div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;">
                 <i class="fa fa-cog fa-lg"></i>
             </div>
 
-            <div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;">
+            
+            <a ng-click="display()"><div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;">
                 <i class="fa fa-bell fa-lg"></i>
-                <span class="label label-warning">!</span>
-            </div>
+                <span class="label label-danger" ng-show="is_team_notifications || is_user_notifications">{{ notification_counter }}</span>
+            </div></a>
+            
 
             <div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7; border-bottom:4px solid #16A4FA">
                 <i class="fa fa-user fa-lg"></i>
@@ -159,7 +161,8 @@
     </div>
 
     <div class="side-body" ng-view>
-           <!-- Angular Controller Here --> 
+           <!-- Angular Controller Here -->
+
     </div>
 </div>
 <!-- -->

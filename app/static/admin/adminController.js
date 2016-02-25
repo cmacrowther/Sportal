@@ -1,11 +1,13 @@
 /**
  * Created by Thomas Doucette on 2016-01-21.
  */
-angular.module('dashboard.controllers').controller('adminController', ['$scope', '$timeout', '$http', function ($scope, $timeout, $http) {
+angular.module('dashboard.controllers').controller('adminController', ['$scope', '$timeout', '$http', '$rootScope', function ($scope, $timeout, $http, $rootScope) {
 
     //Initialize validators
     $('#sportForm').validator();
     $('#facilityForm').validator();
+
+    $rootScope.page_name = "Admin";
 
     //create a new sport
     $scope.createSport = function () {

@@ -18,6 +18,8 @@ angular.module('dashboard.controllers').controller('event_createController', ['$
         }
     });
 
+    $rootScope.page_name = "Create Event";
+
     //Add an event
 	$scope.addEvent = function() {
 		$http.post("api/event", {

@@ -5,6 +5,8 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
 
     var passObject = {user_id: $rootScope.userObject.id};
 
+    $rootScope.page_name = "Play";
+
     //Gets the sports the user has set in there profile as "favourites"
     $http({
         method: 'POST',
