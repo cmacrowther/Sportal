@@ -69,7 +69,7 @@ angular.module('dashboard.controllers').controller('join_teamController', ['$sco
 
                                                 $http.post("api/team_has_notification", {
                                                     team_id: data.id,
-                                                    notification: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name + " has joined the team " + data.name "!",
+                                                    notification: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name + " has joined the team " + data.name + "!",
                                                     time: new Date(),
                                                     link: "#/team_profile/" + data.url,
                                                     is_read: 0

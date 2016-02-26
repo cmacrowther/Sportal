@@ -7,7 +7,7 @@
             Channels<span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
-            <li ng-repeat="item in channels" ng-click="setChannel(item.id)">{{ item.name }}</li>
+            <li ng-repeat="item in channels" ng-click="setChannel(item.id); setMessageType('Channel')">{{ item.name }}</li>
           </ul>
         </div>
         <!-- Conversations -->
@@ -16,7 +16,7 @@
             Conversations<span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
-            <li ng-repeat="item in convos" ng-click="setConversation(item.id)">{{ item.first_name }} {{ item.last_name }}</li>
+            <li ng-repeat="item in convos" ng-click="setConversation(item.id); setMessageType('not_Channel')">{{ item.first_name }} {{ item.last_name }}</li>
           </ul>
         </div>
         
@@ -88,7 +88,7 @@
             </div>
         </div>
 ​
-        <form class="message-form" ng-submit>
+        <form ng-show="message_bar" class="message-form" ng-submit>
 ​
             <div class="input-group">
                 <input type="text" class="form-control" ng-model="message" placeholder="Type a message...">
