@@ -5,7 +5,8 @@ angular.module('example', [
     'ngRoute',
     'example.controllers',
     'ngAnimate',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'angular-loading-bar'
 ]).
     config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'landing/landing.html', controller: 'LandingController'});
@@ -17,7 +18,8 @@ angular.module('dashboard', [
     'dashboard.controllers',
     'ngAnimate',
     'ui.bootstrap',
-    'dashboard.services'
+    'dashboard.services',
+    'angular-loading-bar'
 ]).
     config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'home/home.html', controller: 'HomeController'});
