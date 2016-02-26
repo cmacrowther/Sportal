@@ -1,5 +1,5 @@
 $(function () {
-    $('.navbar-toggle').click(function () {
+    $('#hamburger').click(function () {
         $('.navbar-nav').toggleClass('slide-in');
         $('.side-body').toggleClass('body-slide-in');
         $('#search').removeClass('in').addClass('collapse').slideUp(200);
@@ -173,4 +173,22 @@ angular.module('dashboard.controllers')
 
     }]);
 
-    
+    angular.module('dashboard').directive('isActiveNav', [ '$location', function($location) {
+        return {
+            restrict: 'A',
+            link: function(scope, element) {
+            scope.location = $location;
+            scope.$watch('location.path()', function(currentPath) {
+                if('#' + currentPath === element[0].attributes['href'].nodeValue) {
+                    //element.parent().addClass('active');
+                    setTimeout(function(){
+                        element.parent().addClass('active');
+                    }, 500);
+                    console.log("Checks out!");
+                } else {
+                    element.parent().removeClass('active');
+                }
+            });
+        }
+    };
+}]);

@@ -28,6 +28,14 @@
     background-color: #303949;
 }
 
+#mobile_menu {
+  display: none;
+}
+
+#home_icon {
+    display: block;
+}
+
 .side-menu {
   position: absolute;
   width: 210px;
@@ -41,11 +49,7 @@
 .side-menu .navbar-header {
   width: 100%;
 }
-.side-menu .navbar-nav .active a {
-  background-color: transparent;
-  margin-right: -1px;
-  border-right: 5px solid #e7e7e7;
-}
+
 .side-menu .navbar-nav li {
   display: block;
   width: 100%;
@@ -99,7 +103,6 @@
 }
 .side-menu #dropdown > a:hover {
   background-color: #414D60;
-  border-left: 4px solid #FCAE28;
 }
 .side-menu #dropdown .panel-body {
   padding: 0;
@@ -112,7 +115,6 @@
   width: 100%;
 }
 .side-menu #dropdown .panel-body .navbar-nav li {
-  padding-left: 15px;
   border-bottom: 1px solid #2B3342;
   background-color: #303949;
   position: relative;
@@ -210,193 +212,32 @@
 }
 /* small screen */
 @media (max-width: 768px) {
+
+  #mobile_menu {
+    display: block;
+  }
+
+  #home_icon {
+    display: none;
+  }
+
   .side-menu {
-    position: relative;
-    width: 100%;
-    height: 0;
-    border-right: 0;
-    border-bottom: 1px solid #e7e7e7;
+    display: none !important;
   }
-  .side-menu .brand-name-wrapper .navbar-brand {
-    display: inline-block;
+
+  .navbar-default {
+    display: none !important;
   }
-  /* Slide in animation */
-  @-moz-keyframes slidein {
-    0% {
-      left: -300px;
-    }
-    100% {
-      left: 10px;
-    }
+
+  .absolute-wrapper {
+    display: none !important;
   }
-  @-webkit-keyframes slidein {
-    0% {
-      left: -300px;
-    }
-    100% {
-      left: 10px;
-    }
-  }
-  @keyframes slidein {
-    0% {
-      left: -300px;
-    }
-    100% {
-      left: 10px;
-    }
-  }
-  @-moz-keyframes slideout {
-    0% {
-      left: 0;
-    }
-    100% {
-      left: -300px;
-    }
-  }
-  @-webkit-keyframes slideout {
-    0% {
-      left: 0;
-    }
-    100% {
-      left: -300px;
-    }
-  }
-  @keyframes slideout {
-    0% {
-      left: 0;
-    }
-    100% {
-      left: -300px;
-    }
-  }
-  /* Slide side menu*/
-  /* Add .absolute-wrapper.slide-in for scrollable menu -> see top comment */
-  .side-menu-container > .navbar-nav.slide-in {
-    -moz-animation: slidein 300ms forwards;
-    -o-animation: slidein 300ms forwards;
-    -webkit-animation: slidein 300ms forwards;
-    animation: slidein 300ms forwards;
-    -webkit-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-  }
-  .side-menu-container > .navbar-nav {
-    /* Add position:absolute for scrollable menu -> see top comment */
-    position: absolute;
-    left: -300px;
-    width: 300px;
-    top: 43px;
-    height: 100%;
-    border-right: 1px solid #e7e7e7;
-    background-color: #f8f8f8;
-    -moz-animation: slideout 300ms forwards;
-    -o-animation: slideout 300ms forwards;
-    -webkit-animation: slideout 300ms forwards;
-    animation: slideout 300ms forwards;
-    -webkit-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-  }
-  .absolute-wrapper{
-        width:285px;
-        -moz-animation: slideout 300ms forwards;
-        -o-animation: slideout 300ms forwards;
-        -webkit-animation: slideout 300ms forwards;
-        animation: slideout 300ms forwards;
-        -webkit-transform-style: preserve-3d;
-        transform-style: preserve-3d;
-    }
-  @-moz-keyframes bodyslidein {
-    0% {
-      left: 0;
-    }
-    100% {
-      left: 300px;
-    }
-  }
-  @-webkit-keyframes bodyslidein {
-    0% {
-      left: 0;
-    }
-    100% {
-      left: 300px;
-    }
-  }
-  @keyframes bodyslidein {
-    0% {
-      left: 0;
-    }
-    100% {
-      left: 300px;
-    }
-  }
-  @-moz-keyframes bodyslideout {
-    0% {
-      left: 300px;
-    }
-    100% {
-      left: 0;
-    }
-  }
-  @-webkit-keyframes bodyslideout {
-    0% {
-      left: 300px;
-    }
-    100% {
-      left: 0;
-    }
-  }
-  @keyframes bodyslideout {
-    0% {
-      left: 300px;
-    }
-    100% {
-      left: 0;
-    }
-  }
-  /* Slide side body*/
+
   .side-body {
-    margin-left: 5px;
-    margin-top: 70px;
-    position: relative;
-    -moz-animation: bodyslideout 300ms forwards;
-    -o-animation: bodyslideout 300ms forwards;
-    -webkit-animation: bodyslideout 300ms forwards;
-    animation: bodyslideout 300ms forwards;
-    -webkit-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-  }
-  .body-slide-in {
-    -moz-animation: bodyslidein 300ms forwards;
-    -o-animation: bodyslidein 300ms forwards;
-    -webkit-animation: bodyslidein 300ms forwards;
-    animation: bodyslidein 300ms forwards;
-    -webkit-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-  }
-  /* Hamburger */
-  .navbar-toggle {
-    border: 0;
-    float: left;
-    padding: 18px;
-    margin: 0;
-    border-radius: 0;
-    background-color: #f3f3f3;
-  }
-  /* Search */
-  #search .panel-body .navbar-form {
-    border-bottom: 0;
-  }
-  #search .panel-body .navbar-form .form-group {
-    margin: 0;
-  }
-  .navbar-header {
-    /* this is probably redundant */
-    position: fixed;
-    z-index: 3;
-    background-color: #f8f8f8;
-  }
-  /* Dropdown tweek */
-  #dropdown .panel-body .navbar-nav {
-    margin: 0;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    margin-left: auto !important;
   }
 }
 
@@ -432,6 +273,10 @@
 }
 .head-information .tool-butt:hover {
   background-color: #EDF2F6;
+}
+.head-information .tool-butt:active {
+  border-bottom:4px solid #16A4FA
+  
 }
 .head-information .tool-butt i {
   padding-left: 12px;
@@ -473,6 +318,285 @@
 }
 
 .active {
-    color: #F8F8F8;
-    background-color: #4f81bd;
+  background-color: #303949 !important;
+  color: #303939;
+  border-left: 4px solid #FCAE28;
 }
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .open > a {
+  background-image: none;
+  filter: none;
+  background-repeat: repeat-x;
+  -webkit-box-shadow: inset 0 3px 9px rgba(0,0,0,.075);
+  box-shadow: inset 0 3px 9px rgba(0,0,0,.075);
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+  background-color: #414D60;
+  color: #A9B4C6;
+}
+
+@import url('http://fonts.googleapis.com/css?family=Pacifico|Open+Sans:300');
+.flex-center {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+* {
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+}
+a,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+}
+.outer-menu {
+  position: absolute;
+  padding: 5px;
+  z-index: 1;
+}
+.outer-menu .checkbox-toggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  opacity: 0;
+}
+.outer-menu .checkbox-toggle:checked + .hamburger > div {
+  -webkit-transform: rotate(135deg);
+          transform: rotate(135deg);
+}
+.outer-menu .checkbox-toggle:checked + .hamburger > div:before,
+.outer-menu .checkbox-toggle:checked + .hamburger > div:after {
+  top: 0;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+.outer-menu .checkbox-toggle:checked + .hamburger > div:after {
+  opacity: 0;
+}
+.outer-menu .checkbox-toggle:checked ~ .menu {
+  pointer-events: auto;
+  visibility: visible;
+}
+.outer-menu .checkbox-toggle:checked ~ .menu > div {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  -webkit-transition-duration: .75s;
+          transition-duration: .75s;
+}
+.outer-menu .checkbox-toggle:checked ~ .menu > div > div {
+  opacity: 1;
+  -webkit-transition: opacity 0.4s ease 0.4s;
+  transition: opacity 0.4s ease 0.4s;
+}
+.outer-menu .checkbox-toggle:hover + .hamburger {
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.outer-menu .checkbox-toggle:checked:hover + .hamburger > div {
+  -webkit-transform: rotate(225deg);
+          transform: rotate(225deg);
+}
+.outer-menu .hamburger {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 59px;
+  height: 59px;
+  padding: .5em 1em;
+  background: #FFFFFF;
+  border-radius: 0 0.12em 0.12em 0;
+  cursor: pointer;
+  -webkit-transition: box-shadow 0.4s ease;
+  transition: box-shadow 0.4s ease;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.outer-menu .hamburger > div {
+  position: relative;
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+      -ms-flex: none;
+          flex: none;
+  width: 100%;
+  height: 2px;
+  background: #000000;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.outer-menu .hamburger > div:before,
+.outer-menu .hamburger > div:after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: -10px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: inherit;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+.outer-menu .hamburger > div:after {
+  top: 10px;
+}
+.outer-menu .menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  visibility: hidden;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  outline: 1px solid transparent;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.outer-menu .menu > div {
+  width: 200vw;
+  height: 200vw;
+  color: #000000;
+  background: #EDF2F6;
+  border-radius: 50%;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+      -ms-flex: none;
+          flex: none;
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.outer-menu .menu > div > div {
+  text-align: center;
+  max-width: 90vw;
+  max-height: 100vh;
+  opacity: 0;
+  -webkit-transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease;
+  overflow-y: auto;
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+      -ms-flex: none;
+          flex: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.outer-menu .menu > div > div > ul {
+  list-style: none;
+  padding: 0 1em;
+  margin: 0;
+  display: block;
+  max-height: 100vh;
+}
+.outer-menu .menu > div > div > ul > li {
+  padding: 0;
+  margin: 1em;
+  font-size: 24px;
+  display: block;
+}
+.outer-menu .menu > div > div > ul > li > a {
+  position: relative;
+  display: inline;
+  cursor: pointer;
+  -webkit-transition: color 0.4s ease;
+  transition: color 0.4s ease;
+}
+.outer-menu .menu > div > div > ul > li > a:hover {
+  color: #e5e5e5;
+}
+.outer-menu .menu > div > div > ul > li > a:hover:after {
+  width: 100%;
+}
+.outer-menu .menu > div > div > ul > li > a:after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  bottom: -0.15em;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #e5e5e5;
+  -webkit-transition: width 0.4s ease;
+  transition: width 0.4s ease;
+}
+
+
