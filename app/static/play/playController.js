@@ -100,38 +100,38 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
     //Ran when accept challenge button is clicked in the list of possible matches for the user
     //Creates a match object in the database and throws the user to the games page
     $scope.acceptChallenge = function (item, item2) {
-        console.log("You accepted the challenge of user with id: " + item + " hahaha " + item2);
 
-        $http.get("api/queue/" + item).success(function(data) {
+        $http.get("api/queue/" + item).success(function (data) {
             console.log(data);
             $scope.matches_list.splice(data, 1);
+
+            $http.post("api/send_mail_match", {
+                    user: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name,
+                    email: item2
+                })
+                .success(function (data) {
+                    console.log("Sent email to user.");
+                });
+
+            $http.post("api/match", {
+                    sport_id: $scope.sport.id,
+                    player1_id: $rootScope.userObject.id,
+                    player2_id: item,
+                    is_team: $scope.is_team,
+                    date: "",
+                    time: "",
+                    facility_id: 0,
+                    complete: 2,
+                    winner_id: 0,
+                    score_1: 0,
+                    score_2: 0
+                })
+                .success(function (data) {
+                    console.log("Created Match object. Sending opponent email for this request.");
+                    //window.location.assign("#/games");
+                });
         });
 
-        $http.post("api/send_mail_match", {
-                user: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name,
-                email: item2
-            })
-            .success(function (data) {
-                console.log("Sent email to user.");
-            });
-
-        $http.post("api/match", {
-                sport_id: $scope.sport.id,
-                player1_id: $rootScope.userObject.id,
-                player2_id: item,
-                is_team: $scope.is_team,
-                date: "",
-                time: "",
-                facility_id: 0,
-                complete: 2,
-                winner_id: 0,
-                score_1: 0,
-                score_2: 0
-            })
-            .success(function (data) {
-                console.log("Created Match object. Putting in pending until opponent accepts.");
-                //window.location.assign("#/games");
-            });
 
         //$http.post("api/get_matches_pending", {
         //        user_id: $rootScope.userObject.id,
@@ -145,5 +145,5 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
 
     };
 
-    
+
 }]);
