@@ -1264,7 +1264,6 @@ def get_channel_messages():
             d['sender_last_name'] = user.last_name
             d['message'] = message.body
             d['time'] = message.time
-            d['is_read'] = item.is_read
             d['picture'] = user.picture
             
             objects_list.append(d)

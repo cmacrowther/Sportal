@@ -5,8 +5,8 @@
 angular.module('dashboard.controllers').controller('channelController', ['$scope', '$rootScope', '$http', '$routeParams', function ($scope, $rootScope, $http, $routeParams) {
 
     $rootScope.page_name = "Messages";
-
-    $scope.channel_create = false;
+    $scope.title = "Welcome to Sportal Chat!";
+    $scope.message_bar = false;
 
     $http.get("/api/user").success(function(data){
         $scope.users = data.objects;
@@ -58,7 +58,6 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
             data: JSON.stringify(passObject)
         })
         .success(function(data){
-            console.log("hi");
             $scope.convo_id = conversation_id;
             
             $http.get("api/conversation/" + conversation_id)
@@ -133,8 +132,18 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
         }
     }
 
+    $scope.setMessageType = function (item) {
+        if(item == "Channel") {
+            $scope.is_channel = true;
+            $scope.message_bar = true;
+        }
+        else {
+            $scope.is_channel = false;
+            $scope.message_bar = true;
+        }
+    }
+
     $scope.sendMessage = function () {
-            console.log($scope.convo_id);
             //Create Message
             $http.post("api/message", {
                     user_id: $rootScope.userObject.id,
@@ -143,7 +152,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                 })
                 .success(function (data) {
 
-                    if($scope.channel_id) {
+                    if($scope.is_channel) {
                         $scope.message = "";
                         $http.post("api/channel_has_message", {
                             channel_id: $scope.channel_id,
@@ -151,6 +160,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                         })
                         .success(function(data){
                             console.log("Channel Message Sent.");
+                            $scope.setChannel($scope.channel_id);
                         })
                     }
                     else {
@@ -170,6 +180,8 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
         }
 
     $scope.setChannel = function(channel_id){
+
+        $scope.channel_id = channel_id;
 
         $http.get("/api/channel/" + channel_id)
         .success(function(data){
