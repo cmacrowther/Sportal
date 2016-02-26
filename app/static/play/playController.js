@@ -127,7 +127,9 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
                     score_2: 0
                 })
                 .success(function (data) {
-                    console.log("Created Match object. Sending opponent email for this request.");
+                    console.log("Created Match object. Sending opponent email for this request. deleting person from queue");
+                    $http.delete("api/queue/" + item);
+
                     //window.location.assign("#/games");
                 });
         });
