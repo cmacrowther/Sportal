@@ -351,6 +351,33 @@ def send_mail_match():
     return "Successfully sent"
 
 
+@app.route('/api/send_mail_accepted', methods=['POST'])
+def send_mail_accepted():
+    import smtplib
+    import email.message
+
+    data = request.get_json()
+
+    user = data.get('user')
+    receivers = data.get('email')
+    sender = 'mycodebrary@gmail.com'
+
+    msg = email.message.Message()
+    msg['Subject'] = 'You have matched!'
+    msg['From'] = 'mycodebrary@gmail.com'
+    msg['To'] = receivers
+    msg.add_header('Content-Type', 'text/html')
+    msg.set_payload(
+        '<h1>You have a match! Go to www.unchained.com to talk to them!</h1>')
+
+    s = smtplib.SMTP("smtp.gmail.com", 587)
+    s.starttls()
+    s.login("mycodebrary@gmail.com", "mycodebrary#1")
+    s.sendmail(msg['From'], [msg['To']], msg.as_string())
+
+    return "Successfully sent"
+
+
 @app.route('/api/get_team_members', methods=['POST'])
 def get_team_members():
     import json
@@ -1237,7 +1264,6 @@ def get_channel_messages():
             d['sender_last_name'] = user.last_name
             d['message'] = message.body
             d['time'] = message.time
-            d['is_read'] = item.is_read
             d['picture'] = user.picture
             
             objects_list.append(d)

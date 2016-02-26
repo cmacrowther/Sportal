@@ -1,13 +1,13 @@
 <link type="text/css" rel="stylesheet" href="../css/channels.css">
 <div class="row" style="height: 110px; border-bottom: 1px solid #e7e7e7;">
-    <h2 style="padding-left: 15px;">FireSlack</h2>    
+    <h2 style="padding-left: 15px;">Sportal Chat</h2>    
         <!-- Channels -->
         <div class="btn-group">
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Channels<span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
-            <li ng-repeat="item in channels" ng-click="setChannel(item.id)">{{ item.name }}</li>
+            <li ng-repeat="item in channels" ng-click="setChannel(item.id); setMessageType('Channel')">{{ item.name }}</li>
           </ul>
         </div>
         <!-- Conversations -->
@@ -16,7 +16,7 @@
             Conversations<span class="caret"></span>
           </button>
           <ul class="dropdown-menu">
-            <li ng-repeat="item in convos" ng-click="setConversation(item.id)">{{ item.first_name }} {{ item.last_name }}</li>
+            <li ng-repeat="item in convos" ng-click="setConversation(item.id); setMessageType('not_Channel')">{{ item.first_name }} {{ item.last_name }}</li>
           </ul>
         </div>
         
@@ -88,7 +88,7 @@
             </div>
         </div>
 ​
-        <form class="message-form" ng-submit>
+        <form ng-show="message_bar" class="message-form" ng-submit>
 ​
             <div class="input-group">
                 <input type="text" class="form-control" ng-model="message" placeholder="Type a message...">
