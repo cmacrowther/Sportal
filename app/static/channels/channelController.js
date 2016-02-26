@@ -133,7 +133,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
         }
     }
 
-    $scope.sendDirectMessage = function () {
+    $scope.sendMessage = function () {
             console.log($scope.convo_id);
             //Create Message
             $http.post("api/message", {
@@ -143,8 +143,19 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                 })
                 .success(function (data) {
 
-                    $scope.message = "";
-                    $http.post("api/user_has_message", {
+                    if($scope.channel_id) {
+                        $scope.message = "";
+                        $http.post("api/channel_has_message", {
+                            channel_id: $scope.channel_id,
+                            message_id: data.id
+                        })
+                        .success(function(data){
+                            console.log("Channel Message Sent.");
+                        })
+                    }
+                    else {
+                        $scope.message = "";
+                        $http.post("api/user_has_message", {
                             user_id: $rootScope.userObject.id,
                             message_id: data.id,
                             is_read: 0,
@@ -153,34 +164,36 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                         .success(function (uhm) {
                             $scope.setConversation($scope.convo_id);
                         })
+                    }
                 })
 
         }
 
     $scope.setChannel = function(channel_id){
-         var passObject = {channel_id: channel_id}
+
+        $http.get("/api/channel/" + channel_id)
+        .success(function(data){
+            $scope.title = "Channel " + data.name;
+        })
+
+        var passObject = {channel_id: channel_id};
+
         $http({
             method: 'POST',
             url: 'api/get_channel_messages',
             headers: {'Content-Type': 'application/json'},
             data: JSON.stringify(passObject)
         })
-            .success(function (data) {
+        .success(function (data) {
 
-                $scope.channel_id = channel_id;
-                $http.get("/api/channel/" + channel_id)
-                .success(function(data){
-                    $scope.title = "Channel " + data.name;
-                })
+            if (data == "no messages") {
+                $scope.messages = [];
+            }
+            else {
+                $scope.messages = data;
+            }
 
-                if (data == "no messages") {
-                    $scope.messages = [];
-                }
-                else {
-                    $scope.messages = data;
-                }
-
-            });
+        });
     }
 
 
