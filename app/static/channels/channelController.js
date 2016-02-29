@@ -2,11 +2,11 @@
  * Created by Brandon on 1/20/2016.
  */
 
-angular.module('dashboard.controllers').controller('channelController', ['$scope', '$rootScope', '$http', '$routeParams', function ($scope, $rootScope, $http, $routeParams) {
+angular.module('dashboard.controllers').controller('channelController', ['$scope', '$rootScope', '$http', '$routeParams', '$timeout', function ($scope, $rootScope, $http, $routeParams, $timeout) {
 
     $rootScope.page_name = "Messages";
-    $scope.title = "Welcome to Sportal Chat!";
-    $scope.message_bar = false;
+    $scope.is_channel = false;
+    $scope.in_convo = false;
 
     $http.get("/api/user").success(function(data){
         $scope.users = data.objects;
@@ -23,10 +23,11 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
     .success(function(data){
         if (data == "no conversations") {
             $scope.convos = [];
-            alert(data);
+            $scope.no_convos = "No Conversations";
         }
         else {
             $scope.convos = data;
+            $scope.no_convos = "";
         }
 
     });
@@ -40,10 +41,11 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
     .success(function(data){
         if (data == "no channels") {
             $scope.channels = [];
-            alert(data);
+            $scope.no_channels = "No Channels";
         }
         else {
             $scope.channels = data;
+            $scope.no_channels= "";
         }
 
     });
@@ -82,6 +84,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
             }
             else {
                 $scope.messages = data;
+                
             }
         })
     }
@@ -135,11 +138,13 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
     $scope.setMessageType = function (item) {
         if(item == "Channel") {
             $scope.is_channel = true;
-            $scope.message_bar = true;
+            $scope.is_convo = false;
+            $scope.in_convo = true;
         }
         else {
             $scope.is_channel = false;
-            $scope.message_bar = true;
+            $scope.is_convo = true;
+            $scope.in_convo = true;
         }
     }
 
@@ -208,8 +213,82 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
         });
     }
 
+    $scope.setModal = function (item) {
+        $scope.modalObject = item;
+    };
 
+    $scope.deleteConvo = function () {
 
+        var passObject = {conversation_id: $scope.modalObject.id}
+
+        $http({
+            method: 'POST',
+            url: 'api/get_conversation_messages',
+            headers: {'Content-Type': 'application/json'},
+            data: JSON.stringify(passObject)
+        })
+        .success(function(data){
+            for(var i = 0; i < data.length; i++) {
+                $http.delete("/api/user_has_message/" + data[i].uhm_id);
+                $http.delete("/api/message/" + data[i].id);
+            }
+            $http.delete("/api/conversation/" + $scope.modalObject.id);
+        })
+    }
+
+    $scope.updateMessages = function () {
+
+        $timeout(function () {
+            if($scope.is_channel) {
+                console.log("CHANNEL MESSAGE CHECK");
+
+                var passObject = {channel_id: $scope.channel_id};
+
+                $http({
+                    method: 'POST',
+                    url: 'api/get_channel_messages',
+                    headers: {'Content-Type': 'application/json'},
+                    data: JSON.stringify(passObject)
+                })
+                .success(function (data) {
+
+                    if (data == "no messages") {
+                        $scope.messages = [];
+                    }
+                    else {
+                        $scope.messages = data;
+                    }
+
+                })
+            }
+            if ($scope.is_convo) {
+                console.log("MESSAGE CHECK");
+
+                var passObject = {conversation_id: $scope.convo_id};
+                $http({
+                    method: 'POST',
+                    url: 'api/get_conversation_messages',
+                    headers: {'Content-Type': 'application/json'},
+                    data: JSON.stringify(passObject)
+                })
+                .success(function(data){
+
+                    if (data == "no messages") {
+                        $scope.messages = [];
+                    }
+                    else {
+                        $scope.messages = data;
+                    }
+
+                })
+            }
+            $scope.updateMessages();
+        }, 5000)
+    }
+
+    //Initial Call to update messages
+    $scope.updateMessages();
+    
 
 
 }]);

@@ -1122,6 +1122,7 @@ def get_conversation_messages():
             
             d = collections.OrderedDict()
             d['id'] = message.id
+            d['uhm_id'] = item.id
             d['sender_first_name'] = user.first_name
             d['sender_last_name'] = user.last_name
             d['message'] = message.body
@@ -1181,6 +1182,7 @@ def get_teams_channels():
     from Unchained import TeamHasChannel
     from Unchained import User
     from Unchained import UserHasTeam
+    from Unchained import Team
     
     data = request.get_json()
     user_id = data.get('user_id')
@@ -1195,6 +1197,7 @@ def get_teams_channels():
 
                 channel = Channel.query.get(chan.channel_id)
                 user = User.query.get(channel.admin_id)
+                team = Team.query.get(chan.team_id)
             
                 d = collections.OrderedDict()
                 d['id'] = channel.id
@@ -1203,6 +1206,7 @@ def get_teams_channels():
                 d['admin_id'] = channel.admin_id
                 d['first_name'] = user.first_name
                 d['last_name'] = user.last_name
+                d['team_picture'] = team.picture
             
                 objects_list.append(d)
     

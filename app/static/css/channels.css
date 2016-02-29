@@ -143,8 +143,8 @@ body {
 
 .message-pane {
   position: relative;
-  height:100%;
-  width:80%;
+  height:400px;
+  width:100%;
   overflow-y:scroll;
   margin-right: 0px;
   margin-top: 0px;

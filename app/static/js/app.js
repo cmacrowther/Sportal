@@ -34,4 +34,4 @@ angular.module('dashboard', [
         $routeProvider.when('/play', {templateUrl: 'play/play.html', controller: 'playController'});
         $routeProvider.when('/messages', {templateUrl: 'channels/channel.html', controller: 'channelController'});
         $routeProvider.otherwise({redirectTo: '/'});
-    }]);
+    }])
