@@ -28,7 +28,7 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
             }
             else {
                 for (var i = 0; i < data.length; i++) {
-                    if (data[i].complete == 2) {
+                    if (data[i].complete == 2 && data[i].player2_id == $rootScope.userObject.id) {
                         console.log("Challenge is presentttttttttttttttttttt");
                         $scope.games_pending.push(data[i]);
                     }
@@ -53,12 +53,13 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
                         $scope.no_past_games = "";
                     }
                     else {
-                        $scope.gamesip.push(data[i]);
-                        $scope.no_games_ip = "";
+                        if (data[i].complete == 0) {
+                            $scope.gamesip.push(data[i]);
+                            $scope.no_games_ip = "";
+                        }
                     }
                 }
             }
-
         });
 
     //$http.post("api/get_matches_pending", {
@@ -83,9 +84,26 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
 
     $scope.getUser = function (item) {
 
-        $http.get("/api/user/" + item.player2_id)
+        $http.get("/api/user/" + item.player1_id)
             .success(function (data) {
                 item.opponent = data.first_name + " " + data.last_name;
+            })
+    };
+
+    $scope.sendOpponentEmail = function (item) {
+
+        $http.get("/api/user/" + item.player1_id)
+            .success(function (data) {
+                console.log("got the email: " + data.email);
+
+                $http.post("api/send_mail_accepted", {
+                        user: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name,
+                        email: data.email
+                    })
+                    .success(function (data) {
+                        console.log("Sent email to user.");
+                    });
+
             })
     };
 

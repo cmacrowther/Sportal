@@ -169,25 +169,25 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             headers: {'Content-Type': 'application/json'},
             data: JSON.stringify(passObject)
         })
-        .success(function(data){
-            $http.get("api/channel/" + data[0].channel_id)
-            .success(function(data){
-                data.name = $scope.team_name;
-                $http.put("api/channel/" + data.id, data);
+            .success(function (data) {
+                $http.get("api/channel/" + data[0].channel_id)
+                    .success(function (data) {
+                        data.name = $scope.team_name;
+                        $http.put("api/channel/" + data.id, data);
+                    })
             })
-        })
 
         $http.post("/api/team_has_notification", {
-            team_id: $scope.teamObject.id,
-            notification: "There has been a change to " + $scope.teamObject.url + "'s team profile page.",
-            time: new Date(),
-            link: "#/team_profile/" + $scope.teamObject.team_name,
-            is_read: 0
-        })
-        .success(function(data) {
-            console.log("Notification Sent.");
-            $rootScope.notifications.push(data);
-        })
+                team_id: $scope.teamObject.id,
+                notification: "There has been a change to " + $scope.teamObject.url + "'s team profile page.",
+                time: new Date(),
+                link: "#/team_profile/" + $scope.teamObject.team_name,
+                is_read: 0
+            })
+            .success(function (data) {
+                console.log("Notification Sent.");
+                $rootScope.notifications.push(data);
+            })
 
         $scope.teamObject.name = $scope.team_name;
         $scope.teamObject.url = $scope.team_name;
@@ -365,8 +365,9 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
 
         //available to team admins
         $http.delete("/api/team/" + $scope.teamObject.id)
-            .success(function () {
-                console.log("Team Deleted.");
+            .success(function (data) {
+                console.log("Team Deleted. ddddddddddddddd" + $rootScope.userObject.id);
+
                 var passObject = {team_id: $scope.teamObject.id};
 
                 $http({
@@ -379,7 +380,24 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                         for (var i = 0; i < data.length; i++) {
                             $http.delete("/api/user_has_team/" + data[i].id)
                                 .success(function () {
-                                    console.log("User " + i + " deleted.")
+                                    console.log("User " + i + " deleted.");
+                                    var passObject = {user_id: $rootScope.userObject.id};
+
+                                    $http({
+                                        method: 'POST',
+                                        url: 'api/get_user_teams',
+                                        headers: {'Content-Type': 'application/json'},
+                                        data: JSON.stringify(passObject)
+                                    })
+                                        .success(function (data) {
+                                            console.log(data);
+                                            if (data == "no teams") {
+                                                $rootScope.teams = [];
+                                            }
+                                            else {
+                                                $rootScope.teams = data;
+                                            }
+                                        });
                                 })
                         }
                         var passObject = {team_id: $scope.teamObject.id};
@@ -403,12 +421,12 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                                     headers: {'Content-Type': 'application/json'},
                                     data: JSON.stringify(passObject)
                                 })
-                                .success(function(data){
-                                    $http.delete("/api/team_has_channel/" + data.id);
-                                    $http.delete("/api/channel/" + data.channel_id);
-                                })
+                                    .success(function (data) {
+                                        $http.delete("/api/team_has_channel/" + data.id);
+                                        $http.delete("/api/channel/" + data.channel_id);
+                                    })
 
-                                $rootScope.teams.splice($rootScope.teams.indexOf($scope.teamObject.id), 1);
+
                                 alert("Team Has Been Deleted.");
                                 window.location.assign("#/");
                             })
