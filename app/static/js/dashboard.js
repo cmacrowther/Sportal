@@ -54,6 +54,7 @@ angular.module('dashboard.controllers')
     .controller('DashboardController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
 
         $rootScope.page_name = "Dashboard";
+        $rootScope.message_counter = 0;
 
         var user_id = localStorage.getItem("id");
         var passObject = {user_id: user_id};

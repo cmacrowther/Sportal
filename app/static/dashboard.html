@@ -128,9 +128,9 @@
     <div class="side-body">
         <div class="head-information">
             <!--Header information here-->
-            <div class="tool-butt">
+            <a href="#/"><div class="tool-butt">
                 <i id="home_icon" class="fa fa-home fa-lg"></i>
-            </div>
+            </div></a>
 
             <div id="mobile_menu" class="outer-menu">
 			  <input class="checkbox-toggle" type="checkbox" />
@@ -161,16 +161,15 @@
             </div>
 
             
-            <a ng-click="display()"><div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;">
+            <div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;">
                 <i class="fa fa-bell fa-lg"></i>
                 <span class="label label-danger" ng-show="is_team_notifications || is_user_notifications">{{ notification_counter }}</span>
-            </div></a>
-            
+            </div>            
 
-            <div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;">
+            <a href="#/messages"><div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;">
                 <i class="fa fa-comment fa-lg"></i>
-                
-            </div>
+                <span class="label label-danger">{{ message_counter }}</span>
+            </div></a>
 
         </div>
     </div>

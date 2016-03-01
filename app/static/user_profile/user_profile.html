@@ -2,7 +2,7 @@
 
     <div ng-show="display_notifications" style="margin-top: 0px; height: 200px; width: 200px; border: 1px solid #000000" class="pull-right">
             <ul>
-                <li ng-repeat="item in notifications" ng-click="is_read_set(item)"><a href="{{item.link}}">{{ item.notification }}</a></li>
+                <li ng-repeat="item in notifications | orderBy: 'time'" ng-click="is_read_set(item)"><a href="{{item.link}}">{{ item.notification }}</a></li>
             </ul>
     </div>
 
