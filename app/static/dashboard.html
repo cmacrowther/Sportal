@@ -10,7 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
-    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>        
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>     
 
     <!-- Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -21,7 +21,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
     <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
 
     <!-- Other Stylesheets -->
@@ -46,6 +45,8 @@
     <!-- CSS -->
     <link type="text/css" href="css/dashboard.css" rel="stylesheet">
     <link type="text/css" href="css/loading-bar.min.css" rel="stylesheet">
+
+    <script src="https://cdn.rawgit.com/Luegg/angularjs-scroll-glue/master/src/scrollglue.js"></script>
 
 </head>
 <body ng-controller="DashboardController">
@@ -161,9 +162,14 @@
             </div>
 
             
-            <div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;">
+            <div class="tool-butt" data-toggle="dropdown" data-target="#notification_drop" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;">
                 <i class="fa fa-bell fa-lg"></i>
                 <span class="label label-danger" ng-show="is_team_notifications || is_user_notifications">{{ notification_counter }}</span>
+                <div class="dropdown" id="notification_drop">
+                    <ul>
+                        <li ng-repeat="item in notifications">{{item.notification}}</li>
+                    </ul>
+                </div>
             </div>            
 
             <a href="#/messages"><div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;">

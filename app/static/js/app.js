@@ -19,7 +19,8 @@ angular.module('dashboard', [
     'ngAnimate',
     'ui.bootstrap',
     'dashboard.services',
-    'angular-loading-bar'
+    'angular-loading-bar',
+    'luegg.directives'
 ]).
     config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'home/home.html', controller: 'HomeController'});

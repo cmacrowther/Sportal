@@ -143,7 +143,7 @@ body {
 
 .message-pane {
   position: relative;
-  height:400px;
+  height:67vh;
   width:100%;
   overflow-y:scroll;
   margin-right: 0px;
@@ -157,11 +157,10 @@ body {
   margin-top: 0px;
 }
 
-.message-pane .header h1 {
-  margin-top:0px;
-  font-size:24px;
-  color:#555459;
+.message-header {
   font-weight:900;
+  height: 10%;
+  width: 100%;
 }
 
 .message-pane .message-form {
@@ -199,5 +198,10 @@ body {
   color:#ccc;
   font-weight: normal;
   font-size:10px;
+}
+
+#message_bar {
+  height: 10%;
+  width: 100%;
 }
 

@@ -86,6 +86,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                 $scope.messages = data;
                 
             }
+            
         })
     }
 
