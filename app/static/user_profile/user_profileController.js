@@ -50,6 +50,12 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
             else {
                 $scope.last_name = $scope.profileObject.last_name;
             }
+            if ($scope.profileObject.description == "" || $scope.profileObject.description == undefined) {
+                $scope.description = "No info given";
+            }
+            else {
+                $scope.description = $scope.profileObject.description;
+            }
             if ($scope.profileObject.email == "" || $scope.profileObject.email == undefined) {
                 $scope.email = "No info given";
             }
@@ -251,7 +257,7 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
     $scope.is_read_set = function (item) {
         console.log("Notification Read.");
         item.is_read = 1;
-        if(item.team_id) {
+        if (item.team_id) {
             $http.put("/api/team_has_notification/" + item.id, item);
         }
         else {
