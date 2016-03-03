@@ -51,7 +51,7 @@ $(function () {
 });
 
 angular.module('dashboard.controllers')
-    .controller('DashboardController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
+    .controller('DashboardController', ['$scope', '$http', '$rootScope', '$timeout', function ($scope, $http, $rootScope, $timeout) {
 
         $rootScope.page_name = "Dashboard";
         $rootScope.message_counter = 0;
@@ -170,6 +170,115 @@ angular.module('dashboard.controllers')
                 $scope.display_notifications = true;
             }
             
+        }
+
+        $http({
+            method: 'POST',
+            url: 'api/get_user_conversations',
+            headers: {'Content-Type': 'application/json'},
+            data: JSON.stringify(passObject)
+        })
+        .success(function(data){
+            if (data == "no conversations") {
+                $rootScope.convos = [];
+                $rootScope.no_convos = "No Conversations";
+                $scope.checkNewMessages();
+            }
+            else {
+                $rootScope.convos = data;
+                $rootScope.no_convos = "";
+
+                for(var i = 0; i < $rootScope.convos.length; i++) {
+
+                    var passObject = {conversation_id: $rootScope.convos[i].id};
+                    $http({
+                        method: 'POST',
+                        url: 'api/get_conversation_messages',
+                        headers: {'Content-Type': 'application/json'},
+                        data: JSON.stringify(passObject)
+                    })
+                    .success(function(data){
+
+                        if(data == "no messages") {
+                            $scope.checkNewMessages();
+                        }
+                        else {
+                            for(var i = 0; i < data.length; i++) {
+                                if(data[i].is_read_user_two == 0 && data[i].user_id != $rootScope.userObject.id) {
+                                    $rootScope.message_counter++;
+                                }
+                            }
+                            $scope.checkNewMessages();
+                        }
+                    })
+                }
+            }
+
+        })
+
+        
+
+        $scope.checkNewMessages = function () {
+
+            $timeout(function () {
+
+                var passObject = {user_id: user_id};
+
+                $http({
+                    method: 'POST',
+                    url: 'api/get_user_conversations',
+                    headers: {'Content-Type': 'application/json'},
+                    data: JSON.stringify(passObject)
+                })
+                .success(function(data){
+                    if (data == "no conversations") {
+                        $rootScope.convos = [];
+                        $rootScope.no_convos = "No Conversations";
+                        $scope.checkNewMessages();
+                    }
+                    else {
+                        $rootScope.convos = data;
+                        $rootScope.no_convos = "";
+
+                        for(var i = 0; i < $rootScope.convos.length; i++) {
+
+                            var passObject = {conversation_id: $rootScope.convos[i].id};
+                            $http({
+                                method: 'POST',
+                                url: 'api/get_conversation_messages',
+                                headers: {'Content-Type': 'application/json'},
+                                data: JSON.stringify(passObject)
+                            })
+                            .success(function(data){
+
+                                if(data == "no messages") {
+                                    $scope.checkNewMessages;
+                                }
+                                else {
+
+                                    $scope.message_counter = 0;
+
+                                    for(var i = 0; i < data.length; i++) {
+                                        if(data[i].is_read_user_two == 0 && data[i].user_id != $rootScope.userObject.id) {
+                                            $scope.message_counter++;
+                                        }
+                                        else {
+                                            console.log("nothing new");
+                                        }
+                                    }
+
+                                    if($scope.message_counter != $rootScope.message_counter) {
+                                        $rootScope.message_counter = $scope.message_counter;
+                                    }
+                                }
+
+                            })
+                        }
+                    }
+                })
+                $scope.checkNewMessages();
+
+            }, 5000)
         }
 
     }]);

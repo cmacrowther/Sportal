@@ -162,14 +162,9 @@
             </div>
 
             
-            <div class="tool-butt" data-toggle="dropdown" data-target="#notification_drop" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;">
+            <div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;">
                 <i class="fa fa-bell fa-lg"></i>
                 <span class="label label-danger" ng-show="is_team_notifications || is_user_notifications">{{ notification_counter }}</span>
-                <div class="dropdown" id="notification_drop">
-                    <ul>
-                        <li ng-repeat="item in notifications">{{item.notification}}</li>
-                    </ul>
-                </div>
             </div>            
 
             <a href="#/messages"><div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;">

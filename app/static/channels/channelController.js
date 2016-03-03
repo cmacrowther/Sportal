@@ -16,24 +16,6 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
 
     $http({
         method: 'POST',
-        url: 'api/get_user_conversations',
-        headers: {'Content-Type': 'application/json'},
-        data: JSON.stringify(passObject)
-    })
-    .success(function(data){
-        if (data == "no conversations") {
-            $scope.convos = [];
-            $scope.no_convos = "No Conversations";
-        }
-        else {
-            $scope.convos = data;
-            $scope.no_convos = "";
-        }
-
-    });
-
-    $http({
-        method: 'POST',
         url: 'api/get_team_channels',
         headers: {'Content-Type': 'application/json'},
         data: JSON.stringify(passObject)
@@ -50,6 +32,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
 
     });
 
+    //sets title for current conversation, triggered when a direct message is selected
     $scope.setConversation = function(conversation_id){
         var passObject = {conversation_id: conversation_id}
 
@@ -65,15 +48,17 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
             $http.get("api/conversation/" + conversation_id)
             .success(function(data){
                 if (data.user_one == $rootScope.userObject.id) {
+                    $scope.convo_with = data.user_two;
                     $http.get("/api/user/" + data.user_two)
                     .success(function(data){
-                       $scope.title = "Conversation with " + data.first_name + " " + data.last_name; 
+                        $scope.title = "Conversation with " + data.first_name + " " + data.last_name; 
                     })   
                 }
                 else {
+                    $scope.convo_with = data.user_one;
                     $http.get("/api/user/" + data.user_one)
                     .success(function(data){
-                       $scope.title = "Conversation with " + data.first_name + " " + data.last_name; 
+                        $scope.title = "Conversation with " + data.first_name + " " + data.last_name; 
                     }) 
                 }
             })
@@ -90,6 +75,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
         })
     }
 
+    //creates a new convo when triggered from the "new convo" modal
     $scope.createConversation = function (user_id) {
         if (user_id == $rootScope.userObject.id) {
             alert("yourself");
@@ -127,6 +113,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                                     picture: user.picture
                                 }
                                 $scope.convos.push(convo);
+                                $rootScope.no_convos = "";
 
                                 $scope.setConversation(data.id);
                             });
@@ -136,6 +123,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
         }
     }
 
+    //tells angular if the user is currently in a message pane, in a channel/in a direct message convo
     $scope.setMessageType = function (item) {
         if(item == "Channel") {
             $scope.is_channel = true;
@@ -158,6 +146,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                 })
                 .success(function (data) {
 
+                    //checks if the message is being sent to a channel or to a user
                     if($scope.is_channel) {
                         $scope.message = "";
                         $http.post("api/channel_has_message", {
@@ -174,17 +163,19 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                         $http.post("api/user_has_message", {
                             user_id: $rootScope.userObject.id,
                             message_id: data.id,
-                            is_read: 0,
-                            conversation_id: $scope.convo_id
+                            //always set is_read_user_one to true because they are the one who sent the message
+                            is_read_user_one: 1,
+                            conversation_id: $scope.convo_id,
+                            //set the person recieving the message to false so they message notification will appear upon login
+                            is_read_user_two: 0
                         })
-                        .success(function (uhm) {
-                            $scope.setConversation($scope.convo_id);
-                        })
+                        $scope.setConversation($scope.convo_id);
                     }
                 })
 
         }
 
+    //sets title for current conversation, triggered when a channel is selected
     $scope.setChannel = function(channel_id){
 
         $scope.channel_id = channel_id;
@@ -214,10 +205,12 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
         });
     }
 
+    //sets item for the delete convo modal
     $scope.setModal = function (item) {
         $scope.modalObject = item;
     };
 
+    //function used only to delete direct message conversations
     $scope.deleteConvo = function () {
 
         var passObject = {conversation_id: $scope.modalObject.id}
@@ -234,12 +227,18 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                 $http.delete("/api/message/" + data[i].id);
             }
             $http.delete("/api/conversation/" + $scope.modalObject.id);
+            $scope.convos.splice($scope.modalObject.id, 1);
+            if($scope.convos == []) {
+                $rootScope.no_convos = "No Conversations";
+            }
         })
     }
 
+    //checks every 5 seconds for messages
     $scope.updateMessages = function () {
 
         $timeout(function () {
+            //checks if angular needs to pull channel messages or direct message convo
             if($scope.is_channel) {
                 console.log("CHANNEL MESSAGE CHECK");
 
@@ -289,6 +288,36 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
 
     //Initial Call to update messages
     $scope.updateMessages();
+
+    $scope.is_read_message = function (item) {
+        
+        var passObject = {conversation_id: item};
+
+        $http({
+            method: 'POST',
+            url: 'api/get_conversation_messages',
+            headers: {'Content-Type': 'application/json'},
+            data: JSON.stringify(passObject)
+        })
+        .success(function(data){
+
+            for(var i = 0; i < data.length; i++) {
+                if(data[i].user_id != $rootScope.userObject.id) {
+                    //they didnt sent the message, therefore is_read_user_two needs to change to READ
+                    var is_read = {
+                        id: data[i].uhm_id,
+                        user_id: $scope.convo_with,
+                        is_read_user_one: 1,
+                        conversation_id: item,
+                        is_read_user_two: 1,
+                    }
+                    $http.put("/api/user_has_message/" + is_read.id, is_read);
+                }
+            }
+
+        })
+
+    }
     
 
 

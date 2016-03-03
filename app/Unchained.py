@@ -148,8 +148,9 @@ class UserHasMessage(db.Model):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, unique=False)
     message_id = Column(Integer, unique=False)
-    is_read = Column(Integer, unique=False)
+    is_read_user_one = Column(Integer, unique=False)
     conversation_id = Column(Integer, unique=False)
+    is_read_user_two = Column(Integer, unique=False)
 
 class TeamHasChannel(db.Model):
     id = Column(Integer, primary_key=True)
@@ -1150,11 +1151,13 @@ def get_conversation_messages():
             d = collections.OrderedDict()
             d['id'] = message.id
             d['uhm_id'] = item.id
+            d['user_id'] = item.user_id
             d['sender_first_name'] = user.first_name
             d['sender_last_name'] = user.last_name
             d['message'] = message.body
             d['time'] = message.time
-            d['is_read'] = item.is_read
+            d['is_read_user_one'] = item.is_read_user_one
+            d['is_read_user_two'] = item.is_read_user_two
             d['picture'] = user.picture
             
             objects_list.append(d)
