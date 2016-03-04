@@ -13,9 +13,10 @@
     </thead>
     <tbody>
         <tr ng-repeat="item in games_pending">
-            <td>{{ item.sport_name }}</td>
-            <td>{{ item.opponent }}</td>
-            <td><button ng-click="accept(item.id)" class="btn btn-success"> Accept Challenge</button></td>
+            <td ng-init="item.sport_name=getSport(item)">{{ item.sport_name }}</td>
+            <!--<td ng-init="item.opponent=getUser(item)">{{ item.opponent }}</td>-->
+            <td ng-init="item.opponent=getUser(item)"><a role="button" target="_blank" href="#/user_profile/{{ item.player2_id }}" class="btn btn-success">{{ item.opponent }}</a></td>
+            <td><button ng-click="accept(item.id); sendOpponentEmail(item)" class="btn btn-success"> Accept Challenge</button></td>
             <td><button ng-click="decline(item.id)" class="btn btn-danger"> Decline Challenge</button></td>
         </tr>
     </tbody>

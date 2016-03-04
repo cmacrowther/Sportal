@@ -5,7 +5,7 @@
 angular.module('dashboard.controllers').controller('channelController', ['$scope', '$rootScope', '$http', '$routeParams', function ($scope, $rootScope, $http, $routeParams) {
 
     $rootScope.page_name = "Messages";
-    $scope.title = "Welcome to FireSlack";
+    $scope.title = "Welcome to Sportal Chat!";
     $scope.message_bar = false;
 
     $http.get("/api/user").success(function(data){
@@ -58,7 +58,6 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
             data: JSON.stringify(passObject)
         })
         .success(function(data){
-            console.log("hi");
             $scope.convo_id = conversation_id;
             
             $http.get("api/conversation/" + conversation_id)
