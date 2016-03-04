@@ -16,7 +16,7 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
 
     $rootScope.page_name = $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name;
 
-    console.log("NOTIFICATIONS: " + $rootScope.notifications[0].notification);
+    //console.log("NOTIFICATIONS: " + $rootScope.notifications[0].notification);
 
     //Setting unique user profile URL
     $scope.user_id = $routeParams.user_id;
