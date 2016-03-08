@@ -2,7 +2,7 @@
  * Created by Brandon on 1/20/2016.
  */
 
-angular.module('dashboard.controllers').controller('user_profileController', ['$scope', '$rootScope', '$http', '$routeParams', function ($scope, $rootScope, $http, $routeParams) {
+angular.module('dashboard.controllers').controller('user_profileController', ['$scope', '$timeout', '$rootScope', '$http', '$routeParams', function ($scope, $timeout, $rootScope, $http, $routeParams) {
 
     //Initializes the form validator plugin.
     $('#user_creation_form').validator();
@@ -146,12 +146,23 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
         $http.put("api/user/" + $scope.profileObject.id, $scope.profileObject);
     };
 
+
+    //todo fix this function. Currently will always say current password incorrect
     //Changes password
     $scope.changePassword = function () {
         if ($scope.profileObject.password == $scope.passwordCurrent) {
             $scope.profileObject.password = $scope.passwordNew;
             $http.put("api/user/" + $scope.profileObject.id, $scope.profileObject);
             $scope.password_message = "Password Changed Successfully!";
+
+            $scope.passwordCurrent = null;
+            $scope.passwordNew = null;
+            $scope.passwordConfirm = null;
+
+                $timeout(function() {
+                    $scope.password_message = null;
+                }, 3000);
+
         }
         else {
             console.log("Incorrect Password.");
