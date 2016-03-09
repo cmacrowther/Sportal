@@ -25,7 +25,7 @@
                                 <table class="table table-striped">
                                     <tbody>
                                         <tr ng-repeat="item in channels | filter:searchTerm | orderBy: '-name'">
-                                            <td ng-click="setChannel(item.id); setMessageType('Channel')"><img src="{{item.team_picture}}" style="height: 30px; width: 30px"/> {{ item.name }}<span class="pull-right glyphicon glyphicon-arrow-right"></span></td>
+                                            <td ng-click="setChannel(item.id); setMessageType(item.id, 'Channel')"><img src="{{item.team_picture}}" style="height: 30px; width: 30px"/> {{ item.name }}<span class="pull-right glyphicon glyphicon-arrow-right"></span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -35,7 +35,7 @@
                                 <table class="table table-striped">
                                     <tbody>
                                         <tr ng-repeat="item in convos | filter:searchTerm | orderBy: '-name'" >
-                                            <td ng-click="setConversation(item.id); setMessageType('not_Channel'); is_read_message(item.id)"><img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.first_name }} {{ item.last_name }}<span class="pull-right"><button type="submit" class="btn btn-danger" data-toggle="modal" ng-click="setModal(item)" data-target="#deleteConvoModal">Delete</button></span></td>
+                                            <td ng-click="setConversation(item.id); setMessageType(item.id, 'not_Channel'); is_read_message(item.id)"><img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.first_name }} {{ item.last_name }}<span class="pull-right"><button type="submit" class="btn btn-danger" data-toggle="modal" ng-click="setModal(item)" data-target="#deleteConvoModal">Delete</button></span></td>
                                         </tr>
                                     </tbody>
                                 </table>
