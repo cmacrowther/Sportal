@@ -12,19 +12,19 @@
     </div>
 </div>
 
-<div id="myCarousel" class="carousel slide">
+<div id="myCarousel" class="carousel slide" data-interval="0">
     <!-- Indicators -->
     <ol class="carousel-indicators">
         <li data-target="/play/#myCarousel" data-slide-to="0" class=""></li>
         <li data-target="/play/#myCarousel" data-slide-to="1" class=""></li>
         <li data-target="/play/#myCarousel" data-slide-to="2" class=""></li>
-        <li data-target="/play/#myCarousel" data-slide-to="3" class="active"></li>
-        <li data-target="/play/#myCarousel" data-slide-to="4"></li>
+        <li data-target="/play/#myCarousel" data-slide-to="3" class=""></li>
+        <li data-target="/play/#myCarousel" data-slide-to="4" class=""></li>
     </ol>
 
     <!-- Wrapper for slides -->
     <div style="height: 500px" class="carousel-inner" role="listbox">
-        <div style="height: 500px" class="item">
+        <div style="height: 500px" class="item active">
             <img src="../img/footer_lodyas.png" alt="Chania">
 
             <div class="carousel-caption">
@@ -96,7 +96,7 @@
             </div>
         </div>
 
-        <div style="height: 500px" class="item active">
+        <div style="height: 500px" class="item">
             <img src="../img/footer_lodyas.png" alt="Flower">
 
             <div class="carousel-caption">
@@ -120,6 +120,17 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <tr ng-repeat="item in matches_list">
+                        <td><img src="{{item.picture}}" alt="..." height="40px" width="40px"></td>
+                        <td>{{item.first_name}} {{item.last_name}}</td>
+                        <td>
+                            <button class="btn btn-default" href="#/user_profile/{{item.id}}"> View Profile</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-default" ng-click="acceptChallenge(item.id, item.email)"> Challenge
+                            </button>
+                        </td>
+                    </tr>
                     <!-- ngRepeat: item in matches_list -->
                     </tbody>
                 </table>
@@ -208,26 +219,26 @@
 <!--</div>-->
 
 
-<div class="row">
-    <div class="col-md-12">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th> Opponent Picture</th>
-                <th> Opponent Name</th>
-                <th> Opponent Profile</th>
-                <th> Challenge</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="item in matches_list">
-               <td>{{item.picture}}</td>
-                <td>{{item.first_name}} {{item.last_name}}</td>
-                <td></td>
-                <td> Insert Button</td>
-            </tr>
-            <!-- ngRepeat: item in matches_list -->
-            </tbody>
-        </table>
-    </div>
-</div>
+<!--<div class="row">-->
+<!--<div class="col-md-12">-->
+<!--<table class="table table-striped">-->
+<!--<thead>-->
+<!--<tr>-->
+<!--<th> Opponent Picture</th>-->
+<!--<th> Opponent Name</th>-->
+<!--<th> Opponent Profile</th>-->
+<!--<th> Challenge</th>-->
+<!--</tr>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--<tr ng-repeat="item in matches_list">-->
+<!--<td>{{item.picture}}</td>-->
+<!--<td>{{item.first_name}} {{item.last_name}}</td>-->
+<!--<td></td>-->
+<!--<td> Insert Button</td>-->
+<!--</tr>-->
+<!--&lt;!&ndash; ngRepeat: item in matches_list &ndash;&gt;-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</div>-->
+<!--</div>-->
