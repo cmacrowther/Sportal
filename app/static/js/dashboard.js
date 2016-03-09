@@ -212,21 +212,16 @@ angular.module('dashboard.controllers')
                                     $rootScope.message_counter++;
                                 }
                             }
-
-                            //$scope.checkNewMessages();
-
                         }
                     })
                 }
-
-                $scope.checkNewMessages();
             }
 
         })
 
         
 
-$scope.checkNewMessages = function () {
+/*$scope.checkNewMessages = function () {
 
         $timeout(function () {
 
@@ -296,7 +291,7 @@ $scope.checkNewMessages = function () {
                 
             }, 5000)
     
-        }
+        }*/
 
     }]);
 

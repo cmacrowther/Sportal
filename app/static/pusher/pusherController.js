@@ -18,7 +18,6 @@ angular.module('dashboard.controllers').controller('pusherTestController', ['$sc
     var channel = pusher.subscribe('test_channel');
     channel.bind('hi', function(data) {
        $scope.items.push(data.message);
-       alert("unchained " + data.message);
     });
 
     //sets the event_id to listen for
