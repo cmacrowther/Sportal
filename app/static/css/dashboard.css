@@ -5,6 +5,10 @@
   margin-right: 0;
   margin-left: 0;
 }
+body, html {
+  min-height: 100vh;
+  background-color: #EDF2F6;
+}
 /*
     Sometimes the sub menus get too large for the page and prevent the menu from scrolling, limiting functionality
     A quick fix is to change .side-menu to 
@@ -259,6 +263,7 @@
 .head-information {
   height: 60px;
   border-bottom: 1px solid #e7e7e7;
+  background-color: white;
   overflow: auto;
 
 }
