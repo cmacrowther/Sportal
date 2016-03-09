@@ -30,8 +30,10 @@
         <div class="mui-panel">
             <div style="text-align: center">
                 <div class="row">
+
                     <img src="{{picture}}" alt="..." class="img-circle" height="150px" width="150px" style="margin-top: -85px; box-shadow: 2px 2px 2px #888;">
                     <div ng-show="editable">
+
                     </div>
                 </div>
             </div>
@@ -201,16 +203,43 @@
     </div>
 </div>
 <div class="mui-tabs__pane" id="pane-default-2">
-    <button class="btn btn-default" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Change Password
-    </button>
-    <div class="form-group">
-        <label for="email" class="col-sm-2 control-label-fix">Email</label>
-        <div class="col-sm-8">
-            <input ng-model="email" ng-blur="updateInfo()" type="email" id="email" class="form-control" name="email" placeholder="Example@example.com" data-error="That address is invalid">
-            <div class="help-block with-errors"></div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h3>Change Password</h3>
+
+            <form id="changePassword">
+
+                <div class="form-group">
+                    <input type="password" ng-model="passwordCurrent" name="password" id="passwordCurrent"
+                           class="form-control input-sm" placeholder="Current Password" data-minlength="8"
+                           required>
+
+                    <div class="help-block with-errors"></div>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" ng-model="passwordNew" name="password" id="passwordNew"
+                           class="form-control input-sm" placeholder="New Password" data-minlength="8" required>
+
+                    <div class="help-block with-errors"></div>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" ng-model="passwordConfirm" name="password" id="passwordConfirm"
+                           class="form-control input-sm" placeholder="Confirm Password"
+                           data-match="#passwordNew" data-minlength="8" required>
+
+                    <div class="help-block with-errors"></div>
+                </div>
+            </form>
+
+            <button type="button" ng-click="changePassword()" class="btn btn-success">Change Password</button>
+            <strong>{{password_message}}</strong>
         </div>
     </div>
 </div>
+
+
 <!--<div style="text-align: center; padding-bottom: 20px;">-->
 <!--<h1>{{first_name}} {{last_name}}</h1>-->
 <!--<img src="{{picture}}" alt="..." class="img-rounded" height="150px" width="150px">-->
@@ -460,6 +489,7 @@
 <!--</tbody>-->
 <!--</table>-->
 <!--</div>-->
+
 <!--</div>-->
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
