@@ -172,6 +172,10 @@ angular.module('dashboard.controllers')
             
         }
 
+        var passObject = {user_id: JSON.parse($scope.userId)};
+
+        console.log(passObject);
+
         $http({
             method: 'POST',
             url: 'api/get_user_conversations',
@@ -200,7 +204,7 @@ angular.module('dashboard.controllers')
                     .success(function(data){
 
                         if(data == "no messages") {
-                            $scope.checkNewMessages();
+                            //nothing new
                         }
                         else {
                             for(var i = 0; i < data.length; i++) {
@@ -208,21 +212,23 @@ angular.module('dashboard.controllers')
                                     $rootScope.message_counter++;
                                 }
                             }
-                            $scope.checkNewMessages();
+                            
                         }
                     })
                 }
+
+                $scope.checkNewMessages();
             }
 
         })
 
         
 
-        $scope.checkNewMessages = function () {
+$scope.checkNewMessages = function () {
 
-            $timeout(function () {
+        $timeout(function () {
 
-                var passObject = {user_id: user_id};
+                var passObject = {user_id: $rootScope.userObject.id};
 
                 $http({
                     method: 'POST',
@@ -234,7 +240,6 @@ angular.module('dashboard.controllers')
                     if (data == "no conversations") {
                         $rootScope.convos = [];
                         $rootScope.no_convos = "No Conversations";
-                        $scope.checkNewMessages();
                     }
                     else {
                         $rootScope.convos = data;
@@ -252,7 +257,7 @@ angular.module('dashboard.controllers')
                             .success(function(data){
 
                                 if(data == "no messages") {
-                                    $scope.checkNewMessages;
+                                    //nothing new
                                 }
                                 else {
 
@@ -263,7 +268,7 @@ angular.module('dashboard.controllers')
                                             $scope.message_counter++;
                                         }
                                         else {
-                                            console.log("nothing new");
+                                            //nothing new
                                         }
                                     }
 
@@ -271,14 +276,15 @@ angular.module('dashboard.controllers')
                                         $rootScope.message_counter = $scope.message_counter;
                                     }
                                 }
-
                             })
                         }
                     }
                 })
-                $scope.checkNewMessages();
 
+            $scope.checkNewMessages();
+                
             }, 5000)
+    
         }
 
     }]);

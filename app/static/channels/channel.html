@@ -34,7 +34,7 @@
                                 <h4>Direct Messages</h4>
                                 <table class="table table-striped">
                                     <tbody>
-                                        <tr ng-repeat="item in $root.convos | filter:searchTerm | orderBy: '-name'" >
+                                        <tr ng-repeat="item in convos | filter:searchTerm | orderBy: '-name'" >
                                             <td ng-click="setConversation(item.id); setMessageType('not_Channel'); is_read_message(item.id)"><img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.first_name }} {{ item.last_name }}<span class="pull-right"><button type="submit" class="btn btn-danger" data-toggle="modal" ng-click="setModal(item)" data-target="#deleteConvoModal">Delete</button></span></td>
                                         </tr>
                                     </tbody>

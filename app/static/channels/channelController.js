@@ -112,7 +112,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                                     last_name: user.last_name,
                                     picture: user.picture
                                 }
-                                $scope.convos.push(convo);
+                                $rootScope.convos.push(convo);
                                 $rootScope.no_convos = "";
 
                                 $scope.setConversation(data.id);
