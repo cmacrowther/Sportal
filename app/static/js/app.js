@@ -7,8 +7,7 @@ angular.module('example', [
     'ngAnimate',
     'ui.bootstrap',
     'angular-loading-bar'
-]).
-    config(['$routeProvider', function($routeProvider) {
+]).config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'landing/landing.html', controller: 'LandingController'});
         $routeProvider.otherwise({redirectTo: '/'});
     }]);
@@ -21,8 +20,8 @@ angular.module('dashboard', [
     'dashboard.services',
     'angular-loading-bar',
     'luegg.directives'
-]).
-    config(['$routeProvider', function($routeProvider) {
+])
+.config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'home/home.html', controller: 'HomeController'});
         $routeProvider.when('/search', {templateUrl: 'search/search.html', controller: 'searchController'});
         $routeProvider.when('/team_create', {templateUrl: 'team_create/team_create.html', controller: 'team_createController'});
@@ -36,5 +35,12 @@ angular.module('dashboard', [
         $routeProvider.when('/admin', {templateUrl: 'admin/admin.html', controller: 'adminController'});
         $routeProvider.when('/play', {templateUrl: 'play/play.html', controller: 'playController'});
         $routeProvider.when('/messages', {templateUrl: 'channels/channel.html', controller: 'channelController'});
+        $routeProvider.when('/pusher_test', {templateUrl: 'pusher/pusher_test.html', controller: 'pusherTestController'});
         $routeProvider.otherwise({redirectTo: '/'});
-    }])
+    }]);
+
+
+
+
+
+
