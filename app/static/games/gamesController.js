@@ -29,7 +29,7 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
             else {
                 for (var i = 0; i < data.length; i++) {
                     if (data[i].complete == 2 && data[i].player2_id == $rootScope.userObject.id) {
-                        console.log("Challenge is presentttttttttttttttttttt");
+                        console.log("Challenge is present");
                         $scope.games_pending.push(data[i]);
                     }
                     else if (data[i].complete == 1) {
