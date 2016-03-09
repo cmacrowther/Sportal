@@ -1,22 +1,18 @@
-<link href="css/play.css" rel="stylesheet" class="ng-scope">
+<link href="css/play.css" rel="stylesheet">
 
-<div class="row ng-scope">
-    <h1 align="center">Find an Opponent!</h1>
-
-    <div class="row">
-        <div class="col-md-4">
-            <h1><i class="fa fa-circle"></i> {{ pickSport }}</h1>
-        </div>
-        <div class="col-md-4">
-            <h1><i class="fa fa-circle"></i> {{ pickTier}}</h1>
-        </div>
-        <div class="col-md-4">
-            <h1><i class="fa fa-circle"></i> {{ pickTeams }}</h1>
-        </div>
+<div class="row">
+    <div class="col-md-4">
+        <h1><i class="fa fa-circle"></i> {{ pickSport }}</h1>
+    </div>
+    <div class="col-md-4">
+        <h1><i class="fa fa-circle"></i> {{ pickTier}}</h1>
+    </div>
+    <div class="col-md-4">
+        <h1><i class="fa fa-circle"></i> {{ pickTeams }}</h1>
     </div>
 </div>
 
-<div id="myCarousel" class="carousel slide ng-scope">
+<div id="myCarousel" class="carousel slide">
     <!-- Indicators -->
     <ol class="carousel-indicators">
         <li data-target="/play/#myCarousel" data-slide-to="0" class=""></li>
@@ -32,19 +28,6 @@
             <img src="../img/footer_lodyas.png" alt="Chania">
 
             <div class="carousel-caption">
-
-                <!--<div class="row">-->
-                    <!--<div class="col-md-4">-->
-                        <!--<h1><i class="fa fa-circle"></i> {{ pickSport }}</h1>-->
-                    <!--</div>-->
-                    <!--<div class="col-md-4">-->
-                        <!--<h1><i class="fa fa-circle"></i> {{ pickTier}}</h1>-->
-                    <!--</div>-->
-                    <!--<div class="col-md-4">-->
-                        <!--<h1><i class="fa fa-circle"></i> {{ pickTeams }}</h1>-->
-                    <!--</div>-->
-                <!--</div>-->
-
                 <div class="text-center" style="height: 300px; margin-top: 15px">
                     <div class="btn-group">
                         <button type="button" class="btn btn-lg btn-primary dropdown-toggle" data-toggle="dropdown"
@@ -56,7 +39,7 @@
                             <!-- ngRepeat: item in mySports -->
                             <li class="dropdown-header text-center">All Sports</li>
                             <!-- ngRepeat: item in sports -->
-                            <li ng-repeat="item in sports" ng-click="setSport(item)" class="ng-scope"><a>{{ item.name
+                            <li ng-repeat="item in sports" ng-click="setSport(item)"><a>{{ item.name
                                 }}</a></li><!-- end ngRepeat: item in sports -->
                         </ul>
                     </div>
@@ -68,19 +51,6 @@
             <img src="../img/footer_lodyas.png" alt="Chania">
 
             <div class="carousel-caption">
-
-                <!--<div class="row">-->
-                    <!--<div class="col-md-4">-->
-                        <!--<h1><i class="fa fa-circle"></i> {{ pickSport }}</h1>-->
-                    <!--</div>-->
-                    <!--<div class="col-md-4">-->
-                        <!--<h1><i class="fa fa-circle"></i> {{ pickTier}}</h1>-->
-                    <!--</div>-->
-                    <!--<div class="col-md-4">-->
-                        <!--<h1><i class="fa fa-circle"></i> {{ pickTeams }}</h1>-->
-                    <!--</div>-->
-                <!--</div>-->
-
                 <div class="row text-center" style="height: 300px; margin-top: 15px">
                     <div class="col-md-12" style="height: 33%">
                         <button ng-click="setTier('Novice')" style="margin-top: 15px" class="btn btn-primary btn-lg">
@@ -106,19 +76,6 @@
             <img src="../img/footer_lodyas.png" alt="Flower">
 
             <div class="carousel-caption">
-
-                <!--<div class="row">-->
-                    <!--<div class="col-md-4">-->
-                        <!--<h1><i class="fa fa-circle"></i> {{ pickSport }}</h1>-->
-                    <!--</div>-->
-                    <!--<div class="col-md-4">-->
-                        <!--<h1><i class="fa fa-circle"></i> {{ pickTier}}</h1>-->
-                    <!--</div>-->
-                    <!--<div class="col-md-4">-->
-                        <!--<h1><i class="fa fa-circle"></i> {{ pickTeams }}</h1>-->
-                    <!--</div>-->
-                <!--</div>-->
-
                 <div class="text-center" style="height: 300px; margin-top: 15px">
                     <div class="row" style="height: 50%">
                         <button ng-click="setTeams('1 VS 1')" class="btn btn-primary btn-lg">1 VS 1</button>
@@ -143,19 +100,6 @@
             <img src="../img/footer_lodyas.png" alt="Flower">
 
             <div class="carousel-caption">
-
-                <!--<div class="row">-->
-                    <!--<div class="col-md-4">-->
-                        <!--<h1><i class="fa fa-circle"></i> {{ pickSport }}</h1>-->
-                    <!--</div>-->
-                    <!--<div class="col-md-4">-->
-                        <!--<h1><i class="fa fa-circle"></i> {{ pickTier}}</h1>-->
-                    <!--</div>-->
-                    <!--<div class="col-md-4">-->
-                        <!--<h1><i class="fa fa-circle"></i> {{ pickTeams }}</h1>-->
-                    <!--</div>-->
-                <!--</div>-->
-
                 <div class="text-center" style="height: 300px; margin-top: 15px">
                     <button ng-click="play()" class="btn btn-success btn-lg">Play!</button>
                 </div>
@@ -194,77 +138,77 @@
     </a>
 </div>
 
-<div class="row ng-scope">
-    <div class="well" style="height: 400px">
+<!--<div class="row">-->
+<!--<div class="well" style="height: 400px">-->
 
 
-        <div class="col-md-3">
-            <div class="well text-center" style="height: 300px; margin-top: 15px">
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Pick Sport
-                        <span class="caret"></span></button>
-                    <ul class="dropdown-menu scrollable-menu" role="menu">
-                        <li class="dropdown-header text-center">My Sports</li>
-                        <!-- ngRepeat: item in mySports -->
-                        <li class="dropdown-header text-center">All Sports</li>
-                        <!-- ngRepeat: item in sports -->
-                        <li ng-repeat="item in sports" ng-click="setSport(item)" class="ng-scope"><a>{{item.name}}</a>
-                        </li><!-- end ngRepeat: item in sports -->
-                    </ul>
-                </div>
-            </div>
-            <h3>Sport: {{pickSport}}</h3>
-        </div>
+<!--<div class="col-md-3">-->
+<!--<div class="well text-center" style="height: 300px; margin-top: 15px">-->
+<!--<div class="btn-group">-->
+<!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Pick Sport-->
+<!--<span class="caret"></span></button>-->
+<!--<ul class="dropdown-menu scrollable-menu" role="menu">-->
+<!--<li class="dropdown-header text-center">My Sports</li>-->
+<!--&lt;!&ndash; ngRepeat: item in mySports &ndash;&gt;-->
+<!--<li class="dropdown-header text-center">All Sports</li>-->
+<!--&lt;!&ndash; ngRepeat: item in sports &ndash;&gt;-->
+<!--<li ng-repeat="item in sports" ng-click="setSport(item)"><a>{{item.name}}</a>-->
+<!--</li>&lt;!&ndash; end ngRepeat: item in sports &ndash;&gt;-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+<!--<h3>Sport: {{pickSport}}</h3>-->
+<!--</div>-->
 
-        <div class="col-md-3">
-            <div class="well row text-center" style="height: 300px; margin-top: 15px">
-                <div class="col-md-12" style="height: 33%">
-                    <button ng-click="setTier('Novice')" style="margin-top: 15px" class="btn btn-primary">Novice
-                    </button>
-                </div>
-                <div class="col-md-12" style="height: 33%">
-                    <button ng-click="setTier('Intermediate')" style="margin-top: 15px" class="btn btn-primary">
-                        Intermediate
-                    </button>
-                </div>
-                <div class="col-md-12" style="height: 33%">
-                    <button ng-click="setTier('Expert')" style="margin-top: 15px" class="btn btn-primary">Expert
-                    </button>
-                </div>
-            </div>
-            <h3>Tier: {{pickTier}}</h3>
-        </div>
-        <div class="col-md-3">
-            <div class="well text-center" style="height: 300px; margin-top: 15px">
-                <div class="row" style="height: 50%">
-                    <button ng-click="setTeams('1 VS 1')" class="btn btn-primary">1 VS 1</button>
-                </div>
-                <div class="row" style="height: 50%">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Teams
-                            <span class="caret"></span></button>
-                        <ul class="dropdown-menu scrollable-menu" role="menu">
-                            <li><a ng-click="setTeams('2 VS 2')">2 VS 2</a></li>
-                            <li><a ng-click="setTeams('3 VS 3')">3 VS 3</a></li>
-                            <li><a ng-click="setTeams('4 VS 4')">4 VS 4</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <h3>Teams: {{pickTeams}}</h3>
-        </div>
-        <div class="col-md-3">
-            <div class="well text-center" style="height: 300px; margin-top: 15px">
-                <button ng-click="play()" class="btn btn-success">Play!</button>
-            </div>
-            <h3>{{ playResult }}</h3>
+<!--<div class="col-md-3">-->
+<!--<div class="well row text-center" style="height: 300px; margin-top: 15px">-->
+<!--<div class="col-md-12" style="height: 33%">-->
+<!--<button ng-click="setTier('Novice')" style="margin-top: 15px" class="btn btn-primary">Novice-->
+<!--</button>-->
+<!--</div>-->
+<!--<div class="col-md-12" style="height: 33%">-->
+<!--<button ng-click="setTier('Intermediate')" style="margin-top: 15px" class="btn btn-primary">-->
+<!--Intermediate-->
+<!--</button>-->
+<!--</div>-->
+<!--<div class="col-md-12" style="height: 33%">-->
+<!--<button ng-click="setTier('Expert')" style="margin-top: 15px" class="btn btn-primary">Expert-->
+<!--</button>-->
+<!--</div>-->
+<!--</div>-->
+<!--<h3>Tier: {{pickTier}}</h3>-->
+<!--</div>-->
+<!--<div class="col-md-3">-->
+<!--<div class="well text-center" style="height: 300px; margin-top: 15px">-->
+<!--<div class="row" style="height: 50%">-->
+<!--<button ng-click="setTeams('1 VS 1')" class="btn btn-primary">1 VS 1</button>-->
+<!--</div>-->
+<!--<div class="row" style="height: 50%">-->
+<!--<div class="btn-group">-->
+<!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Teams-->
+<!--<span class="caret"></span></button>-->
+<!--<ul class="dropdown-menu scrollable-menu" role="menu">-->
+<!--<li><a ng-click="setTeams('2 VS 2')">2 VS 2</a></li>-->
+<!--<li><a ng-click="setTeams('3 VS 3')">3 VS 3</a></li>-->
+<!--<li><a ng-click="setTeams('4 VS 4')">4 VS 4</a></li>-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<h3>Teams: {{pickTeams}}</h3>-->
+<!--</div>-->
+<!--<div class="col-md-3">-->
+<!--<div class="well text-center" style="height: 300px; margin-top: 15px">-->
+<!--<button ng-click="play()" class="btn btn-success">Play!</button>-->
+<!--</div>-->
+<!--<h3>{{ playResult }}</h3>-->
 
-        </div>
-    </div>
-</div>
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
 
 
-<div class="row ng-scope">
+<div class="row">
     <div class="col-md-12">
         <table class="table table-striped">
             <thead>
@@ -276,6 +220,12 @@
             </tr>
             </thead>
             <tbody>
+            <tr ng-repeat="item in matches_list">
+               <td>{{item.picture}}</td>
+                <td>{{item.first_name}} {{item.last_name}}</td>
+                <td></td>
+                <td> Insert Button</td>
+            </tr>
             <!-- ngRepeat: item in matches_list -->
             </tbody>
         </table>
