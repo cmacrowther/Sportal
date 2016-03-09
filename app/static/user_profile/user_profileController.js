@@ -24,6 +24,7 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
         $scope.profileObject = data;
 
         console.log($scope.profileObject.first_name);
+
         if ($rootScope.userObject.id == $scope.profileObject.id) {
             $scope.editable = true;
         } 
