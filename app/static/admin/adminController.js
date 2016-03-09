@@ -32,25 +32,25 @@ angular.module('dashboard.controllers').controller('adminController', ['$scope',
                 $timeout(function () {
                     $scope.createSportResult = "";
                 }, 3000);
-                //getting users for repeat notification sending
-                $http.get("/api/user")
-                .success(function(data){
-                    //sending notification to all users
-                    $scope.users = data.objects;
-                    var i = 0;
-                    while(i < $scope.users.length) {
-                        $http.post("api/user_has_notification", {
-                            user_id: $scope.users[i].id,
-                            notification: "There has been a new facility added to the system: " + $scope.facility_name + "!",
-                            time: new Date(),
-                            link: "#/",
-                            is_read: 0
-                        })
-                        .success(function(data){
-                            i++;
-                        })
-                    }
-                })
+                ////getting users for repeat notification sending
+                //$http.get("/api/user")
+                //.success(function(data){
+                //    //sending notification to all users
+                //    $scope.users = data.objects;
+                //    var i = 0;
+                //    while(i < $scope.users.length) {
+                //        $http.post("api/user_has_notification", {
+                //            user_id: $scope.users[i].id,
+                //            notification: "There has been a new facility added to the system: " + $scope.facility_name + "!",
+                //            time: new Date(),
+                //            link: "#/",
+                //            is_read: 0
+                //        })
+                //        .success(function(data){
+                //            i++;
+                //        })
+                //    }
+                //})
             })
     };
 
@@ -70,25 +70,25 @@ angular.module('dashboard.controllers').controller('adminController', ['$scope',
                 $timeout(function () {
                     $scope.createFacilityResult = "";
                 }, 3000);
-                //getting users for repeat notification sending
-                $http.get("/api/user")
-                .success(function(data){
-                    //sending notification to all users
-                    $scope.users = data.objects;
-                    var i = 0;
-                    while (i < $scope.users.length) {
-                        $http.post("api/user_has_notification", {
-                            user_id: $scope.users[i].id,
-                            notification: "There has been a new facility added to the system: " + $scope.facility_name + "!",
-                            time: new Date(),
-                            link: "#/",
-                            is_read: 0
-                        })
-                        .success(function(data){
-                            i++;
-                        })
-                    }
-                })
+                ////getting users for repeat notification sending
+                //$http.get("/api/user")
+                //.success(function(data){
+                //    //sending notification to all users
+                //    $scope.users = data.objects;
+                //    var i = 0;
+                //    while (i < $scope.users.length) {
+                //        $http.post("api/user_has_notification", {
+                //            user_id: $scope.users[i].id,
+                //            notification: "There has been a new facility added to the system: " + $scope.facility_name + "!",
+                //            time: new Date(),
+                //            link: "#/",
+                //            is_read: 0
+                //        })
+                //        .success(function(data){
+                //            i++;
+                //        })
+                //    }
+                //})
 
             })
     };

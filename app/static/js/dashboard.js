@@ -186,7 +186,7 @@ angular.module('dashboard.controllers')
             if (data == "no conversations") {
                 $rootScope.convos = [];
                 $rootScope.no_convos = "No Conversations";
-                $scope.checkNewMessages();
+                //$scope.checkNewMessages();
             }
             else {
                 $rootScope.convos = data;
@@ -212,7 +212,9 @@ angular.module('dashboard.controllers')
                                     $rootScope.message_counter++;
                                 }
                             }
-                            
+
+                            //$scope.checkNewMessages();
+
                         }
                     })
                 }
@@ -240,6 +242,8 @@ $scope.checkNewMessages = function () {
                     if (data == "no conversations") {
                         $rootScope.convos = [];
                         $rootScope.no_convos = "No Conversations";
+                        //$scope.checkNewMessages();
+
                     }
                     else {
                         $rootScope.convos = data;
@@ -257,7 +261,11 @@ $scope.checkNewMessages = function () {
                             .success(function(data){
 
                                 if(data == "no messages") {
+
                                     //nothing new
+
+                                    //$scope.checkNewMessages;
+
                                 }
                                 else {
 
@@ -280,6 +288,9 @@ $scope.checkNewMessages = function () {
                         }
                     }
                 })
+
+                //$scope.checkNewMessages();
+
 
             $scope.checkNewMessages();
                 

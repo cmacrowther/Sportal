@@ -2,6 +2,18 @@
 
 <div class="row ng-scope">
     <h1 align="center">Find an Opponent!</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            <h1><i class="fa fa-circle"></i> {{ pickSport }}</h1>
+        </div>
+        <div class="col-md-4">
+            <h1><i class="fa fa-circle"></i> {{ pickTier}}</h1>
+        </div>
+        <div class="col-md-4">
+            <h1><i class="fa fa-circle"></i> {{ pickTeams }}</h1>
+        </div>
+    </div>
 </div>
 
 <div id="myCarousel" class="carousel slide ng-scope">
@@ -21,28 +33,31 @@
 
             <div class="carousel-caption">
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <h1 class="ng-binding"> <i class="fa fa-circle"></i> Soccer</h1>
-                    </div>
-                    <div class="col-md-4">
-                        <h1 class="ng-binding"> <i class="fa fa-circle"></i> Novice</h1>
-                    </div>
-                    <div class="col-md-4">
-                        <h1 class="ng-binding"> <i class="fa fa-circle"></i> 1 VS 1</h1>
-                    </div>
-                </div>
+                <!--<div class="row">-->
+                    <!--<div class="col-md-4">-->
+                        <!--<h1><i class="fa fa-circle"></i> {{ pickSport }}</h1>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-4">-->
+                        <!--<h1><i class="fa fa-circle"></i> {{ pickTier}}</h1>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-4">-->
+                        <!--<h1><i class="fa fa-circle"></i> {{ pickTeams }}</h1>-->
+                    <!--</div>-->
+                <!--</div>-->
 
                 <div class="text-center" style="height: 300px; margin-top: 15px">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-lg btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Pick
+                        <button type="button" class="btn btn-lg btn-primary dropdown-toggle" data-toggle="dropdown"
+                                aria-expanded="false">Pick
                             Sport
                             <span class="caret"></span></button>
                         <ul class="dropdown-menu scrollable-menu" role="menu">
                             <li class="dropdown-header text-center">My Sports</li>
                             <!-- ngRepeat: item in mySports -->
                             <li class="dropdown-header text-center">All Sports</li>
-                            <!-- ngRepeat: item in sports --><li ng-repeat="item in sports" ng-click="setSport(item)" class="ng-scope"><a class="ng-binding">Soccer</a></li><!-- end ngRepeat: item in sports -->
+                            <!-- ngRepeat: item in sports -->
+                            <li ng-repeat="item in sports" ng-click="setSport(item)" class="ng-scope"><a>{{ item.name
+                                }}</a></li><!-- end ngRepeat: item in sports -->
                         </ul>
                     </div>
                 </div>
@@ -54,17 +69,17 @@
 
             <div class="carousel-caption">
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <h1 class="ng-binding"> <i class="fa fa-circle"></i> Soccer</h1>
-                    </div>
-                    <div class="col-md-4">
-                        <h1 class="ng-binding"> <i class="fa fa-circle"></i> Novice</h1>
-                    </div>
-                    <div class="col-md-4">
-                        <h1 class="ng-binding"> <i class="fa fa-circle"></i> 1 VS 1</h1>
-                    </div>
-                </div>
+                <!--<div class="row">-->
+                    <!--<div class="col-md-4">-->
+                        <!--<h1><i class="fa fa-circle"></i> {{ pickSport }}</h1>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-4">-->
+                        <!--<h1><i class="fa fa-circle"></i> {{ pickTier}}</h1>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-4">-->
+                        <!--<h1><i class="fa fa-circle"></i> {{ pickTeams }}</h1>-->
+                    <!--</div>-->
+                <!--</div>-->
 
                 <div class="row text-center" style="height: 300px; margin-top: 15px">
                     <div class="col-md-12" style="height: 33%">
@@ -73,7 +88,8 @@
                         </button>
                     </div>
                     <div class="col-md-12" style="height: 33%">
-                        <button ng-click="setTier('Intermediate')" style="margin-top: 15px" class="btn btn-primary btn-lg">
+                        <button ng-click="setTier('Intermediate')" style="margin-top: 15px"
+                                class="btn btn-primary btn-lg">
                             Intermediate
                         </button>
                     </div>
@@ -91,17 +107,17 @@
 
             <div class="carousel-caption">
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <h1 class="ng-binding"> <i class="fa fa-circle"></i> Soccer</h1>
-                    </div>
-                    <div class="col-md-4">
-                        <h1 class="ng-binding"> <i class="fa fa-circle"></i> Novice</h1>
-                    </div>
-                    <div class="col-md-4">
-                        <h1 class="ng-binding"> <i class="fa fa-circle"></i> 1 VS 1</h1>
-                    </div>
-                </div>
+                <!--<div class="row">-->
+                    <!--<div class="col-md-4">-->
+                        <!--<h1><i class="fa fa-circle"></i> {{ pickSport }}</h1>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-4">-->
+                        <!--<h1><i class="fa fa-circle"></i> {{ pickTier}}</h1>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-4">-->
+                        <!--<h1><i class="fa fa-circle"></i> {{ pickTeams }}</h1>-->
+                    <!--</div>-->
+                <!--</div>-->
 
                 <div class="text-center" style="height: 300px; margin-top: 15px">
                     <div class="row" style="height: 50%">
@@ -109,7 +125,8 @@
                     </div>
                     <div class="row" style="height: 50%">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-secondary dropdown-toggle btn-lg" data-toggle="dropdown">Teams
+                            <button type="button" class="btn btn-secondary dropdown-toggle btn-lg"
+                                    data-toggle="dropdown">Teams
                                 <span class="caret"></span></button>
                             <ul class="dropdown-menu scrollable-menu" role="menu">
                                 <li><a ng-click="setTeams('2 VS 2')">2 VS 2</a></li>
@@ -127,17 +144,17 @@
 
             <div class="carousel-caption">
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <h1 class="ng-binding"><i class="fa fa-circle"></i> Soccer</h1>
-                    </div>
-                    <div class="col-md-4">
-                        <h1 class="ng-binding"><i class="fa fa-circle"></i> Novice</h1>
-                    </div>
-                    <div class="col-md-4">
-                        <h1 class="ng-binding"><i class="fa fa-circle"></i> 1 VS 1</h1>
-                    </div>
-                </div>
+                <!--<div class="row">-->
+                    <!--<div class="col-md-4">-->
+                        <!--<h1><i class="fa fa-circle"></i> {{ pickSport }}</h1>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-4">-->
+                        <!--<h1><i class="fa fa-circle"></i> {{ pickTier}}</h1>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-4">-->
+                        <!--<h1><i class="fa fa-circle"></i> {{ pickTeams }}</h1>-->
+                    <!--</div>-->
+                <!--</div>-->
 
                 <div class="text-center" style="height: 300px; margin-top: 15px">
                     <button ng-click="play()" class="btn btn-success btn-lg">Play!</button>
@@ -190,11 +207,13 @@
                         <li class="dropdown-header text-center">My Sports</li>
                         <!-- ngRepeat: item in mySports -->
                         <li class="dropdown-header text-center">All Sports</li>
-                        <!-- ngRepeat: item in sports --><li ng-repeat="item in sports" ng-click="setSport(item)" class="ng-scope"><a class="ng-binding">Soccer</a></li><!-- end ngRepeat: item in sports -->
+                        <!-- ngRepeat: item in sports -->
+                        <li ng-repeat="item in sports" ng-click="setSport(item)" class="ng-scope"><a>{{item.name}}</a>
+                        </li><!-- end ngRepeat: item in sports -->
                     </ul>
                 </div>
             </div>
-            <h3 class="ng-binding">Sport: Soccer</h3>
+            <h3>Sport: {{pickSport}}</h3>
         </div>
 
         <div class="col-md-3">
@@ -213,7 +232,7 @@
                     </button>
                 </div>
             </div>
-            <h3 class="ng-binding">Tier: Novice</h3>
+            <h3>Tier: {{pickTier}}</h3>
         </div>
         <div class="col-md-3">
             <div class="well text-center" style="height: 300px; margin-top: 15px">
@@ -232,13 +251,13 @@
                     </div>
                 </div>
             </div>
-            <h3 class="ng-binding">Teams: 1 VS 1</h3>
+            <h3>Teams: {{pickTeams}}</h3>
         </div>
         <div class="col-md-3">
             <div class="well text-center" style="height: 300px; margin-top: 15px">
                 <button ng-click="play()" class="btn btn-success">Play!</button>
             </div>
-            <h3 class="ng-binding">Searching...</h3>
+            <h3>{{ playResult }}</h3>
 
         </div>
     </div>
