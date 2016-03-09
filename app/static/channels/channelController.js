@@ -6,6 +6,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
 
     $rootScope.page_name = "Messages";
     $scope.event_id = "";
+    $scope.editable = false;
 
     $http.get("/api/user").success(function(data){
         $scope.users = data.objects;
@@ -30,6 +31,16 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
         }
 
     });
+
+    $scope.editConvos = function () {
+        if ($scope.editable == true) {
+            $scope.editable = false;
+        }
+        else {
+            $scope.editable = true;
+        }
+    }
+
 
     //sets title for current conversation, triggered when a direct message is selected
     $scope.setConversation = function(conversation_id){
@@ -129,18 +140,18 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
             $scope.is_channel = true;
             $scope.is_convo = false;
             $scope.in_convo = true;
-            console.log(typeof($scope.event_id));
+            console.log($scope.event_id);
         }
         else {
             $scope.event_id = String(id) + "-convo";
             $scope.is_channel = false;
             $scope.is_convo = true;
             $scope.in_convo = true;
-            console.log(typeof($scope.event_id));
+            console.log($scope.event_id);
         }
         channel.bind($scope.event_id, function(data) {
+            console.log(data);
             $scope.messages.push(data);
-            alert("unchained " + data.message);
         });
     }
 
@@ -164,7 +175,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                 })
                 .success(function (data) {
                     console.log("MESSAGE SENT");
-                    /*Create Message
+                    //Create Message
                     $http.post("api/message", {
                             user_id: $rootScope.userObject.id,
                             body: $scope.message,
@@ -181,7 +192,6 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                                 })
                                 .success(function(data){
                                     console.log("Channel Message Sent.");
-                                    $scope.setChannel($scope.channel_id);
                                 })
                             }
                             else {
@@ -195,9 +205,8 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                                     //set the person recieving the message to false so they message notification will appear upon login
                                     is_read_user_two: 0
                                 })
-                                $scope.setConversation($scope.convo_id);
                             }
-                        })*/
+                        })
 
                 })
 

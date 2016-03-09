@@ -13,69 +13,74 @@
         </div>
     </div>
 </div>
-<div class="col-md-4">
-    <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" ng-model="searchTerm" />
+
+
+<!-- Message Convo -->
+<div class="header" ng-show="in_convo">
+    <h1><span class="glyphicon glyphicon-arrow-left" ng-click="in_convo=false; is_channel=false; is_convo=false"></span> {{ title }}</h1>
 </div>
-<div class="col-md-12" style="padding-top: 15px; background-color: #EDF2F6;">
+<div class="message-pane" ng-show="in_convo">
+    <div class="message-wrap" ng-repeat="message in messages">
+        <img class="user-pic" ng-src="{{ message.picture }}" /> ​
+        <div class="message-info">
+            <div class="user-name">
+                {{ message.sender_first_name }} {{ message.sender_last_name }}
+                <span class="timestamp">{{ message.time | date:'short' }}</span>
+            </div>
+            <div class="message">
+                {{ message.message }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Channels -->
+<div ng-hide="in_convo" class="col-md-12" style="padding-top: 15px; background-color: #EDF2F6;">
     <div class="row">
         <div class="col-md-12">
             <div class="mui-container">
-                <h5 style="color: #757E8D;"><b>CHANNELS</b></h5>
+                <h5 style="color: #757E8D;"><b>CHANNELS</b><input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" ng-model="searchTerm1" /></h5>
                 <div class="mui-panel">
-                    <form id="teamForm">
-                        <div class="form-group">
-                            <div ng-hide="in_convo">
-                                <table class="table table-striped">
-                                    <tbody>
-                                        <tr ng-repeat="item in channels | filter:searchTerm | orderBy: '-name'">
-                                            <td ng-click="setChannel(item.id); setMessageType(item.id, 'Channel')"><img src="{{item.team_picture}}" style="height: 30px; width: 30px"/> {{ item.name }}<span class="pull-right glyphicon glyphicon-arrow-right"></span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <p class="text-center">{{ no_channels }}</p>
-                                <h4>Direct Messages</h4>
-                                <table class="table table-striped">
-                                    <tbody>
-                                        <tr ng-repeat="item in convos | filter:searchTerm | orderBy: '-name'" >
-                                            <td ng-click="setConversation(item.id); setMessageType(item.id, 'not_Channel'); is_read_message(item.id)"><img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.first_name }} {{ item.last_name }}<span class="pull-right"><button type="submit" class="btn btn-danger" data-toggle="modal" ng-click="setModal(item)" data-target="#deleteConvoModal">Delete</button></span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <p class="text-center">{{ $root.no_convos }}</p>
-                            </div>
-                            <!-- Message Convo -->
-                            <div class="header" ng-show="in_convo">
-                                <h1><span class="glyphicon glyphicon-arrow-left" ng-click="in_convo=false; is_channel=false; is_convo=false"></span> {{ title }}</h1>
-                            </div>
-                            <div class="message-pane" ng-show="in_convo">
-                                <div class="message-wrap" ng-repeat="message in messages">
-                                    <img class="user-pic" ng-src="{{ message.picture }}" /> ​
-                                    <div class="message-info">
-                                        <div class="user-name">
-                                            {{ message.sender_first_name }} {{ message.sender_last_name }}
-                                            <span class="timestamp">{{ message.time | date:'short' }}</span>
-                                        </div>
-                                        <div class="message">
-                                            {{ message.message }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr ng-repeat="item in channels | filter:searchTerm1 | orderBy: '-name'">
+                                <td ng-click="setChannel(item.id); setMessageType(item.id, 'Channel')"><img src="{{item.team_picture}}" style="height: 30px; width: 30px"/> {{ item.name }}<span class="pull-right mdi mdi-chevron-right" style="padding-top: 17px; padding-right: 10px;"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="text-center">{{ no_channels }}</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Put direct messages form here-->
-<div class="col-md-12" style="padding-top: 15px; background-color: #EDF2F6;">
+<!-- Direct Messages -->
+<div ng-hide="in_convo" class="col-md-12" style="padding-top: 15px; background-color: #EDF2F6;">
     <div class="row">
         <div class="col-md-12">
             <div class="mui-container">
-                <h5 style="color: #757E8D;"><b>MESSAGES</b></h5>
+                <h5 style="color: #757E8D;">
+                    <b>MESSAGES</b>
+                    <span ng-click="editConvos()" class="pull-right glyphicon glyphicon-edit"></span>
+                    <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" ng-model="searchTerm2" />
+                </h5>
                 <div class="mui-panel">
+                    <table ng-hide="editable" class="table table-striped">
+                        <tbody>
+                            <tr ng-repeat="item in convos | filter:searchTerm2 | orderBy: '-name'" >
+                                <td ng-click="setConversation(item.id); setMessageType(item.id, 'not_Channel'); is_read_message(item.id)"><img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.first_name }} {{ item.last_name }}<span class="pull-right mdi mdi-chevron-right" style="padding-top: 17px; padding-right: 10px;"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table ng-show="editable" class="table table-striped">
+                        <tbody>
+                            <tr ng-repeat="item in convos | filter:searchTerm2 | orderBy: '-name'" >
+                                <td ng-click="setConversation(item.id); setMessageType(item.id, 'not_Channel'); is_read_message(item.id)"><img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.first_name }} {{ item.last_name }}<span class="pull-right glyphicon glyphicon-remove" style="color: red" data-toggle="modal" data-target="#deleteConvoModal"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="text-center">{{ $root.no_convos }}</p>
                 </div>
             </div>
         </div>
@@ -92,6 +97,8 @@
     </div>
     ​
 </form>
+
+
 <!-- New convo Modal -->
 <div class="modal fade" id="newConvoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
