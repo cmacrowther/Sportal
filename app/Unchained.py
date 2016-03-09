@@ -2,6 +2,7 @@ from flask import Flask, request
 from flask.ext.restless import APIManager
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy import *
+from pusher import Pusher
 
 app = Flask(__name__, static_url_path='')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///unchained.db'
@@ -10,6 +11,16 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 SQLALCHEMY_TRACK_MODIFICATIONS = True
+
+import pusher
+pusher_client = pusher.Pusher(
+                              app_id='186366',
+                              key='56753b214ab2420a7230',
+                              secret='a10176f8256201a9f921',
+                              ssl=True
+                              )
+    
+pusher_client.trigger('test_channel', 'my_event', {'message': 'yo'})
 
 
 class User(db.Model):
@@ -173,6 +184,10 @@ class TeamHasNotification(db.Model):
     link = Column(Text, unique=false)
     is_read = Column(Integer, unique=False)
 
+class Items(db.Model):
+    id = Column(Integer, primary_key=True)
+    name = Column(Text, unique=false)
+
 db.create_all()
 
 api_manager = APIManager(app, flask_sqlalchemy_db=db)
@@ -197,6 +212,7 @@ api_manager.create_api(UserHasMessage, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(TeamHasChannel, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(UserHasNotification, methods=['GET', 'POST', 'DELETE', 'PUT'])
 api_manager.create_api(TeamHasNotification, methods=['GET', 'POST', 'DELETE', 'PUT'])
+api_manager.create_api(Items, methods=['GET', 'POST', 'DELETE', 'PUT'])
 
 
 
@@ -1415,6 +1431,31 @@ def get_user_notifications():
     
     else:
         return "no user notifications"
+
+@app.route('/api/send_message', methods=['POST'])
+def send_message():
+    import pusher
+    import json
+    
+    data = request.get_json()
+    event = data.get('event_id')
+    sender_first_name = data.get('sender_first_name')
+    sender_last_name = data.get('sender_last_name')
+    time = data.get('time')
+    message = data.get('message')
+    
+    pusher_client = pusher.Pusher(
+                                  app_id='186366',
+                                  key='56753b214ab2420a7230',
+                                  secret='a10176f8256201a9f921',
+                                  ssl=True
+                                  )
+
+    pusher_client.trigger('test_channel', event, {'sender_first_name': sender_first_name, 'sender_last_name': sender_last_name, 'time': time, 'message': message})
+
+    return "Success"
+
+
 
 
 app.debug = True

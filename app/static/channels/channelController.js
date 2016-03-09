@@ -5,8 +5,7 @@
 angular.module('dashboard.controllers').controller('channelController', ['$scope', '$rootScope', '$http', '$routeParams', '$timeout', function ($scope, $rootScope, $http, $routeParams, $timeout) {
 
     $rootScope.page_name = "Messages";
-    $scope.is_channel = false;
-    $scope.in_convo = false;
+    $scope.event_id = "";
 
     $http.get("/api/user").success(function(data){
         $scope.users = data.objects;
@@ -124,56 +123,99 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
     }
 
     //tells angular if the user is currently in a message pane, in a channel/in a direct message convo
-    $scope.setMessageType = function (item) {
+    $scope.setMessageType = function (id, item) {
         if(item == "Channel") {
+            $scope.event_id = String(id) + "-channel";
             $scope.is_channel = true;
             $scope.is_convo = false;
             $scope.in_convo = true;
+            console.log(typeof($scope.event_id));
         }
         else {
+            $scope.event_id = String(id) + "-convo";
             $scope.is_channel = false;
             $scope.is_convo = true;
             $scope.in_convo = true;
+            console.log(typeof($scope.event_id));
         }
+        channel.bind($scope.event_id, function(data) {
+            $scope.messages.push(data);
+            alert("unchained " + data.message);
+        });
     }
 
     $scope.sendMessage = function () {
-            //Create Message
-            $http.post("api/message", {
-                    user_id: $rootScope.userObject.id,
-                    body: $scope.message,
-                    time: new Date()
+
+            if($scope.event_id != undefined){
+                
+                var passObject = {
+                    event_id: $scope.event_id,
+                    sender_first_name: $rootScope.userObject.first_name,
+                    sender_last_name: $rootScope.userObject.last_name,
+                    time: new Date(),
+                    message: $scope.message
+                };
+
+                $http({
+                    method: 'POST',
+                    url: 'api/send_message',
+                    headers: {'Content-Type': 'application/json'},
+                    data: JSON.stringify(passObject)
                 })
                 .success(function (data) {
-
-                    //checks if the message is being sent to a channel or to a user
-                    if($scope.is_channel) {
-                        $scope.message = "";
-                        $http.post("api/channel_has_message", {
-                            channel_id: $scope.channel_id,
-                            message_id: data.id
-                        })
-                        .success(function(data){
-                            console.log("Channel Message Sent.");
-                            $scope.setChannel($scope.channel_id);
-                        })
-                    }
-                    else {
-                        $scope.message = "";
-                        $http.post("api/user_has_message", {
+                    console.log("MESSAGE SENT");
+                    /*Create Message
+                    $http.post("api/message", {
                             user_id: $rootScope.userObject.id,
-                            message_id: data.id,
-                            //always set is_read_user_one to true because they are the one who sent the message
-                            is_read_user_one: 1,
-                            conversation_id: $scope.convo_id,
-                            //set the person recieving the message to false so they message notification will appear upon login
-                            is_read_user_two: 0
+                            body: $scope.message,
+                            time: new Date()
                         })
-                        $scope.setConversation($scope.convo_id);
-                    }
+                        .success(function (data) {
+
+                            //checks if the message is being sent to a channel or to a user
+                            if($scope.is_channel) {
+                                $scope.message = "";
+                                $http.post("api/channel_has_message", {
+                                    channel_id: $scope.channel_id,
+                                    message_id: data.id
+                                })
+                                .success(function(data){
+                                    console.log("Channel Message Sent.");
+                                    $scope.setChannel($scope.channel_id);
+                                })
+                            }
+                            else {
+                                $scope.message = "";
+                                $http.post("api/user_has_message", {
+                                    user_id: $rootScope.userObject.id,
+                                    message_id: data.id,
+                                    //always set is_read_user_one to true because they are the one who sent the message
+                                    is_read_user_one: 1,
+                                    conversation_id: $scope.convo_id,
+                                    //set the person recieving the message to false so they message notification will appear upon login
+                                    is_read_user_two: 0
+                                })
+                                $scope.setConversation($scope.convo_id);
+                            }
+                        })*/
+
                 })
 
+            }
+
         }
+
+    Pusher.log = function(message) {
+        if (window.console && window.console.log) {
+            window.console.log(message);
+        }
+    };
+
+    var pusher = new Pusher('56753b214ab2420a7230', {
+      encrypted: true
+    });
+
+    var channel = pusher.subscribe('test_channel');
 
     //sets title for current conversation, triggered when a channel is selected
     $scope.setChannel = function(channel_id){
@@ -234,7 +276,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
         })
     }
 
-    //checks every 5 seconds for messages
+    /*checks every 5 seconds for messages
     $scope.updateMessages = function () {
 
         $timeout(function () {
@@ -317,7 +359,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
 
         })
 
-    }
+    }*/
     
 
 

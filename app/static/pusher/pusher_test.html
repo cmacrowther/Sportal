@@ -1,0 +1,10 @@
+<h1>Pusher Test Page</h1>
+
+<table class="table table-striped">
+<tbody>
+    <tr ng-repeat="item in items">
+    	<td>{{item}}</td>
+    </tr>
+</tbody>
+</table>
+<input type="text" ng-model="event_id"/><input type="text" ng-model="input"/><button type="submit" ng-click="sendMessage(input)">Test</button>
