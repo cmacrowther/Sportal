@@ -20,7 +20,7 @@
     <h1 style="color: #757E8D;"><b><span class="glyphicon glyphicon-arrow-left" ng-click="in_convo=false; is_channel=false; is_convo=false; $root.convo_id=''"></span> {{ title }}</b></h1>
 </div>
 <div class="message-pane mui-panel" ng-show="in_convo">
-    <div class="message-wrap" ng-repeat="message in messages">
+    <div class="message-wrap" ng-repeat="message in messages track by $index">
         <img class="user-pic" ng-src="{{ message.picture }}" /> ​
         <div class="message-info">
             <div class="user-name">

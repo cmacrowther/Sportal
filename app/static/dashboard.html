@@ -95,12 +95,12 @@
 
             <li><a is-active-nav href="#/play"><span style="padding-right: 15px"><i class="fa fa-futbol-o"></i></span> PLAY</a></li>
             <li><a is-active-nav href="#/games"><span class="glyphicon glyphicon-object-align-horizontal"></span> GAMES</a></li>
-            <li class="panel panel-default" id="dropdown">
+            <!--<li class="panel panel-default" id="dropdown">
                 <a data-toggle="collapse" data-target="#dropdown-lvl2">
                     <span style="padding-right: 15px"><i class="fa fa-calendar"></i></span> EVENTS<span class="caret"></span>
                 </a>
 
-                <!-- Dropdown level 1 -->
+                 Dropdown level 1 
                 <div id="dropdown-lvl2" class="panel-collapse collapse">
                     <div class="panel-body">
                         <ul class="nav navbar-nav">
@@ -109,7 +109,7 @@
                         </ul>
                     </div>
                 </div>
-            </li>
+            </li>-->
             <li><a is-active-nav href="#/admin"><span class="glyphicon glyphicon-cog"></span> ADMIN</a></li>
             <li><a is-active-nav href="#/messages"><span class="glyphicon glyphicon-envelope"></span> MESSAGING</a></li>
 
@@ -170,7 +170,7 @@
 
             <a href="#/messages"><div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;">
                 <i class="fa fa-comment fa-lg"></i>
-                <span class="label label-danger">{{ message_counter }}</span>
+                <span ng-show="message_counter!=0" class="label label-danger">{{ message_counter }}</span>
             </div></a>
 
         </div>

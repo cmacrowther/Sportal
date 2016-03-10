@@ -1439,6 +1439,7 @@ def send_message():
     event = data.get('event_id')
     sender_first_name = data.get('sender_first_name')
     sender_last_name = data.get('sender_last_name')
+    picture = data.get('picture')
     time = data.get('time')
     message = data.get('message')
     
@@ -1449,7 +1450,7 @@ def send_message():
                                   ssl=True
                                   )
 
-    pusher_client.trigger('unchained', event, {'sender_first_name': sender_first_name, 'sender_last_name': sender_last_name, 'time': time, 'message': message})
+    pusher_client.trigger('unchained', event, {'sender_first_name': sender_first_name, 'sender_last_name': sender_last_name, 'picture': picture, 'time': time, 'message': message})
 
     return "Success"
 

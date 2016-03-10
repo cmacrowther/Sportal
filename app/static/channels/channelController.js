@@ -150,7 +150,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
             console.log($scope.event_id);
         }
         channel.bind($scope.event_id, function(data){
-            console.log("UPDATING THE VIEW MAN");
+            console.log(data);
             $scope.messages.push(data);
         });
     }
@@ -163,6 +163,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                     event_id: $scope.event_id,
                     sender_first_name: $rootScope.userObject.first_name,
                     sender_last_name: $rootScope.userObject.last_name,
+                    picture: $rootScope.userObject.picture,
                     time: new Date(),
                     message: $scope.message
                 };
