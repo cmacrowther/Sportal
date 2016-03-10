@@ -149,8 +149,8 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
             $scope.in_convo = true;
             console.log($scope.event_id);
         }
-        channel.bind($scope.event_id, function(data) {
-            console.log(data);
+        channel.bind($scope.event_id, function(data){
+            console.log("UPDATING THE VIEW MAN");
             $scope.messages.push(data);
         });
     }
@@ -361,8 +361,8 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
         .success(function(data){
 
             for(var i = 0; i < data.length; i++) {
-                if(data[i].user_id != $rootScope.userObject.id) {
-                    //they didnt sent the message, therefore is_read_user_two needs to change to READ
+                if(data[i].user_id != $rootScope.userObject.id && data[i].is_read_user_two == 0) {
+                    //they didnt send the message and its unread, therefore is_read_user_two needs to change to READ
                     var is_read = {
                         id: data[i].uhm_id,
                         user_id: $scope.convo_with,
@@ -371,6 +371,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                         is_read_user_two: 1,
                     }
                     $http.put("/api/user_has_message/" + is_read.id, is_read);
+                    $rootScope.message_counter-=1;
                 }
             }
 
