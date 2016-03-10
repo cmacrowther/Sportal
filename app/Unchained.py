@@ -30,6 +30,8 @@ class User(db.Model):
     password = Column(Text, unique=False)
     description = Column(Text, unique=False)
     picture = Column(Text, unique=False)
+    location = Column(Text, unique=False)
+    age = Column(Text, unique=False)
 
 
 class UserHasTeam(db.Model):
@@ -1085,7 +1087,7 @@ def single_matchmaking():
         and_(Queue.difficulty == difficulty, Queue.sport_id == sport_id, Queue.is_team == is_team)).all()
     objects_list = []
 
-    if len(queue) >= 5:
+    if len(queue) >= 1:
         queue1 = queue[:5]
 
         for item in queue1:
@@ -1093,6 +1095,7 @@ def single_matchmaking():
 
             d = collections.OrderedDict()
             d['id'] = user.id
+            d['queue_id'] = item.id
             d['first_name'] = user.first_name
             d['last_name'] = user.last_name
             d['email'] = user.email

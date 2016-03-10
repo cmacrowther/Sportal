@@ -10,3 +10,9 @@
     vertical-align: middle;
     float: none;
 }
+
+.play-slide{
+    height: 500px;
+    background-color: #eeeeee !important;
+    border-left: none;
+}

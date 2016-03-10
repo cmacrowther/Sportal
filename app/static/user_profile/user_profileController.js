@@ -68,47 +68,17 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
             else {
                 $scope.picture = $scope.profileObject.picture;
             }
-            if ($scope.profileObject.birth == "" || $scope.profileObject.birth == undefined) {
-                $scope.birth = "No info given";
+            if ($scope.profileObject.age == "" || $scope.profileObject.age == undefined) {
+                $scope.age = "No info given";
             }
             else {
-                $scope.birth = $scope.profileObject.birth;
+                $scope.age = $scope.profileObject.age;
             }
-            if ($scope.profileObject.address == "" || $scope.profileObject.address == undefined) {
-                $scope.address = "No info given";
-            }
-            else {
-                $scope.address = $scope.profileObject.address;
-            }
-            if ($scope.profileObject.address2 == "" || $scope.profileObject.address2 == undefined) {
-                $scope.address2 = "No info given";
+            if ($scope.profileObject.location == "" || $scope.profileObject.location == undefined) {
+                $scope.location = "No info given";
             }
             else {
-                $scope.address2 = $scope.profileObject.address2;
-            }
-            if ($scope.profileObject.city == "" || $scope.profileObject.city == undefined) {
-                $scope.city = "No info given";
-            }
-            else {
-                $scope.city = $scope.profileObject.city;
-            }
-            if ($scope.profileObject.postal_code == "" || $scope.profileObject.postal_code == undefined) {
-                $scope.postal_code = "No info given";
-            }
-            else {
-                $scope.postal_code = $scope.profileObject.postal_code;
-            }
-            if ($scope.profileObject.province == "" || $scope.profileObject.province == undefined) {
-                $scope.province = "No info given";
-            }
-            else {
-                $scope.province = $scope.profileObject.province;
-            }
-            if ($scope.profileObject.country == "" || $scope.profileObject.country == undefined) {
-                $scope.country = "No info given";
-            }
-            else {
-                $scope.country = $scope.profileObject.country;
+                $scope.location = $scope.profileObject.location;
             }
             if ($scope.profileObject.gender == "" || $scope.profileObject.gender == undefined) {
                 $scope.gender = "No info given";
@@ -143,6 +113,7 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
         $scope.profileObject.last_name = $scope.last_name;
         $scope.profileObject.email = $scope.email;
         $scope.profileObject.picture = $scope.picture;
+        $scope.profileObject.location = $scope.location;
         $http.put("api/user/" + $scope.profileObject.id, $scope.profileObject);
     };
 

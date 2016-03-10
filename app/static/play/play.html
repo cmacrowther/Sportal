@@ -1,16 +1,20 @@
 <link href="css/play.css" rel="stylesheet">
 
-<div class="row">
-    <div class="col-md-4">
-        <h1><i class="fa fa-circle"></i> {{ pickSport }}</h1>
-    </div>
-    <div class="col-md-4">
-        <h1><i class="fa fa-circle"></i> {{ pickTier}}</h1>
-    </div>
-    <div class="col-md-4">
-        <h1><i class="fa fa-circle"></i> {{ pickTeams }}</h1>
+<div class="row" style="height: 110px; background-color: white; border-bottom: 1px solid #e7e7e7;">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 style="padding-left: 15px;">Challenge People to a Game</h2>
+
+            <p style="padding-left: 15px;">Get matched with potential players and teams</p>
+        </div>
+        <div class="col-md-6">
+            <h4><a href="/play/#myCarousel" role="button" data-slide-to="0">{{ pickSport }}</a> > <a
+                    href="/play/#myCarousel" role="button" data-slide-to="1">{{ pickTier }}</a> > <a
+                    href="/play/#myCarousel" role="button" data-slide-to="2">{{ pickTeams }}</a></h4>
+        </div>
     </div>
 </div>
+
 
 <div id="myCarousel" class="carousel slide" data-interval="0">
     <!-- Indicators -->
@@ -23,32 +27,41 @@
     </ol>
 
     <!-- Wrapper for slides -->
-    <div style="height: 500px" class="carousel-inner" role="listbox">
-        <div style="height: 500px" class="item active">
-            <img src="../img/footer_lodyas.png" alt="Chania">
-
+    <div style="height: 500px;" class="carousel-inner" role="listbox">
+        <div class="item play-slide active">
             <div class="carousel-caption">
                 <div class="text-center" style="height: 300px; margin-top: 15px">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-lg btn-primary dropdown-toggle" data-toggle="dropdown"
-                                aria-expanded="false">Pick
-                            Sport
-                            <span class="caret"></span></button>
-                        <ul class="dropdown-menu scrollable-menu" role="menu">
-                            <li class="dropdown-header text-center">My Sports</li>
-                            <!-- ngRepeat: item in mySports -->
-                            <li class="dropdown-header text-center">All Sports</li>
-                            <!-- ngRepeat: item in sports -->
-                            <li ng-repeat="item in sports" ng-click="setSport(item)"><a>{{ item.name
-                                }}</a></li><!-- end ngRepeat: item in sports -->
-                        </ul>
+
+                    <div class="col-md-12" style="padding-top: 15px; background-color: #EDF2F6;">
+                        <div class="mui-container" style="height: 100%;">
+                            <h5 style="color: #757E8D;"><b>PENDING MATCHES</b></h5>
+
+                            <div class="mui-panel" style="padding-top: 10px;">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg btn-primary dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            aria-expanded="false">Pick
+                                        Sport
+                                        <span class="caret"></span></button>
+                                    <ul class="dropdown-menu scrollable-menu" role="menu">
+                                        <li class="dropdown-header text-center">My Sports</li>
+                                        <!-- ngRepeat: item in mySports -->
+                                        <li class="dropdown-header text-center">All Sports</li>
+                                        <!-- ngRepeat: item in sports -->
+                                        <li ng-repeat="item in sports" ng-click="setSport(item)"><a>{{ item.name }}</a>
+                                        </li>
+                                        <!-- end ngRepeat: item in sports -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
 
-        <div style="height: 500px" class="item">
-            <img src="../img/footer_lodyas.png" alt="Chania">
+        <div class="item play-slide">
 
             <div class="carousel-caption">
                 <div class="row text-center" style="height: 300px; margin-top: 15px">
@@ -72,8 +85,7 @@
             </div>
         </div>
 
-        <div style="height: 500px" class="item">
-            <img src="../img/footer_lodyas.png" alt="Flower">
+        <div class="item play-slide">
 
             <div class="carousel-caption">
                 <div class="text-center" style="height: 300px; margin-top: 15px">
@@ -96,8 +108,7 @@
             </div>
         </div>
 
-        <div style="height: 500px" class="item">
-            <img src="../img/footer_lodyas.png" alt="Flower">
+        <div class="item play-slide">
 
             <div class="carousel-caption">
                 <div class="text-center" style="height: 300px; margin-top: 15px">
@@ -106,8 +117,7 @@
             </div>
         </div>
 
-        <div style="height: 500px" class="item">
-            <img src="../img/footer_lodyas.png" alt="Flower">
+        <div class="item play-slide">
 
             <div class="carousel-caption">
                 <table class="table table-striped">
@@ -124,10 +134,11 @@
                         <td><img src="{{item.picture}}" alt="..." height="40px" width="40px"></td>
                         <td>{{item.first_name}} {{item.last_name}}</td>
                         <td>
-                            <button class="btn btn-default" href="#/user_profile/{{item.id}}"> View Profile</button>
+                            <a type="button" target="_blank" class="btn btn-default" href="#/user_profile/{{item.id}}">
+                                View Profile</a>
                         </td>
                         <td>
-                            <button class="btn btn-default" ng-click="acceptChallenge(item.id, item.email)"> Challenge
+                            <button class="btn btn-default" ng-click="acceptChallenge(item)"> Challenge
                             </button>
                         </td>
                     </tr>
