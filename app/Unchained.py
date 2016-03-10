@@ -19,8 +19,6 @@ pusher_client = pusher.Pusher(
                               secret='a10176f8256201a9f921',
                               ssl=True
                               )
-    
-pusher_client.trigger('test_channel', 'my_event', {'message': 'yo'})
 
 
 class User(db.Model):
@@ -1451,10 +1449,29 @@ def send_message():
                                   ssl=True
                                   )
 
-    pusher_client.trigger('test_channel', event, {'sender_first_name': sender_first_name, 'sender_last_name': sender_last_name, 'time': time, 'message': message})
+    pusher_client.trigger('unchained', event, {'sender_first_name': sender_first_name, 'sender_last_name': sender_last_name, 'time': time, 'message': message})
 
     return "Success"
 
+@app.route('/api/increase_message_count', methods=['POST'])
+def increase_message_count():
+    import pusher
+    import json
+    
+    data = request.get_json()
+    recipient_id = data.get('recipient_id')
+    convo_id = data.get('convo_id')
+
+    pusher_client = pusher.Pusher(
+                                  app_id='186366',
+                                  key='56753b214ab2420a7230',
+                                  secret='a10176f8256201a9f921',
+                                  ssl=True
+                              )
+
+    pusher_client.trigger('unchained', 'new_message', {'message': 'increase_count', 'to': recipient_id, 'convo_id': convo_id})
+
+    return "Success"
 
 
 

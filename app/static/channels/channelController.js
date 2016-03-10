@@ -53,7 +53,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
             data: JSON.stringify(passObject)
         })
         .success(function(data){
-            $scope.convo_id = conversation_id;
+            $rootScope.convo_id = conversation_id;
             
             $http.get("api/conversation/" + conversation_id)
             .success(function(data){
@@ -175,8 +175,18 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                 })
                 .success(function (data) {
                     console.log("MESSAGE SENT");
-                    //Create Message
-                    $http.post("api/message", {
+                    
+                    var passObject = {recipient_id: $scope.convo_with, convo_id: $rootScope.convo_id};
+
+                    $http({
+                        method: 'POST',
+                        url: 'api/increase_message_count',
+                        headers: {'Content-Type': 'application/json'},
+                        data: JSON.stringify(passObject)
+                    })
+                    .success(function (data) {
+                        //Create Message
+                        $http.post("api/message", {
                             user_id: $rootScope.userObject.id,
                             body: $scope.message,
                             time: new Date()
@@ -201,17 +211,15 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                                     message_id: data.id,
                                     //always set is_read_user_one to true because they are the one who sent the message
                                     is_read_user_one: 1,
-                                    conversation_id: $scope.convo_id,
+                                    conversation_id: $rootScope.convo_id,
                                     //set the person recieving the message to false so they message notification will appear upon login
                                     is_read_user_two: 0
                                 })
                             }
                         })
-
+                    })
                 })
-
             }
-
         }
 
     Pusher.log = function(message) {
@@ -224,7 +232,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
       encrypted: true
     });
 
-    var channel = pusher.subscribe('test_channel');
+    var channel = pusher.subscribe('unchained');
 
     //sets title for current conversation, triggered when a channel is selected
     $scope.setChannel = function(channel_id){
@@ -315,7 +323,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
             if ($scope.is_convo) {
                 console.log("MESSAGE CHECK");
 
-                var passObject = {conversation_id: $scope.convo_id};
+                var passObject = {conversation_id: $rootScope.convo_id};
                 $http({
                     method: 'POST',
                     url: 'api/get_conversation_messages',
@@ -338,7 +346,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
     }
 
     //Initial Call to update messages
-    $scope.updateMessages();
+    $scope.updateMessages();*/
 
     $scope.is_read_message = function (item) {
         
@@ -368,7 +376,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
 
         })
 
-    }*/
+    }
     
 
 
