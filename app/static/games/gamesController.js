@@ -205,24 +205,28 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
                 $scope.opponent = data.player1_id;
             }
             data.complete = 0;
-            $http.put("api/match/" + data.id, data);
-            $scope.games_pending.splice(data, 1);
-            $scope.gamesip.push(data);
-            $scope.no_games_ip = "";
+            $http.put("api/match/" + data.id, data)
+            .success(function(data){
+                $scope.games_pending.splice(data, 1);
+                $scope.gamesip.push(data);
+                $scope.no_games_ip = "";
 
-            $http.post("api/user_has_notification", {
-                user_id: $scope.opponent,
-                notification: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name + " has accepted your challenge.",
-                time: new Date(),
-                link: "#/games",
-                is_read: 0
-            })
-            .success(function(){
-                console.log("Notification Sent");
-            })
+                $http.post("api/user_has_notification", {
+                    user_id: $scope.opponent,
+                    notification: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name + " has accepted your challenge.",
+                    time: new Date(),
+                    link: "#/games",
+                    is_read: 0
+                })
+                .success(function(){
+                    console.log("Notification Sent");
+                })
 
+                console.log("Accepted the challenge.");
+
+            })
         });
-        console.log("Accepted the challenge.");
+        
     };
 
     $scope.decline = function (item) {

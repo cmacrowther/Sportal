@@ -265,7 +265,6 @@ body, html {
   border-bottom: 1px solid #e7e7e7;
   background-color: white;
   overflow: auto;
-
 }
 .head-information .tool-butt {
   padding-left: 10px;
@@ -275,13 +274,13 @@ body, html {
   height: 59px;
   border-right: 1px solid #e7e7e7;
   display: inline-block;
+  z-index: 1;
 }
 .head-information .tool-butt:hover {
   background-color: #EDF2F6;
 }
 .head-information .tool-butt:active {
   border-bottom:4px solid #16A4FA
-  
 }
 .head-information .tool-butt i {
   padding-left: 12px;
