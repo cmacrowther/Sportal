@@ -114,6 +114,8 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
         $scope.profileObject.email = $scope.email;
         $scope.profileObject.picture = $scope.picture;
         $scope.profileObject.location = $scope.location;
+        $scope.profileObject.age = $scope.age;
+        $scope.profileObject.description = $scope.description;
         $http.put("api/user/" + $scope.profileObject.id, $scope.profileObject);
     };
 
