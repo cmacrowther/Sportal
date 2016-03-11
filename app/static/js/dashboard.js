@@ -248,6 +248,14 @@ angular.module('dashboard.controllers')
             }
         });
 
+        //Logout
+        $scope.logout = function () {
+
+            localStorage.setItem("id", 0);
+
+            window.location.assign("/");
+        };
+
 
         // END OF MODULE ----------------------------------------------------------------------------------------
     }]);
