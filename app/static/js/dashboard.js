@@ -256,6 +256,18 @@ angular.module('dashboard.controllers')
             window.location.assign("/");
         };
 
+        $scope.is_read_set = function (item) {
+            console.log("Notification Read.");
+            item.is_read = 1;
+            if (item.team_id) {
+                $http.put("/api/team_has_notification/" + item.id, item);
+            }
+            else {
+                $http.put("/api/user_has_notification/" + item.id, item);
+            }
+
+        }
+
 
         // END OF MODULE ----------------------------------------------------------------------------------------
     }]);

@@ -38,14 +38,14 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
 
             //variable checks to see if we have values already.
             if ($scope.profileObject.first_name == "" || $scope.profileObject.first_name == undefined) {
-                $scope.first_name = "No info given";
+                $scope.first_name = "John";
             }
             else {
                 $scope.first_name = $scope.profileObject.first_name;
             }
 
             if ($scope.profileObject.last_name == "" || $scope.profileObject.last_name == undefined) {
-                $scope.last_name = "No info given";
+                $scope.last_name = "Doe";
             }
             else {
                 $scope.last_name = $scope.profileObject.last_name;
@@ -80,7 +80,8 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
             else {
                 $scope.location = $scope.profileObject.location;
             }
-            if ($scope.profileObject.gender == "" || $scope.profileObject.gender == undefined) {
+            //nothing in the Database for the following
+            /*if ($scope.profileObject.gender == "" || $scope.profileObject.gender == undefined) {
                 $scope.gender = "No info given";
             }
             else {
@@ -91,7 +92,9 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
             }
             else {
                 $scope.interests = $scope.profileObject.interests;
-            }
+            }*/
+
+            //NOTE: Interests are pulled from MYSPORTS
 
         })
         .error(function () {
@@ -236,18 +239,6 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
                         console.log("Sport successfully deleted");
                     })
             })
-    }
-
-    $scope.is_read_set = function (item) {
-        console.log("Notification Read.");
-        item.is_read = 1;
-        if (item.team_id) {
-            $http.put("/api/team_has_notification/" + item.id, item);
-        }
-        else {
-            $http.put("/api/user_has_notification/" + item.id, item);
-        }
-
     }
 
 }]);
