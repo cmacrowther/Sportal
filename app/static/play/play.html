@@ -23,7 +23,6 @@
         <li data-target="/play/#myCarousel" data-slide-to="1" class=""></li>
         <li data-target="/play/#myCarousel" data-slide-to="2" class=""></li>
         <li data-target="/play/#myCarousel" data-slide-to="3" class=""></li>
-        <li data-target="/play/#myCarousel" data-slide-to="4" class=""></li>
     </ol>
 
     <!-- Wrapper for slides -->
@@ -130,34 +129,44 @@
             </div>
         </div>
 
-        <div class="item play-slide">
+    </div>
 
-            <div class="carousel-caption">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th> Opponent Picture</th>
-                        <th> Opponent Name</th>
-                        <th> Opponent Profile</th>
-                        <th> Challenge</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="item in matches_list">
-                        <td><img src="{{item.picture}}" alt="..." height="40px" width="40px"></td>
-                        <td>{{item.first_name}} {{item.last_name}}</td>
-                        <td>
-                            <a type="button" target="_blank" class="btn btn-default" href="#/user_profile/{{item.id}}">
-                                View Profile</a>
-                        </td>
-                        <td>
-                            <button class="btn btn-default" ng-click="acceptChallenge(item)"> Challenge
-                            </button>
-                        </td>
-                    </tr>
-                    <!-- ngRepeat: item in matches_list -->
-                    </tbody>
-                </table>
+    <!-- Play Modal -->
+    <div class="modal fade" id="playModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title text-center" id="myModalLabel">It's a Match!</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- Possible matches table -->
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th> Opponent Picture</th>
+                            <th> Opponent Name</th>
+                            <th> Opponent Profile</th>
+                            <th> Challenge</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in matches_list">
+                            <td><img src="{{item.picture}}" alt="..." height="40px" width="40px"></td>
+                            <td>{{item.first_name}} {{item.last_name}}</td>
+                            <td>
+                                <a type="button" target="_blank" class="btn btn-default" href="#/user_profile/{{item.id}}">
+                                    View Profile</a>
+                            </td>
+                            <td>
+                                <button class="btn btn-default" ng-click="acceptChallenge(item)"> Challenge
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- ngRepeat: item in matches_list -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

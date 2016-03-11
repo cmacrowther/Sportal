@@ -48,9 +48,6 @@ angular.module('dashboard.controllers').controller('team_createController', ['$s
                                 console.log($scope.team_password);
                                 console.log("Team Logged into DB");
                                 $scope.createTeamResult = "Team Successfully Added!";
-                                $scope.team_name = null;
-                                $scope.team_password = null;
-                                $scope.confirm_password = null;
 
                                 //$scope.teamForm.$setPristine();
                                 //$scope.teamForm.$setUntouched();

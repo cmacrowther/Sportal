@@ -145,9 +145,11 @@ angular.module('example.controllers', []).controller('LandingController', ['$sco
             .success(function (data) {
                 if (data == "Password Incorrect") {
                     console.log("Password Incorrect");
+                    alert("Password Incorrect")
                 }
-                if (data == "No User with that email") {
+                else if (data == "No User with that email") {
                     console.log("No User with that email");
+                    alert("No User With That Email");
                 }
                 else {
                     console.log("User id: " + data);

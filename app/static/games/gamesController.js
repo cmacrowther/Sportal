@@ -10,7 +10,7 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
     $scope.past_games = [];
     $scope.no_games_ip = "No Games in Progress";
     $scope.no_past_games = "No Past Games";
-
+    $scope.no_games_pending = "No Games Pending";
     $rootScope.page_name = "Games";
 
 
@@ -31,6 +31,7 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
                     if (data[i].complete == 2 && data[i].player2_id == $rootScope.userObject.id) {
                         console.log("Challenge is present");
                         $scope.games_pending.push(data[i]);
+                        $scope.no_games_pending = "";
                     }
                     else if (data[i].complete == 1) {
                         $scope.past_games.push(data[i]);
@@ -172,18 +173,18 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
                         console.log("Testing if we get into success.");
                         if (data.winner_id == $rootScope.userObject.id) {
                             if (data.score_1 > data.score_2) {
-                                item.results = "WIN " + data.score_1 + "-" + data.score_2;
+                                data.results = "WIN " + data.score_1 + "-" + data.score_2;
                             }
                             else {
-                                item.results = "WIN " + data.score_2 + "-" + data.score_1;
+                                data.results = "WIN " + data.score_2 + "-" + data.score_1;
                             }
                         }
                         else {
                             if (data.score_1 > data.score_2) {
-                                item.results = "LOSS " + data.score_1 + "-" + data.score_2;
+                                data.results = "LOSS " + data.score_1 + "-" + data.score_2;
                             }
                             else {
-                                item.results = "LOSS " + data.score_2 + "-" + data.score_1;
+                                data.results = "LOSS " + data.score_2 + "-" + data.score_1;
                             }
                         }
                         $scope.gamesip.splice(data, 1);
@@ -196,15 +197,31 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
     $scope.accept = function (item) {
         console.log(item);
         $http.get("api/match/" + item)
-            .success(function (data) {
-                console.log("Sup dude");
-                data.complete = 0;
-                console.log("testing");
-                $http.put("api/match/" + data.id, data);
-                $scope.games_pending.splice(data, 1);
-                $scope.gamesip.push(data);
+        .success(function (data) {
+            if(data.player1_id == $rootScope.userObject.id) {
+                $scope.opponent = data.player2_id;
+            }
+            else {
+                $scope.opponent = data.player1_id;
+            }
+            data.complete = 0;
+            $http.put("api/match/" + data.id, data);
+            $scope.games_pending.splice(data, 1);
+            $scope.gamesip.push(data);
+            $scope.no_games_ip = "";
 
-            });
+            $http.post("api/user_has_notification", {
+                user_id: $scope.opponent,
+                notification: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name + " has accepted your challenge.",
+                time: new Date(),
+                link: "#/games",
+                is_read: 0
+            })
+            .success(function(){
+                console.log("Notification Sent");
+            })
+
+        });
         console.log("Accepted the challenge.");
     };
 

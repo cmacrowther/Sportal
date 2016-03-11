@@ -48,58 +48,67 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
     $scope.play = function () {
         $scope.playResult = "Searching...";
 
-        $scope.matchObject = {
-            user: $rootScope.userObject,
-            sport: $scope.sport,
-            difficulty: $scope.pickTier,
-            team: $scope.pickTeams
-        };
+        if($scope.sport && $scope.pickTier && $scope.pickTeams) {
 
-        var passObject = {
-            user_id: $rootScope.userObject.id,
-            sport_id: $scope.sport.id,
-            difficulty: $scope.pickTier,
-            team: $scope.pickTeams
-        };
+            $scope.matchObject = {
+                user: $rootScope.userObject,
+                sport: $scope.sport,
+                difficulty: $scope.pickTier,
+                team: $scope.pickTeams
+            };
 
-        console.log("Finding an opponent...");
-        console.log(passObject);
+            var passObject = {
+                user_id: $rootScope.userObject.id,
+                sport_id: $scope.sport.id,
+                difficulty: $scope.pickTier,
+                team: $scope.pickTeams
+            };
 
-        $http({
-            method: 'POST',
-            url: 'api/single_matchmaking',
-            headers: {'Content-Type': 'application/json'},
-            data: JSON.stringify(passObject)
-        }).success(function (data) {
-            console.log(data);
-            if (data == "no match") {
-                if ($scope.pickTeams == "1 VS 1") {
-                    $scope.is_team = 0;
+            console.log("Finding an opponent...");
+            console.log(passObject);
+
+            $http({
+                method: 'POST',
+                url: 'api/single_matchmaking',
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify(passObject)
+            }).success(function (data) {
+                console.log(data);
+                if (data == "no match") {
+                    if ($scope.pickTeams == "1 VS 1") {
+                        $scope.is_team = 0;
+                    }
+                    else {
+                        $scope.is_team = 1;
+                    }
+                    $http.post("api/queue", {
+                            sport_id: $scope.sport.id,
+                            user_id: $rootScope.userObject.id,
+                            is_team: $scope.is_team,
+                            members: $scope.pickTeams,
+                            difficulty: $scope.pickTier
+                        })
+                        .success(function (data) {
+                            console.log("Queued for match");
+                            alert("No Current Matches, you have been queued.");
+                        })
                 }
                 else {
-                    $scope.is_team = 1;
+                    $scope.matches_list = data;
+                    $('#playModal').modal('show');
                 }
-                $http.post("api/queue", {
-                        sport_id: $scope.sport.id,
-                        user_id: $rootScope.userObject.id,
-                        is_team: $scope.is_team,
-                        members: $scope.pickTeams,
-                        difficulty: $scope.pickTier
-                    })
-                    .success(function (data) {
-                        console.log("Queued for match");
-                        alert("Queued");
-                    })
-            }
-            else {
-                $scope.matches_list = data;
-            }
-        })
+            })
+        }
+        else {
+            alert("You must fill out all fields.");
+        }
     };
 
     //Ran when accept challenge button is clicked in the list of possible matches for the user
     //Creates a match object in the database and throws the user to the games page
     $scope.acceptChallenge = function (item) {
+
+        $('#playModal').modal('hide');
 
         $http.get("api/queue/" + item.queue_id).success(function (data) {
             console.log(data);
