@@ -2,7 +2,8 @@
 <html lang="en" ng-app="example">
 <head>
     <meta charset="UTF-8">
-    <title>Huddle</title>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <title>Sportal - Game On!</title>
 
      <!-- Angular js-->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
@@ -17,79 +18,41 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
           integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
           crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"
-          integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+    
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
             integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
             crossorigin="anonymous"></script>
     <!-- Other Libraries -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/contact.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link href='http://fonts.googleapis.com/css?family=Exo+2:400,100,300,500,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400italic,400,300,600,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/icons.css" />
 
 
     <!-- JS Plugin for Validation -->
     <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.9.0/validator.js"></script>
     <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.9.0/validator.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
 
 
     <!-- CSS -->
-    <link href="css/index.css" rel="stylesheet">
-    <link href="css/landing.css" rel="stylesheet">
+
     <link type="text/css" href="css/loading-bar.min.css" rel="stylesheet">
 
 </head>
 <body>
 <!-- Navbar -->
-<nav class="navbar navbar-findcond navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Huddle</a>
-        </div>
-        <div class="collapse navbar-collapse" id="navbar">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="#/"> Home </a></li>
-                <li><a href="/dashboard.html"> Filthy Login</a></li>
-            </ul>
-            <form class="navbar-form navbar-right search-form" role="search">
-                <input type="text" class="form-control" placeholder="Search"/>
-            </form>
-        </div>
-    </div>
-</nav>
+
 
 
 <!-- The view changes depending on URL-->
-<div class="container content" ng-view>
+<div class="content container" ng-view>
     <!-- Displays template stated in app.js-->
 </div>
-
-<!--<div id="full-video">-->
-    <!--&lt;!&ndash;Video Section&ndash;&gt;-->
-    <!--<section class="content-section video-section">-->
-        <!--<video muted id="video_background" preload="auto" autoplay="" loop="" poster="//Poster.jpg">-->
-            <!--<source src="video/test.webm" type="video/webm">-->
-            <!--<source src="video/test.mp4" type="video/mp4">-->
-            <!--<source src="video/test.MOV" type="video/mov">-->
-        <!--</video>-->
-        <!--<div class="pattern-overlay">-->
-            <!--<div class="container">-->
-                <!--<div class="row">-->
-                    <!--<div class="col-md-12">-->
-                        <!--&lt;!&ndash;Video text that will be overlayed&ndash;&gt;-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</section>-->
-    <!--&lt;!&ndash;Video Section Ends Here&ndash;&gt;-->
-<!--</div>-->
 
 </body>
 <!-- Scripts -->

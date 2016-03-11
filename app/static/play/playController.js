@@ -99,15 +99,15 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
 
     //Ran when accept challenge button is clicked in the list of possible matches for the user
     //Creates a match object in the database and throws the user to the games page
-    $scope.acceptChallenge = function (item, item2) {
+    $scope.acceptChallenge = function (item) {
 
-        $http.get("api/queue/" + item).success(function (data) {
+        $http.get("api/queue/" + item.queue_id).success(function (data) {
             console.log(data);
             $scope.matches_list.splice(data, 1);
 
             $http.post("api/send_mail_match", {
                     user: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name,
-                    email: item2
+                    email: item.email
                 })
                 .success(function (data) {
                     console.log("Sent email to user.");
@@ -116,7 +116,7 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
             $http.post("api/match", {
                     sport_id: $scope.sport.id,
                     player1_id: $rootScope.userObject.id,
-                    player2_id: item,
+                    player2_id: item.id,
                     is_team: $scope.is_team,
                     date: "",
                     time: "",
@@ -128,9 +128,9 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
                 })
                 .success(function (data) {
                     console.log("Created Match object. Sending opponent email for this request. deleting person from queue");
-                    $http.delete("api/queue/" + item);
+                    $http.delete("api/queue/" + item.queue_id);
 
-                    //window.location.assign("#/games");
+                    window.location.assign("#/games");
                 });
         });
 
