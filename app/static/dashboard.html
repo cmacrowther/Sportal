@@ -158,11 +158,14 @@
                 <p>{{ $root.page_name }}</p>
             </div>
 
+            <div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;" ng-click="logout()">
+                <i class="fa fa-remove fa-lg"></i>
+            </div>
+
             <div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;">
                 <i class="fa fa-cog fa-lg"></i>
             </div>
 
-            
             <div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;">
                 <i class="fa fa-bell fa-lg"></i>
                 <span class="label label-danger" ng-show="is_team_notifications || is_user_notifications">{{ notification_counter }}</span>
