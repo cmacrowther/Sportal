@@ -19,8 +19,6 @@ pusher_client = pusher.Pusher(
                               secret='a10176f8256201a9f921',
                               ssl=True
                               )
-    
-pusher_client.trigger('test_channel', 'my_event', {'message': 'yo'})
 
 
 class User(db.Model):
@@ -32,6 +30,8 @@ class User(db.Model):
     password = Column(Text, unique=False)
     description = Column(Text, unique=False)
     picture = Column(Text, unique=False)
+    location = Column(Text, unique=False)
+    age = Column(Text, unique=False)
 
 
 class UserHasTeam(db.Model):
@@ -1087,7 +1087,7 @@ def single_matchmaking():
         and_(Queue.difficulty == difficulty, Queue.sport_id == sport_id, Queue.is_team == is_team)).all()
     objects_list = []
 
-    if len(queue) >= 5:
+    if len(queue) >= 1:
         queue1 = queue[:5]
 
         for item in queue1:
@@ -1095,6 +1095,7 @@ def single_matchmaking():
 
             d = collections.OrderedDict()
             d['id'] = user.id
+            d['queue_id'] = item.id
             d['first_name'] = user.first_name
             d['last_name'] = user.last_name
             d['email'] = user.email
@@ -1441,6 +1442,7 @@ def send_message():
     event = data.get('event_id')
     sender_first_name = data.get('sender_first_name')
     sender_last_name = data.get('sender_last_name')
+    picture = data.get('picture')
     time = data.get('time')
     message = data.get('message')
     
@@ -1451,10 +1453,29 @@ def send_message():
                                   ssl=True
                                   )
 
-    pusher_client.trigger('test_channel', event, {'sender_first_name': sender_first_name, 'sender_last_name': sender_last_name, 'time': time, 'message': message})
+    pusher_client.trigger('unchained', event, {'sender_first_name': sender_first_name, 'sender_last_name': sender_last_name, 'picture': picture, 'time': time, 'message': message})
 
     return "Success"
 
+@app.route('/api/increase_message_count', methods=['POST'])
+def increase_message_count():
+    import pusher
+    import json
+    
+    data = request.get_json()
+    recipient_id = data.get('recipient_id')
+    convo_id = data.get('convo_id')
+
+    pusher_client = pusher.Pusher(
+                                  app_id='186366',
+                                  key='56753b214ab2420a7230',
+                                  secret='a10176f8256201a9f921',
+                                  ssl=True
+                              )
+
+    pusher_client.trigger('unchained', 'new_message', {'message': 'increase_count', 'to': recipient_id, 'convo_id': convo_id})
+
+    return "Success"
 
 
 

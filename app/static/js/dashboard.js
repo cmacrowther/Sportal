@@ -77,8 +77,8 @@ angular.module('dashboard.controllers')
             window.location.assign("/");
         }
 
+        //getting teams for dashboard list
         $rootScope.teams = [];
-
         $http({
             method: 'POST',
             url: 'api/get_user_teams',
@@ -95,8 +95,8 @@ angular.module('dashboard.controllers')
                 }
             });
 
+        //getting events for dashboard list
         $rootScope.events = [];
-
         $http({
             method: 'POST',
             url: 'api/get_user_events',
@@ -113,9 +113,9 @@ angular.module('dashboard.controllers')
                 }
             });
 
+        //grabbing team notifications
         $rootScope.notifications = [];
         $scope.notification_counter = 0;
-
         $http({
             method: 'POST',
             url: 'api/get_team_notifications',
@@ -138,6 +138,7 @@ angular.module('dashboard.controllers')
             }
         });
 
+        //grabbing user notifications
         $http({
             method: 'POST',
             url: 'api/get_user_notifications',
@@ -160,8 +161,8 @@ angular.module('dashboard.controllers')
             }
         })
 
-        $scope.display_notifications = false;
 
+        $scope.display_notifications = false;
         $scope.display = function() {
             if($scope.display_notifications == true) {
                 $scope.display_notifications = false;
@@ -172,10 +173,9 @@ angular.module('dashboard.controllers')
             
         }
 
+        //INITIAL POPULATION OF MESSAGE COUNTER
         var passObject = {user_id: JSON.parse($scope.userId)};
-
         console.log(passObject);
-
         $http({
             method: 'POST',
             url: 'api/get_user_conversations',
@@ -212,92 +212,44 @@ angular.module('dashboard.controllers')
                                     $rootScope.message_counter++;
                                 }
                             }
-
-                            //$scope.checkNewMessages();
-
                         }
                     })
                 }
-
-                $scope.checkNewMessages();
             }
 
         })
-
-        
-
-$scope.checkNewMessages = function () {
-
-        $timeout(function () {
-
-                var passObject = {user_id: $rootScope.userObject.id};
-
-                $http({
-                    method: 'POST',
-                    url: 'api/get_user_conversations',
-                    headers: {'Content-Type': 'application/json'},
-                    data: JSON.stringify(passObject)
-                })
-                .success(function(data){
-                    if (data == "no conversations") {
-                        $rootScope.convos = [];
-                        $rootScope.no_convos = "No Conversations";
-                        //$scope.checkNewMessages();
-
-                    }
-                    else {
-                        $rootScope.convos = data;
-                        $rootScope.no_convos = "";
-
-                        for(var i = 0; i < $rootScope.convos.length; i++) {
-
-                            var passObject = {conversation_id: $rootScope.convos[i].id};
-                            $http({
-                                method: 'POST',
-                                url: 'api/get_conversation_messages',
-                                headers: {'Content-Type': 'application/json'},
-                                data: JSON.stringify(passObject)
-                            })
-                            .success(function(data){
-
-                                if(data == "no messages") {
-
-                                    //nothing new
-
-                                    //$scope.checkNewMessages;
-
-                                }
-                                else {
-
-                                    $scope.message_counter = 0;
-
-                                    for(var i = 0; i < data.length; i++) {
-                                        if(data[i].is_read_user_two == 0 && data[i].user_id != $rootScope.userObject.id) {
-                                            $scope.message_counter++;
-                                        }
-                                        else {
-                                            //nothing new
-                                        }
-                                    }
-
-                                    if($scope.message_counter != $rootScope.message_counter) {
-                                        $rootScope.message_counter = $scope.message_counter;
-                                    }
-                                }
-                            })
-                        }
-                    }
-                })
-
-                //$scope.checkNewMessages();
+        //POPULATION ENDS HERE
 
 
-            $scope.checkNewMessages();
-                
-            }, 5000)
-    
-        }
+        //Initialization of pusher used to update message counter
+        Pusher.log = function(message) {
+            if (window.console && window.console.log) {
+                window.console.log(message);
+            }
+        };
 
+        var pusher = new Pusher('56753b214ab2420a7230', {
+          encrypted: true
+        });
+
+        var channel = pusher.subscribe('unchained');
+        channel.bind('new_message', function(data) {
+            if(data.message == "increase_count" && data.to == $rootScope.userObject.id) {
+                if($rootScope.convo_id == data.convo_id) {
+                    //dont increase the counter
+                }
+                else {
+                    $rootScope.message_counter+=1;
+                    $http.get("api/user/" + data.to)
+                    .success(function(data){
+                        alert("Increasing counter for " + data.first_name);
+                    })
+                }
+            }
+        });
+
+
+        // END OF MODULE ----------------------------------------------------------------------------------------
     }]);
 
     angular.module('dashboard').directive('isActiveNav', [ '$location', function($location) {

@@ -48,9 +48,16 @@ angular.module('dashboard.controllers').controller('team_createController', ['$s
                                 console.log($scope.team_password);
                                 console.log("Team Logged into DB");
                                 $scope.createTeamResult = "Team Successfully Added!";
+                                $scope.team_name = null;
+                                $scope.team_password = null;
+                                $scope.confirm_password = null;
+
+                                //$scope.teamForm.$setPristine();
+                                //$scope.teamForm.$setUntouched();
+
                                 $timeout(function () {
                                     $scope.createTeamResult = "";
-                                }, 3000);
+                                }, 5000);
                                 $rootScope.teams.push(data);
                                 $scope.team_id_ = data.id;
 
@@ -77,12 +84,12 @@ angular.module('dashboard.controllers').controller('team_createController', ['$s
                                             .success(function (data) {
                                                 console.log("Successful Create.");
                                                 $http.post("api/team_has_channel", {
-                                                    team_id: $scope.team_id_,
-                                                    channel_id: data.id
-                                                })
-                                                .success(function(data){
-                                                    console.log("successful channel creation");
-                                                })
+                                                        team_id: $scope.team_id_,
+                                                        channel_id: data.id
+                                                    })
+                                                    .success(function (data) {
+                                                        console.log("successful channel creation");
+                                                    })
                                             })
                                     })
                             })
