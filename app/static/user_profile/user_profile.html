@@ -12,8 +12,7 @@
             <div style="display: inline;">
                 <h2 style="padding-left: 15px; float: left;">{{first_name}} {{last_name}} ...</h2>
 
-                <p style="padding-left: 10px; margin-top: 28px; float: left;"><i class="fa fa-map-marker"
-                                                                                 style="color: red;"></i> {{ location }}</p>
+                <p style="padding-left: 10px; margin-top: 28px; float: left;"><i class="fa fa-map-marker" style="color: red;"></i> {{ location }}</p>
             </div>
         </div>
         <div class="col-md-6" style="margin-top: 20px; padding-right: 20px;">
@@ -126,6 +125,16 @@
                                         <option value="Summerside, PE">Summerside, PE</option>
                                         <option value="Montague, PE">Montague, PE</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="about" class="col-sm-2 control-label-fix">About You</label>
+
+                                <div class='date col-sm-9'>
+                                    <div class="input-group">
+                                        <textarea ng-show="edit" ng-model="description" ng-blur="updateInfo()" type='text' class="form-control" name="about" id="about"></textarea>
+
+                                    </div>
                                 </div>
                             </div>
                             <!-- The Following two forms are hidden, they contain longitude and latitude values that are needed -->
