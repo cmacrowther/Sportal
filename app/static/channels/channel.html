@@ -5,10 +5,13 @@
         <div class="col-md-12">
             <div class="pull-left">
                 <h2 style="padding-left: 15px;">Recent Messages</h2>
+
                 <p style="padding-left: 15px;">View and respond to recent messages from other enthusiasts.</p>
             </div>
             <div class="pull-right" style="margin-top: 20px; padding-right: 20px;">
-                <button class="mui-btn mui-btn--fab mui-btn--primary" data-target="#newConvoModal" data-toggle="modal" style="float:right;">+</button>
+                <button class="mui-btn mui-btn--fab mui-btn--primary" data-target="#newConvoModal" data-toggle="modal"
+                        style="float:right;">+
+                </button>
             </div>
         </div>
     </div>
@@ -17,11 +20,13 @@
 
 <!-- Message Convo -->
 <div class="header" ng-show="in_convo">
-    <h1 style="color: #757E8D;"><b><span class="glyphicon glyphicon-arrow-left" ng-click="in_convo=false; is_channel=false; is_convo=false; $root.convo_id=''"></span> {{ title }}</b></h1>
+    <h1 style="color: #757E8D;"><b><span class="glyphicon glyphicon-arrow-left"
+                                         ng-click="in_convo=false; is_channel=false; is_convo=false; $root.convo_id=''"></span>
+        {{ title }}</b></h1>
 </div>
 <div class="message-pane mui-panel" ng-show="in_convo">
     <div class="message-wrap" ng-repeat="message in messages track by $index">
-        <img class="user-pic" ng-src="{{ message.picture }}" /> ​
+        <img class="user-pic" ng-src="{{ message.picture }}"/> ​
         <div class="message-info">
             <div class="user-name">
                 {{ message.sender_first_name }} {{ message.sender_last_name }}
@@ -39,13 +44,19 @@
     <div class="row">
         <div class="col-md-12">
             <div class="mui-container">
-                <h5 style="color: #757E8D;"><b>CHANNELS</b><input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" ng-model="searchTerm1" /></h5>
+                <h5 style="color: #757E8D;"><b>CHANNELS</b><input type="text" class="form-control input-sm"
+                                                                  maxlength="64" placeholder="Search"
+                                                                  ng-model="searchTerm1"/></h5>
+
                 <div class="mui-panel">
                     <table class="table table-striped">
                         <tbody>
-                            <tr ng-repeat="item in channels | filter:searchTerm1 | orderBy: '-name'">
-                                <td ng-click="setChannel(item.id); setMessageType(item.id, 'Channel')"><img src="{{item.team_picture}}" style="height: 30px; width: 30px"/> {{ item.name }}<span class="pull-right glyphicon glyphicon-chevron-right" style="padding-top: 8px; padding-right: 10px;"></span></td>
-                            </tr>
+                        <tr ng-repeat="item in channels | filter:searchTerm1 | orderBy: '-name'">
+                            <td ng-click="setChannel(item.id); setMessageType(item.id, 'Channel')"><img
+                                    src="{{item.team_picture}}" style="height: 30px; width: 30px"/> {{ item.name }}<span
+                                    class="pull-right glyphicon glyphicon-chevron-right"
+                                    style="padding-top: 8px; padding-right: 10px;"></span></td>
+                        </tr>
                         </tbody>
                     </table>
                     <p class="text-center">{{ no_channels }}</p>
@@ -63,21 +74,29 @@
                 <h5 style="color: #757E8D;">
                     <b>MESSAGES</b>
                     <span ng-click="editConvos()" class="pull-right glyphicon glyphicon-trash"></span>
-                    <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" ng-model="searchTerm2" />
+                    <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search"
+                           ng-model="searchTerm2"/>
                 </h5>
+
                 <div class="mui-panel">
                     <table ng-hide="editable" class="table table-striped">
                         <tbody>
-                            <tr ng-repeat="item in convos | filter:searchTerm2 | orderBy: '-name'" >
-                                <td ng-click="setConversation(item.id); setMessageType(item.id, 'not_Channel'); is_read_message(item.id)"><img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.first_name }} {{ item.last_name }}<span class="pull-right glyphicon glyphicon-chevron-right" style="padding-top: 8px; padding-right: 10px;"></span></td>
-                            </tr>
+                        <tr ng-repeat="item in convos | filter:searchTerm2 | orderBy: '-name'">
+                            <td ng-click="setConversation(item.id); setMessageType(item.id, 'not_Channel'); is_read_message(item.id)">
+                                <img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.first_name }} {{
+                                item.last_name }}<span class="pull-right glyphicon glyphicon-chevron-right"
+                                                       style="padding-top: 8px; padding-right: 10px;"></span></td>
+                        </tr>
                         </tbody>
                     </table>
                     <table ng-show="editable" class="table table-striped">
                         <tbody>
-                            <tr ng-repeat="item in convos | filter:searchTerm2 | orderBy: '-name'" >
-                                <td><img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.first_name }} {{ item.last_name }}<span class="pull-right glyphicon glyphicon-remove" style="padding-top: 8px; padding-right: 10px; color: red" data-toggle="modal" data-target="#deleteConvoModal"></td>
-                            </tr>
+                        <tr ng-repeat="item in convos | filter:searchTerm2 | orderBy: '-name'">
+                            <td><img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.first_name }} {{
+                                item.last_name }}<span class="pull-right glyphicon glyphicon-remove"
+                                                       style="padding-top: 8px; padding-right: 10px; color: red"
+                                                       data-toggle="modal" data-target="#deleteConvoModal"></td>
+                        </tr>
                         </tbody>
                     </table>
                     <p class="text-center">{{ $root.no_convos }}</p>
@@ -104,25 +123,49 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">New Convo</h4>
             </div>
             <div class="modal-body">
-                <form id="gameFinish">
-                    <div class="md-col-3">
-                        <p class="text-center">Please Select a User:</p>
-                        <div>
-                            <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" ng-model="modalSearchTerm" />
+                <div class="row">
+
+                    <p class="text-center">Create New Channel:</p>
+                    <form id="channelCreate">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control input-sm" maxlength="64" placeholder="Channel Name"
+                                   ng-model="channelName"/>
                         </div>
-                        <table class="table table-striped">
-                            <tbody>
+                        <div class="col-md-6 text-center">
+                            <button class="btn btn-default" ng-click="createChannel()"> Create</button>
+                        </div>
+                    </form>
+                </div>
+
+                <br>
+                <div class="row">
+                    <form id="gameFinish">
+                        <div class="md-col-3">
+                            <p class="text-center">Please Select a User:</p>
+
+                            <div>
+                                <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search"
+                                       ng-model="modalSearchTerm"/>
+                            </div>
+                            <table class="table table-striped">
+                                <tbody>
                                 <tr ng-repeat="item in users | filter:modalSearchTerm | orderBy: '-name'">
-                                    <td ng-click="createConversation(item.id)" data-dismiss="modal"><img src="{{item.picture}}" style="height: 30px; width: 30px" /> {{ item.first_name }} {{ item.last_name }}<span class="pull-right glyphicon glyphicon-plus"></span></td>
+                                    <td ng-click="createConversation(item.id)" data-dismiss="modal"><img
+                                            src="{{item.picture}}" style="height: 30px; width: 30px"/> {{
+                                        item.first_name }} {{ item.last_name }}<span
+                                                class="pull-right glyphicon glyphicon-plus"></span></td>
                                 </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </form>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
@@ -136,7 +179,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Delete Convo</h4>
             </div>
             <div class="modal-body">
@@ -144,7 +188,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger pull-right" data-dismiss="modal" ng-click="deleteConvo()">Delete</button>
+                <button type="button" class="btn btn-danger pull-right" data-dismiss="modal" ng-click="deleteConvo()">
+                    Delete
+                </button>
             </div>
         </div>
     </div>
