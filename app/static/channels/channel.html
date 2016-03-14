@@ -132,12 +132,10 @@
 
                     <p class="text-center">Create New Channel:</p>
                     <form id="channelCreate">
-                        <div class="col-md-6">
-                            <input type="text" class="form-control input-sm" maxlength="64" placeholder="Channel Name"
-                                   ng-model="channelName"/>
-                        </div>
-                        <div class="col-md-6 text-center">
-                            <button class="btn btn-default" ng-click="createChannel()"> Create</button>
+                        <div>
+                            <input type="text" class="form-control input-sm" maxlength="64" placeholder="Channel Name" ng-model="channelName"/>
+                            <input type="text" class="form-control input-sm" maxlength="64" placeholder="Description" ng-model="description"/>
+                            <button class="pull-right btn btn-default" ng-click="createChannel()"> Create</button>
                         </div>
                     </form>
                 </div>

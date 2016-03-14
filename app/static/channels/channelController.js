@@ -389,7 +389,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
         $http.post("api/channel", {
                 admin_id: $rootScope.userObject.id,
                 name: $scope.channelName,
-                description: "lol no field for description made yet"
+                description: $scope.description
             })
             .success(function (data) {
                 console.log("Successful Channel Create");
