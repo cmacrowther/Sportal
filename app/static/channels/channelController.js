@@ -372,7 +372,9 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                             is_read_user_two: 1
                         };
                         $http.put("/api/user_has_message/" + is_read.id, is_read);
-                        $rootScope.message_counter -= 1;
+                        if($rootScope.message_counter != 0) {
+                            $rootScope.message_counter -= 1;
+                        }
                     }
                 }
 
