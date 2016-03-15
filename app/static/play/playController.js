@@ -18,11 +18,31 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
         headers: {'Content-Type': 'application/json'},
         data: JSON.stringify(passObject)
     })
-        .success(function (data) {
-            console.log(data);
+    .success(function (data) {
+        console.log(data);
 
-            $scope.mySports = data;
-        });
+        $scope.mySports = data;
+    });
+
+    $scope.loadTeams = function () {
+
+        var passObject = {user_id: $rootScope.userObject.id};
+
+        $http({
+            method: 'POST',
+            url: 'api/get_admin_teams',
+            headers: {'Content-Type': 'application/json'},
+            data: JSON.stringify(passObject)
+        })
+        .success(function(data){
+            if (data == "no teams") {
+                alert("You are not an admin of any teams.  You must be the admin of a team in order to schedule games for your team.");
+            }
+            else {
+                $scope.admin_teams = data;
+            }
+        })
+    }
 
     //Gets all the sports in the database created by the Admin
     $http.get("/api/sport")
