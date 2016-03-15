@@ -1,56 +1,70 @@
-<h1 class="text-center">Search</h1>
+<link rel="stylesheet" href="css/search.css">
 
-<form ng-submit="search()">
-	<div class="col-md-6 col-md-offset-3">
-	    <div class="input-group custom-search-form">
-		    <input type="text" class="form-control" ng-model="searchTerm">
-		    <span class="input-group-btn">
-		    <button class="btn btn-default" type="button" ng-click="search()">
-		    <span class="glyphicon glyphicon-search"></span>
-		    </button>
-		    </span>
-	    </div><!-- /input-group -->
-	</div>
-</form>
+<div class="row" style="height: 110px; background-color: white; border-bottom: 1px solid #e7e7e7;">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 style="padding-left: 15px;">Search Items</h2>
+            <p style="padding-left: 15px;">Search for different users and teams using the service.</p>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12" style="text-align: center; padding-top: 10px;">
+<div class="mui-container" style="display: inline-block;;">
+	<i ng-click="search()" style="float:left; padding-top: 23px; padding-right: 5px; color: #757E8D;" class="fa fa-search fa-lg"></i>
+	<form style="float: left;" ng-submit="search()">
+		<div class="mui-textfield">
+		<input type="text" ng-model="searchTerm" placeholder="Search Term" style="width: 400px;">
+		</div>
+	</form>
+</div>
+</div>
+
 <br><br><br>
-<div class="mui-panel col-md-10 col-md-offset-1">
-	<h4>Users</h4>
+<div class="mui-container">
+<h5 style="color: #757E8D;"><b>USERS</b></h5>
+<div class="mui-panel col-md-12">
 	<table class="table table-striped">
 	    <thead>
 	        <tr>
-	            <th> Name </th>
-	            <th> Email </th>
-	            <th> Profile</th>
+	            <th style="width: 33%;"> Name </th>
+	            <th style="width: 33%;"> Email </th>
+	            <th style="width: 33%;"> Profile</th>
 	        </tr>
 	    </thead>
 	    <tbody>
 	        <tr ng-repeat="item in users_list">
 	            <td><img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.first_name }} {{ item.last_name }}</td>
 	            <td> {{ item.email }}</td>
-	            <td><a target="_blank" href="#/user_profile/{{item.id}}"><button class="btn btn-primary">Go</button></a></td>
+	            <td><a target="_blank" href="#/user_profile/{{item.id}}"><button style="padding: none;" class="mui-btn mui-btn--small mui-btn--primary">Go</button></a></td>
 	        </tr>
 	    </tbody>
 	</table>
 	<p class="text-center">{{ no_users }}</p>
+</div>
+</div>
 
-	<h4>Teams</h4>
+<div class="mui-container" style="padding-top: 15px;">
+<h5 style="color: #757E8D;"><b>TEAMS</b></h5>
+<div class="mui-panel col-md-12">
 	<table class="table table-striped">
 	    <thead>
 	        <tr>
-	            <th> Name </th>
-	            <th> Sport </th>
-	            <th> Profile </th>
+	            <th style="width: 33%;"> Name </th>
+	            <th style="width: 33%;"> Sport </th>
+	            <th style="width: 33%;"> Profile </th>
 	        </tr>
 	    </thead>
 	    <tbody>
 	        <tr ng-repeat="item in teams_list">
 	            <td><img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.name }}</td>
 	            <td ng-init="item.sport_id=getSport(item)">{{ item.sport_id }}</td>
-	            <td><a target="_blank" href="#/team_profile/{{item.url}}"><button class="btn btn-primary">Go</button></a></td>
+	            <td><a target="_blank" href="#/team_profile/{{item.url}}"><button style="padding: none;" class="mui-btn mui-btn--small mui-btn--primary">Go</button></a></td>
 	        </tr>
 	    </tbody>
 	</table>
 	<p class="text-center">{{ no_teams }}</p>
+</div>
 </div>
 
 <!--<div>
