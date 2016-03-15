@@ -95,9 +95,7 @@
                         <tbody>
                         <tr ng-repeat="item in convos | filter:searchTerm2 | orderBy: '-name'">
                             <td><img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.first_name }} {{
-                                item.last_name }}<span class="pull-right glyphicon glyphicon-remove"
-                                                       style="padding-top: 8px; padding-right: 10px; color: red"
-                                                       data-toggle="modal" data-target="#deleteConvoModal"></td>
+                                item.last_name }}<span class="pull-right glyphicon glyphicon-remove" style="padding-top: 8px; padding-right: 10px; color: red" data-toggle="modal" data-target="#deleteConvoModal" ng-click="setModal(item)"></td>
                         </tr>
                         </tbody>
                     </table>

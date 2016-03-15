@@ -88,7 +88,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
         else {
             var flag = 0; //flag if already in convo with
 
-            angular.forEach($scope.convos, function (value, key) {
+            angular.forEach($rootScope.convos, function (value, key) {
                 if (value.convo_user_id == user_id) {
                     alert("already in convo with");
                     flag = 1;
@@ -277,13 +277,18 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
             data: JSON.stringify(passObject)
         })
             .success(function (data) {
-                for (var i = 0; i < data.length; i++) {
-                    $http.delete("/api/user_has_message/" + data[i].uhm_id);
-                    $http.delete("/api/message/" + data[i].id);
+                if(data == "no messages") {
+                    $http.delete("/api/conversation/" + $scope.modalObject.id);
+                    $rootScope.convos.splice($scope.modalObject.id, 1);
                 }
-                $http.delete("/api/conversation/" + $scope.modalObject.id);
-                $scope.convos.splice($scope.modalObject.id, 1);
-                if ($scope.convos == []) {
+                else {
+                    for (var i = 0; i < data.length; i++) {
+                        $http.delete("/api/user_has_message/" + data[i].uhm_id);
+                        $http.delete("/api/message/" + data[i].id);
+                    }
+                }
+                
+                if ($rootScope.convos == []) {
                     $rootScope.no_convos = "No Conversations";
                 }
             })
