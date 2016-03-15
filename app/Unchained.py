@@ -49,6 +49,7 @@ class Team(db.Model):
     url = Column(Text, unique=False)
     description = Column(Text, unique=False)
     password = Column(Text, unique=False)
+    location = Column(Text, unique=False)
 
 
 class UserHasSport(db.Model):
@@ -879,6 +880,7 @@ def get_team_info():
             d['url'] = team.url
             d['description'] = team.description
             d['password'] = team.password
+            d['location'] = team.location
 
             objects_list.append(d)
 

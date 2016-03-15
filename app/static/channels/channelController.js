@@ -33,12 +33,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
         });
 
     $scope.editConvos = function () {
-        if ($scope.editable == true) {
-            $scope.editable = false;
-        }
-        else {
-            $scope.editable = true;
-        }
+        $scope.editable = !$scope.editable;
     };
 
 
@@ -382,7 +377,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
 
     };
 
-    $scope.createChannel = function () {
+    /*$scope.createChannel = function () {
         console.log("Getting into the create channel Method.");
         console.log("Channel Name: " + $scope.channelName);
 
@@ -400,7 +395,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
         //todo add the user creating channel to user_has_channel
 
 
-    }
+    }*/
 
 
 }]);
