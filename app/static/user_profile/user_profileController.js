@@ -80,19 +80,22 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
             else {
                 $scope.location = $scope.profileObject.location;
             }
+
+
+
             //nothing in the Database for the following
             /*if ($scope.profileObject.gender == "" || $scope.profileObject.gender == undefined) {
-                $scope.gender = "No info given";
-            }
-            else {
-                $scope.gender = $scope.profileObject.gender;
-            }
-            if ($scope.profileObject.interests == "" || $scope.profileObject.interests == undefined) {
-                $scope.interests = "No info given";
-            }
-            else {
-                $scope.interests = $scope.profileObject.interests;
-            }*/
+             $scope.gender = "No info given";
+             }
+             else {
+             $scope.gender = $scope.profileObject.gender;
+             }
+             if ($scope.profileObject.interests == "" || $scope.profileObject.interests == undefined) {
+             $scope.interests = "No info given";
+             }
+             else {
+             $scope.interests = $scope.profileObject.interests;
+             }*/
 
             //NOTE: Interests are pulled from MYSPORTS
 
@@ -135,9 +138,9 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
             $scope.passwordNew = null;
             $scope.passwordConfirm = null;
 
-                $timeout(function() {
-                    $scope.password_message = null;
-                }, 3000);
+            $timeout(function () {
+                $scope.password_message = null;
+            }, 3000);
 
         }
         else {
@@ -239,6 +242,7 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
                         console.log("Sport successfully deleted");
                     })
             })
-    }
+    };
+
 
 }]);
