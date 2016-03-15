@@ -1479,6 +1479,35 @@ def increase_message_count():
 
     return "Success"
 
+@app.route('/api/get_admin_teams', methods=['POST'])
+def get_admin_teams():
+    import json
+    import collections
+    import Team
+    import TeamHasAdmin
+
+    data = request.get_json()
+    user_id = data.get('user_id')
+    uht = TeamHasAdmin.query.filter(TeamHasAdmin.user_id == user_id).all()
+
+    if uht:
+        for item in uht:
+            team = Team.query.get(item.team_id)
+
+            d = collections.OrderedDict()
+            d['id'] = team.id
+            d['picture'] = team.picture
+            d['name'] = team.name
+            d['location'] = team.location
+
+            objects_list.append(d)
+    
+        j = json.dumps(objects_list)
+        return j
+
+    else:
+        return "no teams"
+
 
 
 app.debug = True

@@ -245,6 +245,24 @@ body, html {
   }
 }
 
+/*Start removing icons */
+@media (max-width: 550px) {
+  #chat {
+    display: none !important;
+  }
+
+  #cog {
+    display: none !important;
+  }
+}
+
+/*Start removing icons */
+@media (max-width: 480px) {
+  #notif {
+    display: none !important;
+  }
+}
+
 #footer  {
     clear: both; /*may be omitted*/
     position: fixed;
@@ -264,11 +282,11 @@ body, html {
   height: 60px;
   border-bottom: 1px solid #e7e7e7;
   background-color: white;
-  overflow: auto;
+  overflow: visible;
 }
 .head-information .tool-butt {
   padding-left: 10px;
-  position: relative;
+  position: static;
   float: left;
   width: 60px;
   height: 59px;
@@ -603,4 +621,18 @@ a:active {
   transition: width 0.4s ease;
 }
 
+.btn-group, .btn-group-vertical {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  float: right;
+}
 
+.new-message {
+  background-color: #EDF2F6;
+}
+
+.new-message i {
+  margin-left: -12px;
+  padding-right: 5px;
+}

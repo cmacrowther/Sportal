@@ -89,7 +89,7 @@
                             <a href="" type="button" ng-click="setTeams('1 VS 1')"><div class="col-md-12" style="height: 46%; border: 5px solid black; margin-top: 10px">
                                     <h1 class="text-center" style="line-height: 100px">1 VS 1</p>
                             </div></a>
-                            <a href="" type="button" ng-click="setTeams('TEAM')"><div class="col-md-12" style="height: 46%; border: 5px solid black; margin-top: 10px">
+                            <a href="" type="button" data-toggle="modal" ng-click="loadTeams()" data-target="#teamModal"><div class="col-md-12" style="height: 46%; border: 5px solid black; margin-top: 10px">
                                     <h1 class="text-center" style="line-height: 100px">TEAMS</p>
                             </div></a>
                         </div>
@@ -143,6 +143,34 @@
                             </td>
                             <td>
                                 <button class="btn btn-default" ng-click="acceptChallenge(item)"> Challenge
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- ngRepeat: item in matches_list -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Select Team Modal -->
+    <div class="modal fade" id="teamModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title text-center" id="myModalLabel">Select Your Team</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- Teams table -->
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr ng-repeat="item in admin_teams">
+                            <td><img src="{{item.picture}}" alt="..." height="40px" width="40px"></td>
+                            <td>{{item.name}}</td>
+                            <td>
+                                <button class="btn btn-default" ng-click="setTeams(item)" data-dismiss="modal"> Select
                                 </button>
                             </td>
                         </tr>
