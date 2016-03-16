@@ -3,7 +3,7 @@
  */
 angular.module('dashboard.controllers').controller('gamesController', ['$scope', '$http', '$rootScope', '$routeParams', function ($scope, $http, $rootScope, $routeParams) {
 
-    var passObject = {user_id: $rootScope.userObject.id, page: 3};
+    var passObject = {user_id: $rootScope.userObject.id};
 
     $scope.games_pending = [];
     $scope.gamesip = [];
@@ -35,6 +35,7 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
                     }
                     else if (data[i].complete == 1) {
                         $scope.past_games.push(data[i]);
+                        //todo add tie
                         if (data[i].winner_id == $rootScope.userObject.id) {
                             if (data[i].score_1 > data[i].score_2) {
                                 data[i].results = "WIN " + data[i].score_1 + "-" + data[i].score_2;
@@ -63,17 +64,6 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
             }
         });
 
-    //$http.post("api/get_matches_pending", {
-    //        user_id: $rootScope.userObject.id,
-    //        page: 0
-    //    })
-    //    .success(function (data) {
-    //        console.log("Finding pending matches.");
-    //        $scope.games_pending = data;
-    //        console.log(data);
-    //        //window.location.assign("#/games");
-    //    });
-
     $scope.getSport = function (item) {
 
         $http.get("/api/sport/" + item.sport_id)
@@ -85,7 +75,14 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
 
     $scope.getUser = function (item) {
 
-        $http.get("/api/user/" + item.player1_id)
+        var opponent_id = 0;
+        if (item.player1_id == $rootScope.userObject.id) {
+            opponent_id = item.player2_id;
+        }
+        else {
+            opponent_id = item.player1_id;
+        }
+        $http.get("/api/user/" + opponent_id)
             .success(function (data) {
                 item.opponent = data.first_name + " " + data.last_name;
             })
@@ -218,36 +215,39 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
     $scope.accept = function (item) {
         console.log(item);
         $http.get("api/match/" + item)
-        .success(function (data) {
-            if(data.player1_id == $rootScope.userObject.id) {
-                $scope.opponent = data.player2_id;
-            }
-            else {
-                $scope.opponent = data.player1_id;
-            }
-            data.complete = 0;
-            $http.put("api/match/" + data.id, data)
-            .success(function(data){
-                $scope.games_pending.splice(data, 1);
-                $scope.gamesip.push(data);
-                $scope.no_games_ip = "";
+            .success(function (data) {
+                if (data.player1_id == $rootScope.userObject.id) {
+                    $scope.opponent = data.player2_id;
+                }
+                else {
+                    $scope.opponent = data.player1_id;
+                }
+                data.complete = 0;
+                $http.put("api/match/" + data.id, data)
+                    .success(function (data) {
+                        console.log("Whoop whoop whooppppppppppp");
+                        console.log(data);
 
-                $http.post("api/user_has_notification", {
-                    user_id: $scope.opponent,
-                    notification: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name + " has accepted your challenge.",
-                    time: new Date(),
-                    link: "#/games",
-                    is_read: 0
-                })
-                .success(function(){
-                    console.log("Notification Sent");
-                })
+                        $scope.games_pending.splice(data, 1);
+                        $scope.gamesip.push(data);
+                        $scope.no_games_ip = "";
 
-                console.log("Accepted the challenge.");
+                        $http.post("api/user_has_notification", {
+                                user_id: $scope.opponent,
+                                notification: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name + " has accepted your challenge.",
+                                time: new Date(),
+                                link: "#/games",
+                                is_read: 0
+                            })
+                            .success(function () {
+                                console.log("Notification Sent");
+                            });
 
-            })
-        });
-        
+                        console.log("Accepted the challenge.");
+
+                    })
+            });
+
     };
 
     $scope.decline = function (item) {
