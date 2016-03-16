@@ -5,19 +5,15 @@
         <div class="col-md-12">
             <div class="pull-left">
                 <h2 style="padding-left: 15px;">Recent Messages</h2>
-
                 <p style="padding-left: 15px;">View and respond to recent messages from other enthusiasts.</p>
             </div>
             <div class="pull-right" style="margin-top: 20px; padding-right: 20px;">
-                <button class="mui-btn mui-btn--fab mui-btn--primary" data-target="#newConvoModal" data-toggle="modal"
-                        style="float:right;">+
+                <button class="mui-btn mui-btn--fab mui-btn--primary" data-target="#newConvoModal" data-toggle="modal" style="float:right;">+
                 </button>
             </div>
         </div>
     </div>
 </div>
-
-
 <!-- Message Convo -->
 <div class="header" ng-show="in_convo">
     <h1 style="color: #757E8D;"><b><span class="glyphicon glyphicon-arrow-left"
@@ -26,7 +22,7 @@
 </div>
 <div class="message-pane mui-panel" ng-show="in_convo">
     <div class="message-wrap" ng-repeat="message in messages track by $index">
-        <img class="user-pic" ng-src="{{ message.picture }}"/> ​
+        <img class="user-pic" ng-src="{{ message.picture }}" /> ​
         <div class="message-info">
             <div class="user-name">
                 {{ message.sender_first_name }} {{ message.sender_last_name }}
@@ -38,7 +34,6 @@
         </div>
     </div>
 </div>
-
 <!-- Channels -->
 <div ng-hide="in_convo" class="col-md-12" style="padding-top: 15px; background-color: #EDF2F6;">
     <div class="row">
@@ -49,16 +44,12 @@
                 <input type="text" class="form-control input-sm"
                                                                   maxlength="64" placeholder="Search"
                                                                   ng-model="searchTerm1"/></h5>
-
                 <div class="mui-panel">
                     <table class="table table-striped">
                         <tbody>
-                        <tr ng-repeat="item in channels | filter:searchTerm1 | orderBy: '-name'">
-                            <td ng-click="setChannel(item.id); setMessageType(item.id, 'Channel')"><img
-                                    src="{{item.team_picture}}" style="height: 30px; width: 30px"/> {{ item.name }}<span
-                                    class="pull-right glyphicon glyphicon-chevron-right"
-                                    style="padding-top: 8px; padding-right: 10px;"></span></td>
-                        </tr>
+                            <tr ng-repeat="item in channels | filter:searchTerm1 | orderBy: '-name'">
+                                <td ng-click="setChannel(item.id); setMessageType(item.id, 'Channel')"><img src="{{item.team_picture}}" style="height: 30px; width: 30px" /> {{ item.name }}<span class="pull-right fa fa-chevron-right" style="padding-top: 8px; padding-right: 10px;"></span></td>
+                            </tr>
                         </tbody>
                     </table>
                     <p class="text-center">{{ no_channels }}</p>
@@ -67,7 +58,6 @@
         </div>
     </div>
 </div>
-
 <!-- Direct Messages -->
 <div ng-hide="in_convo" class="col-md-12" style="padding-top: 15px; background-color: #EDF2F6;">
     <div class="row">
@@ -79,23 +69,19 @@
                     <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search"
                            ng-model="searchTerm2"/>
                 </h5>
-
                 <div class="mui-panel">
                     <table ng-hide="editable" class="table table-striped">
                         <tbody>
-                        <tr ng-repeat="item in convos | filter:searchTerm2 | orderBy: '-name'">
-                            <td ng-click="setConversation(item.id); setMessageType(item.id, 'not_Channel'); is_read_message(item.id)">
-                                <img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.first_name }} {{
-                                item.last_name }}<span class="pull-right glyphicon glyphicon-chevron-right"
-                                                       style="padding-top: 8px; padding-right: 10px;"></span></td>
-                        </tr>
+                            <tr ng-repeat="item in convos | filter:searchTerm2 | orderBy: '-name'">
+                                <td ng-click="setConversation(item.id); setMessageType(item.id, 'not_Channel'); is_read_message(item.id)">
+                                    <img src="{{item.picture}}" style="height: 30px; width: 30px" /> {{ item.first_name }} {{ item.last_name }}<span class="pull-right glyphicon glyphicon-chevron-right" style="padding-top: 8px; padding-right: 10px;"></span></td>
+                            </tr>
                         </tbody>
                     </table>
                     <table ng-show="editable" class="table table-striped">
                         <tbody>
-                        <tr ng-repeat="item in convos | filter:searchTerm2 | orderBy: '-name'">
-                            <td><img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.first_name }} {{
-                                item.last_name }}<span class="pull-right glyphicon glyphicon-remove" style="padding-top: 8px; padding-right: 10px; color: red" data-toggle="modal" data-target="#deleteConvoModal" ng-click="setModal(item)"></td>
+                            <tr ng-repeat="item in convos | filter:searchTerm2 | orderBy: '-name'">
+                                <td><img src="{{item.picture}}" style="height: 30px; width: 30px" /> {{ item.first_name }} {{ item.last_name }}<span class="pull-right glyphicon glyphicon-remove" style="padding-top: 8px; padding-right: 10px; color: red" data-toggle="modal" data-target="#deleteConvoModal" ng-click="setModal(item)"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -113,71 +99,63 @@
         <span class="input-group-btn">
               <button class="btn btn-default" ng-click="sendMessage()" type="submit">Send</button>
             </span>
-    </div>
-    ​
-</form>
-
-
-<!-- New convo Modal -->
-<div class="modal fade" id="newConvoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">New Convo</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <form id="gameFinish">
-                        <div class="md-col-3">
-                            <p class="text-center">Please Select a User:</p>
-
-                            <div>
-                                <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search"
-                                       ng-model="modalSearchTerm"/>
-                            </div>
-                            <table class="table table-striped">
-                                <tbody>
-                                <tr ng-repeat="item in users | filter:modalSearchTerm | orderBy: '-name'">
-                                    <a href=""><td ng-click="createConversation(item.id)" data-dismiss="modal"><img
-                                            src="{{item.picture}}" style="height: 30px; width: 30px"/> {{
-                                        item.first_name }} {{ item.last_name }}<span
-                                                class="pull-right glyphicon glyphicon-plus" style="padding-top: 5px"></span></td></a>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </form>
                 </div>
-
+                ​
+                </form>
+                <!-- New convo Modal -->
+                <div class="modal fade" id="newConvoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">New Convo</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <form id="gameFinish">
+                                        <div class="md-col-3">
+                                            <p class="text-center">Please Select a User:</p>
+                                            <div>
+                                                <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" ng-model="modalSearchTerm" />
+                                            </div>
+                                            <table class="table table-striped">
+                                                <tbody>
+                                                    <tr ng-repeat="item in users | filter:modalSearchTerm | orderBy: '-name'">
+                                                        <a href="">
+                                                            <td ng-click="createConversation(item.id)" data-dismiss="modal"><img src="{{item.picture}}" style="height: 30px; width: 30px" /> {{ item.first_name }} {{ item.last_name }}<span class="pull-right glyphicon glyphicon-plus" style="padding-top: 5px"></span></td>
+                                                        </a>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Cancel</button>
+            <!-- Delete convo Modal -->
+            <div class="modal fade" id="deleteConvoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Delete Convo</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-center">Are you sure you want to delete this conversation?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-right" data-dismiss="modal" ng-click="editable=false">Cancel</button>
+                            <button type="button" class="btn btn-danger pull-right" data-dismiss="modal" ng-click="deleteConvo(); editable=false">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-</div>
-<!-- Delete convo Modal -->
-<div class="modal fade" id="deleteConvoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Delete Convo</h4>
-            </div>
-            <div class="modal-body">
-                <p class="text-center">Are you sure you want to delete this conversation?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-right" data-dismiss="modal" ng-click="editable=false">Cancel</button>
-                <button type="button" class="btn btn-danger pull-right" data-dismiss="modal" ng-click="deleteConvo(); editable=false">
-                    Delete
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
