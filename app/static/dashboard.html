@@ -177,7 +177,9 @@
 	                <span class="label label-danger" ng-show="notification_counter>0">{{ notification_counter }}</span>
 	            </div>  
 	            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
-				    <li ng-repeat="item in notifications | orderBy: '-date'"><a href="{{item.link}}" ng-click="is_read_set(item)">{{ item.notification }}</a><hr></li>
+                    <li ng-repeat="item in notifications | filter:{is_read:'0'} | orderBy:'-time'"><a ng-click="is_read_set(item)" class="new-message" href="{{item.link}}"><i class="fa fa-exclamation"></i>{{item.notification}}</a></li>
+                    <li ng-show="notification_counter>0" role="separator" class="divider"></li>
+                    <li ng-repeat="item in notifications | filter:{is_read:'1'} | orderBy:'-time'"><a href="{{item.link}}">{{item.notification}}</a></li>
   				</ul>
 	        </div>
 
