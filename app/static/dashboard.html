@@ -73,6 +73,7 @@
     <div class="side-menu-container">
         <ul class="nav navbar-nav">
 
+            <li><a is-active-nav href="#/search"><span class="glyphicon glyphicon-search"></span> SEARCH</a></li>
             <li><a is-active-nav href="#/user_profile/{{ $root.userObject.id }}"><span class="glyphicon glyphicon-user"></span> PROFILE</a></li>
 
             <!-- Dropdown-->
@@ -109,10 +110,9 @@
                         </ul>
                     </div>
                 </div>
-            </li>-->
-            <li><a is-active-nav href="#/admin"><span class="glyphicon glyphicon-cog"></span> ADMIN</a></li>
+            </li>
+            <li><a is-active-nav href="#/admin"><span class="glyphicon glyphicon-cog"></span> ADMIN</a></li>-->
             <li><a is-active-nav href="#/messages"><span class="glyphicon glyphicon-envelope"></span> MESSAGING</a></li>
-            <li><a is-active-nav href="#/search"><span class="glyphicon glyphicon-search"></span> SEARCH</a></li>
 
 
 
@@ -169,33 +169,31 @@
 				    <li role="separator" class="divider"></li>
 				    <li><a ng-click="logout()">Logout</a></li>
   				</ul>
-	        </div>  
+	        </div>
 
             <div id="notif" class="btn-group dropdown">
 	            <div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 	                <i class="fa fa-bell fa-lg"></i>
-	                <span class="label label-danger" ng-show="is_team_notifications || is_user_notifications">{{ notification_counter }}</span>
+	                <span class="label label-danger" ng-show="notification_counter>0">{{ notification_counter }}</span>
 	            </div>  
 	            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
-				    <li><a class="new-message" href="#"><i class="fa fa-exclamation"></i>New Notification</a></li>
-				    <li><a href="#">Notification Here</a></li>
-				    <li><a href="#">Notification Here</a></li>
+				    <li ng-repeat="item in notifications | orderBy: '-date'"><a href="{{item.link}}" ng-click="is_read_set(item)">{{ item.notification }}</a><hr></li>
   				</ul>
-	        </div>    
+	        </div>
 
-	        <div id="chat" class="btn-group dropdown">
+	        <a href="#/messages"><div id="chat" class="btn-group dropdown">
 	           <div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 	                <i class="fa fa-comment fa-lg"></i>
 	                <span ng-show="message_counter>0" data-min="0" class="label label-danger">{{ message_counter }}</span>
 	            </div>
-	            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu3">
+	            <!--<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu3">
 				    <li><a class="new-message" href="#"><i class="fa fa-exclamation"></i>New Message</a></li>
 				    <li><a href="#">Message Here</a></li>
 				    <li><a href="#">Message Here</a></li>
 				    <li role="separator" class="divider"></li>
 				    <li><a href="#/messages">Go to Messages</a></li>
-  				</ul>
-	        </div>  
+  				</ul>-->
+	        </div></a>  
 
         </div>
     </div>

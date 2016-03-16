@@ -14,10 +14,6 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
         viewMode: 'years'
     });
 
-    $rootScope.page_name = $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name;
-
-    //console.log("NOTIFICATIONS: " + $rootScope.notifications[0].notification);
-
     //Setting unique user profile URL
     $scope.user_id = $routeParams.user_id;
     console.log("Profile Parameter user ID: " + $scope.user_id);
@@ -50,6 +46,11 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
             else {
                 $scope.last_name = $scope.profileObject.last_name;
             }
+
+            //Setting Page Name
+            $rootScope.page_name = $rootScope.profileObject.first_name + " " + $rootScope.profileObject.last_name;
+
+            //continuing variable checks
             if ($scope.profileObject.description == "" || $scope.profileObject.description == undefined) {
                 $scope.description = "No info given";
             }
@@ -80,21 +81,6 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
             else {
                 $scope.location = $scope.profileObject.location;
             }
-            //nothing in the Database for the following
-            /*if ($scope.profileObject.gender == "" || $scope.profileObject.gender == undefined) {
-                $scope.gender = "No info given";
-            }
-            else {
-                $scope.gender = $scope.profileObject.gender;
-            }
-            if ($scope.profileObject.interests == "" || $scope.profileObject.interests == undefined) {
-                $scope.interests = "No info given";
-            }
-            else {
-                $scope.interests = $scope.profileObject.interests;
-            }*/
-
-            //NOTE: Interests are pulled from MYSPORTS
 
         })
         .error(function () {
@@ -105,7 +91,6 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
 
     //Function to toggle input fields for editing
     $scope.editPage = function () {
-        console.log("Edit = true.");
         $scope.edit = !$scope.edit;
     };
 
