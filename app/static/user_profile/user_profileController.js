@@ -120,9 +120,9 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
             $scope.passwordNew = null;
             $scope.passwordConfirm = null;
 
-                $timeout(function() {
-                    $scope.password_message = null;
-                }, 3000);
+            $timeout(function () {
+                $scope.password_message = null;
+            }, 3000);
 
         }
         else {
@@ -224,6 +224,7 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
                         console.log("Sport successfully deleted");
                     })
             })
-    }
+    };
+
 
 }]);

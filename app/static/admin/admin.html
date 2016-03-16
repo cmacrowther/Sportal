@@ -1,105 +1,90 @@
-<div class="row">
-    <div class="col-md-6 col-md-offset-3">
-        <form id="sportForm">
-            <div class="well">
-                <div>
-                    <h2>Add a Sport</h2>
-                </div>
-
+<div class="row" style="height: 110px; background-color: white; border-bottom: 1px solid #e7e7e7;">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 style="padding-left: 15px;">Administrative Settings</h2>
+            <p style="padding-left: 15px;">Here you will find additional settings for managing this service.</p>
+        </div>
+    </div>
+</div>
+<div class="col-md-12" style="padding-top: 25px; background-color: #EDF2F6;">
+    <div class="mui-container">
+    <h5 style="color: #757E8D;"><b>CREATE SPORT</b></h5>
+        <div class="mui-panel">
+            <p style="padding-top: 5px;">Create a type of sport that players can play.</p>
+            <br />
+            <form id="sportForm">
                 <div class="form-group">
-                    <label class="signup control-label">Sport Name</label>
-
                     <div class="row">
-                        <div class="col-md-12">
-                            <input ng-model="sport_name" type="text" class="form-control"
-                                   placeholder="Sport Name" required>
-
+                        <div style="margin-bottom: 0" class="mui-textfield col-md-12">
+                            <input ng-model="sport_name" type="text" placeholder="Sport Name" required>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group">
-                    <label class="signup control-label">Number of Members</label>
-
                     <div class="row">
-                        <div class="col-md-12">
-                            <input ng-model="members_required" type="number" min="1" class="form-control"
-                                   placeholder="Members Required" required>
-
+                        <div style="margin-bottom: 0" class="mui-textfield col-md-12">
+                            <input ng-model="members_required" type="number" min="1" placeholder="# of Members Required" required>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group">
-                    <label class="signup control-label">Number of Teams</label>
-
                     <div class="row">
-                        <div class="col-md-12">
-                            <input ng-model="teams_required" type="number" class="form-control"
-                                   min="1" placeholder="Teams Required" required>
-
+                        <div style="margin-bottom: 0" class="mui-textfield col-md-12">
+                            <input ng-model="teams_required" type="number" min="1" placeholder="# of Teams Required" required>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-4 col-md-offset-4" class="form-group">
-                        <button type="submit" ng-click="createSport()" class="btn btn-success btn-block">Create Sport
-                        </button>
                         <h4 class="text-center">{{ createSportResult }}</h4>
                     </div>
                 </div>
-            </div>
-        </form>
+                <div style="padding-right: 15px; padding-bottom: 35px;">
+                    <button ng-click="createSport()" class="mui-btn mui-btn--primary mui-btn--raised" style="float: right;">Create
+                    </button>
+                </div>
+        </div>
     </div>
+    </form>
 </div>
+</div>
+<div class="col-md-12" style="padding-top: 25px; background-color: #EDF2F6;">
+    <div class="mui-container">
+    <h5 style="color: #757E8D;"><b>CREATE FACILITY</b></h5>
+        <div class="mui-panel">
+            <p style="padding-top: 5px;">Create a facility in which games and sports can take place.</p>
+            <br />
 
-<div class="row">
-    <div class="col-md-6 col-md-offset-3">
-        <form id="facilityForm">
-            <div class="well">
-                <div>
-                    <h2>Add a Facility</h2>
-                </div>
-
+            <form id="facilityForm">
                 <div class="form-group">
-                    <label class="signup control-label">Facility Name</label>
-
                     <div class="row">
-                        <div class="col-md-12">
-                            <input ng-model="facility_name" type="text" class="form-control"
-                                   placeholder="Name" required>
-
+                        <div style="margin-bottom: 0" class="mui-textfield col-md-12">
+                            <input ng-model="facility_name" type="text" placeholder="Facility Name" required>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group">
-                    <label class="signup control-label">Facility Address</label>
-
                     <div class="row">
-                        <div class="col-md-12">
-                            <input ng-model="facility_address" type="text" class="form-control"
-                                   placeholder="Address" required>
-
+                        <div style="margin-bottom: 0" class="mui-textfield col-md-12">
+                            <input ng-model="facility_address" type="text" placeholder="Facility Address" required>
                             <div class="help-block with-errors"></div>
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-4 col-md-offset-4" class="form-group">
-                        <button type="submit" ng-click="createFacility()" class="btn btn-success btn-block">Create
-                            Facility
-                        </button>
                         <h4 class="text-center">{{ createFacilityResult }}</h4>
                     </div>
                 </div>
-            </div>
-        </form>
+                <div style="padding-right: 15px; padding-bottom: 35px;">
+                    <button ng-click="createFacility()" class="mui-btn mui-btn--primary mui-btn--raised" style="float: right;">Create
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
