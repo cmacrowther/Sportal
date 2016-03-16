@@ -9,3 +9,5 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.mui-btn { z-index: 0; }

@@ -7,10 +7,12 @@
 
             <p style="padding-left: 15px;">Get matched with potential players and teams</p>
         </div>
-        <div class="col-md-6">
-            <h4><a href="/play/#myCarousel" role="button" data-slide-to="0">{{ pickSport }}</a> > <a
-                    href="/play/#myCarousel" role="button" data-slide-to="1">{{ pickTier }}</a> > <a
-                    href="/play/#myCarousel" role="button" data-slide-to="2">{{ pickTeams }}</a></h4>
+        <div class="col-md-6" style="text-align: center; padding-top: 22px;">
+            <h3><b><a href="/play/#myCarousel" role="button" data-slide-to="0">{{ pickSport }}</a></b>
+            <i style="padding-right: 10px; padding-left: 10px;" class="fa fa-chevron-right"></i>
+            <b><a href="/play/#myCarousel" role="button" data-slide-to="1">{{ pickTier }}</a></b>
+            <i style="padding-right: 10px; padding-left: 10px;" class="fa fa-chevron-right"></i>
+            <b><a href="/play/#myCarousel" role="button" data-slide-to="2">{{ pickTeams }}</a></b></h3>
         </div>
     </div>
 </div>
@@ -26,18 +28,19 @@
     </ol>
 
     <!-- Wrapper for slides -->
-    <div style="height: 500px;" class="carousel-inner" role="listbox">
+    <div style="height: 400px;" class="carousel-inner" role="listbox">
         <div class="item play-slide active">
             <div class="carousel-caption">
                 <div class="text-center" style="height: 300px; margin-top: 15px">
-
                     <div class="col-md-12">
-                        <div class="mui-panel" style="z-index: -100;padding-top: 10px; height: 400px;">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-lg btn-primary dropdown-toggle"
+                        <div class="mui-panel" style="height: 300px;">
+                            <div class="element">
+                            <div class="mui--text-button">Choose Your Sport</div>
+                            <hr>
+                            <div class="btn-group" style="float: none !important;">
+                                <button type="button" class="mui-btn mui-btn--large mui-btn--raised mui-btn--primary"
                                         data-toggle="dropdown"
-                                        aria-expanded="false">Pick
-                                    Sport
+                                        aria-expanded="false">Select Sport
                                     <span class="caret"></span></button>
                                 <ul class="dropdown-menu scrollable-menu" role="menu">
                                     <li class="dropdown-header text-center">My Sports</li>
@@ -51,6 +54,7 @@
                                     <!-- end ngRepeat: item in sports -->
                                 </ul>
                             </div>
+                            </div>
                         </div>
                     </div>
 
@@ -63,17 +67,14 @@
             <div class="carousel-caption">
                 <div class="row text-center" style="height: 300px; margin-top: 15px">
                     <div class="col-md-12">
-                        <div class="mui-panel" style="padding-top: 10px; height: 400px;">
-
-                            <a href="" type="button" ng-click="setTier('Novice')"><div class="col-md-12" style="height: 30%; border: 5px solid black; margin-top: 10px">
-                                    <h1 class="text-center" style="line-height: 60px">Novice</p>
-                            </div></a>
-                            <a href="" type="button" ng-click="setTier('Intermediate')"><div class="col-md-12" style="height: 30%; border: 5px solid black; margin-top: 10px">
-                                    <h1 class="text-center" style="line-height: 60px">Intermediate</p>
-                            </div></a>
-                            <a href="" type="button" ng-click="setTier('Expert')"><div class="col-md-12" style="height: 30%; border: 5px solid black; margin-top: 10px">
-                                    <h1 class="text-center" style="line-height: 60px">Expert</p>
-                            </div></a>
+                        <div class="mui-panel" style="height: 300px;">
+                        <div class="element">
+                            <div class="mui--text-button">Choose Your Difficulty</div>
+                            <hr>
+                             <button ng-click="setTier('Novice')" class="mui-btn mui-btn--large mui-btn--primary mui-btn--raised">Novice</button>
+                              <button ng-click="setTier('Intermediate')" class="mui-btn mui-btn--large mui-btn--primary mui-btn--raised">Intermediate</button>
+                               <button ng-click="setTier('Expert')" class="mui-btn mui-btn--large mui-btn--primary mui-btn--raised">Expert</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -85,13 +86,13 @@
             <div class="carousel-caption">
                 <div class="text-center" style="height: 300px; margin-top: 15px">
                     <div class="col-md-12">
-                        <div class="mui-panel" style="padding-top: 10px; height: 400px;">
-                            <a href="" type="button" ng-click="setTeams('1 VS 1')"><div class="col-md-12" style="height: 46%; border: 5px solid black; margin-top: 10px">
-                                    <h1 class="text-center" style="line-height: 100px">1 VS 1</p>
-                            </div></a>
-                            <a href="" type="button" data-toggle="modal" ng-click="loadTeams()" data-target="#teamModal"><div class="col-md-12" style="height: 46%; border: 5px solid black; margin-top: 10px">
-                                    <h1 class="text-center" style="line-height: 100px">TEAMS</p>
-                            </div></a>
+                        <div class="mui-panel" style="height: 300px;">
+                            <div class="element">
+                            <div class="mui--text-button">Choose Team Size</div>
+                            <hr>
+                              <button ng-click="setTeams('1 VS 1')" class="mui-btn mui-btn--large mui-btn--primary mui-btn--raised">Singles</button>
+                               <button ng-click="loadTeams()" class="mui-btn mui-btn--large mui-btn--primary mui-btn--raised">Teams</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -103,9 +104,13 @@
             <div class="carousel-caption">
                 <div class="text-center" style="height: 300px; margin-top: 15px">
                     <div class="col-md-12">
-                        <div class="mui-panel" style="padding-top: 10px; height: 400px;">
+                        <div class="mui-panel" style="height: 300px;">
 
-                            <button ng-click="play()" class="btn btn-success btn-lg" style="margin-top: 100px; height:200px; width: 300px;">Play!</button>
+                            <div class="element">
+                            <div class="mui--text-button">Confirm Your Match</div>
+                            <hr>
+                              <button ng-click="play()" class="mui-btn mui-btn--large mui-btn--primary mui-btn--raised">Play</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -136,12 +141,16 @@
                         <tbody>
                         <tr ng-repeat="item in matches_list">
                             <td><img src="{{item.picture}}" alt="..." height="40px" width="40px"></td>
-                            <td>{{item.first_name}} {{item.last_name}}</td>
                             <td>
-                                <a type="button" target="_blank" class="btn btn-default" ng-href="{{link}}">View Profile</a>
+                                <div class="mui--text-body2" style="margin-top: 10px; margin-left: 3px;">
+                                    {{item.first_name}} {{item.last_name}}
+                                </div>
                             </td>
                             <td>
-                                <button class="btn btn-default" ng-click="acceptChallenge(item)"> Challenge
+                                <a type="button" target="_blank" class="mui-btn mui-btn--raised mui-btn--small" ng-href="{{link}}">View Profile</a>
+                            </td>
+                            <td>
+                                <button class="mui-btn mui-btn--raised mui-btn--small" ng-click="acceptChallenge(item)"> Challenge
                                 </button>
                             </td>
                         </tr>

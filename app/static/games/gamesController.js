@@ -153,42 +153,63 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
 
     $scope.finishGame = function () {
         $http.get("api/match/" + $scope.modalObject.id)
+        .success(function (data) {
+            if ($rootScope.userObject.id == $scope.modalObject.player1_id) {
+                data.score_1 = $scope.your_score;
+                data.score_2 = $scope.opponent_score;
+                data.winner_id = $scope.modalObject.winner_id;
+            }
+            else {
+                data.score_2 = $scope.your_score;
+                data.score_1 = $scope.opponent_score;
+                data.winner_id = $scope.modalObject.winner_id;
+            }
+            data.complete = 1;
+            $http.put("api/match/" + data.id, data)
             .success(function (data) {
-                if ($rootScope.userObject.id == $scope.modalObject.player1_id) {
-                    data.score_1 = $scope.your_score;
-                    data.score_2 = $scope.opponent_score;
-                    data.winner_id = $scope.modalObject.winner_id;
+                console.log("Testing if we get into success.");
+                if (data.winner_id == $rootScope.userObject.id) {
+                    if (data.score_1 > data.score_2) {
+                        data.results = "WIN " + data.score_1 + "-" + data.score_2;
+                    }
+                    else {
+                        data.results = "WIN " + data.score_2 + "-" + data.score_1;
+                    }
                 }
                 else {
-                    data.score_2 = $scope.your_score;
-                    data.score_1 = $scope.opponent_score;
-                    data.winner_id = $scope.modalObject.winner_id;
+                    if (data.score_1 > data.score_2) {
+                        data.results = "LOSS " + data.score_1 + "-" + data.score_2;
+                    }
+                    else {
+                        data.results = "LOSS " + data.score_2 + "-" + data.score_1;
+                    }
                 }
-                data.complete = 1;
-                $http.put("api/match/" + data.id, data)
-                    .success(function (data) {
-                        console.log("Testing if we get into success.");
-                        if (data.winner_id == $rootScope.userObject.id) {
-                            if (data.score_1 > data.score_2) {
-                                data.results = "WIN " + data.score_1 + "-" + data.score_2;
-                            }
-                            else {
-                                data.results = "WIN " + data.score_2 + "-" + data.score_1;
-                            }
-                        }
-                        else {
-                            if (data.score_1 > data.score_2) {
-                                data.results = "LOSS " + data.score_1 + "-" + data.score_2;
-                            }
-                            else {
-                                data.results = "LOSS " + data.score_2 + "-" + data.score_1;
-                            }
-                        }
-                        $scope.gamesip.splice(data, 1);
-                        $scope.past_games.push(data);
-                        $scope.no_past_games = "";
-                    });
+                $scope.gamesip.splice(data, 1);
+                $scope.past_games.push(data);
+                $scope.no_past_games = "";
             });
+
+            if ($rootScope.userObject.id == $scope.modalObject.player1_id) {
+                $scope.opponent = $scope.modalObject.player2_id;
+            }
+            else {
+                $scope.opponent = $scope.modalObject.player1_id;
+            }
+
+            $http.get("api/sport/" + $scope.modalObject.sport_id)
+            .success(function(data){
+                $http.post("api/user_has_notification", {
+                    user_id: $scope.opponent,
+                    notification: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name + " has posted the results of your " + data.name + " game.",
+                    time: new Date(),
+                    link: "#/games",
+                    is_read: 0
+                })
+                .success(function(){
+                    console.log("Notification Sent");
+                })
+            })
+        });
     };
 
     $scope.accept = function (item) {
@@ -232,13 +253,30 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
     $scope.decline = function (item) {
         console.log(item);
         $http.get("api/match/" + item)
-            .success(function (data) {
-                console.log("Sup dude");
-                $scope.games_pending.splice(data, 1);
-            });
+        .success(function (data) {
+            console.log("Sup dude");
+            $scope.games_pending.splice(data, 1);
+            if(data.player1_id == $rootScope.userObject.id) {
+                $scope.opponent = data.player2_id;
+            }
+            else {
+                $scope.opponent = data.player1_id;
+            }
+        });
 
         $http.delete("api/match/" + item);
         console.log("Declined the challenge and removed match object from database.");
+
+        $http.post("api/user_has_notification", {
+            user_id: $scope.opponent,
+            notification: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name + " has declined your challenge.",
+            time: new Date(),
+            link: "#/games",
+            is_read: 0
+        })
+        .success(function(){
+            console.log("Notification Sent");
+        })
     };
 
 }]);

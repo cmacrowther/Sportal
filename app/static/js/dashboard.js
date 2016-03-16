@@ -1,13 +1,11 @@
 $(function () {
-    $('#hamburger').click(function () {
+    $('.mobile_link').click(/*function () {
         $('.navbar-nav').toggleClass('slide-in');
         $('.side-body').toggleClass('body-slide-in');
         $('#search').removeClass('in').addClass('collapse').slideUp(200);
 
         /// uncomment code for absolute positioning tweek see top comment in css
-        $('.absolute-wrapper').toggleClass('slide-in');
-
-    });
+        $('.absolute-wrapper').toggleClass('slide-in');*/)
     // Remove menu for searching
     $('#search-trigger').click(function () {
         $('.navbar-nav').removeClass('slide-in');
@@ -125,7 +123,7 @@ angular.module('dashboard.controllers')
         .success(function (data) {
             console.log(data);
             if(data == "no team notifications") {
-                $scope.is_team_notifications = false;
+                //nothing
             }
             else {
                 for(var i = 0; i < data.length; i++) {
@@ -134,7 +132,6 @@ angular.module('dashboard.controllers')
                         $scope.notification_counter++;
                     }
                 }
-                $scope.is_team_notifications = true;
             }
         });
 
@@ -148,7 +145,7 @@ angular.module('dashboard.controllers')
         .success(function (data) {
             console.log(data);
             if(data == "no user notifications") {
-                $scope.is_user_notifications = false;
+                //nothing
             }
             else {
                 for(var i = 0; i < data.length; i++) {
@@ -157,21 +154,8 @@ angular.module('dashboard.controllers')
                         $scope.notification_counter++;
                     }
                 }
-                $scope.is_user_notifications = true;
             }
         })
-
-
-        $scope.display_notifications = false;
-        $scope.display = function() {
-            if($scope.display_notifications == true) {
-                $scope.display_notifications = false;
-            }
-            else {
-                $scope.display_notifications = true;
-            }
-            
-        }
 
         //INITIAL POPULATION OF MESSAGE COUNTER
         var passObject = {user_id: JSON.parse($scope.userId)};
@@ -257,13 +241,25 @@ angular.module('dashboard.controllers')
         };
 
         $scope.is_read_set = function (item) {
-            console.log("Notification Read.");
-            item.is_read = 1;
-            if (item.team_id) {
-                $http.put("/api/team_has_notification/" + item.id, item);
+
+            if (item.is_read == 1) {
+                //already read, do nothing
+                console.log("Notification already read.");
             }
             else {
-                $http.put("/api/user_has_notification/" + item.id, item);
+                item.is_read = 1;
+                if (item.team_id) {
+                    $http.put("/api/team_has_notification/" + item.id, item);
+                }
+                else {
+                    $http.put("/api/user_has_notification/" + item.id, item);
+                }
+                console.log("Notification Read.");
+
+                //decrease the counter
+                if ($scope.notification_counter > 0) {
+                    $scope.notification_counter-=1;
+                }
             }
 
         }

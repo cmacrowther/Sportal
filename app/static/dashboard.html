@@ -6,17 +6,17 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon"/>
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
 
-     <!-- Angular jss-->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
-    <script src="https://js.pusher.com/3.0/pusher.min.js"></script>
+     <!-- Angular jss -->
+    <script src="components/angular/angular.js"></script>
+    <script src="components/angular/angular-route.js"></script>
+    <script src="components/angular/angular-animate.js"></script>
+    <script src="components/angular/angular-aria.min.js"></script>
+    <script src="components/angular/angular-messages.min.js"></script>
+    <script src="components/angular/pusher.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>     
 
     <!-- Jquery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="components/jQuery/jquery.min.js"></script>
 
     <!-- Bootstrap -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.0/ui-bootstrap-tpls.js"></script>
@@ -34,20 +34,19 @@
     <script src="js/loading-bar.min.js"></script>
 
     <!-- JS Plugin for Validation -->
-    <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.9.0/validator.js"></script>
-    <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.9.0/validator.min.js"></script>
-    <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
-    <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="components/validation/validator.min.js"></script>
+    <script src="components/validation/moment.js"></script>
+    <script src="components/validation/bootstrap-datetimepicker.min.js"></script>
 
     <!-- MUI -->
-    <link href="//cdn.muicss.com/mui-0.4.6/css/mui.min.css" rel="stylesheet" type="text/css" />
-    <script src="//cdn.muicss.com/mui-0.4.6/js/mui.min.js"></script>
+    <link href="components/mui/mui.min.css" rel="stylesheet" type="text/css"/>
+    <script src="components/mui/mui.min.js"></script>
 
     <!-- CSS -->
     <link type="text/css" href="css/dashboard.css" rel="stylesheet">
     <link type="text/css" href="css/loading-bar.min.css" rel="stylesheet">
 
-    <script src="https://cdn.rawgit.com/Luegg/angularjs-scroll-glue/master/src/scrollglue.js"></script>
+    <script src="components/angular/scrollglue.js"></script>
 
 </head>
 <body ng-controller="DashboardController">
@@ -73,6 +72,7 @@
     <div class="side-menu-container">
         <ul class="nav navbar-nav">
 
+            <li><a is-active-nav href="#/search"><span class="glyphicon glyphicon-search"></span> SEARCH</a></li>
             <li><a is-active-nav href="#/user_profile/{{ $root.userObject.id }}"><span class="glyphicon glyphicon-user"></span> PROFILE</a></li>
 
             <!-- Dropdown-->
@@ -109,10 +109,9 @@
                         </ul>
                     </div>
                 </div>
-            </li>-->
-            <li><a is-active-nav href="#/admin"><span class="glyphicon glyphicon-cog"></span> ADMIN</a></li>
+            </li>
+            <li><a is-active-nav href="#/admin"><span class="glyphicon glyphicon-cog"></span> ADMIN</a></li>-->
             <li><a is-active-nav href="#/messages"><span class="glyphicon glyphicon-envelope"></span> MESSAGING</a></li>
-            <li><a is-active-nav href="#/search"><span class="glyphicon glyphicon-search"></span> SEARCH</a></li>
 
 
 
@@ -144,11 +143,12 @@
 			    <div>
 			      <div>
 			        <ul>
-			            <li><a href="#/user_profile/{{ $root.userObject.id }}">PROFILE</a></li>
-			            <li><a href="#/play">PLAY</a></li>
-			            <li><a href="#/games">GAMES</a></li>
-			            <li><a href="#/admin">ADMIN</a></li>
-			            <li><a href="#/messages">MESSAGING</a></li>
+                        <li><a class="mobile_link" href="#/search">SEARCH</a></li>
+			            <li><a class="mobile_link" href="#/user_profile/{{ $root.userObject.id }}">PROFILE</a></li>
+			            <li><a class="mobile_link" href="#/play">PLAY</a></li>
+			            <li><a class="mobile_link" href="#/games">GAMES</a></li>
+			            <li><a class="mobile_link" href="#/admin">ADMIN</a></li>
+			            <li><a class="mobile_link" href="#/messages">MESSAGING</a></li>
         			</ul>
 			      </div>
 			    </div>
@@ -169,33 +169,33 @@
 				    <li role="separator" class="divider"></li>
 				    <li><a ng-click="logout()">Logout</a></li>
   				</ul>
-	        </div>  
+	        </div>
 
             <div id="notif" class="btn-group dropdown">
 	            <div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 	                <i class="fa fa-bell fa-lg"></i>
-	                <span class="label label-danger" ng-show="is_team_notifications || is_user_notifications">{{ notification_counter }}</span>
+	                <span class="label label-danger" ng-show="notification_counter>0">{{ notification_counter }}</span>
 	            </div>  
 	            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
-				    <li><a class="new-message" href="#"><i class="fa fa-exclamation"></i>New Notification</a></li>
-				    <li><a href="#">Notification Here</a></li>
-				    <li><a href="#">Notification Here</a></li>
+                    <li ng-repeat="item in notifications | filter:{is_read:'0'} | orderBy:'-time'"><a ng-click="is_read_set(item)" class="new-message" href="{{item.link}}"><i class="fa fa-exclamation"></i>{{item.notification}}</a></li>
+                    <li ng-show="notification_counter>0" role="separator" class="divider"></li>
+                    <li ng-repeat="item in notifications | filter:{is_read:'1'} | orderBy:'-time'"><a href="{{item.link}}">{{item.notification}}</a></li>
   				</ul>
-	        </div>    
+	        </div>
 
-	        <div id="chat" class="btn-group dropdown">
+	        <a href="#/messages"><div id="chat" class="btn-group dropdown">
 	           <div class="tool-butt" style="float: right; border-right: none; border-left: 1px solid #e7e7e7;" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 	                <i class="fa fa-comment fa-lg"></i>
 	                <span ng-show="message_counter>0" data-min="0" class="label label-danger">{{ message_counter }}</span>
 	            </div>
-	            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu3">
+	            <!--<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu3">
 				    <li><a class="new-message" href="#"><i class="fa fa-exclamation"></i>New Message</a></li>
 				    <li><a href="#">Message Here</a></li>
 				    <li><a href="#">Message Here</a></li>
 				    <li role="separator" class="divider"></li>
 				    <li><a href="#/messages">Go to Messages</a></li>
-  				</ul>
-	        </div>  
+  				</ul>-->
+	        </div></a>  
 
         </div>
     </div>
