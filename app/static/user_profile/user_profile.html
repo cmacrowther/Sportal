@@ -1,11 +1,6 @@
 <link href="css/user_profile.css" rel="stylesheet">
-<div ng-show="display_notifications" style="margin-top: 0px; height: 200px; width: 200px; border: 1px solid #000000"
-     class="pull-right">
-    <ul>
-        <li ng-repeat="item in notifications | orderBy: 'time'" ng-click="is_read_set(item)"><a href="{{item.link}}">{{
-            item.notification }}</a></li>
-    </ul>
-</div>
+
+<!-- Page Options -->
 <div class="row" style="height: 110px; background-color: white; border-bottom: 1px solid #e7e7e7;">
     <div class="row">
         <div class="col-md-6">
@@ -29,6 +24,8 @@
         </ul>
     </div>
 </div>
+
+<!-- View -->
 <div class="mui-tabs__pane mui--is-active" id="pane-default-1">
     <div class="col-md-12" style="padding-top: 95px; padding-left: 50px; padding-right: 50px;">
         <h5 style="color: #757E8D;"><b>INFORMATION</b></h5>
@@ -248,6 +245,8 @@
         </div>
     </div>
 </div>
+
+<!-- Change Password View -->
 <div class="mui-tabs__pane" id="pane-default-2">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">

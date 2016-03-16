@@ -1,10 +1,10 @@
 angular.module('dashboard.controllers').controller('searchController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
 
+    //Declaring Variables
     $scope.no_users = "No Matching Users";
     $scope.no_teams = "No Matching Teams";
 
-
-	//function for searching database
+	//Function for searching database
 	$scope.search = function() {
 
 		var passObject = {searchTerm: $scope.searchTerm};
@@ -46,6 +46,7 @@ angular.module('dashboard.controllers').controller('searchController', ['$scope'
         })
 	}
 
+    //Used for displaying the name of the Team's Sport
     $scope.getSport = function(item){
         
         $http.get("/api/sport/" + item.sport_id)
@@ -54,14 +55,4 @@ angular.module('dashboard.controllers').controller('searchController', ['$scope'
         })
 
     }
-
-    /*$scope.getCreator = function(item) {
-
-        $http.get("/api/user/" + item.creator)
-        .success(function(data){
-            item.creator = data.first_name + " " + data.last_name;
-        })
-    }*/
-
-
 }]);

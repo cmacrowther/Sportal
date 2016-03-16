@@ -183,23 +183,9 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                     })
             })
 
-        $http.post("/api/team_has_notification", {
-                team_id: $scope.teamObject.id,
-                notification: "There has been a change to " + $scope.teamObject.url + "'s team profile page.",
-                time: new Date(),
-                link: "#/team_profile/" + $scope.teamObject.team_name,
-                is_read: 0
-            })
-            .success(function (data) {
-                console.log("Notification Sent.");
-                $rootScope.notifications.push(data);
-            })
-
         if ($scope.teamObject.name != $scope.team_name) {
             $scope.change_windows = true;
         }
-
-        console.log("NEW LOCATION:" + $scope.location);
 
         $scope.teamObject.name = $scope.team_name;
         $scope.teamObject.url = $scope.team_name;
@@ -208,13 +194,26 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         $scope.teamObject.picture = $scope.picture;
         $scope.teamObject.location = $scope.location;
 
-        $http.put("api/team/" + $scope.teamObject.id, $scope.teamObject);
-        $rootScope.teams.splice($rootScope.teams.indexOf($scope.teamObject), 1, $scope.teamObject);
+        $http.put("api/team/" + $scope.teamObject.id, $scope.teamObject)
+        .success(function(data){
+            $rootScope.teams.splice($rootScope.teams.indexOf($scope.teamObject), 1, $scope.teamObject);
+
+            $http.post("/api/team_has_notification", {
+                team_id: $scope.teamObject.id,
+                notification: "There has been a change to " + $scope.teamObject.url + "'s team profile page.",
+                time: new Date(),
+                link: "#/team_profile/" + $scope.teamObject.url,
+                is_read: 0
+            })
+            .success(function (data) {
+                console.log("Notification Sent.");
+            })
+        })
+        
         
         if($scope.change_windows) {
            window.location.assign("#/team_profile/" + $scope.teamObject.name); 
         }
-        
     };
 
     //Updates team sport from dropdown

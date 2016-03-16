@@ -3,13 +3,12 @@
  */
 angular.module('dashboard.controllers').controller('playController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
 
-    var passObject = {user_id: $rootScope.userObject.id};
-
+    //Declaring Variables
     $rootScope.page_name = "Play";
     $scope.pickSport = "Sport";
     $scope.pickTier = "Difficulty";
     $scope.pickTeams = "Team";
-
+    var passObject = {user_id: $rootScope.userObject.id};
 
     //Gets the sports the user has set in there profile as "favourites"
     $http({
@@ -18,12 +17,20 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
         headers: {'Content-Type': 'application/json'},
         data: JSON.stringify(passObject)
     })
-        .success(function (data) {
-            console.log(data);
+    .success(function (data) {
+        console.log(data);
 
-            $scope.mySports = data;
-        });
+        $scope.mySports = data;
+    });
 
+    //Gets all the sports in the database created by the Admin
+    $http.get("/api/sport")
+    .success(function (data) {
+        console.log(data);
+        $scope.sports = data.objects;
+    });
+
+    //loads teams for the option of playing with a team you direct
     $scope.loadTeams = function () {
 
         var passObject = {user_id: $rootScope.userObject.id};
@@ -43,13 +50,6 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
                 }
             })
     }
-
-    //Gets all the sports in the database created by the Admin
-    $http.get("/api/sport")
-        .success(function (data) {
-            console.log(data);
-            $scope.sports = data.objects;
-        });
 
     //Sets the sport the user wishes to find opponents for
     $scope.setSport = function (item) {
@@ -74,8 +74,9 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
         $scope.pickTeams = item.name;
         $scope.link = "#/team_profile/" + item.name;
     };
+    
     //Finds matches similar to games you wish to play
-    //No matches will throw you into a queue to wait for a possible match
+    //No matches? will throw you into a queue to wait for a possible match
     $scope.play = function () {
         $scope.playResult = "Searching...";
 
@@ -167,7 +168,8 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
 
         $('#playModal').modal('hide');
 
-        $http.get("api/queue/" + item.queue_id).success(function (data) {
+        $http.get("api/queue/" + item.queue_id)
+        .success(function (data) {
             console.log(data);
             $scope.matches_list.splice(data, 1);
 
@@ -196,6 +198,17 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
                     console.log("Created Match object. Sending opponent email for this request. deleting person from queue");
                     $http.delete("api/queue/" + item.queue_id);
 
+                    $http.post("api/user_has_notification", {
+                        user_id: data.player2_id,
+                        notification: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name + " has challenged you.",
+                        time: new Date(),
+                        link: "#/games",
+                        is_read: 0
+                    })
+                    .success(function(){
+                        console.log("Notification Sent");
+                    })
+
                     window.location.assign("#/games");
                 });
         });
@@ -214,5 +227,4 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
     };
 
 
-}
-]);
+}]);
