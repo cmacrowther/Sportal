@@ -58,3 +58,8 @@ h2 {
 .carousel-caption {
     z-index: 0;
 }
+
+.mui-btn {
+    margin-top: none !important;
+    margin-bottom: none !important;
+}

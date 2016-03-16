@@ -141,12 +141,16 @@
                         <tbody>
                         <tr ng-repeat="item in matches_list">
                             <td><img src="{{item.picture}}" alt="..." height="40px" width="40px"></td>
-                            <td>{{item.first_name}} {{item.last_name}}</td>
                             <td>
-                                <a type="button" target="_blank" class="btn btn-default" ng-href="{{link}}">View Profile</a>
+                                <div class="mui--text-body2" style="margin-top: 10px; margin-left: 3px;">
+                                    {{item.first_name}} {{item.last_name}}
+                                </div>
                             </td>
                             <td>
-                                <button class="btn btn-default" ng-click="acceptChallenge(item)"> Challenge
+                                <a type="button" target="_blank" class="mui-btn mui-btn--raised mui-btn--small" ng-href="{{link}}">View Profile</a>
+                            </td>
+                            <td>
+                                <button class="mui-btn mui-btn--raised mui-btn--small" ng-click="acceptChallenge(item)"> Challenge
                                 </button>
                             </td>
                         </tr>
