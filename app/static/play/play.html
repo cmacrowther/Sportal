@@ -42,8 +42,8 @@
                                 <ul class="dropdown-menu scrollable-menu" role="menu">
                                     <li class="dropdown-header text-center">My Sports</li>
                                     <!-- ngRepeat: item in mySports -->
-                                    <li ng-repeat="item in mySports" ng-click="setSport(item)"><a href="">{{ item.name }}</a>
-                                    </li>
+                                    <li ng-repeat="item in mySports" ng-click="setSport(item)"><a>{{ item.name }}</a></li>
+
                                     <li class="dropdown-header text-center">All Sports</li>
                                     <!-- ngRepeat: item in sports -->
                                     <li ng-repeat="item in sports" ng-click="setSport(item)"><a href="">{{ item.name }}</a>
@@ -138,8 +138,7 @@
                             <td><img src="{{item.picture}}" alt="..." height="40px" width="40px"></td>
                             <td>{{item.first_name}} {{item.last_name}}</td>
                             <td>
-                                <a type="button" target="_blank" class="btn btn-default" href="#/user_profile/{{item.id}}">
-                                    View Profile</a>
+                                <a type="button" target="_blank" class="btn btn-default" ng-href="{{link}}">View Profile</a>
                             </td>
                             <td>
                                 <button class="btn btn-default" ng-click="acceptChallenge(item)"> Challenge
@@ -170,7 +169,7 @@
                             <td><img src="{{item.picture}}" alt="..." height="40px" width="40px"></td>
                             <td>{{item.name}}</td>
                             <td>
-                                <button class="btn btn-default" ng-click="setTeams(item)" data-dismiss="modal"> Select
+                                <button class="btn btn-default" ng-click="setTeamObject(item)" data-dismiss="modal"> Select
                                 </button>
                             </td>
                         </tr>

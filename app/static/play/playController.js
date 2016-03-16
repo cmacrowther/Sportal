@@ -18,11 +18,11 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
         headers: {'Content-Type': 'application/json'},
         data: JSON.stringify(passObject)
     })
-    .success(function (data) {
-        console.log(data);
+        .success(function (data) {
+            console.log(data);
 
-        $scope.mySports = data;
-    });
+            $scope.mySports = data;
+        });
 
     $scope.loadTeams = function () {
 
@@ -34,14 +34,14 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
             headers: {'Content-Type': 'application/json'},
             data: JSON.stringify(passObject)
         })
-        .success(function(data){
-            if (data == "no teams") {
-                alert("You are not an admin of any teams.  You must be the admin of a team in order to schedule games for your team.");
-            }
-            else {
-                $scope.admin_teams = data;
-            }
-        })
+            .success(function (data) {
+                if (data == "no teams") {
+                    alert("You are not an admin of any teams.  You must be the admin of a team in order to schedule games for your team.");
+                }
+                else {
+                    $scope.admin_teams = data;
+                }
+            })
     }
 
     //Gets all the sports in the database created by the Admin
@@ -65,14 +65,21 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
     //Sets 1vs1, 2vs2, 3vs3, etc
     $scope.setTeams = function (item) {
         $scope.pickTeams = item;
+        $scope.is_team = 0;
+        $scope.link = "#/user_profile/{{item.id}}";
     };
-
+    $scope.setTeamObject = function (item) {
+        $scope.pickTeamObject = item;
+        $scope.is_team = 1;
+        $scope.pickTeams = item.name;
+        $scope.link = "#/team_profile/" + item.name;
+    };
     //Finds matches similar to games you wish to play
     //No matches will throw you into a queue to wait for a possible match
     $scope.play = function () {
         $scope.playResult = "Searching...";
 
-        if($scope.sport && $scope.pickTier && $scope.pickTeams) {
+        if ($scope.sport && $scope.pickTier && $scope.pickTeams) {
 
             $scope.matchObject = {
                 user: $rootScope.userObject,
@@ -80,20 +87,32 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
                 difficulty: $scope.pickTier,
                 team: $scope.pickTeams
             };
+            if ($scope.is_team) {
 
-            var passObject = {
-                user_id: $rootScope.userObject.id,
-                sport_id: $scope.sport.id,
-                difficulty: $scope.pickTier,
-                team: $scope.pickTeams
-            };
+                var passObject = {
+                    user_id: $scope.pickTeamObject.id,
+                    sport_id: $scope.sport.id,
+                    difficulty: $scope.pickTier,
+                    team: $scope.pickTeams
+                }
+            }
+            else {
+
+                var passObject = {
+                    user_id: $rootScope.userObject.id,
+                    sport_id: $scope.sport.id,
+                    difficulty: $scope.pickTier,
+                    team: $scope.pickTeams
+                };
+            }
+
 
             console.log("Finding an opponent...");
             console.log(passObject);
 
             $http({
                 method: 'POST',
-                url: 'api/single_matchmaking',
+                url: 'api/matchmaking',
                 headers: {'Content-Type': 'application/json'},
                 data: JSON.stringify(passObject)
             }).success(function (data) {
@@ -101,11 +120,8 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
                 if (data == "no match") {
                     if ($scope.pickTeams == "1 VS 1") {
                         $scope.is_team = 0;
-                    }
-                    else {
-                        $scope.is_team = 1;
-                    }
-                    $http.post("api/queue", {
+
+                        $http.post("api/queue", {
                             sport_id: $scope.sport.id,
                             user_id: $rootScope.userObject.id,
                             is_team: $scope.is_team,
@@ -116,6 +132,22 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
                             console.log("Queued for match");
                             alert("No Current Matches, you have been queued.");
                         })
+                    }
+                    else {
+                        $scope.is_team = 1;
+
+                         $http.post("api/queue", {
+                            sport_id: $scope.sport.id,
+                            user_id: $scope.pickTeamObject.id,
+                            is_team: $scope.is_team,
+                            members: $scope.pickTeams,
+                            difficulty: $scope.pickTier
+                        })
+                        .success(function (data) {
+                            console.log("Queued for match");
+                            alert("No Current Matches, your team has been queued.");
+                        })
+                    }
                 }
                 else {
                     $scope.matches_list = data;
@@ -126,7 +158,8 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
         else {
             alert("You must fill out all fields.");
         }
-    };
+    }
+    ;
 
     //Ran when accept challenge button is clicked in the list of possible matches for the user
     //Creates a match object in the database and throws the user to the games page
@@ -181,4 +214,5 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
     };
 
 
-}]);
+}
+]);
