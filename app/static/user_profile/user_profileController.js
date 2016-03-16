@@ -48,7 +48,7 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
             }
 
             //Setting Page Name
-            $rootScope.page_name = $rootScope.profileObject.first_name + " " + $rootScope.profileObject.last_name;
+            $rootScope.page_name = $scope.profileObject.first_name + " " + $scope.profileObject.last_name;
 
             //continuing variable checks
             if ($scope.profileObject.description == "" || $scope.profileObject.description == undefined) {
