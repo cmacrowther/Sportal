@@ -13,8 +13,7 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
     $scope.no_games_pending = "No Games Pending";
     $rootScope.page_name = "Games";
 
-
-    //code here
+    //Populate Pending Matches, Current Matches and Past Games lists
     $http({
         method: 'POST',
         url: 'api/get_user_games',
@@ -64,17 +63,16 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
             }
         });
 
+    //Grabs a sports name using their ID
     $scope.getSport = function (item) {
-
         $http.get("/api/sport/" + item.sport_id)
             .success(function (data) {
                 item.sport_name = data.name;
             })
-
     };
 
+    //Grabs a users name to insert into the opponent column
     $scope.getUser = function (item) {
-
         var opponent_id = 0;
         if (item.player1_id == $rootScope.userObject.id) {
             opponent_id = item.player2_id;
@@ -88,12 +86,10 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
             })
     };
 
+    //Sends the opponent an email
     $scope.sendOpponentEmail = function (item) {
-
         $http.get("/api/user/" + item.player1_id)
             .success(function (data) {
-                console.log("got the email: " + data.email);
-
                 $http.post("api/send_mail_accepted", {
                         user: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name,
                         email: data.email
@@ -101,7 +97,6 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
                     .success(function (data) {
                         console.log("Sent email to user.");
                     });
-
             })
     };
 
@@ -122,16 +117,11 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
         });
 
     $scope.updateInfo = function () {
-
-        console.log("Updating Info.");
-
         $http.get("api/match/" + $scope.modalObject.id)
             .success(function (data) {
-
                 data.facility_id = $scope.facility;
                 data.date = $scope.modalObject.date;
                 data.time = $scope.modalObject.time;
-
                 $http.put("api/match/" + data.id, data);
             })
     };
@@ -225,9 +215,6 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
                 data.complete = 0;
                 $http.put("api/match/" + data.id, data)
                     .success(function (data) {
-                        console.log("Whoop whoop whooppppppppppp");
-                        console.log(data);
-
                         $scope.games_pending.splice(data, 1);
                         $scope.gamesip.push(data);
                         $scope.no_games_ip = "";
@@ -242,19 +229,14 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
                             .success(function () {
                                 console.log("Notification Sent");
                             });
-
-                        console.log("Accepted the challenge.");
-
                     })
             });
-
     };
 
     $scope.decline = function (item) {
         console.log(item);
         $http.get("api/match/" + item)
         .success(function (data) {
-            console.log("Sup dude");
             $scope.games_pending.splice(data, 1);
             if(data.player1_id == $rootScope.userObject.id) {
                 $scope.opponent = data.player2_id;
@@ -263,10 +245,7 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
                 $scope.opponent = data.player1_id;
             }
         });
-
         $http.delete("api/match/" + item);
-        console.log("Declined the challenge and removed match object from database.");
-
         $http.post("api/user_has_notification", {
             user_id: $scope.opponent,
             notification: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name + " has declined your challenge.",
@@ -278,5 +257,4 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
             console.log("Notification Sent");
         })
     };
-
 }]);
