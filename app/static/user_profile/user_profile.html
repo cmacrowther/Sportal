@@ -7,7 +7,9 @@
             <div style="display: inline;">
                 <h2 style="padding-left: 15px; float: left;">{{first_name}} {{last_name}} ...</h2>
 
-                <p style="padding-left: 10px; margin-top: 28px; float: left;"><i class="fa fa-map-marker" style="color: red;"></i> {{ location }}</p>
+                <p style="padding-left: 10px; margin-top: 28px; float: left;"><i class="fa fa-map-marker"
+                                                                                 style="color: red;"></i> {{ location }}
+                </p>
             </div>
         </div>
         <div class="col-md-6" style="margin-top: 20px; padding-right: 20px;">
@@ -101,22 +103,21 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="birth" class="col-sm-2 control-label-fix">Age</label>
+                                <label class="col-sm-2 control-label-fix">Age</label>
 
                                 <div class='date col-sm-9'>
                                     <div class="input-group">
-                                        <input ng-show="edit" ng-model="age" ng-blur="updateInfo()" type="text" class="form-control" name="Age"><!--<span ng-show="edit"
-                                                                                                  class="input-group-addon">-->
-                                       <!--<span ng-show="edit" class="glyphicon glyphicon-calendar"></span>
-                                        </span>-->
+                                        <input ng-show="edit" ng-model="age" ng-blur="updateInfo()" type="text"
+                                               class="form-control" name="Age">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="location" class="col-sm-2 control-label-fix">Location</label>
+                                <label class="col-sm-2 control-label-fix">Location</label>
 
                                 <div class="col-sm-9">
-                                    <select  ng-show="edit" ng-blur="updateInfo()" ng-model="location" name="language" class="form-control">
+                                    <select ng-show="edit" ng-blur="updateInfo()" ng-model="location" name="language"
+                                            class="form-control">
                                         <option value=""></option>
                                         <option value="Charlottetown, PE">Charlottetown, PE</option>
                                         <option value="Summerside, PE">Summerside, PE</option>
@@ -129,8 +130,8 @@
 
                                 <div class='date col-sm-9'>
                                     <div class="input-group">
-                                        <textarea ng-show="edit" ng-model="description" ng-blur="updateInfo()" type='text' class="form-control" name="about" id="about"></textarea>
-
+                                        <textarea ng-show="edit" ng-model="description" ng-blur="updateInfo()"
+                                                  type='text' class="form-control" name="about" id="about"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -139,8 +140,7 @@
                             <input type="hidden" class="form-control" name="latitude">
 
                             <div class="form-group">
-                                <label for="interests" class="col-sm-2 control-label-fix">Sports Interest</label>
-
+                                <label class="col-sm-2 control-label-fix">Sports Interest</label>
                                 <div class="col-sm-8">
                                     <div class="row" ng-show="editable">
                                         <div class="col-md-6">
@@ -280,299 +280,6 @@
 
             <button type="button" ng-click="changePassword()" class="btn btn-success">Change Password</button>
             <strong>{{password_message}}</strong>
-        </div>
-    </div>
-</div>
-
-
-<!--<div style="text-align: center; padding-bottom: 20px;">-->
-<!--<h1>{{first_name}} {{last_name}}</h1>-->
-<!--<img src="{{picture}}" alt="..." class="img-rounded" height="150px" width="150px">-->
-<!--<br>-->
-<!--<br>-->
-<!--<div ng-show="editable">-->
-<!--<button ng-hide="edit" class="btn btn-default" ng-click="editPage()"><span class="glyphicon glyphicon-wrench"-->
-<!--aria-hidden="true"></span> Edit Info-->
-<!--</button>-->
-<!--<button ng-show="edit" class="btn btn-danger" ng-click="editPage()"><span class="glyphicon glyphicon-wrench"-->
-<!--aria-hidden="true"></span> Stop-->
-<!--Editing-->
-<!--</button>-->
-<!--<button class="btn btn-default" data-toggle="modal" data-target="#myModal"><span-->
-<!--class="glyphicon glyphicon-wrench"-->
-<!--aria-hidden="true"></span> Change-->
-<!--Password-->
-<!--</button>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="row">-->
-<!--<div class="col-md-12">-->
-<!--<form data-toggle="validator" role="form" class="form-horizontal" id="user_creation_form">-->
-<!--<div class="form-group">-->
-<!--<label for="first_name" class="col-sm-2 control-label-fix">First Name</label>-->
-<!--<div class="col-sm-8">-->
-<!--<input ng-show="edit" ng-model="first_name" ng-blur="updateInfo()" type="text" id="first_name"-->
-<!--class="form-control" name="first_name"-->
-<!--placeholder="Jane">-->
-<!--<strong ng-hide="edit">{{ first_name }}</strong>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="form-group">-->
-<!--<label for="last_name" class="col-sm-2 control-label-fix">Last Name</label>-->
-<!--<div class="col-sm-8">-->
-<!--<input ng-show="edit" ng-model="last_name" ng-blur="updateInfo()" type="text" id="last_name"-->
-<!--class="form-control" name="last_name"-->
-<!--placeholder="Doe">-->
-<!--<strong ng-hide="edit">{{ last_name }}</strong>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="form-group">-->
-<!--<label for="email" class="col-sm-2 control-label-fix">Email</label>-->
-<!--<div class="col-sm-8">-->
-<!--<input ng-show="edit" ng-model="email" ng-blur="updateInfo()" type="email" id="email"-->
-<!--class="form-control" name="email"-->
-<!--placeholder="Example@example.com"-->
-<!--data-error="That address is invalid">-->
-<!--<strong ng-hide="edit">{{ email }}</strong>-->
-<!--<div class="help-block with-errors"></div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="form-group">-->
-<!--<label for="picture" class="col-sm-2 control-label-fix">Profile Picture</label>-->
-<!--<div class="col-sm-8">-->
-<!--<input ng-show="edit" ng-model="picture" ng-blur="updateInfo()" type="text" id="picture"-->
-<!--class="form-control" name="picture"-->
-<!--placeholder="URL link to picture">-->
-<!--<div class="limit-text-length">-->
-<!--<strong ng-hide="edit">{{ picture }}</strong>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="form-group">-->
-<!--<label for="birth" class="col-sm-2 control-label-fix">Birth</label>-->
-<!--<div class='date col-sm-8'>-->
-<!--<div class="input-group">-->
-<!--<input ng-show="edit" ng-model="birth" ng-blur="updateInfo()" type='text' id='birth'-->
-<!--class="form-control" name="Birth">-->
-<!--<span ng-show="edit" class="input-group-addon">-->
-<!--<span ng-show="edit" class="glyphicon glyphicon-calendar"></span>-->
-<!--</span>-->
-<!--<strong ng-hide="edit">{{ birth }}</strong>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="form-group">-->
-<!--<label for="address" class="col-sm-2 control-label-fix">Address One</label>-->
-<!--<div class="col-sm-8">-->
-<!--<input ng-show="edit" ng-model="address" ng-blur="updateInfo()" type="text" id="address"-->
-<!--class="form-control" name="address"-->
-<!--placeholder="812 Hwy 1.">-->
-<!--<strong ng-hide="edit">{{ address }}</strong>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="form-group">-->
-<!--<label for="addressLine2" class="col-sm-2 control-label-fix">Address Two</label>-->
-<!--<div class="col-sm-8">-->
-<!--<input ng-show="edit" ng-model="address2" ng-blur="updateInfo()" type="text" id="addressLine2"-->
-<!--class="form-control" name="addressLine2"-->
-<!--placeholder="RR 1">-->
-<!--<strong ng-hide="edit">{{ address2 }}</strong>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="form-group">-->
-<!--<label for="city" class="col-sm-2 control-label-fix">City</label>-->
-<!--<div class="col-sm-8">-->
-<!--<input ng-show="edit" ng-model="city" ng-blur="updateInfo()" type="text" id="city"-->
-<!--class="form-control" name="city"-->
-<!--placeholder="Annapolis Royal">-->
-<!--<strong ng-hide="edit">{{ city }}</strong>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="form-group">-->
-<!--<label for="postal_code" class="col-sm-2 control-label-fix">Postal Code</label>-->
-<!--<div class="col-sm-8">-->
-<!--<input ng-show="edit" ng-model="postal_code" ng-blur="updateInfo()" type="text" id="postal_code"-->
-<!--class="form-control" name="postal_code"-->
-<!--placeholder="B0V 1A0">-->
-<!--<strong ng-hide="edit">{{ postal_code }}</strong>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="form-group">-->
-<!--<label for="province" class="col-sm-2 control-label-fix">Province</label>-->
-<!--<div class="col-sm-8">-->
-<!--<select ng-show="edit" ng-model="province" ng-blur="updateInfo()" name="province" id="province"-->
-<!--class="form-control">-->
-<!--<option value="ns">NS</option>-->
-<!--<option value="nb">NB</option>-->
-<!--<option value="pe">PE</option>-->
-<!--<option value="nl">NL</option>-->
-<!--<option value="qc">QC</option>-->
-<!--<option value="on">ON</option>-->
-<!--<option value="mn">MN</option>-->
-<!--<option value="sk">SK</option>-->
-<!--<option value="ab">AB</option>-->
-<!--<option value="bc">BC</option>-->
-<!--<option value="nwt">NT</option>-->
-<!--<option value="yk">YK</option>-->
-<!--<option value="nu">NU</option>-->
-<!--</select>-->
-<!--<strong ng-hide="edit">{{ province }}</strong>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="form-group">-->
-<!--<label for="country" class="col-sm-2 control-label-fix">Country</label>-->
-<!--<div class="col-sm-8">-->
-<!--<select ng-show="edit" ng-model="country" ng-blur="updateInfo()" name="country" id="country"-->
-<!--class="form-control">-->
-<!--<option value="CA">Canada</option>-->
-<!--</select>-->
-<!--<strong ng-hide="edit">{{ country }}</strong>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="form-group">-->
-<!--<label for="gender" class="col-sm-2 control-label-fix">Gender</label>-->
-<!--<div class="col-sm-8">-->
-<!--<label ng-show="edit" class="radio-inline">-->
-<!--<input ng-show="edit" ng-model="gender" ng-blur="updateInfo()" type="radio" id="gender"-->
-<!--name="gender" value="male" checked="checked">-->
-<!--Male-->
-<!--</label>-->
-<!--<br/>-->
-<!--<label ng-show="edit" class="radio-inline">-->
-<!--<input ng-show="edit" type="radio" name="gender" value="female"> Female-->
-<!--</label>-->
-<!--<strong ng-hide="edit">{{ gender }}</strong>-->
-<!--</div>-->
-<!--</div>-->
-<!--&lt;!&ndash; The Following two forms are hidden, they contain longitude and latitude values that are needed &ndash;&gt;-->
-<!--<input type="hidden" class="form-control" name="longitude">-->
-<!--<input type="hidden" class="form-control" name="latitude">-->
-<!--<div class="form-group">-->
-<!--<label for="interests" class="col-sm-2 control-label-fix">Interests</label>-->
-<!--<div class="col-sm-8">-->
-<!--<select ng-show="edit" ng-model="interests" ng-blur="updateInfo()" id="interests" name="tags"-->
-<!--class="form-control tagSelectBox"></select>-->
-<!--<strong ng-hide="edit">{{ interests }}</strong>-->
-<!--</div>-->
-<!--</div>-->
-<!--</form>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="row" ng-show="editable">-->
-<!--<div class="col-md-6">-->
-<!--<h3 class="text-center">All Sports</h3>-->
-<!--<hr>-->
-<!--<div>-->
-<!--<input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" ng-model="searchTerm"/>-->
-<!--</div>-->
-<!--<br>-->
-<!--<table class="table table-striped">-->
-<!--<thead>-->
-<!--</thead>-->
-<!--<tbody>-->
-<!--<tr ng-repeat="item in allSports | filter:searchTerm | orderBy: '-name'">-->
-<!--<td>{{ item.name }}</td>-->
-<!--<td>-->
-<!--<button class="btn btn-primary" ng-click="addSport(item)" style="float: right">Add</button>-->
-<!--</td>-->
-<!--</tr>-->
-<!--</tbody>-->
-<!--</table>-->
-<!--</div>-->
-<!--<div class="col-md-6">-->
-<!--<h3 class="text-center">My Sports</h3>-->
-<!--<hr>-->
-<!--<table class="table table-striped">-->
-<!--<thead>-->
-<!--</thead>-->
-<!--<tbody>-->
-<!--<tr ng-repeat="item in mySports | orderBy:'-name'">-->
-<!--<td>{{ item.name }}</td>-->
-<!--<td>-->
-<!--&lt;!&ndash; ######### FIX ########### &ndash;&gt;-->
-<!--<div class="text-center">-->
-<!--<button type="button" class="btn btn-primary btn-md" data-toggle="modal"-->
-<!--ng-click="setSportModal(item)" data-target="#{{item.id}}myModal">Set Difficulty-->
-<!--</button>-->
-<!--<div id="{{item.id}}myModal" class="modal fade" role="dialog">-->
-<!--<div class="modal-dialog">-->
-<!--&lt;!&ndash; Modal content&ndash;&gt;-->
-<!--<div class="modal-content">-->
-<!--<div class="modal-header">-->
-<!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-<!--<h4 class="modal-title">Set Difficulty</h4>-->
-<!--</div>-->
-<!--<div class="modal-body">-->
-<!--<p>{{ item.name }}</p>-->
-<!--<button type="button" class="btn btn-primary btn-md"-->
-<!--ng-click="setDifficulty('Novice'); item.skill = 'Novice'">Novice-->
-<!--</button>-->
-<!--<button type="button" class="btn btn-primary btn-md"-->
-<!--ng-click="setDifficulty('Intermediate'); item.skill = 'Intermediate'">-->
-<!--Intermediate-->
-<!--</button>-->
-<!--<button type="button" class="btn btn-primary btn-md"-->
-<!--ng-click="setDifficulty('Expert'); item.skill = 'Expert'">Expert-->
-<!--</button>-->
-<!--<br><br>-->
-<!--<p>Current Skill Level: {{ item.skill }}</p>-->
-<!--</div>-->
-<!--<div class="modal-footer">-->
-<!--<button type="button" class="btn btn-default" data-dismiss="modal">Close-->
-<!--</button>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</td>-->
-<!--<td>{{ item.skill }}</td>-->
-<!--<td>-->
-<!--<button class="btn btn-danger" ng-click="deleteSport(item)" style="float: right">Delete</button>-->
-<!--</td>-->
-<!--</tr>-->
-<!--</tbody>-->
-<!--</table>-->
-<!--</div>-->
-
-<!--</div>-->
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Change Password</h4>
-            </div>
-            <div class="modal-body">
-                <form id="changePassword">
-                    <div class="form-group">
-                        <input type="password" ng-model="passwordCurrent" name="password" id="passwordCurrent"
-                               class="form-control input-sm" placeholder="Current Password" data-minlength="8" required>
-
-                        <div class="help-block with-errors"></div>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" ng-model="passwordNew" name="password" id="passwordNew"
-                               class="form-control input-sm" placeholder="New Password" data-minlength="8" required>
-
-                        <div class="help-block with-errors"></div>
-                    </div>
-                    <div class="form-group">
-                        <input type="password" ng-model="passwordConfirm" name="password" id="passwordConfirm"
-                               class="form-control input-sm" placeholder="Confirm Password" data-match="#passwordNew"
-                               data-minlength="8" required>
-
-                        <div class="help-block with-errors"></div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <p class="pull-left">{{password_message}}</p>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" ng-click="changePassword()" class="btn btn-primary">Save changes</button>
-            </div>
         </div>
     </div>
 </div>

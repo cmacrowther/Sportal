@@ -23,8 +23,6 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
         .success(function (data) {
             $scope.profileObject = data;
 
-            console.log($scope.profileObject.first_name);
-
             if ($rootScope.userObject.id == $scope.profileObject.id) {
                 $scope.editable = true;
             }
@@ -96,7 +94,6 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
 
     //Updates core info based on inputs with ng-blur
     $scope.updateInfo = function () {
-        console.log("Updating Info.");
         $scope.profileObject.first_name = $scope.first_name;
         $scope.profileObject.last_name = $scope.last_name;
         $scope.profileObject.email = $scope.email;
@@ -107,8 +104,6 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
         $http.put("api/user/" + $scope.profileObject.id, $scope.profileObject);
     };
 
-
-    //todo fix this function. Currently will always say current password incorrect
     //Changes password
     $scope.changePassword = function () {
         if ($scope.profileObject.password == $scope.passwordCurrent) {
@@ -123,7 +118,6 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
             $timeout(function () {
                 $scope.password_message = null;
             }, 3000);
-
         }
         else {
             console.log("Incorrect Password.");
@@ -138,7 +132,6 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
 
     //sets the difficulty when adding sports ############## FIX THIS ################
     $scope.setDifficulty = function (skill) {
-        console.log("Change skill: " + skill);
         passObject = {user_id: $rootScope.userObject.id, sport_id: $scope.sportModal.id};
         $http({
             method: 'POST',
@@ -151,10 +144,8 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
                     data.skill = skill;
                     $http.put("/api/user_has_sport/" + data.id, data)
                         .success(function (item) {
-                            console.log("Skill Level Updated");
                         })
                 });
-            console.log('data.id' + data + "skill: " + skill);
         })
     };
 
@@ -166,21 +157,17 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
         headers: {'Content-Type': 'application/json'},
         data: JSON.stringify(passObject)
     }).success(function (data) {
-        console.log(data);
-
         if (data == "no sports") {
             $scope.mySports = [];
         }
         else {
             $scope.mySports = data;
         }
-
     });
 
     //Get all the sports that have been added by an admin
     $http.get("/api/sport")
         .success(function (data) {
-            console.log(data);
             $scope.allSports = data.objects;
         });
 
@@ -190,7 +177,6 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
         angular.forEach($scope.mySports, function (value, index) {
             if (item.id == value.id) {
                 flag = true;
-                console.log("Duplicate");
             }
         });
         if (flag == false) {
@@ -200,8 +186,6 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
                     skill: item.skill
                 })
                 .success(function (data) {
-                    console.log(data);
-                    console.log("Sport added to user profile");
                     $scope.mySports.push(item);
                 })
         }
@@ -217,7 +201,6 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
             data: JSON.stringify(passObject)
         })
             .success(function (data) {
-                console.log(data);
                 $scope.mySports.splice($scope.mySports.indexOf(item), 1);
                 $http.delete("/api/user_has_sport/" + data)
                     .success(function (data) {
@@ -225,6 +208,5 @@ angular.module('dashboard.controllers').controller('user_profileController', ['$
                     })
             })
     };
-
 
 }]);
