@@ -208,7 +208,7 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
 
                     if ($scope.is_team) {
                         $http.post("api/team_has_notification", {
-                            user_id: data.player2_id,
+                            team_id: data.player2_id,
                             notification: $scope.pickTeamObject.name + " has challenged your team.",
                             time: new Date(),
                             link: "#/games",

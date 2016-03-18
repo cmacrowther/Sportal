@@ -288,7 +288,7 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
                             console.log("Team 1 Notification Sent");
 
                             $http.post("api/team_has_notification", {
-                                user_id: $scope.team2,
+                                team_id: $scope.team2,
                                 notification: "One of your teams has agreed to a game of " + $scope.sport + ".",
                                 time: new Date(),
                                 link: "#/games",
