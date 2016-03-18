@@ -138,10 +138,8 @@ angular.module('example.controllers', []).controller('LandingController', ['$sco
                         context.fillText(initials, canvasCssWidth / 2, canvasCssHeight / 1.75);
 
                         var dataURL = canvas.toDataURL();
-                        //document.getElementById('canvasImg').src = dataURL;
 
-
-                        //sending the shit to the database
+                        //sending to the database
                         $http.post("api/user", {
                                 team_id: 0,
                                 first_name: $scope.first_name,
