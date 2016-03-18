@@ -6,11 +6,9 @@ angular.module('dashboard.controllers').controller('team_createController', ['$s
     //Initializes the validator plugin
     $('#teamForm').validator();
 
-    console.log("team_create Page");
-
     $rootScope.page_name = "Create Team";
 
-    //creates a team in the database
+    //Creates a team in the database
     $scope.createTeam = function () {
         var passObject = {url: $scope.team_name};
         $scope.createTeamResult = "";
@@ -48,9 +46,6 @@ angular.module('dashboard.controllers').controller('team_createController', ['$s
                                 console.log($scope.team_password);
                                 console.log("Team Logged into DB");
                                 $scope.createTeamResult = "Team Successfully Added!";
-
-                                //$scope.teamForm.$setPristine();
-                                //$scope.teamForm.$setUntouched();
 
                                 $timeout(function () {
                                     $scope.createTeamResult = "";
