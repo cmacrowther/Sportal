@@ -5,7 +5,9 @@
             <div style="display: inline;">
                 <h2 style="padding-left: 15px; float: left;">{{ team_name }} ...</h2>
 
-                <p style="padding-left: 10px; margin-top: 28px; float: left;"><i class="fa fa-map-marker" style="color: red;"></i> {{location}}</p>
+                <p style="padding-left: 10px; margin-top: 28px; float: left;"><i class="fa fa-map-marker"
+                                                                                 style="color: red;"></i> {{location}}
+                </p>
             </div>
         </div>
         <div class="col-md-6" style="margin-top: 20px; padding-right: 20px;">
@@ -18,7 +20,8 @@
     <div class="tab-container" style="position: relative;">
         <ul class="mui-tabs__bar" style="position: absolute; margin-top: -26px;">
             <li class="mui--is-active"><a data-mui-toggle="tab" data-mui-controls="pane-default-1">Team Profile</a></li>
-            <li ng-show="editable"><a data-mui-toggle="tab" data-mui-controls="pane-default-2">Admin Information</a></li>
+            <li ng-show="editable"><a data-mui-toggle="tab" data-mui-controls="pane-default-2">Admin Information</a>
+            </li>
         </ul>
     </div>
 </div>
@@ -59,27 +62,28 @@
 
                 <div ng-show="editable" class="col-md-12 text-center">
                     <form id="inviteForm">
-                    <div>
-                        <h2>Invite a Friend</h2>
-                    </div>
+                        <div>
+                            <h2>Invite a Friend</h2>
+                        </div>
 
-                    <div class="form-group">
-                        <label class="signup control-label">Email</label>
+                        <div class="form-group">
+                            <label class="signup control-label">Email</label>
 
-                        <div class="row">
-                            <div class="col-md-4 col-md-offset-4">
-                                <input ng-model="email" type="text" class="form-control"
-                                       placeholder="Enter Email" required>
+                            <div class="row">
+                                <div class="col-md-4 col-md-offset-4">
+                                    <input ng-model="email" type="text" class="form-control"
+                                           placeholder="Enter Email" required>
 
-                                <div class="help-block with-errors"></div>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-md-offset-4" class="form-group">
+                                <button type="submit" data-disable="true" class="btn btn-success btn-block">Send Message
+                                    <span> <i ng-show="emailLoad" class="fa fa-spinner fa-spin"></i> </span></button>
+                                <h4 class="text-center">{{ sendMessageResult }}</h4>
                             </div>
                         </div>
-                        <div class="col-md-4 col-md-offset-4" class="form-group">
-                            <button type="submit" data-disable="true" class="btn btn-success btn-block">Send Message
-                            <span> <i ng-show="emailLoad" class="fa fa-spinner fa-spin"></i> </span></button>
-                            <h4 class="text-center">{{ sendMessageResult }}</h4>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
             <div ng-show="edit">
@@ -87,7 +91,7 @@
                     <div class="col-md-12">
                         <form data-toggle="validator" role="form" class="form-horizontal" id="user_creation_form">
                             <div class="form-group" style="padding-top: 30px">
-                                <label for="first_name" class="col-sm-2 control-label-fix">Team Name</label>
+                                <label class="col-sm-2 control-label-fix">Team Name</label>
 
                                 <div class="col-sm-9">
                                     <input ng-show="edit" ng-model="team_name" ng-blur="updateInfo()" type="text"
@@ -109,19 +113,22 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="birth" class="col-sm-2 control-label-fix">Sport</label>
+                                <label class="col-sm-2 control-label-fix">Sport</label>
 
                                 <div class="col-sm-9">
-                                    <select ng-show="edit" ng-model="team_sport_id" ng-blur="updateTeamSport()" class="form-control">
-                                        <option value="{{item.id}}" ng-repeat="item in allSports">{{ item.name }}</option>
+                                    <select ng-show="edit" ng-model="team_sport_id" ng-blur="updateTeamSport()"
+                                            class="form-control">
+                                        <option value="{{item.id}}" ng-repeat="item in allSports">{{ item.name }}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="location" class="col-sm-2 control-label-fix">Location</label>
+                                <label class="col-sm-2 control-label-fix">Location</label>
 
                                 <div class="col-sm-9">
-                                    <select ng-show="edit" ng-blur="updateInfo()" ng-model="location" name="language" class="form-control">
+                                    <select ng-show="edit" ng-blur="updateInfo()" ng-model="location" name="language"
+                                            class="form-control">
                                         <option value="Charlottetown, PE">Charlottetown, PE</option>
                                         <option value="Summerside, PE">Summerside, PE</option>
                                         <option value="Montague, PE">Montague, PE</option>
@@ -133,7 +140,8 @@
 
                                 <div class='date col-sm-9'>
                                     <div class="input-group">
-                                        <textarea ng-show="edit" ng-model="description" ng-blur="updateInfo()" type='text' class="form-control" name="about" id="about"></textarea>
+                                        <textarea ng-show="edit" ng-model="description" ng-blur="updateInfo()"
+                                                  type='text' class="form-control" name="about" id="about"></textarea>
 
                                     </div>
                                 </div>
@@ -155,9 +163,9 @@
 </div>
 
 
-
 <div class="mui-tabs__pane" id="pane-default-2">
     <br>
+
     <div class="mui-panel col-md-10 col-md-offset-1">
         <!-- admin stuff -->
         <h4>Team Admins</h4>
@@ -208,6 +216,7 @@
         </table>
     </div>
     <br>
+
     <div class="mui-panel col-md-10 col-md-offset-1">
         <div class="row">
             <div class="col-md-6 col-md-offset-3 text-center">
@@ -260,7 +269,7 @@
             <div class="modal-header text-center">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Delete Team</h4>
+                <h4 class="modal-title" id="myModalLabel1">Delete Team</h4>
             </div>
 
             <div class="modal-body">
@@ -283,7 +292,7 @@
             <div class="modal-header text-center">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Leave Team</h4>
+                <h4 class="modal-title" id="myModalLabel2">Leave Team</h4>
             </div>
 
             <div class="modal-body">
