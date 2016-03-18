@@ -3,6 +3,7 @@ angular.module('dashboard.controllers').controller('searchController', ['$scope'
     //Declaring Variables
     $scope.no_users = "No Matching Users";
     $scope.no_teams = "No Matching Teams";
+    $rootScope.page_name = "Search";
 
 	//Function for searching database
 	$scope.search = function() {

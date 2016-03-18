@@ -8,12 +8,32 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
     $scope.event_id = "";
     $scope.editable = false;
 
+    ////////////////////////////////////////////////////////
+
+    //PUSHER INITIALIZATION
+
+    Pusher.log = function (message) {
+        if (window.console && window.console.log) {
+            window.console.log(message);
+        }
+    };
+
+    var pusher = new Pusher('56753b214ab2420a7230', {
+        encrypted: true
+    });
+
+    var channel = pusher.subscribe('unchained');
+
+
+    ////////////////////////////////////////////////////////
+
+    //gets users for new convo modal
     $http.get("/api/user").success(function (data) {
         $scope.users = data.objects;
     });
 
+    //grabs the team channels
     var passObject = {user_id: $rootScope.userObject.id};
-
     $http({
         method: 'POST',
         url: 'api/get_team_channels',
@@ -32,6 +52,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
 
         });
 
+    //toggle between delete/regular view
     $scope.editConvos = function () {
         $scope.editable = !$scope.editable;
     };
@@ -218,18 +239,6 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
         }
     };
 
-    Pusher.log = function (message) {
-        if (window.console && window.console.log) {
-            window.console.log(message);
-        }
-    };
-
-    var pusher = new Pusher('56753b214ab2420a7230', {
-        encrypted: true
-    });
-
-    var channel = pusher.subscribe('unchained');
-
     //sets title for current conversation, triggered when a channel is selected
     $scope.setChannel = function (channel_id) {
 
@@ -294,61 +303,6 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
             })
     };
 
-    /*checks every 5 seconds for messages
-     $scope.updateMessages = function () {
-
-     $timeout(function () {
-     //checks if angular needs to pull channel messages or direct message convo
-     if($scope.is_channel) {
-     console.log("CHANNEL MESSAGE CHECK");
-
-     var passObject = {channel_id: $scope.channel_id};
-
-     $http({
-     method: 'POST',
-     url: 'api/get_channel_messages',
-     headers: {'Content-Type': 'application/json'},
-     data: JSON.stringify(passObject)
-     })
-     .success(function (data) {
-
-     if (data == "no messages") {
-     $scope.messages = [];
-     }
-     else {
-     $scope.messages = data;
-     }
-
-     })
-     }
-     if ($scope.is_convo) {
-     console.log("MESSAGE CHECK");
-
-     var passObject = {conversation_id: $rootScope.convo_id};
-     $http({
-     method: 'POST',
-     url: 'api/get_conversation_messages',
-     headers: {'Content-Type': 'application/json'},
-     data: JSON.stringify(passObject)
-     })
-     .success(function(data){
-
-     if (data == "no messages") {
-     $scope.messages = [];
-     }
-     else {
-     $scope.messages = data;
-     }
-
-     })
-     }
-     $scope.updateMessages();
-     }, 5000)
-     }
-
-     //Initial Call to update messages
-     $scope.updateMessages();*/
-
     $scope.is_read_message = function (item) {
 
         var passObject = {conversation_id: item};
@@ -381,26 +335,6 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
             })
 
     };
-
-    /*$scope.createChannel = function () {
-        console.log("Getting into the create channel Method.");
-        console.log("Channel Name: " + $scope.channelName);
-
-        //todo Make post to create channel
-
-        $http.post("api/channel", {
-                admin_id: $rootScope.userObject.id,
-                name: $scope.channelName,
-                description: $scope.description
-            })
-            .success(function (data) {
-                console.log("Successful Channel Create");
-            });
-
-        //todo add the user creating channel to user_has_channel
-
-
-    }*/
 
 
 }]);

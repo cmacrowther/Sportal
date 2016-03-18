@@ -5,10 +5,12 @@ angular.module('dashboard.controllers').controller('join_teamController', ['$sco
 
     $rootScope.page_name = "Join Team";
 
+    //joining the team
     $scope.joinTeam = function () {
 
         var passObject = {url: $scope.team_name, password: $scope.team_password};
 
+        //checks variables in backend
         $http({
             method: 'POST',
             url: 'api/join_team',
@@ -32,8 +34,8 @@ angular.module('dashboard.controllers').controller('join_teamController', ['$sco
                 }
                 else {
 
+                    //credentials good, check to see if they are already a member
                     var passObject = {url: $scope.team_name, user_id: $rootScope.userObject.id};
-
                     $http({
                         method: 'POST',
                         url: 'api/team_member_check',
@@ -50,6 +52,8 @@ angular.module('dashboard.controllers').controller('join_teamController', ['$sco
                                 }, 3000);
                             }
                             else {
+
+                                //good to join, post to user_has_team
                                 console.log("Joining team... " + data);
                                 $scope.join_team_id = data;
                                 $http.post("api/user_has_team", {

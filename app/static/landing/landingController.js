@@ -159,13 +159,6 @@ angular.module('example.controllers', []).controller('LandingController', ['$sco
         }
     };
 
-    //Dirty Admin Login for testing purposes
-    $scope.adminLogin = function () {
-        //set this to whoever signs in for now
-        localStorage.setItem("id", 1);
-        window.location.assign("/dashboard.html");
-    };
-
     //Logs you in and stores userObject information
     $scope.login = function () {
         var passObject = {email: $scope.loginEmail, password: $scope.loginPassword};

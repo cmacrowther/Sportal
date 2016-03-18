@@ -1,115 +1,238 @@
 <link type="text/css" href="css/games.css" rel="stylesheet">
 
+<!-- Page Options -->
 <div class="row" style="height: 110px; background-color: white; border-bottom: 1px solid #e7e7e7;">
     <div class="row">
         <div class="col-md-12">
-            <h2 style="padding-left: 15px;">View your games</h2>
-            <p style="padding-left: 15px;">View your list of pending, current, and past games.</p>
+            <div>
+                <h2 style="padding-left: 15px; float: left;">Games</h2>
+            </div>
+        </div>
+    </div>
+    <div class="tab-container" style="position: relative;">
+        <ul class="mui-tabs__bar" style="position: absolute; margin-top: -26px;">
+            <li class="mui--is-active"><a data-mui-toggle="tab" data-mui-controls="pane-default-1">Your Games</a></li>
+            <li><a data-mui-toggle="tab" data-mui-controls="pane-default-2">Team Games</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="mui-tabs__pane mui--is-active" id="pane-default-1">
+    <div class="col-md-12" style="padding-top: 15px; background-color: #EDF2F6;">
+        <div class="mui-container" style="height: 100%;">
+            <h5 style="color: #757E8D;"><b>PENDING MATCHES</b></h5>
+            <div class="mui-panel" style="padding-top: 10px;">
+                <p style="padding-top: 5px;">Current list of matchest that are still pending.</p>
+                <br />
+                <table class="mui-table mui-table--bordered">
+                    <thead>
+                        <tr>
+                            <th width="25%"> Sport </th>
+                            <th width="25%"> Opponent </th>
+                            <th width="25%"> Accept </th>
+                            <th width="25%"> Decline </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in games_pending">
+                            <td ng-init="item.sport_name=getSport(item)">
+                                <div class="mui--text-body2" style="margin-top: 10px; margin-left: 3px;">{{ item.sport_name }}</div>
+                                
+                            </td>
+                            <!--<td ng-init="item.opponent=getUser(item)">{{ item.opponent }}</td>-->
+                            <td ng-init="item.opponent=getUser(item)"><a target="_blank" href="#/user_profile/{{ item.player2_id }}" class="mui--text-body2">{{ item.opponent }}</a></td>
+                            <td>
+                                <button ng-click="accept(item.id); sendOpponentEmail(item)" class="mui-btn mui-btn--raised mui-btn--small">Accept</button>
+                            </td>
+                            <td>
+                                <button ng-click="decline(item.id)" class="mui-btn mui-btn--raised mui-btn--small">Decline</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="text-center">{{ no_games_pending }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" style="padding-top: 15px; background-color: #EDF2F6;">
+        <div class="mui-container" style="height: 100%;">
+            <h5 style="color: #757E8D;"><b>CURRENT MATCHES</b></h5>
+            <div class="mui-panel" style="padding-top: 10px;">
+                <p style="padding-top: 5px;">List of matches that are currently ongoing, and require results.</p>
+                <br />
+                <table class="mui-table mui-table--bordered">
+                    <thead>
+                        <tr>
+                            <th width="25%"> Sport </th>
+                            <th width="25%"> Opponent </th>
+                            <th width="25%"> Edit </th>
+                            <th width="25%"> Finish </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in gamesip">
+                            <td ng-init="item.sport_name=getSport(item)">
+                            <div class="mui--text-body2" style="margin-top: 10px; margin-left: 3px;">
+                                {{ item.sport_name }}</td>
+                                </div>
+                            <td ng-init="item.opponent=getUser(item)">
+                            <div class="mui--text-body2" style="margin-top: 10px; margin-left: 3px;">
+                                {{ item.opponent }}
+                                </div></td>
+                            <td>
+                                <button class="mui-btn mui-btn--raised mui-btn--small" ng-click="setModal(item)" data-toggle="modal" data-target="#gameModal"> Details</button>
+                            </td>
+                            <td>
+                                <button class="mui-btn mui-btn--raised mui-btn--small" ng-click="setModal(item)" data-toggle="modal" data-target="#gameFinishModal"> Finish Game!</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="text-center">{{ no_games_ip }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" style="padding-top: 15px; background-color: #EDF2F6;">
+        <div class="mui-container" style="height: 100%;">
+            <h5 style="color: #757E8D;"><b>PAST MATCHES</b></h5>
+            <div class="mui-panel" style="padding-top: 10px;">
+                <p style="padding-top: 5px;">List of past or finished matches.</p>
+                <br />
+                <table class="mui-table mui-table--bordered">
+                    <thead>
+                        <tr>
+                            <th width="25%"> Sport </th>
+                            <th width="25%"> Opponent </th>
+                            <th width="25%"> Date </th>
+                            <th width="25%"> Results </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in past_games">
+                            <td ng-init="item.sport_name=getSport(item)">{{ item.sport_name }}</td>
+                            <td ng-init="item.opponent=getUser(item)">{{ item.opponent }}</td>
+                            <td>{{ item.date }}</td>
+                            <td>{{ item.results }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="text-center">{{ no_past_games }}</p>
+            </div>
         </div>
     </div>
 </div>
-<div class="col-md-12" style="padding-top: 15px; background-color: #EDF2F6;">
-    <div class="mui-container" style="height: 100%;">
-        <h5 style="color: #757E8D;"><b>PENDING MATCHES</b></h5>
-        <div class="mui-panel" style="padding-top: 10px;">
-            <p style="padding-top: 5px;">Current list of matchest that are still pending.</p>
-            <br />
-            <table class="mui-table mui-table--bordered">
-                <thead>
-                    <tr>
-                        <th width="25%"> Sport </th>
-                        <th width="25%"> Opponent </th>
-                        <th width="25%"> Accept </th>
-                        <th width="25%"> Decline </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in games_pending">
-                        <td ng-init="item.sport_name=getSport(item)">
-                            <div class="mui--text-body2" style="margin-top: 10px; margin-left: 3px;">{{ item.sport_name }}</div>
-                            
-                        </td>
-                        <!--<td ng-init="item.opponent=getUser(item)">{{ item.opponent }}</td>-->
-                        <td ng-init="item.opponent=getUser(item)"><a target="_blank" href="#/user_profile/{{ item.player2_id }}" class="mui--text-body2">{{ item.opponent }}</a></td>
-                        <td>
-                            <button ng-click="accept(item.id); sendOpponentEmail(item)" class="mui-btn mui-btn--raised mui-btn--small">Accept</button>
-                        </td>
-                        <td>
-                            <button ng-click="decline(item.id)" class="mui-btn mui-btn--raised mui-btn--small">Decline</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <p class="text-center">{{ no_games_pending }}</p>
+
+
+
+
+
+<!-- Teams View -->
+<div class="mui-tabs__pane mui--is-active" id="pane-default-2">
+    <div class="col-md-12" style="padding-top: 15px; background-color: #EDF2F6;">
+        <div class="mui-container" style="height: 100%;">
+            <h5 style="color: #757E8D;"><b>PENDING MATCHES</b></h5>
+            <div class="mui-panel" style="padding-top: 10px;">
+                <p style="padding-top: 5px;">Current list of matchest that are still pending.</p>
+                <br />
+                <table class="mui-table mui-table--bordered">
+                    <thead>
+                        <tr>
+                            <th width="25%"> Sport </th>
+                            <th width="25%"> Opponent </th>
+                            <th width="25%"> Accept </th>
+                            <th width="25%"> Decline </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in team_games_pending">
+                            <td ng-init="item.sport_name=getSport(item)">
+                                <div class="mui--text-body2" style="margin-top: 10px; margin-left: 3px;">{{ item.sport_name }}</div>
+                                
+                            </td>
+                            <td ng-init="item.opponent=getTeam(item)"><a target="_blank" href="#/team_profile/{{ item.player2_id }}" class="mui--text-body2">{{ item.opponent }}</a></td>
+                            <td>
+                                <button ng-click="accept(item.id); sendOpponentEmail(item)" class="mui-btn mui-btn--raised mui-btn--small">Accept</button>
+                            </td>
+                            <td>
+                                <button ng-click="decline(item.id)" class="mui-btn mui-btn--raised mui-btn--small">Decline</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="text-center">{{ team_no_games_pending }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" style="padding-top: 15px; background-color: #EDF2F6;">
+        <div class="mui-container" style="height: 100%;">
+            <h5 style="color: #757E8D;"><b>CURRENT MATCHES</b></h5>
+            <div class="mui-panel" style="padding-top: 10px;">
+                <p style="padding-top: 5px;">List of matches that are currently ongoing, and require results.</p>
+                <br />
+                <table class="mui-table mui-table--bordered">
+                    <thead>
+                        <tr>
+                            <th width="25%"> Sport </th>
+                            <th width="25%"> Opponent </th>
+                            <th width="25%"> Edit </th>
+                            <th width="25%"> Finish </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in team_gamesip">
+                            <td ng-init="item.sport_name=getSport(item)">
+                            <div class="mui--text-body2" style="margin-top: 10px; margin-left: 3px;">
+                                {{ item.sport_name }}</td>
+                                </div>
+                            <td ng-init="item.opponent=getTeam(item)">
+                            <div class="mui--text-body2" style="margin-top: 10px; margin-left: 3px;">
+                                {{ item.opponent }}
+                                </div></td>
+                            <td>
+                                <button class="mui-btn mui-btn--raised mui-btn--small" ng-click="setModal(item)" data-toggle="modal" data-target="#gameModal"> Details</button>
+                            </td>
+                            <td>
+                                <button class="mui-btn mui-btn--raised mui-btn--small" ng-click="setModal(item)" data-toggle="modal" data-target="#gameFinishModal"> Finish Game!</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="text-center">{{ team_no_games_ip }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" style="padding-top: 15px; background-color: #EDF2F6;">
+        <div class="mui-container" style="height: 100%;">
+            <h5 style="color: #757E8D;"><b>PAST MATCHES</b></h5>
+            <div class="mui-panel" style="padding-top: 10px;">
+                <p style="padding-top: 5px;">List of past or finished matches.</p>
+                <br />
+                <table class="mui-table mui-table--bordered">
+                    <thead>
+                        <tr>
+                            <th width="25%"> Sport </th>
+                            <th width="25%"> Opponent </th>
+                            <th width="25%"> Date </th>
+                            <th width="25%"> Results </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in team_past_games">
+                            <td ng-init="item.sport_name=getSport(item)">{{ item.sport_name }}</td>
+                            <td ng-init="item.opponent=getTeam(item)">{{ item.opponent }}</td>
+                            <td>{{ item.date }}</td>
+                            <td>{{ item.results }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="text-center">{{ team_no_past_games }}</p>
+            </div>
         </div>
     </div>
 </div>
-<div class="col-md-12" style="padding-top: 15px; background-color: #EDF2F6;">
-    <div class="mui-container" style="height: 100%;">
-        <h5 style="color: #757E8D;"><b>CURRENT MATCHES</b></h5>
-        <div class="mui-panel" style="padding-top: 10px;">
-            <p style="padding-top: 5px;">List of matches that are currently ongoing, and require results.</p>
-            <br />
-            <table class="mui-table mui-table--bordered">
-                <thead>
-                    <tr>
-                        <th width="25%"> Sport </th>
-                        <th width="25%"> Opponent </th>
-                        <th width="25%"> Edit </th>
-                        <th width="25%"> Finish </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in gamesip">
-                        <td ng-init="item.sport_name=getSport(item)">
-                        <div class="mui--text-body2" style="margin-top: 10px; margin-left: 3px;">
-                            {{ item.sport_name }}</td>
-                            </div>
-                        <td ng-init="item.opponent=getUser(item)">
-                        <div class="mui--text-body2" style="margin-top: 10px; margin-left: 3px;">
-                            {{ item.opponent }}
-                            </div></td>
-                        <td>
-                            <button class="mui-btn mui-btn--raised mui-btn--small" ng-click="setModal(item)" data-toggle="modal" data-target="#gameModal"> Details</button>
-                        </td>
-                        <td>
-                            <button class="mui-btn mui-btn--raised mui-btn--small" ng-click="setModal(item)" data-toggle="modal" data-target="#gameFinishModal"> Finish Game!</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <p class="text-center">{{ no_games_ip }}</p>
-        </div>
-    </div>
-</div>
-<div class="col-md-12" style="padding-top: 15px; background-color: #EDF2F6;">
-    <div class="mui-container" style="height: 100%;">
-        <h5 style="color: #757E8D;"><b>PAST MATCHES</b></h5>
-        <div class="mui-panel" style="padding-top: 10px;">
-            <p style="padding-top: 5px;">List of past or finished matches.</p>
-            <br />
-            <table class="mui-table mui-table--bordered">
-                <thead>
-                    <tr>
-                        <th width="25%"> Sport </th>
-                        <th width="25%"> Opponent </th>
-                        <th width="25%"> Date </th>
-                        <th width="25%"> Results </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="item in past_games">
-                        <td ng-init="item.sport_name=getSport(item)">{{ item.sport_name }}</td>
-                        <td ng-init="item.opponent=getUser(item)">{{ item.opponent }}</td>
-                        <td>{{ item.date }}</td>
-                        <td>{{ item.results }}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <p class="text-center">{{ no_past_games }}</p>
-        </div>
-    </div>
-</div>
+
+
+
 <!-- Game Modal -->
 <div class="modal fade" id="gameModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
