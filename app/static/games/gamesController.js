@@ -200,6 +200,32 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
     $scope.finishGame = function () {
         $http.get("api/match/" + $scope.modalObject.id)
         .success(function (data) {
+
+            if (data.is_team == 1) {
+
+                //is a team game
+                if ($rootScope.userObject.id == $scope.modalObject.player1_id) {
+                    data.score_1 = $scope.your_score;
+                    data.score_2 = $scope.opponent_score;
+                    data.winner_id = $scope.modalObject.winner_id;
+                }
+                else {
+                    data.score_2 = $scope.your_score;
+                    data.score_1 = $scope.opponent_score;
+                    data.winner_id = $scope.modalObject.winner_id;
+                }
+            }
+            else {
+
+                //is a 1VS1 game
+
+
+
+
+
+
+            }
+
             if ($rootScope.userObject.id == $scope.modalObject.player1_id) {
                 data.score_1 = $scope.your_score;
                 data.score_2 = $scope.opponent_score;
