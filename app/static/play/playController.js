@@ -63,8 +63,8 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
     };
 
     //Sets 1vs1, 2vs2, 3vs3, etc
-    $scope.setTeams = function (item) {
-        $scope.pickTeams = item;
+    $scope.setSingles = function () {
+        $scope.pickTeams = "1 VS 1";
         $scope.is_team = 0;
         $scope.link = "#/user_profile/{{item.id}}";
     };
@@ -88,6 +88,7 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
                 difficulty: $scope.pickTier,
                 team: $scope.pickTeams
             };
+
             if ($scope.is_team) {
 
                 var passObject = {
@@ -181,13 +182,20 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
                     console.log("Sent email to user.");
                 });
 
+            if($scope.is_team) {
+                $scope.setPlayer1 = $scope.pickTeamObject.id;
+            }
+            else {
+                $scope.setPlayer1 = $rootScope.userObject.id;
+            }
+
             $http.post("api/match", {
                     sport_id: $scope.sport.id,
-                    player1_id: $rootScope.userObject.id,
+                    player1_id: $scope.setPlayer1,
                     player2_id: item.id,
                     is_team: $scope.is_team,
-                    date: "",
-                    time: "",
+                    date: new Date(),
+                    time: new Date(),
                     facility_id: 0,
                     complete: 2,
                     winner_id: 0,
@@ -198,32 +206,34 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
                     console.log("Created Match object. Sending opponent email for this request. deleting person from queue");
                     $http.delete("api/queue/" + item.queue_id);
 
-                    $http.post("api/user_has_notification", {
-                        user_id: data.player2_id,
-                        notification: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name + " has challenged you.",
-                        time: new Date(),
-                        link: "#/games",
-                        is_read: 0
-                    })
-                    .success(function(){
-                        console.log("Notification Sent");
-                    })
+                    if ($scope.is_team) {
+                        $http.post("api/team_has_notification", {
+                            user_id: data.player2_id,
+                            notification: $scope.pickTeamObject.name + " has challenged your team.",
+                            time: new Date(),
+                            link: "#/games",
+                            is_read: 0
+                        })
+                        .success(function(){
+                            console.log("Team Notification Sent");
+                        })
+                    }
+                    else {
+                        $http.post("api/user_has_notification", {
+                            user_id: data.player2_id,
+                            notification: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name + " has challenged you.",
+                            time: new Date(),
+                            link: "#/games",
+                            is_read: 0
+                        })
+                        .success(function(){
+                            console.log("USer Notification Sent");
+                        })
+                    }
 
                     window.location.assign("#/games");
                 });
         });
-
-
-        //$http.post("api/get_matches_pending", {
-        //        user_id: $rootScope.userObject.id,
-        //        page: 1
-        //    })
-        //    .success(function (data) {
-        //        console.log("Finding pending matches.");
-        //        $scope.pending_list = data;
-        //        //window.location.assign("#/games");
-        //    })
-
     };
 
 

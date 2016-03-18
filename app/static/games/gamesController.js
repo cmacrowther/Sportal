@@ -5,12 +5,21 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
 
     var passObject = {user_id: $rootScope.userObject.id};
 
+    //user games
     $scope.games_pending = [];
     $scope.gamesip = [];
     $scope.past_games = [];
     $scope.no_games_ip = "No Games in Progress";
     $scope.no_past_games = "No Past Games";
     $scope.no_games_pending = "No Games Pending";
+    //team games
+    $scope.team_games_pending = [];
+    $scope.team_gamesip = [];
+    $scope.team_past_games = [];
+    $scope.team_no_games_ip = "No Team Games in Progress";
+    $scope.team_no_past_games = "No Past Team Games";
+    $scope.team_no_games_pending = "No Team Games Pending";
+
     $rootScope.page_name = "Games";
 
     //Populate Pending Matches, Current Matches and Past Games lists
@@ -27,34 +36,73 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
             }
             else {
                 for (var i = 0; i < data.length; i++) {
-                    if (data[i].complete == 2 && data[i].player2_id == $rootScope.userObject.id) {
-                        console.log("Challenge is present");
-                        $scope.games_pending.push(data[i]);
-                        $scope.no_games_pending = "";
-                    }
-                    else if (data[i].complete == 1) {
-                        $scope.past_games.push(data[i]);
-                        //todo add tie
-                        if (data[i].winner_id == $rootScope.userObject.id) {
-                            if (data[i].score_1 > data[i].score_2) {
-                                data[i].results = "WIN " + data[i].score_1 + "-" + data[i].score_2;
+
+                    if (data[i].is_team == 1) {
+                        //fills the list of games for a team
+                        if (data[i].complete == 2) {
+                            console.log("Challenge is present");
+                            $scope.team_games_pending.push(data[i]);
+                            $scope.team_no_games_pending = "";
+                        }
+                        else if (data[i].complete == 1) {
+
+                            $scope.team_past_games.push(data[i]);
+                            //todo add tie
+                            if (data[i].winner_id == $rootScope.userObject.id) {
+                                if (data[i].score_1 > data[i].score_2) {
+                                    data[i].results = "WIN " + data[i].score_1 + "-" + data[i].score_2;
+                                }
+                                else {
+                                    data[i].results = "WIN " + data[i].score_2 + "-" + data[i].score_1;
+                                }
                             }
                             else {
-                                data[i].results = "WIN " + data[i].score_2 + "-" + data[i].score_1;
+                                if (data[i].score_1 > data[i].score_2) {
+                                    data[i].results = "LOSS " + data[i].score_1 + "-" + data[i].score_2;
+                                }
+                                else {
+                                    data[i].results = "LOSS " + data[i].score_2 + "-" + data[i].score_1;
+                                }
                             }
+                            $scope.team_no_past_games = "";
+                            
                         }
                         else {
-                            if (data[i].score_1 > data[i].score_2) {
-                                data[i].results = "LOSS " + data[i].score_1 + "-" + data[i].score_2;
-                            }
-                            else {
-                                data[i].results = "LOSS " + data[i].score_2 + "-" + data[i].score_1;
-                            }
+                            $scope.team_gamesip.push(data[i]);
+                            $scope.team_no_games_ip = "";
                         }
-                        $scope.no_past_games = "";
                     }
                     else {
-                        if (data[i].complete == 0) {
+                        //fills the list of user games
+                        if (data[i].complete == 2 && data[i].player2_id == $rootScope.userObject.id) {
+                            console.log("Challenge is present");
+                            $scope.games_pending.push(data[i]);
+                            $scope.no_games_pending = "";
+                        }
+                        else if (data[i].complete == 1) {
+
+                            $scope.past_games.push(data[i]);
+                            //todo add tie
+                            if (data[i].winner_id == $rootScope.userObject.id) {
+                                if (data[i].score_1 > data[i].score_2) {
+                                    data[i].results = "WIN " + data[i].score_1 + "-" + data[i].score_2;
+                                }
+                                else {
+                                    data[i].results = "WIN " + data[i].score_2 + "-" + data[i].score_1;
+                                }
+                            }
+                            else {
+                                if (data[i].score_1 > data[i].score_2) {
+                                    data[i].results = "LOSS " + data[i].score_1 + "-" + data[i].score_2;
+                                }
+                                else {
+                                    data[i].results = "LOSS " + data[i].score_2 + "-" + data[i].score_1;
+                                }
+                            }
+                            $scope.no_past_games = "";
+                            
+                        }
+                        else {
                             $scope.gamesip.push(data[i]);
                             $scope.no_games_ip = "";
                         }
@@ -85,6 +133,14 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
                 item.opponent = data.first_name + " " + data.last_name;
             })
     };
+
+    $scope.getTeam = function (item) {
+        var team_opponent_id = item.player2_id;
+        $http.get("/api/team/" + team_opponent_id)
+        .success(function (data) {
+            item.opponent = data.name;
+        })
+    }
 
     //Sends the opponent an email
     $scope.sendOpponentEmail = function (item) {
@@ -205,7 +261,48 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
     $scope.accept = function (item) {
         console.log(item);
         $http.get("api/match/" + item)
-            .success(function (data) {
+        .success(function (data) {
+
+            if (data.is_team == 1) {
+                data.complete = 0;
+                $http.put("api/match/" + data.id, data)
+                .success(function (data) {
+                    $scope.team_games_pending.splice(data, 1);
+                    $scope.team_gamesip.push(data);
+                    $scope.team_no_games_ip = "";
+                    $scope.team1 = data.player1_id;
+                    $scope.team2 = data.player2_id;
+
+                    $http.get("api/sport/" + data.sport_id)
+                    .success(function(data){
+                        $scope.sport = data.name;
+
+                        $http.post("api/team_has_notification", {
+                            team_id: $scope.team1,
+                            notification: "One of your teams has agreed to a game of " + $scope.sport + ".",
+                            time: new Date(),
+                            link: "#/games",
+                            is_read: 0
+                        })
+                        .success(function () {
+                            console.log("Team 1 Notification Sent");
+
+                            $http.post("api/team_has_notification", {
+                                user_id: $scope.team2,
+                                notification: "One of your teams has agreed to a game of " + $scope.sport + ".",
+                                time: new Date(),
+                                link: "#/games",
+                                is_read: 0
+                            })
+                            .success(function () {
+                                console.log("Team 2 Notification Sent");
+                            });
+                        });
+                    })
+                })
+
+            }
+            else {
                 if (data.player1_id == $rootScope.userObject.id) {
                     $scope.opponent = data.player2_id;
                 }
@@ -214,47 +311,68 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
                 }
                 data.complete = 0;
                 $http.put("api/match/" + data.id, data)
-                    .success(function (data) {
-                        $scope.games_pending.splice(data, 1);
-                        $scope.gamesip.push(data);
-                        $scope.no_games_ip = "";
+                .success(function (data) {
+                    $scope.games_pending.splice(data, 1);
+                    $scope.gamesip.push(data);
+                    $scope.no_games_ip = "";
 
-                        $http.post("api/user_has_notification", {
-                                user_id: $scope.opponent,
-                                notification: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name + " has accepted your challenge.",
-                                time: new Date(),
-                                link: "#/games",
-                                is_read: 0
-                            })
-                            .success(function () {
-                                console.log("Notification Sent");
-                            });
+                    $http.post("api/user_has_notification", {
+                        user_id: $scope.opponent,
+                        notification: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name + " has accepted your challenge.",
+                        time: new Date(),
+                        link: "#/games",
+                        is_read: 0
                     })
-            });
+                    .success(function () {
+                        console.log("User Notification Sent");
+                    });
+                })
+            }
+        });
     };
 
     $scope.decline = function (item) {
         console.log(item);
         $http.get("api/match/" + item)
         .success(function (data) {
-            $scope.games_pending.splice(data, 1);
-            if(data.player1_id == $rootScope.userObject.id) {
-                $scope.opponent = data.player2_id;
+
+            if (data.is_team == 1) {    
+                $scope.team_games_pending.splice(data, 1);
+                //send a notification for team decline
             }
             else {
-                $scope.opponent = data.player1_id;
+                $scope.games_pending.splice(data, 1);
+                if(data.player1_id == $rootScope.userObject.id) {
+                    $scope.opponent = data.player2_id;
+                }
+                else {
+                    $scope.opponent = data.player1_id;
+                }
+                $http.post("api/user_has_notification", {
+                    user_id: $scope.opponent,
+                    notification: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name + " has declined your challenge.",
+                    time: new Date(),
+                    link: "#/games",
+                    is_read: 0
+                })
+                .success(function(){
+                    console.log("Notification Sent");
+                })
             }
         });
         $http.delete("api/match/" + item);
-        $http.post("api/user_has_notification", {
-            user_id: $scope.opponent,
-            notification: $rootScope.userObject.first_name + " " + $rootScope.userObject.last_name + " has declined your challenge.",
-            time: new Date(),
-            link: "#/games",
-            is_read: 0
-        })
-        .success(function(){
-            console.log("Notification Sent");
-        })
     };
+
+    $scope.isYourTeam = function (id1, id2) {
+        for (var i = 0; i < $rootScope.teams.length; i++) {
+            if (id1 != $rootScope.teams[i].id || id2 != $rootScope.teams[i].id) {
+                //haven't matched yet
+            }
+            else {
+                return true;
+            }
+        }
+        //if function reaches here, there has been no team found
+        return false;
+    }
 }]);
