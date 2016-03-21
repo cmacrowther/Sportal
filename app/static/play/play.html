@@ -176,8 +176,8 @@
                             </div>
                         </td>
                         <td>
-                            <a type="button" target="_blank" class="mui-btn mui-btn--raised mui-btn--small"
-                               ng-href="{{link}}">View Profile</a>
+                            <a ng-hide="is_team" type="button" target="_blank" class="mui-btn mui-btn--raised mui-btn--small" ng-href="#/user_profile/{{item.id}}">View Profile</a>
+                            <a ng-show="is_team" type="button" target="_blank" class="mui-btn mui-btn--raised mui-btn--small" ng-href="#/team_profile/{{item.name}}">View Profile</a>
                         </td>
                         <td>
                             <button class="mui-btn mui-btn--raised mui-btn--small" ng-click="acceptChallenge(item)">

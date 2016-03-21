@@ -35,6 +35,8 @@ angular.module('dashboard', [
         $routeProvider.when('/admin', {templateUrl: 'admin/admin.html', controller: 'adminController'});
         $routeProvider.when('/play', {templateUrl: 'play/play.html', controller: 'playController'});
         $routeProvider.when('/messages', {templateUrl: 'channels/channel.html', controller: 'channelController'});
+        $routeProvider.when('/messages/user/:user_id', {templateUrl: 'channels/channel.html', controller: 'channelController'});
+        $routeProvider.when('/messages/team/:team1_id/:team2_id', {templateUrl: 'channels/channel.html', controller: 'channelController'});
         $routeProvider.when('/pusher_test', {templateUrl: 'pusher/pusher_test.html', controller: 'pusherTestController'});
         $routeProvider.otherwise({redirectTo: '/'});
     }]);

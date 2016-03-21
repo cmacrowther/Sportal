@@ -7,6 +7,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
     $rootScope.page_name = "Messages";
     $scope.event_id = "";
     $scope.editable = false;
+    $scope.in_convo = false;
 
     ////////////////////////////////////////////////////////
 
@@ -27,19 +28,79 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
 
     ////////////////////////////////////////////////////////
 
-    //gets users for new convo modal
-    $http.get("/api/user").success(function (data) {
-        $scope.users = data.objects;
-    });
+    if ($routeParams.user_id) {
+        $http.get("api/user/" + $routeParams.user_id)
+        .success(function(data){
+            //the user exists
+            $scope.createConversation(data.id);
+        })
+        .error(function(data){
+            //the user cannot be found
+            $scope.error = "User does Not Exist";
+            window.location.assign("dashboard.html#/error/" + $scope.error);
+        })
+    }
+    else if ($routeParams.team1_id && $routeParams.team2_id) {
+        $http.get("api/team/" + $routeParams.team1_id)
+        .success(function(data){
+            $scope.first_team = data;
+            $http.get("api/team/" + $routeParams.team2_id)
+            .success(function(data){
+                $scope.second_team = data;
 
-    //grabs the team channels
-    var passObject = {user_id: $rootScope.userObject.id};
-    $http({
-        method: 'POST',
-        url: 'api/get_team_channels',
-        headers: {'Content-Type': 'application/json'},
-        data: JSON.stringify(passObject)
-    })
+                var passObject = {team_1: $scope.first_team.id, team_2: $scope.second_team.id};
+
+                $http({
+                    method: 'POST',
+                    url: 'api/check_for_channel',
+                    headers: {'Content-Type': 'application/json'},
+                    data: JSON.stringify(passObject)
+                })
+                .success(function (data) {
+                    if (data == "duplicate") {
+                        //already exists
+                        alert("Channel Already Exists!");
+                        window.location.assign("#/messages")
+                    }
+                    else {
+                        $http.post("api/channel", {
+                            admin_id: 1,
+                            name: $scope.first_team.name + " vs. " + $scope.second_team.name,
+                            description: "Null"
+                        })
+                        .success(function(data){
+                            $http.post("api/team_has_channel", {
+                                team_id: $scope.first_team.id,
+                                channel_id: data.id
+                            })
+                            .success(function(data){
+                                $http.post("api/team_has_channel", {
+                                    team_id: $scope.second_team.id,
+                                    channel_id: data.channel_id
+                                })
+                                .success(function(data){
+                                    console.log("Total Success.");
+                                    $routeParams.team1_id = null;
+                                    $routeParams.team2_id = null;
+                                    window.location.assign("#/messages");
+                                })
+                            })
+                        })
+                    }
+                })
+            })
+        })
+    }
+    else {
+        //regular page load
+        //grabs the team channels
+        var passObject = {user_id: $rootScope.userObject.id};
+        $http({
+            method: 'POST',
+            url: 'api/get_team_channels',
+            headers: {'Content-Type': 'application/json'},
+            data: JSON.stringify(passObject)
+        })
         .success(function (data) {
             if (data == "no channels") {
                 $scope.channels = [];
@@ -51,6 +112,12 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
             }
 
         });
+    }
+
+    //gets users for new convo modal
+    $http.get("/api/user").success(function (data) {
+        $scope.users = data.objects;
+    });
 
     //toggle between delete/regular view
     $scope.editConvos = function () {
@@ -60,6 +127,9 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
 
     //sets title for current conversation, triggered when a direct message is selected
     $scope.setConversation = function (conversation_id) {
+
+        $scope.in_convo = true;
+
         var passObject = {conversation_id: conversation_id};
 
         $http({
@@ -155,14 +225,12 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
             $scope.event_id = String(id) + "-channel";
             $scope.is_channel = true;
             $scope.is_convo = false;
-            $scope.in_convo = true;
             console.log($scope.event_id);
         }
         else {
             $scope.event_id = String(id) + "-convo";
             $scope.is_channel = false;
             $scope.is_convo = true;
-            $scope.in_convo = true;
             console.log($scope.event_id);
         }
         channel.bind($scope.event_id, function (data) {
@@ -241,6 +309,8 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
 
     //sets title for current conversation, triggered when a channel is selected
     $scope.setChannel = function (channel_id) {
+
+        $scope.in_convo = true;
 
         $scope.channel_id = channel_id;
 
@@ -335,6 +405,62 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
             })
 
     };
+
+    /*//creates a conversation between two teams
+    $scope.createChannel = function (team_id) {
+
+        var flag = 0; //flag if already in convo with
+
+        angular.forEach($scope.channels, function (value, key) {
+            if (value.team_id == team_id) {
+                alert("already in channel with");
+                flag = 1;
+            }
+        });
+
+        if (flag == 0) {
+            //create the channel
+            $http.get("api/team/" + team_id)
+            .success(function(data){
+
+                $http.post("api/channel", {
+                    admin_id: $rootScope.userObject.id,
+                    name: data.name,
+                    description: "Blah"
+                })
+                .success(function(data){
+                    console.log("channel created");
+
+                    $scope.channel_id = data.id;
+
+                    $http.post("api/team_has_channel", {
+                        team_id: team_id,
+                        channel_id: $scope.channel_id
+                    })
+                    .success(function(){
+                        console.log("Team 1 added");
+                        $http.post("api/team_has_channel", {
+                            team_id: team_id,
+                            channel_id: $scope.channel_id
+                        })
+                        .success(function(){
+                            
+
+                        })
+
+                    })
+                })
+
+
+
+
+            })
+
+
+
+
+        }
+    }*/
 
 
 }]);

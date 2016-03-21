@@ -63,10 +63,10 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
     };
 
     //Sets 1vs1, 2vs2, 3vs3, etc
-    $scope.setSingles = function () {
+    $scope.setSingles = function (item) {
         $scope.pickTeams = "1 VS 1";
         $scope.is_team = 0;
-        $scope.link = "#/user_profile/{{item.id}}";
+        $scope.link = "#/user_profile/" + item.id;
     };
     $scope.setTeamObject = function (item) {
         $scope.pickTeamObject = item;

@@ -137,10 +137,11 @@
                 <table class="mui-table mui-table--bordered">
                     <thead>
                         <tr>
-                            <th width="25%"> Sport </th>
-                            <th width="25%"> Opponent </th>
-                            <th width="25%"> Accept </th>
-                            <th width="25%"> Decline </th>
+                            <th width="20%"> Sport </th>
+                            <th width="20%"> Your Team </th>
+                            <th width="20%"> Opponent </th>
+                            <th width="20%"> Accept </th>
+                            <th width="20%"> Decline </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -149,7 +150,8 @@
                                 <div class="mui--text-body2" style="margin-top: 10px; margin-left: 3px;">{{ item.sport_name }}</div>
                                 
                             </td>
-                            <td ng-init="item.opponent=getTeam(item)"><a target="_blank" href="#/team_profile/{{ item.player2_id }}" class="mui--text-body2">{{ item.opponent }}</a></td>
+                            <td ng-init="item.your_team=getYourTeam(item)"><a target="_blank" href="#/team_profile/{{ item.your_team_id }}" class="mui--text-body2">{{ item.your_team }}</a></td>
+                            <td ng-init="item.opponent=getOpponentTeam(item)"><a target="_blank" href="#/team_profile/{{ item.your_team_id }}" class="mui--text-body2">{{ item.opponent }}</a></td>
                             <td>
                                 <button ng-click="accept(item.id); sendOpponentEmail(item)" class="mui-btn mui-btn--raised mui-btn--small">Accept</button>
                             </td>
@@ -172,19 +174,24 @@
                 <table class="mui-table mui-table--bordered">
                     <thead>
                         <tr>
-                            <th width="25%"> Sport </th>
-                            <th width="25%"> Opponent </th>
-                            <th width="25%"> Edit </th>
-                            <th width="25%"> Finish </th>
+                            <th width="16.6%"> Sport </th>
+                            <th width="16.6%"> Your Team </th>
+                            <th width="16.6%"> Opponent </th>
+                            <th width="16.6%"> Edit </th>
+                            <th width="16.6%"> Chat </th>
+                            <th width="16.6%"> Finish </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in team_gamesip">
                             <td ng-init="item.sport_name=getSport(item)">
                             <div class="mui--text-body2" style="margin-top: 10px; margin-left: 3px;">
-                                {{ item.sport_name }}</td>
-                                </div>
-                            <td ng-init="item.opponent=getTeam(item)">
+                                {{ item.sport_name }}</div></td>
+                            <td ng-init="item.your_team=getYourTeam(item)">
+                            <div class="mui--text-body2" style="margin-top: 10px; margin-left: 3px;">
+                                {{ item.your_team }}
+                                </div></td>
+                            <td ng-init="item.opponent=getOpponentTeam(item)">
                             <div class="mui--text-body2" style="margin-top: 10px; margin-left: 3px;">
                                 {{ item.opponent }}
                                 </div></td>
@@ -192,7 +199,10 @@
                                 <button class="mui-btn mui-btn--raised mui-btn--small" ng-click="setModal(item)" data-toggle="modal" data-target="#gameModal"> Details</button>
                             </td>
                             <td>
-                                <button class="mui-btn mui-btn--raised mui-btn--small" ng-click="setModal(item)" data-toggle="modal" data-target="#gameFinishModal"> Finish Game!</button>
+                                <a href="#/messages/team/{{item.your_team_id}}/{{item.opponent_id}}"><button class="mui-btn mui-btn--raised mui-btn--small"> Chat</button>
+                            </td>
+                            <td>
+                                <button class="mui-btn mui-btn--raised mui-btn--small" ng-click="setModal(item); modalObject.your_team=getTeam(item)" data-toggle="modal" data-target="#gameFinishModal"> Finish Game!</button>
                             </td>
                         </tr>
                     </tbody>
@@ -210,16 +220,18 @@
                 <table class="mui-table mui-table--bordered">
                     <thead>
                         <tr>
-                            <th width="25%"> Sport </th>
-                            <th width="25%"> Opponent </th>
-                            <th width="25%"> Date </th>
-                            <th width="25%"> Results </th>
+                            <th width="20%"> Sport </th>
+                            <th width="20%"> Your Team </th>
+                            <th width="20%"> Opponent </th>
+                            <th width="20%"> Date </th>
+                            <th width="20%"> Results </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in team_past_games">
                             <td ng-init="item.sport_name=getSport(item)">{{ item.sport_name }}</td>
-                            <td ng-init="item.opponent=getTeam(item)">{{ item.opponent }}</td>
+                            <td ng-init="item.your_team=getYourTeam(item)">{{ item.your_team }}</td>
+                            <td ng-init="item.opponent=getOpponentTeam(item)">{{ item.opponent }}</td>
                             <td>{{ item.date }}</td>
                             <td>{{ item.results }}</td>
                         </tr>
@@ -280,7 +292,7 @@
             <div class="modal-body">
                 <form id="gameFinish">
                     <p class="text-center">Please Enter Results</p>
-                    <br>{{$root.userObject.first_name}} {{$root.userObject.last_name}}
+                    <br>{{modalObject.your_team}}
                     <input ng-blur="getWinner()" ng-model="your_score" class="pull-right" type="number" min="0" />
                     <br>
                     <br>{{modalObject.opponent}}
