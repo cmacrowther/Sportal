@@ -66,13 +66,11 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
     $scope.setSingles = function (item) {
         $scope.pickTeams = "1 VS 1";
         $scope.is_team = 0;
-        $scope.link = "#/user_profile/" + item.id;
     };
     $scope.setTeamObject = function (item) {
         $scope.pickTeamObject = item;
         $scope.is_team = 1;
         $scope.pickTeams = item.name;
-        $scope.link = "#/team_profile/" + item.name;
     };
     
     //Finds matches similar to games you wish to play

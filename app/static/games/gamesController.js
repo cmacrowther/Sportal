@@ -200,10 +200,13 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
     $scope.updateInfo = function () {
         $http.get("api/match/" + $scope.modalObject.id)
             .success(function (data) {
-                data.facility_id = $scope.facility;
-                data.date = $scope.modalObject.date;
-                data.time = $scope.modalObject.time;
-                $http.put("api/match/" + data.id, data);
+                data.facility_id = $scope.game_location;
+                data.date = $scope.modalObject.game_date;
+                data.time = $scope.modalObject.game_time;
+                $http.put("api/match/" + data.id, data)
+                .success(function(data){
+                    console.log("Game Updated");
+                })
             })
     };
 

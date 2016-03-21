@@ -258,17 +258,17 @@
                     Opponent:
                     <p class="pull-right">{{modalObject.opponent}}</p>
                     <br>
-                    <br>Facility:<span class="pull-right"><select class="form-control">
+                    <br>Facility:<span class="pull-right"><select class="form-control" ng-model="game_location">
                                                                     <option value="{{modalObject.facility_id}}" ng-repeat="item in allFacilities">{{ item.name }}</option>
                                                                 </select></span>
                     <br>
-                    <br>Date:<span class="pull-right"><input type="date" value="{{modalObject.date}}"/></span>
+                    <br>Date:<span class="pull-right"><input ng-model="game_date" type="date" value="{{modalObject.date}}"/></span>
                     <br>
-                    <br>Time:<span class="pull-right"><input type="time" value="{{modalObject.time}}"/></span>
+                    <br>Time:<span class="pull-right"><input ng-model="game_time" type="time" value="{{modalObject.time}}"/></span>
                     <br>
                     <br>
                     <select class="form-control">
-                        <option value="{{modalObject.sport_id}}" ng-repeat="item in allSports">{{ item.name }}</option>
+                        <option ng-model="sport_id" value="{{modalObject.sport_id}}" ng-repeat="item in allSports">{{ item.name }}</option>
                     </select>
                 </form>
             </div>
