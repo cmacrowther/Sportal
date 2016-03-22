@@ -42,6 +42,8 @@
                                 <ul class="dropdown-menu scrollable-menu" role="menu">
                                     <li class="dropdown-header text-center">My Sports</li>
                                     <!-- ngRepeat: item in mySports -->
+                                    <li ng-repeat="item in mySports" ng-click="setSport(item)"><a>{{ item.name }}</a></li>
+
                                     <li class="dropdown-header text-center">All Sports</li>
                                     <!-- ngRepeat: item in sports -->
                                     <li ng-repeat="item in sports" ng-click="setSport(item)"><a>{{ item.name }}</a>

@@ -1109,6 +1109,66 @@ def single_matchmaking():
         return "no match"
 
 
+@app.route('/api/matchmaking', methods=['POST'])
+def matchmaking():
+    import json
+    import collections
+    from Unchained import Queue
+    from Unchained import User
+    from Unchained import Team
+
+    data = request.get_json()
+    sport_id = data.get('sport_id')
+    user_id = data.get('user_id')
+    difficulty = data.get('difficulty')
+    team = data.get('team')
+
+    if team == '1 VS 1':
+        is_team = 0
+    else:
+        is_team = 1
+
+    queue = Queue.query.filter(
+        and_(Queue.difficulty == difficulty, Queue.sport_id == sport_id, Queue.is_team == is_team)).all()
+    objects_list = []
+
+    if len(queue) >= 1:
+        queue1 = queue[:5]
+
+        for item in queue1:
+
+            if is_team == 1:
+                team = Team.query.get(item.user_id)
+                admin = User.query.get(team.adminId)
+
+                d = collections.OrderedDict()
+                d['id'] = team.id
+                d['queue_id'] = item.id
+                d['first_name'] = team.name
+                d['last_name'] = ""
+                d['email'] = admin.email
+                d['picture'] = team.picture
+
+                objects_list.append(d)
+            else:
+                user = User.query.get(item.user_id)
+
+                d = collections.OrderedDict()
+                d['id'] = user.id
+                d['queue_id'] = item.id
+                d['first_name'] = user.first_name
+                d['last_name'] = user.last_name
+                d['email'] = user.email
+                d['picture'] = user.picture
+
+                objects_list.append(d)
+
+        j = json.dumps(objects_list)
+        return j
+    else:
+        return "no match"
+
+
 @app.route('/api/get_user_games', methods=['POST'])
 def get_user_games():
     import json
@@ -1146,6 +1206,7 @@ def get_user_games():
 
     else:
         return "no games"
+
 
 @app.route('/api/get_conversation_messages', methods=['POST'])
 def get_conversation_messages():
