@@ -1,0 +1,65 @@
+
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.play-slide{
+    height: 500px;
+    background-color: #eeeeee !important;
+    border-left: none;
+}
+.carousel-control:focus, .carousel-control:hover {
+    color: #FCAE28;
+}
+.carousel-control {
+    font-size: 20px;
+    color: #FCAE28;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0,0,0,.6);
+}
+
+.element {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.mui--text-button {
+    color:black;
+    text-shadow: none;
+}
+
+h2 {
+    color:black;
+    text-shadow: none;
+}
+
+.play-slide {
+    height: 400px !important;
+    background-color: transparent !important;
+    border-left: none;
+}
+
+.carousel-indicators .active {
+    width: 12px;
+    height: 12px;
+    margin: 0;
+    background-color: #FCAE28 !important;
+}
+
+.carousel-caption {
+    z-index: 0;
+}
+
+.mui-btn {
+    margin-top: none !important;
+    margin-bottom: none !important;
+}

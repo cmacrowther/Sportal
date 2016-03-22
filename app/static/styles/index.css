@@ -1,0 +1,182 @@
+body {   
+	background: url(../images/bg.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}	
+
+.videooverlay {
+	background-color: rgba(0,0,0,.5);	
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #333;
+}
+
+a, a:visited {
+	color: #333;
+}  
+
+a:hover {
+	color: #444; 
+}  
+	
+.loading #loadingoverlay {
+	background: #c84d73;
+}
+
+#loadingoverlay h2 { 
+	color:#fff		
+}
+
+a.button, a.button:visited {  
+	text-transform: uppercase;
+	background: #333;
+	color:#fff;
+	border: solid 1px #333; 
+	font-weight: 400;
+}
+a.button span {
+	color: #c84d73;
+}
+
+a.button:hover {
+	background: #333; 
+  	color: #fff;
+}	
+
+a.button-light, a.button-light:visited {
+	background: #fff; 
+	border: solid 1px #333; 
+	color:#c84d73;
+}
+
+a.button-light span {
+	color:#333;	
+}
+ 
+.large, .medium {  
+	color: #c84d73;
+}
+
+.form-row input.btn {
+	text-transform: uppercase;
+	background: #c84d73;
+	color:#fff; 	
+}
+
+.form-row input.btn:hover {
+	background: #333; 
+  	color: #fff;	
+}
+
+#footer a .medium:hover {  
+  	color: #66A0FF;
+} 
+
+#sidebar ul li h3.label span {
+	color: #c84d73	
+}
+
+.hero h2 span { 
+	border-bottom: solid 5px #c84d73;
+}	
+
+.hero .form-box .top .spacer {
+	background: #c84d73;
+}
+
+.hero .button {
+	border:0;
+	background: #c84d73 !important;
+	border: solid 2px #c84d73 !important;
+	color:#fff;
+}
+
+.hero .button-light {
+	border: solid 2px #fff !important;
+	background: rgba(0,0,0,.2) !important;
+	color: #fff;
+}
+
+.demo-box span {
+	color: #c84d73;
+}
+
+.price .option span.spacer {
+	background: #c84d73;
+}			
+
+.form-row input.btn { 
+	background: #c84d73; 
+	color:#333; 	
+}
+
+.form-row input.btn:hover, 
+.form-row input.btn:focus {
+	background: #c84d73; 
+	color:#333; 
+}	
+
+.price .ribbon {
+	background-color: #333;
+	color:#fff;
+}
+	
+.box-right .image-box {
+	background: url(../images/sample1.jpg) 50% 0 / cover no-repeat;	
+}
+
+.box-left .image-box {
+	background: url(../images/sample2.jpg) 50% 0 / cover no-repeat;	
+}
+
+.price { 
+	background:#c84d73;
+}
+
+.videooverlay {
+	background: url(../images/background_block_trans_01.png); 
+}
+
+.image-cropper {
+
+  width: 250px;
+
+  height: 250px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  border-radius: 50%;
+
+  margin: auto;
+
+}
+
+.image-cropper__image {
+
+  display: inline;
+
+  margin: 0 auto;
+
+  height: 100%;
+
+  min-width: 100%;
+}
+
+#about
+{
+    overflow-y:auto;
+    height:70%;
+}​
+
+

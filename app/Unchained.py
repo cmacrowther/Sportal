@@ -172,17 +172,17 @@ class TeamHasChannel(db.Model):
 class UserHasNotification(db.Model):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, unique=False)
-    notification = Column(Text, unique=false)
+    notification = Column(Text, unique=False)
     time = Column(Text, unique=False)
-    link = Column(Text, unique=false)
+    link = Column(Text, unique=False)
     is_read = Column(Integer, unique=False)
 
 class TeamHasNotification(db.Model):
     id = Column(Integer, primary_key=True)
     team_id = Column(Integer, unique=False)
-    notification = Column(Text, unique=false)
+    notification = Column(Text, unique=False)
     time = Column(Text, unique=False)
-    link = Column(Text, unique=false)
+    link = Column(Text, unique=False)
     is_read = Column(Integer, unique=False)
 
 class Items(db.Model):
@@ -1120,8 +1120,8 @@ def matchmaking():
     from Unchained import Team
 
     data = request.get_json()
-    sport_id = data.get('sport_id')
     user_id = data.get('user_id')
+    sport_id = data.get('sport_id')
     difficulty = data.get('difficulty')
     team = data.get('team')
 
@@ -1130,8 +1130,7 @@ def matchmaking():
     else:
         is_team = 1
 
-    queue = Queue.query.filter(
-        and_(Queue.difficulty == difficulty, Queue.sport_id == sport_id, Queue.is_team == is_team)).all()
+    queue = Queue.query.filter(and_(Queue.difficulty == difficulty, Queue.sport_id == sport_id, Queue.is_team == is_team)).all()
     objects_list = []
 
     if len(queue) >= 1:
@@ -1232,43 +1231,45 @@ def get_team_games():
             if games:
         
                 for item in games:
-                    game = Match.query.get(item.id)
+                    
+                    if item.is_team == 1:
+                        game = Match.query.get(item.id)
             
-                    if game.is_team == 1 and game.player1_id == your_team_id:
+                        if game.player1_id == your_team_id:
             
-                        d = collections.OrderedDict()
-                        d['id'] = game.id
-                        d['sport_id'] = game.sport_id
-                        d['your_team_id'] = game.player1_id
-                        d['opponent_id'] = game.player2_id
-                        d['is_team'] = game.is_team
-                        d['date'] = game.date
-                        d['time'] = game.time
-                        d['facility_id'] = game.facility_id
-                        d['complete'] = game.complete
-                        d['winner_id'] = game.winner_id
-                        d['score_1'] = game.score_1
-                        d['score_2'] = game.score_2
-            
-                        objects_list.append(d)
+                            d = collections.OrderedDict()
+                            d['id'] = game.id
+                            d['sport_id'] = game.sport_id
+                            d['your_team_id'] = game.player1_id
+                            d['opponent_id'] = game.player2_id
+                            d['is_team'] = game.is_team
+                            d['date'] = game.date
+                            d['time'] = game.time
+                            d['facility_id'] = game.facility_id
+                            d['complete'] = game.complete
+                            d['winner_id'] = game.winner_id
+                            d['score_1'] = game.score_1
+                            d['score_2'] = game.score_2
+
+                            objects_list.append(d)
     
-                    else:
+                        else:
     
-                        d = collections.OrderedDict()
-                        d['id'] = game.id
-                        d['sport_id'] = game.sport_id
-                        d['your_team_id'] = game.player2_id
-                        d['opponent_id'] = game.player1_id
-                        d['is_team'] = game.is_team
-                        d['date'] = game.date
-                        d['time'] = game.time
-                        d['facility_id'] = game.facility_id
-                        d['complete'] = game.complete
-                        d['winner_id'] = game.winner_id
-                        d['score_1'] = game.score_1
-                        d['score_2'] = game.score_2
+                            d = collections.OrderedDict()
+                            d['id'] = game.id
+                            d['sport_id'] = game.sport_id
+                            d['your_team_id'] = game.player2_id
+                            d['opponent_id'] = game.player1_id
+                            d['is_team'] = game.is_team
+                            d['date'] = game.date
+                            d['time'] = game.time
+                            d['facility_id'] = game.facility_id
+                            d['complete'] = game.complete
+                            d['winner_id'] = game.winner_id
+                            d['score_1'] = game.score_1
+                            d['score_2'] = game.score_2
                         
-                        objects_list.append(d)
+                            objects_list.append(d)
 
 
         j = json.dumps(objects_list)
