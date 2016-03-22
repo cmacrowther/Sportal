@@ -43,6 +43,12 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             else {
                 $scope.description = $scope.teamObject.description;
             }
+            if ($scope.teamObject.location == "" || $scope.teamObject.location == undefined) {
+                $scope.location = "No Info Given";
+            }   
+            else {
+                $scope.location = $scope.teamObject.location;
+            }
             if ($scope.teamObject.picture == "" || $scope.teamObject.picture == undefined) {
                 $scope.picture = "http://placehold.it/150x150";
             }
@@ -189,15 +195,26 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                 $rootScope.notifications.push(data);
             })
 
+        if ($scope.teamObject.name != $scope.team_name) {
+            $scope.change_windows = true;
+        }
+
+        console.log("NEW LOCATION:" + $scope.location);
+
         $scope.teamObject.name = $scope.team_name;
         $scope.teamObject.url = $scope.team_name;
         $scope.teamObject.adminId = $scope.admin;
         $scope.teamObject.description = $scope.description;
         $scope.teamObject.picture = $scope.picture;
+        $scope.teamObject.location = $scope.location;
 
         $http.put("api/team/" + $scope.teamObject.id, $scope.teamObject);
         $rootScope.teams.splice($rootScope.teams.indexOf($scope.teamObject), 1, $scope.teamObject);
-        window.location.assign("#/team_profile/" + $scope.teamObject.name);
+        
+        if($scope.change_windows) {
+           window.location.assign("#/team_profile/" + $scope.teamObject.name); 
+        }
+        
     };
 
     //Updates team sport from dropdown
@@ -227,6 +244,9 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             console.log("Incorrect Password.");
             $scope.password_message = "Current Password Incorrect";
         }
+        $timeout(function() {
+            $scope.password_message = null;
+        }, 3000);
     };
 
     $scope.unique_team_name = function () {

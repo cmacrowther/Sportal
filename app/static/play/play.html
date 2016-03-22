@@ -46,7 +46,7 @@
 
                                     <li class="dropdown-header text-center">All Sports</li>
                                     <!-- ngRepeat: item in sports -->
-                                    <li ng-repeat="item in sports" ng-click="setSport(item)"><a>{{ item.name }}</a>
+                                    <li ng-repeat="item in sports" ng-click="setSport(item)"><a href="">{{ item.name }}</a>
                                     </li>
                                     <!-- end ngRepeat: item in sports -->
                                 </ul>
@@ -86,22 +86,12 @@
                 <div class="text-center" style="height: 300px; margin-top: 15px">
                     <div class="col-md-12">
                         <div class="mui-panel" style="padding-top: 10px; height: 400px;">
-
-                            <div class="row" style="height: 50%">
-                                <button ng-click="setTeams('1 VS 1')" class="btn btn-primary btn-lg">1 VS 1</button>
-                            </div>
-                            <div class="row" style="height: 50%">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-secondary dropdown-toggle btn-lg"
-                                            data-toggle="dropdown">Teams
-                                        <span class="caret"></span></button>
-                                    <ul class="dropdown-menu scrollable-menu" role="menu">
-                                        <li><a ng-click="setTeams('2 VS 2')">2 VS 2</a></li>
-                                        <li><a ng-click="setTeams('3 VS 3')">3 VS 3</a></li>
-                                        <li><a ng-click="setTeams('4 VS 4')">4 VS 4</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <a href="" type="button" ng-click="setTeams('1 VS 1')"><div class="col-md-12" style="height: 46%; border: 5px solid black; margin-top: 10px">
+                                    <h1 class="text-center" style="line-height: 100px">1 VS 1</p>
+                            </div></a>
+                            <a href="" type="button" ng-click="setTeams('TEAM')"><div class="col-md-12" style="height: 46%; border: 5px solid black; margin-top: 10px">
+                                    <h1 class="text-center" style="line-height: 100px">TEAMS</p>
+                            </div></a>
                         </div>
                     </div>
                 </div>
@@ -115,7 +105,7 @@
                     <div class="col-md-12">
                         <div class="mui-panel" style="padding-top: 10px; height: 400px;">
 
-                            <button ng-click="play()" class="btn btn-success btn-lg">Play!</button>
+                            <button ng-click="play()" class="btn btn-success btn-lg" style="margin-top: 100px; height:200px; width: 300px;">Play!</button>
                         </div>
                     </div>
                 </div>

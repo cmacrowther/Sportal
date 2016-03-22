@@ -33,12 +33,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
         });
 
     $scope.editConvos = function () {
-        if ($scope.editable == true) {
-            $scope.editable = false;
-        }
-        else {
-            $scope.editable = true;
-        }
+        $scope.editable = !$scope.editable;
     };
 
 
@@ -93,7 +88,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
         else {
             var flag = 0; //flag if already in convo with
 
-            angular.forEach($scope.convos, function (value, key) {
+            angular.forEach($rootScope.convos, function (value, key) {
                 if (value.convo_user_id == user_id) {
                     alert("already in convo with");
                     flag = 1;
@@ -282,13 +277,18 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
             data: JSON.stringify(passObject)
         })
             .success(function (data) {
-                for (var i = 0; i < data.length; i++) {
-                    $http.delete("/api/user_has_message/" + data[i].uhm_id);
-                    $http.delete("/api/message/" + data[i].id);
+                if(data == "no messages") {
+                    $http.delete("/api/conversation/" + $scope.modalObject.id);
+                    $rootScope.convos.splice($scope.modalObject.id, 1);
                 }
-                $http.delete("/api/conversation/" + $scope.modalObject.id);
-                $scope.convos.splice($scope.modalObject.id, 1);
-                if ($scope.convos == []) {
+                else {
+                    for (var i = 0; i < data.length; i++) {
+                        $http.delete("/api/user_has_message/" + data[i].uhm_id);
+                        $http.delete("/api/message/" + data[i].id);
+                    }
+                }
+                
+                if ($rootScope.convos == []) {
                     $rootScope.no_convos = "No Conversations";
                 }
             })
@@ -372,7 +372,9 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                             is_read_user_two: 1
                         };
                         $http.put("/api/user_has_message/" + is_read.id, is_read);
-                        $rootScope.message_counter -= 1;
+                        if($rootScope.message_counter != 0) {
+                            $rootScope.message_counter -= 1;
+                        }
                     }
                 }
 
@@ -380,7 +382,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
 
     };
 
-    $scope.createChannel = function () {
+    /*$scope.createChannel = function () {
         console.log("Getting into the create channel Method.");
         console.log("Channel Name: " + $scope.channelName);
 
@@ -398,7 +400,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
         //todo add the user creating channel to user_has_channel
 
 
-    }
+    }*/
 
 
 }]);

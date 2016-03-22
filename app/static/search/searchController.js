@@ -1,5 +1,7 @@
 angular.module('dashboard.controllers').controller('searchController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
 
+    $scope.no_users = "No Matching Users";
+    $scope.no_teams = "No Matching Teams";
 
 
 	//function for searching database
@@ -42,24 +44,6 @@ angular.module('dashboard.controllers').controller('searchController', ['$scope'
                 $scope.no_teams = "";
             }
         })
-
-        $http({
-            method: 'POST',
-            url: 'api/events_search',
-            headers: {'Content-Type': 'application/json'},
-            data: JSON.stringify(passObject)
-        })
-        .success(function(data){
-            console.log(data);
-            if (data == "no matching events") {
-                $rootScope.events_list = [];
-                $scope.no_events = "No Matching Events";
-            }
-            else {
-                $rootScope.events_list = data;
-                $scope.no_events = "";
-            }
-        })
 	}
 
     $scope.getSport = function(item){
@@ -71,13 +55,13 @@ angular.module('dashboard.controllers').controller('searchController', ['$scope'
 
     }
 
-    $scope.getCreator = function(item) {
+    /*$scope.getCreator = function(item) {
 
         $http.get("/api/user/" + item.creator)
         .success(function(data){
             item.creator = data.first_name + " " + data.last_name;
         })
-    }
+    }*/
 
 
 }]);
