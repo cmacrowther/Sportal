@@ -138,8 +138,7 @@
                             <td><img src="{{item.picture}}" alt="..." height="40px" width="40px"></td>
                             <td>{{item.first_name}} {{item.last_name}}</td>
                             <td>
-                                <a type="button" target="_blank" class="btn btn-default" href="#/user_profile/{{item.id}}">
-                                    View Profile</a>
+                                <a type="button" target="_blank" class="btn btn-default" ng-href="{{link}}">View Profile</a>
                             </td>
                             <td>
                                 <button class="btn btn-default" ng-click="acceptChallenge(item)"> Challenge
@@ -170,7 +169,7 @@
                             <td><img src="{{item.picture}}" alt="..." height="40px" width="40px"></td>
                             <td>{{item.name}}</td>
                             <td>
-                                <button class="btn btn-default" ng-click="setTeams(item)" data-dismiss="modal"> Select
+                                <button class="btn btn-default" ng-click="setTeamObject(item)" data-dismiss="modal"> Select
                                 </button>
                             </td>
                         </tr>

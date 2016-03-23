@@ -1544,13 +1544,14 @@ def increase_message_count():
 def get_admin_teams():
     import json
     import collections
-    import Team
-    import TeamHasAdmin
+    from Unchained import Team
+    from Unchained import TeamHasAdmin
 
     data = request.get_json()
     user_id = data.get('user_id')
     uht = TeamHasAdmin.query.filter(TeamHasAdmin.user_id == user_id).all()
 
+    objects_list = []
     if uht:
         for item in uht:
             team = Team.query.get(item.team_id)
