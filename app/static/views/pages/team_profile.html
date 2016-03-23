@@ -10,7 +10,7 @@
                 </p>
             </div>
         </div>
-        <div class="col-md-6" style="margin-top: 20px; padding-right: 20px;">
+        <div class="col-md-6" style="margin-top: 20px; padding-right: 20px;" ng-show="editable">
             <button ng-hide="edit" ng-click="editPage()" class="mui-btn mui-btn--fab mui-btn--primary"
                     style="float:right;"><i class="fa fa-pencil" style="color: white;" aria-hidden="true"></i></button>
             <button ng-show="edit" ng-click="editPage()" class="mui-btn mui-btn--fab mui-btn--accent"
@@ -156,7 +156,7 @@
         </div>
     </div>
     <div ng-hide="edit" class="col-md-6 col-md-offset-3 text-center">
-        <button class="btn btn-danger" data-toggle="modal" data-target="#leaveTeamModal"><span
+        <button ng-show="is_member" class="btn btn-danger" data-toggle="modal" data-target="#leaveTeamModal"><span
                 class="glyphicon glyphicon-trash" aria-hidden="true"></span> Leave Team
         </button>
     </div>

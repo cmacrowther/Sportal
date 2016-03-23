@@ -67,9 +67,17 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                 headers: {'Content-Type': 'application/json'},
                 data: JSON.stringify(passObject)
             })
-                .success(function (data) {
-                    $scope.team_members = data;
-                });
+            .success(function (data) {
+                $scope.team_members = data;
+                for (var i = 0; i < $scope.team_members.length; i++) {
+                    if ($rootScope.userObject.id == $scope.team_members[i].id) {
+                        $scope.is_member = true;
+                    }
+                    else {
+                        //nothing
+                    }
+                }
+            });
 
             //pulls team admins
             $http({

@@ -19,15 +19,25 @@ angular.module('dashboard.controllers').controller('playController', ['$scope', 
     })
     .success(function (data) {
         console.log(data);
-
-        $scope.mySports = data;
+        if(data == "no sports") {
+            $scope.mySports = [];
+        }
+        else {
+            $scope.mySports = data;
+        }
+        
     });
 
     //Gets all the sports in the database created by the Admin
     $http.get("/api/sport")
     .success(function (data) {
         console.log(data);
-        $scope.sports = data.objects;
+        if(data == "no sports") {
+            $scope.sports = [];
+        }
+        else {
+            $scope.sports = data.objects;
+        }
     });
 
     //loads teams for the option of playing with a team you direct
