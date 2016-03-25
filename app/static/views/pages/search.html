@@ -1,0 +1,88 @@
+<link rel="stylesheet" href="../../styles/search.css">
+
+<div class="row" style="height: 110px; background-color: white; border-bottom: 1px solid #e7e7e7;">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 style="padding-left: 15px;">Search Items</h2>
+            <p style="padding-left: 15px;">Search for different users and teams using the service.</p>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12" style="text-align: center; padding-top: 10px;">
+<div class="mui-container" style="display: inline-block;;">
+	<i ng-click="search()" style="float:left; padding-top: 23px; padding-right: 5px; color: #757E8D;" class="fa fa-search fa-lg"></i>
+	<form style="float: left;" ng-submit="search()">
+		<div class="mui-textfield">
+		<input type="text" ng-model="searchTerm" placeholder="Search Term" style="width: 400px;">
+		</div>
+	</form>
+</div>
+</div>
+
+<br><br><br>
+<div class="mui-container">
+<h5 style="color: #757E8D;"><b>USERS</b></h5>
+<div class="mui-panel col-md-12">
+	<table class="table table-striped">
+	    <thead>
+	        <tr>
+	            <th style="width: 25%;"> Name </th>
+	            <th style="width: 25%;"> Email </th>
+	            <th style="width: 25%;"> Profile</th>
+	            <th style="wdith: 25%;"> Chat</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <tr ng-repeat="item in users_list">
+	            <td>
+	            	<div class="mui--text-body2" style="margin-top: 10px; margin-left: 3px;">
+	            	<img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.first_name }} {{ item.last_name }}
+	            	</div>
+	            </td>
+	            <td> 
+	            	<div class="mui--text-body2" style="margin-top: 10px; margin-left: 3px;">
+	            		{{ item.email }}
+	            	</div>
+	            </td>
+	            <td><a target="_blank" href="#/user_profile/{{item.id}}"><button style="padding: none;" class="mui-btn mui-btn--raised mui-btn--small">Go</button></a></td>
+	            <td><a href="#/messages/user/{{item.id}}"><button style="padding: none;" class="mui-btn mui-btn--raised mui-btn--small">Chat</button></a></td>
+	        </tr>
+	    </tbody>
+	</table>
+	<p class="text-center">{{ no_users }}</p>
+</div>
+</div>
+
+<div class="mui-container" style="padding-top: 15px;">
+<h5 style="color: #757E8D;"><b>TEAMS</b></h5>
+<div class="mui-panel col-md-12">
+	<table class="table table-striped">
+	    <thead>
+	        <tr>
+	            <th style="width: 33%;"> Name </th>
+	            <th style="width: 33%;"> Sport </th>
+	            <th style="width: 33%;"> Profile </th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        <tr ng-repeat="item in teams_list">
+	            <td>
+	            	<div class="mui--text-body2" style="margin-top: 10px; margin-left: 3px;">
+	            		<img src="{{item.picture}}" style="height: 30px; width: 30px"/> {{ item.name }}
+	            	</div>
+	            </td>
+	            <td ng-init="item.sport_id=getSport(item)">
+	            	<div class="mui--text-body2" style="margin-top: 10px; margin-left: 3px;">
+	            		{{ item.sport_id }}
+	            	</div>
+	            </td>
+	            <td><a target="_blank" href="#/team_profile/{{item.url}}"><button class="mui-btn mui-btn--raised mui-btn--small">Go</button></a></td>
+	        </tr>
+	    </tbody>
+	</table>
+	<p class="text-center">{{ no_teams }}</p>
+
+</div>
+</div>
+

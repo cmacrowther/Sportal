@@ -172,17 +172,17 @@ class TeamHasChannel(db.Model):
 class UserHasNotification(db.Model):
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, unique=False)
-    notification = Column(Text, unique=false)
+    notification = Column(Text, unique=False)
     time = Column(Text, unique=False)
-    link = Column(Text, unique=false)
+    link = Column(Text, unique=False)
     is_read = Column(Integer, unique=False)
 
 class TeamHasNotification(db.Model):
     id = Column(Integer, primary_key=True)
     team_id = Column(Integer, unique=False)
-    notification = Column(Text, unique=false)
+    notification = Column(Text, unique=False)
     time = Column(Text, unique=False)
-    link = Column(Text, unique=false)
+    link = Column(Text, unique=False)
     is_read = Column(Integer, unique=False)
 
 class Items(db.Model):
@@ -1120,8 +1120,8 @@ def matchmaking():
     from Unchained import Team
 
     data = request.get_json()
-    sport_id = data.get('sport_id')
     user_id = data.get('user_id')
+    sport_id = data.get('sport_id')
     difficulty = data.get('difficulty')
     team = data.get('team')
 
@@ -1130,8 +1130,7 @@ def matchmaking():
     else:
         is_team = 1
 
-    queue = Queue.query.filter(
-        and_(Queue.difficulty == difficulty, Queue.sport_id == sport_id, Queue.is_team == is_team)).all()
+    queue = Queue.query.filter(and_(Queue.difficulty == difficulty, Queue.sport_id == sport_id, Queue.is_team == is_team)).all()
     objects_list = []
 
     if len(queue) >= 1:
@@ -1187,25 +1186,95 @@ def get_user_games():
         for item in games:
             game = Match.query.get(item.id)
 
-            d = collections.OrderedDict()
-            d['id'] = game.id
-            d['sport_id'] = game.sport_id
-            d['player1_id'] = game.player1_id
-            d['player2_id'] = game.player2_id
-            d['is_team'] = game.is_team
-            d['date'] = game.date
-            d['time'] = game.time
-            d['facility_id'] = game.facility_id
-            d['complete'] = game.complete
-            d['winner_id'] = game.winner_id
-            d['score_1'] = game.score_1
-            d['score_2'] = game.score_2
+            if game.is_team != 1:
+                
+                d = collections.OrderedDict()
+                d['id'] = game.id
+                d['sport_id'] = game.sport_id
+                d['player1_id'] = game.player1_id
+                d['player2_id'] = game.player2_id
+                d['is_team'] = game.is_team
+                d['date'] = game.date
+                d['time'] = game.time
+                d['facility_id'] = game.facility_id
+                d['complete'] = game.complete
+                d['winner_id'] = game.winner_id
+                d['score_1'] = game.score_1
+                d['score_2'] = game.score_2
 
-            objects_list.append(d)
+                objects_list.append(d)
 
         j = json.dumps(objects_list)
         return j
 
+    else:
+        return "no games"
+
+@app.route('/api/get_team_games', methods=['POST'])
+def get_team_games():
+    import json
+    import collections
+    from Unchained import Match
+    from Unchained import UserHasTeam
+    
+    data = request.get_json()
+    user_id = data.get('user_id')
+    teams = UserHasTeam.query.filter(UserHasTeam.user_id == user_id).all()
+    objects_list = []
+    
+    if teams:
+    
+        for item in teams:
+            games = Match.query.filter(or_(Match.player1_id == item.team_id, Match.player2_id == item.team_id)).all()
+            your_team_id = item.team_id
+        
+            if games:
+        
+                for item in games:
+                    
+                    if item.is_team == 1:
+                        game = Match.query.get(item.id)
+            
+                        if game.player1_id == your_team_id:
+            
+                            d = collections.OrderedDict()
+                            d['id'] = game.id
+                            d['sport_id'] = game.sport_id
+                            d['your_team_id'] = game.player1_id
+                            d['opponent_id'] = game.player2_id
+                            d['is_team'] = game.is_team
+                            d['date'] = game.date
+                            d['time'] = game.time
+                            d['facility_id'] = game.facility_id
+                            d['complete'] = game.complete
+                            d['winner_id'] = game.winner_id
+                            d['score_1'] = game.score_1
+                            d['score_2'] = game.score_2
+
+                            objects_list.append(d)
+    
+                        else:
+    
+                            d = collections.OrderedDict()
+                            d['id'] = game.id
+                            d['sport_id'] = game.sport_id
+                            d['your_team_id'] = game.player2_id
+                            d['opponent_id'] = game.player1_id
+                            d['is_team'] = game.is_team
+                            d['date'] = game.date
+                            d['time'] = game.time
+                            d['facility_id'] = game.facility_id
+                            d['complete'] = game.complete
+                            d['winner_id'] = game.winner_id
+                            d['score_1'] = game.score_1
+                            d['score_2'] = game.score_2
+                        
+                            objects_list.append(d)
+
+
+        j = json.dumps(objects_list)
+        return j
+    
     else:
         return "no games"
 
@@ -1312,6 +1381,7 @@ def get_teams_channels():
                 d = collections.OrderedDict()
                 d['id'] = channel.id
                 d['name'] = channel.name
+                d['team_id'] = team.id
                 d['description'] = channel.description
                 d['admin_id'] = channel.admin_id
                 d['first_name'] = user.first_name
@@ -1569,6 +1639,44 @@ def get_admin_teams():
 
     else:
         return "no teams"
+
+@app.route('/api/check_for_channel', methods=['POST'])
+def check_for_channel():
+    import json
+    from Unchained import TeamHasChannel
+
+    data = request.get_json()
+    team_1 = data.get('team_1')
+    team_2 = data.get('team_2')
+    t1hc = TeamHasChannel.query.filter(TeamHasChannel.team_id == team_1).all()
+    t2hc = TeamHasChannel.query.filter(TeamHasChannel.team_id == team_2).all()
+    flag = 0
+
+    if t1hc:
+        for item_t1hc in t1hc:
+            if t2hc:
+                for item_t2hc in t2hc:
+                    if item_t1hc.channel_id == item_t2hc.channel_id:
+                        flag = 1
+        if flag == 1:
+            return "duplicate"
+        else:
+            return "noduplicate"
+
+    elif t2hc:
+        for item_t2hc in t2hc:
+            if t1hc:
+                for item_t1hc in t1hc:
+                    if item_t2hc.channel_id == item_t1hc.channel_id:
+                        flag = 1
+        if flag == 1:
+            return "duplicate"
+        else:
+            return "noduplicate"
+
+    else:
+        return "noduplicate"
+
 
 
 

@@ -1,0 +1,35 @@
+<h1>Event Page</h1>
+
+<div class="row">
+	<p>Event Name: {{ event_name }}<span class="pull-right"><button class="btn btn-danger" ng-click="deleteEvent()">Delete Event</button></span></p>
+	<p>Event Date: {{ event_date }}</p>
+	<p>Event Time: {{ event_time }}</p>
+	<p>Event Location: {{ event_location_addresss }}</p>
+    <div id="location" style="width: 600px; height: 600px;"></div>
+	<p>Event Description: {{ event_description }}</p>
+	<p>Event Creator: {{ event_creator }}</p>
+</div>
+
+<h4>Event Participants</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in attendees">
+            <td>{{ item.first_name }} {{ item.last_name }}</td>
+            <td> {{ item.email }}</td>
+        </tr>
+    </tbody>
+</table>
+<p class="text-center">{{ no_attendees }}</p>
+
+<div class="text-center">
+	<button class="btn btn-primary" ng-click="followEvent()">Follow</button>
+</div>
+
+
+

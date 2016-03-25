@@ -1,0 +1,624 @@
+:focus {
+  outline: none;
+}
+
+.row {
+  margin-right: 0;
+  margin-left: 0;
+}
+body, html {
+  min-height: 100vh;
+  background-color: #EDF2F6;
+}
+
+.absolute-wrapper{
+    position: fixed;
+    width: 210px;
+    height: 100%;
+    background-color: #303949;
+}
+
+#mobile_menu {
+  display: none;
+}
+
+#home_icon {
+    display: block;
+}
+
+.side-menu {
+  position: absolute;
+  width: 210px;
+  height: 100%;
+  background-color: #303949;
+  border-right: 1px solid #2B3342;
+}
+.side-menu .navbar {
+  border: none;
+}
+.side-menu .navbar-header {
+  width: 100%;
+}
+
+.side-menu .navbar-nav li {
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid #303A4B;
+  background-color: #354052;
+  position: relative;
+  overflow: hidden;
+  outline:none
+}
+.side-menu .navbar-nav li:hover {
+  background-color: #414D60;
+}
+.side-menu .navbar-nav li a {
+  padding: 15px;
+  padding-left: 20px;
+  color: #A9B4C6;
+  font-family: 'Roboto', sans-serif;
+  position: relative;
+  overflow: hidden;
+  outline:none
+}
+.navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {
+  color: #A9B4C6;
+}
+.side-menu .navbar-nav li a .glyphicon {
+  padding-right: 15px;
+}
+.side-menu #dropdown {
+  border: 0;
+  margin-bottom: 0;
+  border-radius: 0;
+  background-color: transparent;
+  box-shadow: none;
+  position: relative;
+  overflow: hidden;
+  outline:none
+}
+.side-menu #dropdown .caret {
+  float: right;
+  margin: 9px 5px 0;
+}
+.side-menu #dropdown .indicator {
+  float: right;
+}
+.side-menu #dropdown > a {
+  border-bottom: 1px solid #303A4B;
+  background-color: #354052;
+  position: relative;
+  overflow: hidden;
+  outline:none
+}
+.side-menu #dropdown > a:hover {
+  background-color: #414D60;
+}
+.side-menu #dropdown .panel-body {
+  padding: 0;
+  background-color: #f3f3f3;
+  position: relative;
+  overflow: hidden;
+  outline:none
+}
+.side-menu #dropdown .panel-body .navbar-nav {
+  width: 100%;
+}
+.side-menu #dropdown .panel-body .navbar-nav li {
+  border-bottom: 1px solid #2B3342;
+  background-color: #303949;
+  position: relative;
+  overflow: hidden;
+  outline:none
+}
+.side-menu #dropdown .panel-body .navbar-nav li a .glyphicon {
+  padding-right: 15px;
+}
+.side-menu #dropdown .panel-body .navbar-nav li:hover {
+  background-color: #414D60;
+}
+.side-menu #dropdown .panel-body .navbar-nav li:last-child {
+  border-bottom: none;
+}
+.side-menu #dropdown .panel-body .panel > a {
+  margin-left: -20px;
+  padding-left: 35px;
+  position: relative;
+  overflow: hidden;
+  outline:none
+}
+.side-menu #dropdown .panel-body .panel-body {
+  margin-left: -15px;
+}
+.side-menu #dropdown .panel-body .panel-body li {
+  padding-left: 30px;
+  position: relative;
+  overflow: hidden;
+  outline:none
+}
+.side-menu #dropdown .panel-body .panel-body li:last-child {
+  border-bottom: 1px solid #e7e7e7;
+}
+.side-menu #search-trigger {
+  background-color: #f3f3f3;
+  border: 0;
+  border-radius: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 15px 18px;
+}
+.side-menu .brand-name-wrapper {
+  min-height: 60px;
+  background-color: #303949;
+}
+.side-menu .brand-name-wrapper .navbar-brand {
+  display: block;
+  text-align: center;
+}
+.side-menu .brand-name-wrapper .navbar-brand a {
+  color: #FCAE28;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+}
+.side-menu #search {
+  position: relative;
+  z-index: 1000;
+}
+.side-menu #search .panel-body {
+  padding: 0;
+}
+.side-menu #search .panel-body .navbar-form {
+  padding: 0;
+  padding-right: 50px;
+  width: 100%;
+  margin: 0;
+  position: relative;
+  border-top: 1px solid #e7e7e7;
+}
+.side-menu #search .panel-body .navbar-form .form-group {
+  width: 100%;
+  position: relative;
+}
+.side-menu #search .panel-body .navbar-form input {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  width: 100%;
+  height: 50px;
+}
+.side-menu #search .panel-body .navbar-form .btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: 0;
+  border-radius: 0;
+  background-color: #f3f3f3;
+  padding: 15px 18px;
+}
+/* Main body section */
+.side-body {
+  margin-left: 210px;
+}
+/* small screen */
+@media (max-width: 768px) {
+
+  #mobile_menu {
+    display: block;
+  }
+
+  #home_icon {
+    display: none;
+  }
+
+  .side-menu {
+    display: none !important;
+  }
+
+  .navbar-default {
+    display: none !important;
+  }
+
+  .absolute-wrapper {
+    display: none !important;
+  }
+
+  .side-body {
+    width: 100vw;
+    top: 0;
+    left: 0;
+    margin-left: auto !important;
+  }
+}
+
+/*Start removing icons */
+@media (max-width: 550px) {
+  #chat {
+    display: none !important;
+  }
+
+  #cog {
+    display: none !important;
+  }
+}
+
+/*Start removing icons */
+@media (max-width: 480px) {
+  #notif {
+    display: none !important;
+  }
+}
+
+#footer  {
+    clear: both; /*may be omitted*/
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    width: 210px;
+    height: 20px; 
+ }
+
+#footer p {
+  color: #A9B4C6;
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+}
+
+.head-information {
+  height: 60px;
+  border-bottom: 1px solid #e7e7e7;
+  background-color: white;
+  overflow: visible;
+}
+.head-information .tool-butt {
+  padding-left: 10px;
+  position: static;
+  float: left;
+  width: 60px;
+  height: 59px;
+  border-right: 1px solid #e7e7e7;
+  display: inline-block;
+  z-index: 1;
+}
+.head-information .tool-butt:hover {
+  background-color: #EDF2F6;
+}
+.head-information .tool-butt:active {
+  border-bottom:4px solid #16A4FA
+}
+.head-information .tool-butt i {
+  padding-left: 12px;
+  padding-top: 23px;
+  color: #757E8D;
+}
+
+.head-information .tool-name {
+  float: left;
+  width: 300px;
+}
+
+.head-information .tool-name p {
+  color: #423D3D;
+  margin-left: 10px;
+  padding-top: 12px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+}
+
+.label {
+  position: absolute;
+  top: 10px;
+  left: 35px;
+}
+
+/*.ink styles - the elements which will create the ripple effect. The size and position of these elements will be set by the JS code. Initially these elements will be scaled down to 0% and later animated to large fading circles on user click.*/
+.ink {
+  display: block; position: absolute;
+  background-color: #303949;
+  border-radius: 100%;
+  transform: scale(0);
+}
+/*animation effect*/
+.ink.animate {animation: ripple 0.65s linear;}
+@keyframes ripple {
+  /*scale the element to 250% to safely cover the entire link and fade it out*/
+  100% {opacity: 0; transform: scale(2.5);}
+}
+
+.active {
+  background-color: #303949 !important;
+  color: #303939;
+  border-left: 4px solid #FCAE28;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .open > a {
+  background-image: none;
+  filter: none;
+  background-repeat: repeat-x;
+  -webkit-box-shadow: inset 0 3px 9px rgba(0,0,0,.075);
+  box-shadow: inset 0 3px 9px rgba(0,0,0,.075);
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+  background-color: #414D60;
+  color: #A9B4C6;
+}
+
+@import url('http://fonts.googleapis.com/css?family=Pacifico|Open+Sans:300');
+.flex-center {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+* {
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+}
+a,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+}
+.outer-menu {
+  position: absolute;
+  padding: 5px;
+  z-index: 1;
+}
+.outer-menu .checkbox-toggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  opacity: 0;
+}
+.outer-menu .checkbox-toggle:checked + .hamburger > div {
+  -webkit-transform: rotate(135deg);
+          transform: rotate(135deg);
+}
+.outer-menu .checkbox-toggle:checked + .hamburger > div:before,
+.outer-menu .checkbox-toggle:checked + .hamburger > div:after {
+  top: 0;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+}
+.outer-menu .checkbox-toggle:checked + .hamburger > div:after {
+  opacity: 0;
+}
+.outer-menu .checkbox-toggle:checked ~ .menu {
+  pointer-events: auto;
+  visibility: visible;
+}
+.outer-menu .checkbox-toggle:checked ~ .menu > div {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  -webkit-transition-duration: .75s;
+          transition-duration: .75s;
+}
+.outer-menu .checkbox-toggle:checked ~ .menu > div > div {
+  opacity: 1;
+  -webkit-transition: opacity 0.4s ease 0.4s;
+  transition: opacity 0.4s ease 0.4s;
+}
+.outer-menu .checkbox-toggle:hover + .hamburger {
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.outer-menu .checkbox-toggle:checked:hover + .hamburger > div {
+  -webkit-transform: rotate(225deg);
+          transform: rotate(225deg);
+}
+.outer-menu .hamburger {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 59px;
+  height: 59px;
+  padding: .5em 1em;
+  background: #FFFFFF;
+  border-radius: 0 0.12em 0.12em 0;
+  cursor: pointer;
+  -webkit-transition: box-shadow 0.4s ease;
+  transition: box-shadow 0.4s ease;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.outer-menu .hamburger > div {
+  position: relative;
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+      -ms-flex: none;
+          flex: none;
+  width: 100%;
+  height: 2px;
+  background: #000000;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.outer-menu .hamburger > div:before,
+.outer-menu .hamburger > div:after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: -10px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: inherit;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+.outer-menu .hamburger > div:after {
+  top: 10px;
+}
+.outer-menu .menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  visibility: hidden;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  outline: 1px solid transparent;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.outer-menu .menu > div {
+  width: 200vw;
+  height: 200vw;
+  color: #000000;
+  background: #EDF2F6;
+  border-radius: 50%;
+  -webkit-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+      -ms-flex: none;
+          flex: none;
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.outer-menu .menu > div > div {
+  text-align: center;
+  max-width: 90vw;
+  max-height: 100vh;
+  opacity: 0;
+  -webkit-transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease;
+  overflow-y: auto;
+  -webkit-box-flex: 0;
+  -webkit-flex: none;
+      -ms-flex: none;
+          flex: none;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.outer-menu .menu > div > div > ul {
+  list-style: none;
+  padding: 0 1em;
+  margin: 0;
+  display: block;
+  max-height: 100vh;
+}
+.outer-menu .menu > div > div > ul > li {
+  padding: 0;
+  margin: 1em;
+  font-size: 24px;
+  display: block;
+}
+.outer-menu .menu > div > div > ul > li > a {
+  position: relative;
+  display: inline;
+  cursor: pointer;
+  -webkit-transition: color 0.4s ease;
+  transition: color 0.4s ease;
+}
+.outer-menu .menu > div > div > ul > li > a:hover {
+  color: #e5e5e5;
+}
+.outer-menu .menu > div > div > ul > li > a:hover:after {
+  width: 100%;
+}
+.outer-menu .menu > div > div > ul > li > a:after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  bottom: -0.15em;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #e5e5e5;
+  -webkit-transition: width 0.4s ease;
+  transition: width 0.4s ease;
+}
+
+.btn-group, .btn-group-vertical {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  float: right;
+}
+
+.new-message {
+  background-color: #EDF2F6;
+}
+
+.new-message i {
+  margin-left: -12px;
+  padding-right: 5px;
+}
