@@ -1684,6 +1684,7 @@ app.debug = True
 
 if __name__ == '__main__':
     print "\n"
-    print " * Sportznegger Development Server - Ver. 0.1"
+    print " * Sportal Development Server - Ver. 0.1"
     print " *"
-    app.run(debug=False, port=5000)
+    #app.run(debug=False, port=5000)
+    app.run(host='0.0.0.0', debug=False)
