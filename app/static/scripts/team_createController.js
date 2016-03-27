@@ -15,7 +15,6 @@ angular.module('dashboard.controllers').controller('team_createController', ['$s
         $scope.team_name_exists_error = "";
 
         if ($scope.team_name == null || $scope.team_password == null || $scope.confirm_password == null) {
-            console.log("One or more fields empty");
             $scope.team_name_exists_error = "Please Fill in Required Fields.";
         }
         else {

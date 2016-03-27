@@ -109,22 +109,10 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
     //initializes bootstrap validator
     $("#inviteForm").validator();
 
-    console.log("team_profile Page");
-
     $scope.sendMail = function () {
 
         $scope.emailLoad = true;
-        //console.log($rootScope.userObject.first_name);
-        //console.log($scope.email);
-        //console.log($scope.team_name);
-        //console.log($scope.team_password);
 
-        console.log("1 " + $rootScope.userObject.first_name);
-        console.log("2 " + $scope.email);
-        console.log("3 " + $scope.teamObject.name);
-        console.log("4 " + $scope.teamObject.password);
-
-        //passObject = {user: $rootScope.userObject.first_name, email: $scope.email, team: $scope.team_name, password: $scope.team_password};
         passObject = {
             user: $rootScope.userObject.first_name,
             email: $scope.email,
@@ -139,22 +127,21 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             headers: {'Content-Type': 'application/json'},
             data: JSON.stringify(passObject)
         })
-            .success(function (data) {
-                $scope.emailLoad = false;
+        .success(function (data) {
+            $scope.emailLoad = false;
 
-                console.log("Success");
-                if (data == "Successfully sent") {
-                    $scope.sendMessageResult = "Message Sent Successfully";
-                    console.log("Message Sent Successfully");
-                    $timeout(function () {
-                        console.log("TIMEOUT YA!");
-                        $scope.sendMessageResult = "";
-                    }, 3000);
-                }
-                else {
-                    console.log("Error Sending Mail");
-                }
-            })
+            console.log("Success");
+            if (data == "Successfully sent") {
+                $scope.sendMessageResult = "Message Sent Successfully";
+                console.log("Message Sent Successfully");
+                $timeout(function () {
+                    $scope.sendMessageResult = "";
+                }, 3000);
+            }
+            else {
+                console.log("Error Sending Mail");
+            }
+        })
     };
 
     $('#inviteForm').validator().on('submit', function (e) {
@@ -393,7 +380,6 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         //available to team admins
         $http.delete("/api/team/" + $scope.teamObject.id)
             .success(function (data) {
-                console.log("Team Deleted. ddddddddddddddd" + $rootScope.userObject.id);
 
                 var passObject = {team_id: $scope.teamObject.id};
 

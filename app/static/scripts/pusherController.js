@@ -1,6 +1,6 @@
 angular.module('dashboard.controllers').controller('pusherTestController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
 
-	//lets get pusher yAYYYYY
+	//pusher testing
 
 	$scope.items = [];
 	$scope.test_message = "Default";

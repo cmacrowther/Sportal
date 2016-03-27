@@ -5,14 +5,15 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
 
     var passObject = {user_id: $rootScope.userObject.id};
 
-    //user games
+    //user games lists and variables
     $scope.games_pending = [];
     $scope.gamesip = [];
     $scope.past_games = [];
     $scope.no_games_ip = "No Games in Progress";
     $scope.no_past_games = "No Past Games";
     $scope.no_games_pending = "No Games Pending";
-    //team games
+
+    //team games lists and variables
     $scope.team_games_pending = [];
     $scope.team_gamesip = [];
     $scope.team_past_games = [];
@@ -76,7 +77,7 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
         }
     });
 
-    //Populate Pending Matches, Current Matches and Past Games lists
+    //Populate Pending Team Matches, Current Team Matches and Past Team Games lists
     $http({
         method: 'POST',
         url: 'api/get_team_games',
@@ -130,15 +131,26 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
         }
     });
 
-    //Grabs a sports name using their ID
+    $http.get("/api/sport")
+    .success(function (data) {
+        console.log(data);
+        $scope.allSports = data.objects;
+    });
+
+    $http.get("/api/facility")
+    .success(function (data) {
+        console.log(data);
+        $scope.allFacilities = data.objects;
+    });
+
+    //---------------------------------------------------------------
+    // Gets the proper names for listing matches information
     $scope.getSport = function (item) {
         $http.get("/api/sport/" + item.sport_id)
             .success(function (data) {
                 item.sport_name = data.name;
             })
     };
-
-    //Grabs a users name to insert into the opponent column
     $scope.getUser = function (item) {
         var opponent_id = 0;
         if (item.player1_id == $rootScope.userObject.id) {
@@ -152,20 +164,19 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
                 item.opponent = data.first_name + " " + data.last_name;
             })
     };
-
     $scope.getYourTeam = function (item) {
         $http.get("/api/team/" + item.your_team_id)
         .success(function (data) {
             item.your_team = data.name;
         })
     }
-
     $scope.getOpponentTeam = function (item) {
         $http.get("/api/team/" + item.opponent_id)
         .success(function (data) {
             item.opponent = data.name;
         })
     }
+    //---------------------------------------------------------------
 
     //Sends the opponent an email
     $scope.sendOpponentEmail = function (item) {
@@ -181,21 +192,10 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
             })
     };
 
+    //setting modal to display unique match info
     $scope.setModal = function (item) {
         $scope.modalObject = item;
     };
-
-    $http.get("/api/sport")
-        .success(function (data) {
-            console.log(data);
-            $scope.allSports = data.objects;
-        });
-
-    $http.get("/api/facility")
-        .success(function (data) {
-            console.log(data);
-            $scope.allFacilities = data.objects;
-        });
 
     $scope.updateInfo = function () {
         $http.get("api/match/" + $scope.modalObject.id)
@@ -210,6 +210,8 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
             })
     };
 
+
+    //automatically update the winner when inputting score (ng-blur, user games only)
     $scope.getWinnerUSER = function () {
         if ($scope.your_score > $scope.opponent_score) {
             $scope.game_results = "You Won! :)";
@@ -225,6 +227,7 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
         }
     };
 
+    //automatically update the winner when inputting score (ng-blur, team games only)
     $scope.getWinnerTEAM = function () {
         if ($scope.your_team_score > $scope.opponent_team_score) {
             $scope.game_results = "Your Team Won! :)";
@@ -240,6 +243,7 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
         }
     };
 
+    //finish game function, logs results in DB
     $scope.finishGame = function () {
         $http.get("api/match/" + $scope.modalObject.id)
         .success(function (data) {
@@ -368,6 +372,8 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
         });
     };
 
+
+    //accept function for pending matches
     $scope.accept = function (item) {
         console.log(item);
         $http.get("api/match/" + item)
@@ -441,6 +447,7 @@ angular.module('dashboard.controllers').controller('gamesController', ['$scope',
         });
     };
 
+    //decline function for pending matches
     $scope.decline = function (item) {
         console.log(item);
         $http.get("api/match/" + item)
