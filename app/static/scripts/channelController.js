@@ -4,6 +4,7 @@
 
 angular.module('dashboard.controllers').controller('channelController', ['$scope', '$rootScope', '$http', '$routeParams', '$timeout', function ($scope, $rootScope, $http, $routeParams, $timeout) {
 
+    //variable declarations
     $rootScope.page_name = "Messages";
     $scope.event_id = "";
     $scope.editable = false;
@@ -28,6 +29,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
 
     ////////////////////////////////////////////////////////
 
+    //checking the URL for new convo/new channel directive
     if ($routeParams.user_id) {
         $http.get("api/user/" + $routeParams.user_id)
         .success(function(data){
@@ -93,7 +95,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
     }
     else {
         //regular page load
-        //grabs the team channels
+        //grab the team channels
         var passObject = {user_id: $rootScope.userObject.id};
         $http({
             method: 'POST',
@@ -138,37 +140,37 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
             headers: {'Content-Type': 'application/json'},
             data: JSON.stringify(passObject)
         })
-            .success(function (data) {
-                $rootScope.convo_id = conversation_id;
+        .success(function (data) {
+            $rootScope.convo_id = conversation_id;
 
-                $http.get("api/conversation/" + conversation_id)
-                    .success(function (data) {
-                        if (data.user_one == $rootScope.userObject.id) {
-                            $scope.convo_with = data.user_two;
-                            $http.get("/api/user/" + data.user_two)
-                                .success(function (data) {
-                                    $scope.title = "Conversation with " + data.first_name + " " + data.last_name;
-                                })
-                        }
-                        else {
-                            $scope.convo_with = data.user_one;
-                            $http.get("/api/user/" + data.user_one)
-                                .success(function (data) {
-                                    $scope.title = "Conversation with " + data.first_name + " " + data.last_name;
-                                })
-                        }
-                    });
+            $http.get("api/conversation/" + conversation_id)
+                .success(function (data) {
+                    if (data.user_one == $rootScope.userObject.id) {
+                        $scope.convo_with = data.user_two;
+                        $http.get("/api/user/" + data.user_two)
+                            .success(function (data) {
+                                $scope.title = "Conversation with " + data.first_name + " " + data.last_name;
+                            })
+                    }
+                    else {
+                        $scope.convo_with = data.user_one;
+                        $http.get("/api/user/" + data.user_one)
+                            .success(function (data) {
+                                $scope.title = "Conversation with " + data.first_name + " " + data.last_name;
+                            })
+                    }
+                });
 
-                if (data == "no messages") {
-                    console.log('');
-                    $scope.messages = [];
-                }
-                else {
-                    $scope.messages = data;
+            if (data == "no messages") {
+                console.log('');
+                $scope.messages = [];
+            }
+            else {
+                $scope.messages = data;
 
-                }
+            }
 
-            })
+        })
     };
 
     //creates a new convo when triggered from the "new convo" modal
@@ -233,12 +235,14 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
             $scope.is_convo = true;
             console.log($scope.event_id);
         }
+        //watch for events on given channel or conversation, push new events to screen
         channel.bind($scope.event_id, function (data) {
             console.log(data);
             $scope.messages.push(data);
         });
     };
 
+    //function used to send message, triggers pusher in back end for sending message and increasing counter
     $scope.sendMessage = function () {
 
         if ($scope.event_id != undefined) {
@@ -373,6 +377,7 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
             })
     };
 
+    //function used to change read tags when convo is selected
     $scope.is_read_message = function (item) {
 
         var passObject = {conversation_id: item};
@@ -396,6 +401,8 @@ angular.module('dashboard.controllers').controller('channelController', ['$scope
                             is_read_user_two: 1
                         };
                         $http.put("/api/user_has_message/" + is_read.id, is_read);
+
+                        //does not decrease counter if already 0
                         if($rootScope.message_counter != 0) {
                             $rootScope.message_counter -= 1;
                         }
