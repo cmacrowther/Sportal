@@ -11,8 +11,7 @@ angular.module('dashboard.controllers').controller('eventsController', ['$scope'
         url: 'api/get_event_info',
         headers: {'Content-Type': 'application/json'},
         data: JSON.stringify(passObject)
-    })
-    .success(function(data){
+    }).success(function (data) {
 
         $scope.eventObject = data[0];
 
@@ -54,9 +53,9 @@ angular.module('dashboard.controllers').controller('eventsController', ['$scope'
             $scope.event_location_longitude = $scope.eventObject.longitude;
         }
         $('#location').locationpicker({
-            location: {latitude: $scope.event_location_latitude, longitude: $scope.event_location_longitude},   
+            location: {latitude: $scope.event_location_latitude, longitude: $scope.event_location_longitude},
             radius: 300
-        })
+        });
         if ($scope.eventObject.description == "" || $scope.eventObject.description == undefined) {
             $scope.event_description = "No info given";
         }
@@ -67,23 +66,21 @@ angular.module('dashboard.controllers').controller('eventsController', ['$scope'
             $scope.event_creator = "No info given";
         }
         else {
-            $http.get("/api/user/" + $scope.eventObject.creator)
-            .success(function(data){
+            $http.get("/api/user/" + $scope.eventObject.creator).success(function (data) {
                 $scope.event_creator = data.first_name + " " + data.last_name;
             })
         }
 
         $rootScope.attendees = [];
 
-        passObject = {event_id: $scope.eventObject.id}
+        passObject = {event_id: $scope.eventObject.id};
 
         $http({
             method: 'POST',
             url: 'api/get_event_attendees',
             headers: {'Content-Type': 'application/json'},
             data: JSON.stringify(passObject)
-        })
-        .success(function(data){
+        }).success(function (data) {
             console.log(data);
             if (data == "no people attending") {
                 $rootScope.attendees = [];
@@ -94,11 +91,10 @@ angular.module('dashboard.controllers').controller('eventsController', ['$scope'
                 $scope.no_attendees = "";
             }
         })
+    });
 
-    })
-
-    $scope.followEvent = function() {
-
+    /* Follow an event */
+    $scope.followEvent = function () {
         var passObject = {event_id: $scope.eventObject.id, user_id: $rootScope.userObject.id};
 
         $http({
@@ -106,17 +102,14 @@ angular.module('dashboard.controllers').controller('eventsController', ['$scope'
             url: 'api/check_follow_status',
             headers: {'Content-Type': 'application/json'},
             data: JSON.stringify(passObject)
-        })
-        .success(function(data){
+        }).success(function (data) {
             if (data == "noduplicate") {
                 $http.post("api/event_has_attendee", {
                     event_id: $scope.eventObject.id,
                     user_id: $rootScope.userObject.id
-                })
-                .success(function(data){
+                }).success(function (data) {
                     $rootScope.attendees.push($rootScope.userObject);
-                    $http.get("/api/event/" + $scope.eventObject.id)
-                    .success(function(data){
+                    $http.get("/api/event/" + $scope.eventObject.id).success(function (data) {
                         $rootScope.events.push(data);
                     })
                 })
@@ -125,30 +118,28 @@ angular.module('dashboard.controllers').controller('eventsController', ['$scope'
                 alert("You are already following this event you!");
             }
         })
-    }
+    };
 
-    $scope.deleteEvent = function() {
+    /* Deletes an event */
+    $scope.deleteEvent = function () {
 
         var passObject = {event_id: $scope.eventObject.id};
 
-        $http.delete("/api/event/" + $scope.eventObject.id)
-        .success(function(){
+        $http.delete("/api/event/" + $scope.eventObject.id).success(function () {
             $http({
                 method: 'POST',
                 url: 'api/get_event_attendees',
                 headers: {'Content-Type': 'application/json'},
                 data: JSON.stringify(passObject)
-            })
-            .success(function(data){
-                for(var i = 0; i<data.length; i++){
-                    $http.delete("/api/event_has_attendee/" + data[i].id)
-                    .success(function(){
+            }).success(function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $http.delete("/api/event_has_attendee/" + data[i].id).success(function () {
                         console.log("Attendee " + i + " deleted.");
                     })
                 }
                 window.location.assign("#/home");
             })
         })
-    }
+    };
 
 }]);
