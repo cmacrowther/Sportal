@@ -1,8 +1,7 @@
 # Sportal
-A web application for recreational athletes to match against, and meet other athletes.
 &nbsp;
 
-##### Game On
+##### A web app for recreational athletes to match against and compete with other athletes.
 
 ***
 
@@ -14,8 +13,8 @@ Clone repository or download and extract zip from GitLab
 ***
 
 ## Usage
-1. Set up a virtual environment, and install requirements.txt using pip.
-2. Run `python Sportal.py` located in ~Sportal/app/
+1. Setup a virtual environment, and install requirement.txt using pip.
+2. Run `python Sportal.py` located in ~/app/
 3. Navigate to `localhost:5000` in your browser
  
  &nbsp;
@@ -34,14 +33,13 @@ Clone repository or download and extract zip from GitLab
 
 ***
 
-## Features
+## Feature Set
 
- - Create a personalized sporting profile
- - Join or create a sports team, and start inviting others
- - In-app messaging with other individuals using the app
- - Single or team matchmaking for sport of choice
- - Statistics and past history of matches played
- - Desktop and mobile friendly user interface
+ - Create a personalized sports profile
+ - Join or create a new team, and start inviting others
+ - Matchmaking for single or team sports
+ - In-app messaging to connect with your opponents or teams
+ - Mobile and desktop friendly user interface
  
  
  &nbsp;
@@ -60,6 +58,7 @@ Clone repository or download and extract zip from GitLab
 ***
 
 ## License
+
 
 &nbsp;
 
