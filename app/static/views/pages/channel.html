@@ -1,11 +1,11 @@
 <link type="text/css" rel="stylesheet" href="../../styles/channels.css">
 <!-- Top Nav -->
-<div class="row" style="height: 110px; background-color: white; border-bottom: 1px solid #e7e7e7;">
+<div class="row title-panel">
     <div class="row">
         <div class="col-md-12">
             <div class="pull-left">
-                <h2 style="padding-left: 15px;">Recent Messages</h2>
-                <p style="padding-left: 15px;">View and respond to recent messages from other enthusiasts.</p>
+                <h2 class="title-cont">Recent Messages</h2>
+                <p class="title-cont">View and respond to recent messages from other enthusiasts.</p>
             </div>
             <div class="pull-right" style="margin-top: 20px; padding-right: 20px;">
                 <button class="mui-btn mui-btn--fab mui-btn--primary" data-target="#newConvoModal" data-toggle="modal" style="float:right;">+
@@ -17,7 +17,7 @@
 <!-- Message Convo -->
 <div class="col-md-12" style="padding-top: 10px;">
     <div class="mui-container">
-        <h5 style="color: #757E8D;"><b>{{ title.toUpperCase() }}</b></h5>
+        <h5 class="content-header">{{ title.toUpperCase() }}</h5>
         <div class="mui-panel" ng-show="in_convo">
             <i class="pull-right fa fa-remove fa-lg" ng-click="in_convo=false; is_channel=false; is_convo=false; $root.convo_id=''"></i>
             <div class="message-pane">
@@ -42,7 +42,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="mui-container">
-                <h5 style="color: #757E8D;"><b>CHANNELS</b>
+                <h5 class="content-header"><b>CHANNELS</b>
 
                 <input type="text" class="form-control input-sm"
                                                                   maxlength="64" placeholder="Search"

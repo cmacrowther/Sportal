@@ -216,3 +216,22 @@ td {
   width: 100%;
 }
 
+.title-cont {
+  padding-left: 15px;
+}
+
+.title-panel {
+  height: 110px !important;
+  background-color: white !important; 
+  border-bottom: 1px solid #e7e7e7 !important;
+}
+
+.content-header {
+  color: #757E8D;
+  font-weight: bold;
+}
+
+.content-spacer {
+  padding-top: 25px;
+}
+
