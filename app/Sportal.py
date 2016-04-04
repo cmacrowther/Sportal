@@ -225,7 +225,7 @@ def index():
 @app.route('/api/sign_in', methods=['POST'])
 def sign_in():
     # Get User table
-    from Unchained import User
+    from Sportal import User
 
     data = request.get_json()
     email = data.get('email')
@@ -243,7 +243,7 @@ def sign_in():
 
 @app.route('/api/join_team', methods=['POST'])
 def join_team():
-    from Unchained import Team
+    from Sportal import Team
 
     data = request.get_json()
     url = data.get('url')
@@ -261,7 +261,7 @@ def join_team():
 
 @app.route('/api/get_team_id_by_url', methods=['GET'])
 def get_team_id_by_url(team_url):
-    from Unchained import Team
+    from Sportal import Team
 
     team = Team.query.filter(Team.url == team_url).all()
 
@@ -273,7 +273,7 @@ def get_team_id_by_url(team_url):
 
 @app.route('/api/email_check', methods=['POST'])
 def email_check():
-    from Unchained import User
+    from Sportal import User
 
     data = request.get_json()
     email = data.get('email')
@@ -287,7 +287,7 @@ def email_check():
 
 @app.route('/api/team_url_check', methods=['POST'])
 def team_url_check():
-    from Unchained import Team
+    from Sportal import Team
 
     data = request.get_json()
     url = data.get('url')
@@ -301,7 +301,7 @@ def team_url_check():
 
 @app.route('/api/team_name_check', methods=['POST'])
 def team_name_check():
-    from Unchained import Team
+    from Sportal import Team
 
     data = request.get_json()
     name = data.get('name')
@@ -327,12 +327,12 @@ def send_mail():
     sender = 'mycodebrary@gmail.com'
 
     msg = email.message.Message()
-    msg['Subject'] = 'Unchained Invitation from' + user
+    msg['Subject'] = 'Sportal Invitation from' + user
     msg['From'] = 'mycodebrary@gmail.com'
     msg['To'] = receivers
     msg.add_header('Content-Type', 'text/html')
     msg.set_payload(
-        '<h1>You have recieved an invitation to join ' + user + '\'s Team ' + team + ' with password ' + password + ' <br><br> Go to www.unchained.com make an account and join their team!</h1>')
+        '<h1>You have recieved an invitation to join ' + user + '\'s Team ' + team + ' with password ' + password + ' <br><br> Go to www.Sportal.com make an account and join their team!</h1>')
 
     s = smtplib.SMTP("smtp.gmail.com", 587)
     s.starttls()
@@ -354,12 +354,12 @@ def send_mail_match():
     sender = 'mycodebrary@gmail.com'
 
     msg = email.message.Message()
-    msg['Subject'] = 'Unchained Invitation from' + user
+    msg['Subject'] = 'Sportal Invitation from' + user
     msg['From'] = 'mycodebrary@gmail.com'
     msg['To'] = receivers
     msg.add_header('Content-Type', 'text/html')
     msg.set_payload(
-        '<h1>You have a possible match with ' + user + '<br><br> Go to www.unchained.com to accept the match against them!</h1>')
+        '<h1>You have a possible match with ' + user + '<br><br> Go to www.Sportal.com to accept the match against them!</h1>')
 
     s = smtplib.SMTP("smtp.gmail.com", 587)
     s.starttls()
@@ -386,7 +386,7 @@ def send_mail_accepted():
     msg['To'] = receivers
     msg.add_header('Content-Type', 'text/html')
     msg.set_payload(
-        '<h1>You have a match! Go to www.unchained.com to talk to them!</h1>')
+        '<h1>You have a match! Go to www.Sportal.com to talk to them!</h1>')
 
     s = smtplib.SMTP("smtp.gmail.com", 587)
     s.starttls()
@@ -400,8 +400,8 @@ def send_mail_accepted():
 def get_team_members():
     import json
     import collections
-    from Unchained import UserHasTeam
-    from Unchained import User
+    from Sportal import UserHasTeam
+    from Sportal import User
 
     data = request.get_json()
     team_id = data.get('team_id')
@@ -431,7 +431,7 @@ def get_team_members():
 def get_team_members_for_deletion():
     import json
     import collections
-    from Unchained import UserHasTeam
+    from Sportal import UserHasTeam
 
     data = request.get_json()
     team_id = data.get('team_id')
@@ -455,7 +455,7 @@ def get_team_members_for_deletion():
 def get_team_admins_for_deletion():
     import json
     import collections
-    from Unchained import TeamHasAdmin
+    from Sportal import TeamHasAdmin
 
     data = request.get_json()
     team_id = data.get('team_id')
@@ -479,8 +479,8 @@ def get_team_admins_for_deletion():
 def get_team_admins():
     import json
     import collections
-    from Unchained import TeamHasAdmin
-    from Unchained import User
+    from Sportal import TeamHasAdmin
+    from Sportal import User
 
     data = request.get_json()
     team_id = data.get('team_id')
@@ -508,7 +508,7 @@ def get_team_admins():
 def get_admin():
     import json
     import collections
-    from Unchained import TeamHasAdmin
+    from Sportal import TeamHasAdmin
 
     data = request.get_json()
     team_id = data.get('team_id')
@@ -533,7 +533,7 @@ def get_admin():
 def get_member():
     import json
     import collections
-    from Unchained import UserHasTeam
+    from Sportal import UserHasTeam
 
     data = request.get_json()
     team_id = data.get('team_id')
@@ -558,8 +558,8 @@ def get_member():
 def get_user_sports():
     import json
     import collections
-    from Unchained import UserHasSport
-    from Unchained import Sport
+    from Sportal import UserHasSport
+    from Sportal import Sport
 
     data = request.get_json()
     user_id = data.get('user_id')
@@ -593,8 +593,8 @@ def get_user_sports():
 def get_event_attendees():
     import json
     import collections
-    from Unchained import User
-    from Unchained import EventHasAttendee
+    from Sportal import User
+    from Sportal import EventHasAttendee
 
     data = request.get_json()
     event_id = data.get('event_id')
@@ -626,7 +626,7 @@ def get_event_attendees():
 
 @app.route("/profile/<int:profile_id>", methods=["GET"])
 def get_profile(profile_id):
-    from Unchained import User
+    from Sportal import User
     import json
     import collections
 
@@ -653,7 +653,7 @@ def get_profile(profile_id):
 
 @app.route("/team/<string:team_url>", methods=["GET"])
 def get_team(team_url):
-    from Unchained import Team
+    from Sportal import Team
     import json
     import collections
 
@@ -682,7 +682,7 @@ def get_team(team_url):
 
 @app.route('/api/get_user_has_sport_id', methods=['POST'])
 def get_user_has_sport_id():
-    from Unchained import UserHasSport
+    from Sportal import UserHasSport
 
     data = request.get_json()
     user_id = data.get('user_id')
@@ -698,7 +698,7 @@ def get_user_has_sport_id():
 def get_user_has_sport():
     import json
     import collections
-    from Unchained import UserHasSport
+    from Sportal import UserHasSport
 
     data = request.get_json()
     user_id = data.get('user_id')
@@ -730,8 +730,8 @@ def get_user_has_sport():
 def get_user_teams():
     import json
     import collections
-    from Unchained import UserHasTeam
-    from Unchained import Team
+    from Sportal import UserHasTeam
+    from Sportal import Team
 
     data = request.get_json()
     user_id = data.get('user_id')
@@ -767,8 +767,8 @@ def get_user_teams():
 def get_user_events():
     import json
     import collections
-    from Unchained import EventHasAttendee
-    from Unchained import Event
+    from Sportal import EventHasAttendee
+    from Sportal import Event
 
     data = request.get_json()
     user_id = data.get('user_id')
@@ -804,7 +804,7 @@ def get_user_events():
 @app.route('/api/check_follow_status', methods=['POST'])
 def check_follow_status():
     import json
-    from Unchained import EventHasAttendee
+    from Sportal import EventHasAttendee
 
     data = request.get_json()
     event_id = data.get('event_id')
@@ -823,7 +823,7 @@ def check_follow_status():
 def get_event_info():
     import json
     import collections
-    from Unchained import Event
+    from Sportal import Event
 
     data = request.get_json()
     url = data.get('url')
@@ -859,7 +859,7 @@ def get_event_info():
 def get_team_info():
     import json
     import collections
-    from Unchained import Team
+    from Sportal import Team
 
     data = request.get_json()
     url = data.get('url')
@@ -894,8 +894,8 @@ def get_team_info():
 def team_member_check():
     import json
     import collections
-    from Unchained import Team
-    from Unchained import UserHasTeam
+    from Sportal import Team
+    from Sportal import UserHasTeam
 
     data = request.get_json()
     url = data.get('url')
@@ -915,7 +915,7 @@ def team_member_check():
 def team_search():
     import json
     import collections
-    from Unchained import Team
+    from Sportal import Team
 
     data = request.get_json()
     searchTerm = '%' + str(data.get('searchTerm')) + '%'
@@ -945,7 +945,7 @@ def team_search():
 def user_search():
     import json
     import collections
-    from Unchained import User
+    from Sportal import User
 
     data = request.get_json()
     searchTerm = '%' + str(data.get('searchTerm')) + '%'
@@ -975,7 +975,7 @@ def user_search():
 @app.route('/api/team_admin_check', methods=['POST'])
 def team_admin_check():
     import json
-    from Unchained import TeamHasAdmin
+    from Sportal import TeamHasAdmin
 
     data = request.get_json()
     team = data.get('team_id')
@@ -992,7 +992,7 @@ def team_admin_check():
 def events_search():
     import json
     import collections
-    from Unchained import Event
+    from Sportal import Event
 
     data = request.get_json()
     searchTerm = '%' + str(data.get('searchTerm')) + '%'
@@ -1027,9 +1027,9 @@ def events_search():
 def get_matches_pending():
     import json
     import collections
-    from Unchained import Match
-    from Unchained import User
-    from Unchained import Sport
+    from Sportal import Match
+    from Sportal import User
+    from Sportal import Sport
 
     data = request.get_json()
     user_id = data.get('user_id')
@@ -1071,8 +1071,8 @@ def get_matches_pending():
 def single_matchmaking():
     import json
     import collections
-    from Unchained import Queue
-    from Unchained import User
+    from Sportal import Queue
+    from Sportal import User
 
     data = request.get_json()
     sport_id = data.get('sport_id')
@@ -1115,9 +1115,9 @@ def single_matchmaking():
 def matchmaking():
     import json
     import collections
-    from Unchained import Queue
-    from Unchained import User
-    from Unchained import Team
+    from Sportal import Queue
+    from Sportal import User
+    from Sportal import Team
 
     data = request.get_json()
     user_id = data.get('user_id')
@@ -1174,7 +1174,7 @@ def matchmaking():
 def get_user_games():
     import json
     import collections
-    from Unchained import Match
+    from Sportal import Match
 
     data = request.get_json()
     user_id = data.get('user_id')
@@ -1214,8 +1214,8 @@ def get_user_games():
 def get_team_games():
     import json
     import collections
-    from Unchained import Match
-    from Unchained import UserHasTeam
+    from Sportal import Match
+    from Sportal import UserHasTeam
     
     data = request.get_json()
     user_id = data.get('user_id')
@@ -1283,9 +1283,9 @@ def get_team_games():
 def get_conversation_messages():
     import json
     import collections
-    from Unchained import UserHasMessage
-    from Unchained import Message
-    from Unchained import User
+    from Sportal import UserHasMessage
+    from Sportal import Message
+    from Sportal import User
     
     data = request.get_json()
     conversation_id = data.get('conversation_id')
@@ -1321,8 +1321,8 @@ def get_conversation_messages():
 def get_user_conversations():
     import json
     import collections
-    from Unchained import Conversation
-    from Unchained import User
+    from Sportal import Conversation
+    from Sportal import User
     
     data = request.get_json()
     user_id = data.get('user_id')
@@ -1357,11 +1357,11 @@ def get_user_conversations():
 def get_teams_channels():
     import json
     import collections
-    from Unchained import Channel
-    from Unchained import TeamHasChannel
-    from Unchained import User
-    from Unchained import UserHasTeam
-    from Unchained import Team
+    from Sportal import Channel
+    from Sportal import TeamHasChannel
+    from Sportal import User
+    from Sportal import UserHasTeam
+    from Sportal import Team
     
     data = request.get_json()
     user_id = data.get('user_id')
@@ -1401,9 +1401,9 @@ def get_teams_channels():
 def get_channel_messages():
     import json
     import collections
-    from Unchained import ChannelHasMessage
-    from Unchained import Message
-    from Unchained import User
+    from Sportal import ChannelHasMessage
+    from Sportal import Message
+    from Sportal import User
     
     data = request.get_json()
     channel_id = data.get('channel_id')
@@ -1435,7 +1435,7 @@ def get_channel_messages():
 def get_team_has_channel():
     import json
     import collections
-    from Unchained import TeamHasChannel
+    from Sportal import TeamHasChannel
 
     data = request.get_json()
     team_id = data.get('team_id')
@@ -1458,8 +1458,8 @@ def get_team_has_channel():
 def get_team_notifications():
     import json
     import collections
-    from Unchained import UserHasTeam
-    from Unchained import TeamHasNotification
+    from Sportal import UserHasTeam
+    from Sportal import TeamHasNotification
     
     data = request.get_json()
     user_id = data.get('user_id')
@@ -1499,8 +1499,8 @@ def get_team_notifications():
 def get_team_notifications_test():
     import json
     import collections
-    from Unchained import UserHasTeam
-    from Unchained import TeamHasNotification
+    from Sportal import UserHasTeam
+    from Sportal import TeamHasNotification
     
     data = request.get_json()
     user_id = 1
@@ -1538,7 +1538,7 @@ def get_team_notifications_test():
 def get_user_notifications():
     import json
     import collections
-    from Unchained import UserHasNotification
+    from Sportal import UserHasNotification
     
     data = request.get_json()
     user_id = data.get('user_id')
@@ -1586,7 +1586,7 @@ def send_message():
                                   ssl=True
                                   )
 
-    pusher_client.trigger('unchained', event, {'sender_first_name': sender_first_name, 'sender_last_name': sender_last_name, 'picture': picture, 'time': time, 'message': message})
+    pusher_client.trigger('Sportal', event, {'sender_first_name': sender_first_name, 'sender_last_name': sender_last_name, 'picture': picture, 'time': time, 'message': message})
 
     return "Success"
 
@@ -1606,7 +1606,7 @@ def increase_message_count():
                                   ssl=True
                               )
 
-    pusher_client.trigger('unchained', 'new_message', {'message': 'increase_count', 'to': recipient_id, 'convo_id': convo_id})
+    pusher_client.trigger('Sportal', 'new_message', {'message': 'increase_count', 'to': recipient_id, 'convo_id': convo_id})
 
     return "Success"
 
@@ -1614,8 +1614,8 @@ def increase_message_count():
 def get_admin_teams():
     import json
     import collections
-    from Unchained import Team
-    from Unchained import TeamHasAdmin
+    from Sportal import Team
+    from Sportal import TeamHasAdmin
 
     data = request.get_json()
     user_id = data.get('user_id')
@@ -1643,7 +1643,7 @@ def get_admin_teams():
 @app.route('/api/check_for_channel', methods=['POST'])
 def check_for_channel():
     import json
-    from Unchained import TeamHasChannel
+    from Sportal import TeamHasChannel
 
     data = request.get_json()
     team_1 = data.get('team_1')

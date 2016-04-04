@@ -1,22 +1,17 @@
 <link href="../../styles/user_profile.css" rel="stylesheet">
-
 <!-- Page Options -->
-<div class="row" style="height: 110px; background-color: white; border-bottom: 1px solid #e7e7e7;">
+<div class="row title-panel">
     <div class="row">
         <div class="col-md-6">
             <div style="display: inline;">
                 <h2 style="padding-left: 15px; float: left;">{{first_name}} {{last_name}} ...</h2>
-
-                <p style="padding-left: 10px; margin-top: 28px; float: left;"><i class="fa fa-map-marker"
-                                                                                 style="color: red;"></i> {{ location }}
+                <p style="padding-left: 10px; margin-top: 28px; float: left;"><i class="fa fa-map-marker" style="color: red;"></i> {{ location }}
                 </p>
             </div>
         </div>
         <div class="col-md-6" style="margin-top: 20px; padding-right: 20px;">
-            <button ng-hide="edit" ng-click="editPage()" class="mui-btn mui-btn--fab mui-btn--primary"
-                    style="float:right;"><i class="fa fa-pencil" style="color: white;" aria-hidden="true"></i></button>
-            <button ng-show="edit" ng-click="editPage()" class="mui-btn mui-btn--fab mui-btn--accent"
-                    style="float:right;"><i class="fa fa-check" style="color: white;" aria-hidden="true"></i></button>
+            <button ng-hide="edit" ng-click="editPage()" class="mui-btn mui-btn--fab mui-btn--primary" style="float:right;"><i class="fa fa-pencil" style="color: white;" aria-hidden="true"></i></button>
+            <button ng-show="edit" ng-click="editPage()" class="mui-btn mui-btn--fab mui-btn--accent" style="float:right;"><i class="fa fa-check" style="color: white;" aria-hidden="true"></i></button>
         </div>
     </div>
     <div class="tab-container" style="position: relative;">
@@ -26,27 +21,20 @@
         </ul>
     </div>
 </div>
-
 <!-- View -->
 <div class="mui-tabs__pane mui--is-active" id="pane-default-1">
     <div class="col-md-12" style="padding-top: 95px; padding-left: 50px; padding-right: 50px;">
-        <h5 style="color: #757E8D;"><b>INFORMATION</b></h5>
-
+        <h5 class="content-header">INFORMATION</h5>
         <div class="mui-panel">
             <div style="text-align: center">
                 <div class="row">
-
-                    <img src="{{picture}}" alt="..." class="img-circle" height="150px" width="150px"
-                         style="margin-top: -85px; box-shadow: 2px 2px 2px #888;">
-
+                    <img src="{{picture}}" alt="..." class="img-circle" height="150px" width="150px" style="margin-top: -85px; box-shadow: 2px 2px 2px #888;">
                     <div ng-show="editable">
-
                     </div>
                 </div>
             </div>
             <div ng-hide="edit">
                 <br>
-
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3" style="padding-top: 15px;">
                         <p><strong>Age: </strong>{{ age }}</p>
@@ -74,50 +62,36 @@
                         <form data-toggle="validator" role="form" class="form-horizontal" id="user_creation_form">
                             <div class="form-group" style="padding-top: 30px">
                                 <label for="first_name" class="col-sm-2 control-label-fix">First Name</label>
-
                                 <div class="col-sm-9">
-                                    <input ng-show="edit" ng-model="first_name" ng-blur="updateInfo()" type="text"
-                                           id="first_name" class="form-control" name="first_name" placeholder="Jane">
+                                    <input ng-show="edit" ng-model="first_name" ng-blur="updateInfo()" type="text" id="first_name" class="form-control" name="first_name" placeholder="Jane">
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label for="last_name" class="col-sm-2 control-label-fix">Last Name</label>
-
                                 <div class="col-sm-9">
-                                    <input ng-show="edit" ng-model="last_name" ng-blur="updateInfo()" type="text"
-                                           id="last_name" class="form-control" name="last_name" placeholder="Doe">
+                                    <input ng-show="edit" ng-model="last_name" ng-blur="updateInfo()" type="text" id="last_name" class="form-control" name="last_name" placeholder="Doe">
                                 </div>
                             </div>
-
                             <div class="form-group">
                                 <label for="picture" class="col-sm-2 control-label-fix">Profile Picture</label>
-
                                 <div class="col-sm-9">
-                                    <input ng-show="edit" ng-model="picture" ng-blur="updateInfo()" type="text"
-                                           id="picture" class="form-control" name="picture"
-                                           placeholder="URL link to picture">
-
+                                    <input ng-show="edit" ng-model="picture" ng-blur="updateInfo()" type="text" id="picture" class="form-control" name="picture" placeholder="URL link to picture">
                                     <div class="limit-text-length">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label-fix">Age</label>
-
                                 <div class='date col-sm-9'>
                                     <div class="input-group">
-                                        <input ng-show="edit" ng-model="age" ng-blur="updateInfo()" type="text"
-                                               class="form-control" name="Age">
+                                        <input ng-show="edit" ng-model="age" ng-blur="updateInfo()" type="text" class="form-control" name="Age">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label-fix">Location</label>
-
                                 <div class="col-sm-9">
-                                    <select ng-show="edit" ng-blur="updateInfo()" ng-model="location" name="language"
-                                            class="form-control">
+                                    <select ng-show="edit" ng-blur="updateInfo()" ng-model="location" name="language" class="form-control">
                                         <option value=""></option>
                                         <option value="Charlottetown, PE">Charlottetown, PE</option>
                                         <option value="Summerside, PE">Summerside, PE</option>
@@ -127,18 +101,15 @@
                             </div>
                             <div class="form-group">
                                 <label for="about" class="col-sm-2 control-label-fix">About You</label>
-
                                 <div class='date col-sm-9'>
                                     <div class="input-group">
-                                        <textarea ng-show="edit" ng-model="description" ng-blur="updateInfo()"
-                                                  type='text' class="form-control" name="about" id="about"></textarea>
+                                        <textarea ng-show="edit" ng-model="description" ng-blur="updateInfo()" type='text' class="form-control" name="about" id="about"></textarea>
                                     </div>
                                 </div>
                             </div>
                             <!-- The Following two forms are hidden, they contain longitude and latitude values that are needed -->
                             <input type="hidden" class="form-control" name="longitude">
                             <input type="hidden" class="form-control" name="latitude">
-
                             <div class="form-group">
                                 <label class="col-sm-2 control-label-fix">Sports Interest</label>
                                 <div class="col-sm-8">
@@ -147,22 +118,20 @@
                                             <h5 class="text-center">All Sports</h5>
                                             <hr>
                                             <div>
-                                                <input type="text" class="form-control input-sm" maxlength="64"
-                                                       placeholder="Search" ng-model="searchTerm"/>
+                                                <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" ng-model="searchTerm" />
                                             </div>
                                             <br>
                                             <table class="table table-striped">
                                                 <thead>
                                                 </thead>
                                                 <tbody>
-                                                <tr ng-repeat="item in allSports | filter:searchTerm | orderBy: '-name'">
-                                                    <td>{{ item.name }}</td>
-                                                    <td>
-                                                        <button class="btn btn-primary" ng-click="addSport(item)"
-                                                                style="float: right">Add
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                                    <tr ng-repeat="item in allSports | filter:searchTerm | orderBy: '-name'">
+                                                        <td>{{ item.name }}</td>
+                                                        <td>
+                                                            <button class="btn btn-primary" ng-click="addSport(item)" style="float: right">Add
+                                                            </button>
+                                                        </td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -173,65 +142,51 @@
                                                 <thead>
                                                 </thead>
                                                 <tbody>
-                                                <tr ng-repeat="item in mySports | orderBy:'-name'">
-                                                    <td>{{ item.name }}</td>
-                                                    <td>
-                                                        <!-- ######### FIX ########### -->
-                                                        <div class="text-center">
-                                                            <button type="button" class="btn btn-primary btn-md"
-                                                                    data-toggle="modal" ng-click="setSportModal(item)"
-                                                                    data-target="#{{item.id}}myModal">Set Difficulty
-                                                            </button>
-                                                            <div id="{{item.id}}myModal" class="modal fade"
-                                                                 role="dialog">
-                                                                <div class="modal-dialog">
-                                                                    <!-- Modal content-->
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <button type="button" class="close"
-                                                                                    data-dismiss="modal">&times;</button>
-                                                                            <h4 class="modal-title">Set Difficulty</h4>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <p>{{ item.name }}</p>
-                                                                            <button type="button"
-                                                                                    class="btn btn-primary btn-md"
-                                                                                    ng-click="setDifficulty('Novice'); item.skill = 'Novice'">
-                                                                                Novice
-                                                                            </button>
-                                                                            <button type="button"
-                                                                                    class="btn btn-primary btn-md"
-                                                                                    ng-click="setDifficulty('Intermediate'); item.skill = 'Intermediate'">
-                                                                                Intermediate
-                                                                            </button>
-                                                                            <button type="button"
-                                                                                    class="btn btn-primary btn-md"
-                                                                                    ng-click="setDifficulty('Expert'); item.skill = 'Expert'">
-                                                                                Expert
-                                                                            </button>
-                                                                            <br>
-                                                                            <br>
-
-                                                                            <p>Current Skill Level: {{ item.skill }}</p>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button"
-                                                                                    class="btn btn-default"
-                                                                                    data-dismiss="modal">Close
-                                                                            </button>
+                                                    <tr ng-repeat="item in mySports | orderBy:'-name'">
+                                                        <td>{{ item.name }}</td>
+                                                        <td>
+                                                            <!-- ######### FIX ########### -->
+                                                            <div class="text-center">
+                                                                <button type="button" class="btn btn-primary btn-md" data-toggle="modal" ng-click="setSportModal(item)" data-target="#{{item.id}}myModal">Set Difficulty
+                                                                </button>
+                                                                <div id="{{item.id}}myModal" class="modal fade" role="dialog">
+                                                                    <div class="modal-dialog">
+                                                                        <!-- Modal content-->
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                                <h4 class="modal-title">Set Difficulty</h4>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <p>{{ item.name }}</p>
+                                                                                <button type="button" class="btn btn-primary btn-md" ng-click="setDifficulty('Novice'); item.skill = 'Novice'">
+                                                                                    Novice
+                                                                                </button>
+                                                                                <button type="button" class="btn btn-primary btn-md" ng-click="setDifficulty('Intermediate'); item.skill = 'Intermediate'">
+                                                                                    Intermediate
+                                                                                </button>
+                                                                                <button type="button" class="btn btn-primary btn-md" ng-click="setDifficulty('Expert'); item.skill = 'Expert'">
+                                                                                    Expert
+                                                                                </button>
+                                                                                <br>
+                                                                                <br>
+                                                                                <p>Current Skill Level: {{ item.skill }}</p>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                                                                                </button>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>{{ item.skill }}</td>
-                                                    <td>
-                                                        <button class="btn btn-danger" ng-click="deleteSport(item)"
-                                                                style="float: right">Delete
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                                        </td>
+                                                        <td>{{ item.skill }}</td>
+                                                        <td>
+                                                            <button class="btn btn-danger" ng-click="deleteSport(item)" style="float: right">Delete
+                                                            </button>
+                                                        </td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -245,40 +200,26 @@
         </div>
     </div>
 </div>
-
 <!-- Change Password View -->
 <div class="mui-tabs__pane" id="pane-default-2">
     <div class="row">
         <div class="col-md-6 col-md-offset-3" style="padding-top: 35px;">
             <div class="mui-panel">
                 <h3>Change Password</h3>
-
                 <form id="changePassword">
-
                     <div class="form-group">
-                        <input type="password" ng-model="passwordCurrent" name="password" id="passwordCurrent"
-                               class="form-control input-sm" placeholder="Current Password" data-minlength="8"
-                               required>
-
+                        <input type="password" ng-model="passwordCurrent" name="password" id="passwordCurrent" class="form-control input-sm" placeholder="Current Password" data-minlength="8" required>
                         <div class="help-block with-errors"></div>
                     </div>
-
                     <div class="form-group">
-                        <input type="password" ng-model="passwordNew" name="password" id="passwordNew"
-                               class="form-control input-sm" placeholder="New Password" data-minlength="8" required>
-
+                        <input type="password" ng-model="passwordNew" name="password" id="passwordNew" class="form-control input-sm" placeholder="New Password" data-minlength="8" required>
                         <div class="help-block with-errors"></div>
                     </div>
-
                     <div class="form-group">
-                        <input type="password" ng-model="passwordConfirm" name="password" id="passwordConfirm"
-                               class="form-control input-sm" placeholder="Confirm Password"
-                               data-match="#passwordNew" data-minlength="8" required>
-
+                        <input type="password" ng-model="passwordConfirm" name="password" id="passwordConfirm" class="form-control input-sm" placeholder="Confirm Password" data-match="#passwordNew" data-minlength="8" required>
                         <div class="help-block with-errors"></div>
                     </div>
                 </form>
-
                 <button type="button" ng-click="changePassword()" class="mui-btn mui-btn--raised mui-btn--small pull-right">Change Password</button>
                 <strong>{{password_message}}</strong>
             </div>
