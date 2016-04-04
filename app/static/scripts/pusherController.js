@@ -1,3 +1,7 @@
+/**
+ * Created by Brandon Banks, Corey Weber, Colin Crowther, & Thomas Doucette on 2016-01-21.
+ */
+
 angular.module('dashboard.controllers').controller('pusherTestController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
 
 	//pusher testing

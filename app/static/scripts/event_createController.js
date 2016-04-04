@@ -1,6 +1,7 @@
 /**
- * Created by Brandon on 1/20/2016.
+ * Created by Brandon Banks, Corey Weber, Colin Crowther, & Thomas Doucette on 2016-01-21.
  */
+
 angular.module('dashboard.controllers').controller('event_createController', ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
 
     //Location Picker

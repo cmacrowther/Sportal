@@ -1,6 +1,7 @@
 /**
- * Created by Corey Weber on 2016-01-11.
+ * Created by Brandon Banks, Corey Weber, Colin Crowther, & Thomas Doucette on 2016-01-21.
  */
+
 angular.module('dashboard.controllers',[]).controller('HomeController', ['$scope', '$http','$rootScope', function ($scope, $http, $rootScope) {
 
     $rootScope.page_name = "Home";

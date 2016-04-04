@@ -1,5 +1,5 @@
 /**
- * Created by Brandon on 1/20/2016.
+ * Created by Brandon Banks, Corey Weber, Colin Crowther, & Thomas Doucette on 2016-01-21.
  */
 
 angular.module('dashboard.controllers').controller('user_profileController', ['$scope', '$timeout', '$rootScope', '$http', '$routeParams', function ($scope, $timeout, $rootScope, $http, $routeParams) {

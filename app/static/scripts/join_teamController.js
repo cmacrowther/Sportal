@@ -1,3 +1,7 @@
+/**
+ * Created by Brandon Banks, Corey Weber, Colin Crowther, & Thomas Doucette on 2016-01-21.
+ */
+
 angular.module('dashboard.controllers').controller('join_teamController', ['$scope', '$http', '$timeout', '$rootScope', function ($scope, $http, $timeout, $rootScope) {
 
     //Initializes the validator plugin

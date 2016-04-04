@@ -1,6 +1,7 @@
 /**
- * Created by Brandon on 1/20/2016.
+ * Created by Brandon Banks, Corey Weber, Colin Crowther, & Thomas Doucette on 2016-01-21.
  */
+
 angular.module('dashboard.controllers').controller('gamesController', ['$scope', '$http', '$rootScope', '$routeParams', function ($scope, $http, $rootScope, $routeParams) {
 
     var passObject = {user_id: $rootScope.userObject.id};
