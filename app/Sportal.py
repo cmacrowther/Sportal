@@ -5,7 +5,7 @@ from sqlalchemy import *
 from pusher import Pusher
 
 app = Flask(__name__, static_url_path='')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///unchained.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sportal.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
