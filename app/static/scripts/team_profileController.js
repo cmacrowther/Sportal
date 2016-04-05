@@ -1,5 +1,7 @@
 /**
  * Created by Brandon Banks, Corey Weber, Colin Crowther, & Thomas Doucette on 2016-01-21.
+ *
+ * team_profileController - Functions for the team profile.
  */
 
 angular.module('dashboard.controllers').controller('team_profileController', ['$scope', '$http', '$rootScope', '$timeout', '$routeParams', function ($scope, $http, $rootScope, $timeout, $routeParams) {
@@ -29,14 +31,12 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                 $scope.team_sport = "No info given";
             }
             else {
-                $http.get("/api/sport/" + $scope.teamObject.sport_id)
-                    .success(function (data) {
-                        $scope.sportObject = data;
-                        $scope.team_sport = $scope.sportObject.name;
-                    })
-                    .error(function (data) {
-                        console.log("Error getting sport.");
-                    })
+                $http.get("/api/sport/" + $scope.teamObject.sport_id).success(function (data) {
+                    $scope.sportObject = data;
+                    $scope.team_sport = $scope.sportObject.name;
+                }).error(function (data) {
+                    console.log("Error getting sport.");
+                })
             }
             if ($scope.teamObject.description == "" || $scope.teamObject.description == undefined) {
                 $scope.description = "No info given";
@@ -46,7 +46,7 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             }
             if ($scope.teamObject.location == "" || $scope.teamObject.location == undefined) {
                 $scope.location = "No Info Given";
-            }   
+            }
             else {
                 $scope.location = $scope.teamObject.location;
             }
@@ -67,8 +67,7 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                 url: 'api/get_team_members',
                 headers: {'Content-Type': 'application/json'},
                 data: JSON.stringify(passObject)
-            })
-            .success(function (data) {
+            }).success(function (data) {
                 $scope.team_members = data;
                 for (var i = 0; i < $scope.team_members.length; i++) {
                     if ($rootScope.userObject.id == $scope.team_members[i].id) {
@@ -86,18 +85,17 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                 url: 'api/get_team_admins',
                 headers: {'Content-Type': 'application/json'},
                 data: JSON.stringify(passObject)
-            })
-                .success(function (data) {
-                    $scope.team_admins = data;
-                    for (var i = 0; i < $scope.team_admins.length; i++) {
-                        if ($rootScope.userObject.id == $scope.team_admins[i].id) {
-                            $scope.editable = true;
-                        }
-                        else {
-                            //nothing
-                        }
+            }).success(function (data) {
+                $scope.team_admins = data;
+                for (var i = 0; i < $scope.team_admins.length; i++) {
+                    if ($rootScope.userObject.id == $scope.team_admins[i].id) {
+                        $scope.editable = true;
                     }
-                })
+                    else {
+                        //nothing
+                    }
+                }
+            })
         }
         else {
             console.log("Team does Not Exist");
@@ -107,11 +105,11 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
     });
 
 
-    //initializes bootstrap validator
+    /* Initializes Bootstrap Validator */
     $("#inviteForm").validator();
 
+    /* Send email invite to join the team. */
     $scope.sendMail = function () {
-
         $scope.emailLoad = true;
 
         passObject = {
@@ -121,14 +119,12 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             password: $scope.teamObject.password
         };
 
-
         $http({
             method: 'POST',
             url: 'api/send_mail',
             headers: {'Content-Type': 'application/json'},
             data: JSON.stringify(passObject)
-        })
-        .success(function (data) {
+        }).success(function (data) {
             $scope.emailLoad = false;
 
             console.log("Success");
@@ -154,15 +150,14 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         }
     });
 
+    /* Toggles between edit view and regular view */
     $scope.editPage = function () {
         $scope.edit = !$scope.edit;
     };
 
-    //Function to update info based on inputs with ng-blur
+    /* Function to update info based on inputs with ng-blur */
     $scope.updateInfo = function () {
-
         console.log("Updating Info.");
-
         var passObject = {team_id: $scope.teamObject.id};
 
         $http({
@@ -170,14 +165,13 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             url: 'api/get_team_has_channel',
             headers: {'Content-Type': 'application/json'},
             data: JSON.stringify(passObject)
-        })
-            .success(function (data) {
-                $http.get("api/channel/" + data[0].channel_id)
-                    .success(function (data) {
-                        data.name = $scope.team_name;
-                        $http.put("api/channel/" + data.id, data);
-                    })
-            })
+        }).success(function (data) {
+            $http.get("api/channel/" + data[0].channel_id)
+                .success(function (data) {
+                    data.name = $scope.team_name;
+                    $http.put("api/channel/" + data.id, data);
+                })
+        });
 
         if ($scope.teamObject.name != $scope.team_name) {
             $scope.change_windows = true;
@@ -190,8 +184,7 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
         $scope.teamObject.picture = $scope.picture;
         $scope.teamObject.location = $scope.location;
 
-        $http.put("api/team/" + $scope.teamObject.id, $scope.teamObject)
-        .success(function(data){
+        $http.put("api/team/" + $scope.teamObject.id, $scope.teamObject).success(function (data) {
             $rootScope.teams.splice($rootScope.teams.indexOf($scope.teamObject), 1, $scope.teamObject);
 
             $http.post("/api/team_has_notification", {
@@ -200,36 +193,31 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                 time: new Date(),
                 link: "#/team_profile/" + $scope.teamObject.url,
                 is_read: 0
-            })
-            .success(function (data) {
+            }).success(function (data) {
                 console.log("Notification Sent.");
             })
-        })
-        
-        
-        if($scope.change_windows) {
-           window.location.assign("#/team_profile/" + $scope.teamObject.name); 
+        });
+
+        if ($scope.change_windows) {
+            window.location.assign("#/team_profile/" + $scope.teamObject.name);
         }
     };
 
-    //Updates team sport from dropdown
+    /* Updates team sport from dropdown */
     $scope.updateTeamSport = function () {
-
         console.log("Changing Team Sport");
 
-        $http.get("/api/sport/" + $scope.team_sport_id)
-            .success(function (data) {
-                $scope.teamObject.sport_id = data.id;
-                $scope.team_sport = data.name;
-                $scope.updateInfo();
-            })
-            .error(function (data) {
-                console.log("Error getting sport.");
-            })
+        $http.get("/api/sport/" + $scope.team_sport_id).success(function (data) {
+            $scope.teamObject.sport_id = data.id;
+            $scope.team_sport = data.name;
+            $scope.updateInfo();
+        }).error(function (data) {
+            console.log("Error getting sport.");
+        })
     };
 
+    /* Changes a teams password */
     $scope.changePassword = function () {
-
         if ($scope.teamObject.password == $scope.passwordCurrent) {
             $scope.teamObject.password = $scope.passwordNew;
             $http.put("api/team/" + $scope.teamObject.id, $scope.teamObject);
@@ -239,13 +227,12 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             console.log("Incorrect Password.");
             $scope.password_message = "Current Password Incorrect";
         }
-        $timeout(function() {
+        $timeout(function () {
             $scope.password_message = null;
         }, 3000);
     };
 
     $scope.unique_team_name = function () {
-
         if ($scope.team_name != $scope.teamObject.name) {
 
             var passObject = {name: $scope.team_name};
@@ -256,30 +243,27 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
                 url: 'api/team_name_check',
                 headers: {'Content-Type': 'application/json'},
                 data: JSON.stringify(passObject)
+            }).then(function (data) {
+                console.log(data.data);
+                if (data.data == "noduplicate") {
+                    $scope.updateInfo();
+                }
+                else {
+                    alert("Duplicate Name");
+                    window.location.assign('#/team_profile/' + $scope.teamObject.url);
+                }
             })
-                .then(function (data) {
-                    console.log(data.data);
-                    if (data.data == "noduplicate") {
-                        $scope.updateInfo();
-                    }
-                    else {
-                        alert("Duplicate Name");
-                        window.location.assign('#/team_profile/' + $scope.teamObject.url);
-                    }
-                })
         }
         else {
             return true;
         }
     };
 
-    $http.get("/api/sport")
-        .success(function (data) {
-            $scope.allSports = data.objects;
-        });
+    $http.get("/api/sport").success(function (data) {
+        $scope.allSports = data.objects;
+    });
 
     $scope.promote = function (item) {
-
         var passObject = {team_id: $scope.teamObject.id, promotee: item.id};
 
         $http({
@@ -287,31 +271,28 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             url: 'api/team_admin_check',
             headers: {'Content-Type': 'application/json'},
             data: JSON.stringify(passObject)
+        }).success(function (data) {
+            if (data == "promote") {
+                $http.post("api/team_has_admin", {
+                    user_id: item.id,
+                    team_id: $scope.teamObject.id
+                }).success(function (data) {
+                    console.log("User Promoted!");
+                    $http.get("/api/user/" + data.user_id).success(function (data) {
+                        $scope.team_admins.push(data);
+                    })
+                })
+            }
+            else {
+                console.log("Already an Admin");
+                alert("That Member is Already An Admin!");
+            }
         })
-            .success(function (data) {
-                if (data == "promote") {
-                    $http.post("api/team_has_admin", {
-                            user_id: item.id,
-                            team_id: $scope.teamObject.id
-                        })
-                        .success(function (data) {
-                            console.log("User Promoted!");
-                            $http.get("/api/user/" + data.user_id)
-                                .success(function (data) {
-                                    $scope.team_admins.push(data);
-                                })
-                        })
-                }
-                else {
-                    console.log("Already an Admin");
-                    alert("That Member is Already An Admin!");
-                }
-            })
     };
 
+    /* Removes a user from the team */
     $scope.kick = function (item) {
-
-        //available to team admins
+        //Available to team admins
         var passObject = {team_id: $scope.teamObject.id, user_id: item.id};
         console.log(passObject);
 
@@ -320,20 +301,18 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             url: 'api/get_member',
             headers: {'Content-Type': 'application/json'},
             data: JSON.stringify(passObject)
-        })
-            .success(function (data) {
-                console.log(data);
+        }).success(function (data) {
+            console.log(data);
 
-                $http.delete("/api/user_has_team/" + data[0].id)
-                    .success(function () {
-                        console.log("Team Member Deleted.");
-                        $scope.team_members.splice(item, 1)
-                    })
+            $http.delete("/api/user_has_team/" + data[0].id).success(function () {
+                console.log("Team Member Deleted.");
+                $scope.team_members.splice(item, 1)
             })
+        })
     };
 
+    /* Allows users to leave a team on their own */
     $scope.leaveTeam = function () {
-
         //available to team admins
         var passObject = {team_id: $scope.teamObject.id, user_id: $rootScope.userObject.id};
 
@@ -342,20 +321,18 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             url: 'api/get_member',
             headers: {'Content-Type': 'application/json'},
             data: JSON.stringify(passObject)
-        })
-            .success(function (data) {
-                console.log(data);
-                $http.delete("/api/user_has_team/" + data[0].id)
-                    .success(function () {
-                        console.log("Team Left.");
-                        $rootScope.teams.splice($rootScope.teams.indexOf($scope.teamObject.id), 1);
-                        window.location.assign("#/");
-                    })
+        }).success(function (data) {
+            console.log(data);
+            $http.delete("/api/user_has_team/" + data[0].id).success(function () {
+                console.log("Team Left.");
+                $rootScope.teams.splice($rootScope.teams.indexOf($scope.teamObject.id), 1);
+                window.location.assign("#/");
             })
+        })
     };
 
+    /* Demotes a user from admin status in the team. */
     $scope.demote = function (item) {
-
         //available to team admins
         var passObject = {team_id: $scope.teamObject.id, user_id: item.id};
 
@@ -364,89 +341,78 @@ angular.module('dashboard.controllers').controller('team_profileController', ['$
             url: 'api/get_admin',
             headers: {'Content-Type': 'application/json'},
             data: JSON.stringify(passObject)
-        })
-            .success(function (data) {
-                console.log(data);
+        }).success(function (data) {
+            console.log(data);
 
-                $http.delete("/api/team_has_admin/" + data[0].id)
-                    .success(function () {
-                        console.log("Team Admin Demoted.");
-                        $scope.team_admins.splice(item, 1)
-                    })
+            $http.delete("/api/team_has_admin/" + data[0].id).success(function () {
+                console.log("Team Admin Demoted.");
+                $scope.team_admins.splice(item, 1)
             })
+        })
     };
 
+    /* Deletes the team. */
     $scope.deleteTeam = function (item) {
-
         //available to team admins
-        $http.delete("/api/team/" + $scope.teamObject.id)
-            .success(function (data) {
+        $http.delete("/api/team/" + $scope.teamObject.id).success(function (data) {
 
-                var passObject = {team_id: $scope.teamObject.id};
+            var passObject = {team_id: $scope.teamObject.id};
 
-                $http({
-                    method: 'POST',
-                    url: 'api/get_team_members_for_deletion',
-                    headers: {'Content-Type': 'application/json'},
-                    data: JSON.stringify(passObject)
-                })
-                    .success(function (data) {
-                        for (var i = 0; i < data.length; i++) {
-                            $http.delete("/api/user_has_team/" + data[i].id)
-                                .success(function () {
-                                    console.log("User " + i + " deleted.");
-                                    var passObject = {user_id: $rootScope.userObject.id};
+            $http({
+                method: 'POST',
+                url: 'api/get_team_members_for_deletion',
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify(passObject)
+            }).success(function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $http.delete("/api/user_has_team/" + data[i].id).success(function () {
+                        console.log("User " + i + " deleted.");
+                        var passObject = {user_id: $rootScope.userObject.id};
 
-                                    $http({
-                                        method: 'POST',
-                                        url: 'api/get_user_teams',
-                                        headers: {'Content-Type': 'application/json'},
-                                        data: JSON.stringify(passObject)
-                                    })
-                                        .success(function (data) {
-                                            console.log(data);
-                                            if (data == "no teams") {
-                                                $rootScope.teams = [];
-                                            }
-                                            else {
-                                                $rootScope.teams = data;
-                                            }
-                                        });
-                                })
-                        }
-                        var passObject = {team_id: $scope.teamObject.id};
                         $http({
                             method: 'POST',
-                            url: 'api/get_team_admins_for_deletion',
+                            url: 'api/get_user_teams',
                             headers: {'Content-Type': 'application/json'},
                             data: JSON.stringify(passObject)
-                        })
-                            .success(function (data) {
-                                for (var i = 0; i < data.length; i++) {
-                                    $http.delete("/api/team_has_admin/" + data[i].id)
-                                        .success(function () {
-                                            console.log("Admin " + i + " deleted.")
-                                        })
-                                }
-
-                                $http({
-                                    method: 'POST',
-                                    url: 'api/get_team_has_channel',
-                                    headers: {'Content-Type': 'application/json'},
-                                    data: JSON.stringify(passObject)
-                                })
-                                    .success(function (data) {
-                                        $http.delete("/api/team_has_channel/" + data.id);
-                                        $http.delete("/api/channel/" + data.channel_id);
-                                    })
-
-
-                                alert("Team Has Been Deleted.");
-                                window.location.assign("#/");
-                            })
-
+                        }).success(function (data) {
+                            console.log(data);
+                            if (data == "no teams") {
+                                $rootScope.teams = [];
+                            }
+                            else {
+                                $rootScope.teams = data;
+                            }
+                        });
                     })
+                }
+                var passObject = {team_id: $scope.teamObject.id};
+                $http({
+                    method: 'POST',
+                    url: 'api/get_team_admins_for_deletion',
+                    headers: {'Content-Type': 'application/json'},
+                    data: JSON.stringify(passObject)
+                }).success(function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        $http.delete("/api/team_has_admin/" + data[i].id).success(function () {
+                            console.log("Admin " + i + " deleted.");
+                        })
+                    }
+
+                    $http({
+                        method: 'POST',
+                        url: 'api/get_team_has_channel',
+                        headers: {'Content-Type': 'application/json'},
+                        data: JSON.stringify(passObject)
+                    }).success(function (data) {
+                        $http.delete("/api/team_has_channel/" + data.id);
+                        $http.delete("/api/channel/" + data.channel_id);
+                    });
+
+                    alert("Team Has Been Deleted.");
+                    window.location.assign("#/");
+                })
             })
+        })
     };
 
     $scope.checkID = function (item) {
